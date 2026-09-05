@@ -3,6 +3,7 @@ import { Preview, CodeBlock } from "../Preview";
 import { Card, Badge } from "../../../../packages/core/src/components/Misc";
 import { Table, DataTable, Avatar, AvatarGroup, Progress } from "../../../../packages/core/src/components/DataDisplay";
 import { Item, AspectRatio, DescriptionList } from "../../../../packages/core/src/components/Primitives";
+import { AutoAnatomy, AutoAnatomyLegend } from "../AutoAnatomy";
 import { Button } from "../../../../packages/core/src/components/Button";
 
 const manyRows = [
@@ -54,6 +55,18 @@ export default function DataDisplay() {
           </Card>
         </Preview>
       </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Padding — 20px all sides", anchor: "top" },
+          { n: 2, label: "Shadow — elevation.1", anchor: "bottom" }
+        ]}>
+          <Card style={{ width: 200 }}><div style={{ fontSize: 13 }}>Balance</div><div style={{ fontSize: 20, fontWeight: 700 }}>$84,213</div></Card>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Padding: 20px on every side", anchor: "top" },
+          { n: 2, label: "Shadow: elevation.1 (default), none until hover on interactive", anchor: "bottom" }
+        ]} />
+      </div>
 
       <h2 className="site-section-title" id="badge">Badge</h2>
       <table className="spec-table" style={{ marginBottom: 20 }}>
@@ -82,6 +95,18 @@ export default function DataDisplay() {
           </div>
         </div>
       </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Padding — 2px 10px (md)", anchor: "bottom" },
+          { n: 2, label: "Radius — fully rounded", anchor: "top" }
+        ]}>
+          <Badge tone="success">Active</Badge>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Padding: 1px/7px (sm) or 2px/10px (md)", anchor: "bottom" },
+          { n: 2, label: "Radius: fully rounded pill shape always", anchor: "top" }
+        ]} />
+      </div>
 
       <h2 className="site-section-title" id="table">Table</h2>
       <div className="site-panel site-panel--flush">
@@ -96,6 +121,18 @@ export default function DataDisplay() {
             rows={rows}
           />
         </div>
+      </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Header row — surface-sunken background", anchor: "top" },
+          { n: 2, label: "Cell padding — 12px/16px", anchor: "bottom" }
+        ]}>
+          <div style={{ width: 320 }}><Table columns={[{ key: "a", header: "Fund" }, { key: "b", header: "Return" }]} rows={[{ id: 1, a: "S&P 500", b: "+8.2%" }]} /></div>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Header: surface-sunken background, 600 weight, 10px/16px padding", anchor: "top" },
+          { n: 2, label: "Cell padding: 12px vertical, 16px horizontal", anchor: "bottom" }
+        ]} />
       </div>
 
       <h2 className="site-section-title" id="data-table">Data Table (sortable, filterable, paginated)</h2>
@@ -128,6 +165,16 @@ export default function DataDisplay() {
           />
         </div>
       </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Toolbar — search + filter selects, 10px gap", anchor: "top" }
+        ]}>
+          <div style={{ width: 260 }}><input className="cds-input cds-table-search" placeholder="Search…" readOnly /></div>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Toolbar: search input (max 240px) + filter dropdowns, 10px gap, sits above the table", anchor: "top" }
+        ]} />
+      </div>
 
       <h2 className="site-section-title" id="item">Item (generic list row)</h2>
       <div className="site-panel site-panel--flush">
@@ -135,6 +182,18 @@ export default function DataDisplay() {
           <Item title="Roth 401(k)" description="62% of portfolio" action={<Button variant="secondary" size="sm">Manage</Button>} />
           <Item title="Traditional 401(k)" description="38% of portfolio" action={<Button variant="secondary" size="sm">Manage</Button>} />
         </div>
+      </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Row padding — 12px vertical", anchor: "top" },
+          { n: 2, label: "Action — right-aligned, flex-shrink 0", anchor: "right" }
+        ]}>
+          <div style={{ width: 300 }}><Item title="Roth 401(k)" description="62% of portfolio" action={<Button variant="secondary" size="sm">Manage</Button>} /></div>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Row padding: 12px vertical, 4px horizontal", anchor: "top" },
+          { n: 2, label: "Action slot: right-aligned, never shrinks when title/description wrap", anchor: "right" }
+        ]} />
       </div>
 
       <h2 className="site-section-title" id="description-list">Description List</h2>
@@ -167,6 +226,18 @@ export default function DataDisplay() {
           </div>
         </div>
       </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Row gap — 16px vertical, 32px horizontal (stacked)", anchor: "top" },
+          { n: 2, label: "Term — uppercase, 12px, tertiary color", anchor: "bottom" }
+        ]}>
+          <div style={{ width: 220 }}><DescriptionList orientation="inline" items={[{ term: "Plan balance", value: "$12,840.00" }]} /></div>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Grid gap: 16px vertical, 32px horizontal between pairs", anchor: "top" },
+          { n: 2, label: "Term (stacked): 12px uppercase, tertiary text color", anchor: "bottom" }
+        ]} />
+      </div>
 
       <h2 className="site-section-title" id="avatar">Avatar</h2>
       <table className="spec-table" style={{ marginBottom: 20 }}>
@@ -189,6 +260,18 @@ export default function DataDisplay() {
           <AvatarGroup avatars={[{ name: "Jordan Lee" }, { name: "Sam Park" }, { name: "Ada Osei" }, { name: "Lee Kim" }, { name: "Nia Brooks" }]} max={3} />
         </Preview>
       </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Circle — 48px (lg)", anchor: "left" },
+          { n: 2, label: "Status dot — bottom-right, 9px", anchor: "bottom-right" }
+        ]}>
+          <Avatar name="Jordan Lee" size="lg" status="online" />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Circle: 24/36/48px per size, initials fallback if no image", anchor: "left" },
+          { n: 2, label: "Status dot: 9px, 2px border matching surface, bottom-right", anchor: "bottom-right" }
+        ]} />
+      </div>
 
       <h2 className="site-section-title" id="progress">Progress</h2>
       <table className="spec-table" style={{ marginBottom: 20 }}>
@@ -207,6 +290,18 @@ export default function DataDisplay() {
           </div>
         </Preview>
       </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Track height — 8px", anchor: "top" },
+          { n: 2, label: "Fill — Primary, animated width", anchor: "bottom" }
+        ]}>
+          <div style={{ width: 220 }}><Progress value={68} /></div>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Track: 8px height, fully rounded, surface-sunken", anchor: "top" },
+          { n: 2, label: "Fill: Primary color, animates on value change (280ms)", anchor: "bottom" }
+        ]} />
+      </div>
 
       <h2 className="site-section-title" id="aspect-ratio">Aspect Ratio</h2>
       <p className="site-section-sub">Locks a media container to a ratio regardless of content size — for illustrations, video embeds, or document previews.</p>
@@ -223,6 +318,18 @@ export default function DataDisplay() {
             </AspectRatio>
           </div>
         </div>
+      </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Padding-bottom trick — ratio-locked height", anchor: "bottom" },
+          { n: 2, label: "Content — absolutely positioned, fills box", anchor: "center" }
+        ]}>
+          <div style={{ width: 180 }}><AspectRatio ratio={16/9}><div style={{ background: "var(--core-color-surface-sunken)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12 }}>16:9</div></AspectRatio></div>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Height is set via padding-bottom percentage, not a fixed px — stays ratio-locked at any width", anchor: "bottom" },
+          { n: 2, label: "Content: absolutely positioned, object-fit: cover for images", anchor: "center" }
+        ]} />
       </div>
 
       <h2 className="site-section-title">Accessibility</h2>
