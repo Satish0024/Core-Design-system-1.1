@@ -3,6 +3,7 @@ import { Preview, CodeBlock } from "../Preview";
 import { Button, IconButton, Link } from "../../../../packages/core/src/components/Button";
 import { ButtonGroup } from "../../../../packages/core/src/components/Primitives";
 import { Anatomy, AnatomyLegend } from "../Anatomy";
+import { AutoAnatomy, AutoAnatomyLegend } from "../AutoAnatomy";
 
 export default function Actions() {
   return (
@@ -74,7 +75,21 @@ export default function Actions() {
       </div>
 
       <h2 className="site-section-title" id="icon-button">Icon Button</h2>
-      <p className="site-section-sub">Square, icon-only — every instance requires an <code>aria-label</code> (enforced by the TypeScript prop, not just a convention).</p>
+      <p className="site-section-sub">Anatomy — square, icon-only — every instance requires an <code>aria-label</code> (enforced by the TypeScript prop, not just a convention).</p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Icon — centered both axes", anchor: "center", offset: 60 },
+          { n: 2, label: "Square size — 40×40px (md)", anchor: "left" },
+          { n: 3, label: "Corner radius — button.radius", anchor: "bottom" },
+        ]}>
+          <IconButton variant="secondary" size="md" aria-label="Settings"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" strokeWidth="1.4"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg></IconButton>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Icon: centered, sized to match the icon-size token (16/20/24px)", anchor: "center" },
+          { n: 2, label: "Square: 32×32 (sm) / 40×40 (md) / 48×48 (lg) — same as control-height tokens", anchor: "left" },
+          { n: 3, label: "Radius: button.radius, themeable per client", anchor: "bottom" },
+        ]} />
+      </div>
       <div className="site-panel site-panel--flush">
         <Preview>
           <IconButton variant="secondary" size="sm" aria-label="Close"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1L11 11M11 1L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg></IconButton>

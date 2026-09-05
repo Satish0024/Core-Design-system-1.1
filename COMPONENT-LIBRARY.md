@@ -12,6 +12,24 @@ Base references:
 This is the master checklist for CORE's component coverage. Update the **Status** column as work lands — don't
 let this drift from `packages/core/src/components/`.
 
+## Anatomy rollout tracker
+
+Every component needs an "Anatomy" section (exact sizing/padding/font per size — visual numbered-callout diagram
+for the highest-traffic ones, a spec table for the rest). Button got the full visual diagram treatment first as
+the template ([Anatomy.tsx](apps/docs-site/src/Anatomy.tsx)); this list is the honest state, not "all 50 done":
+
+**✅ Has Anatomy (10):** Button (full diagram + table), Input, Textarea, Select, Checkbox/Radio, Switch, Badge,
+Card, Avatar, Progress (spec tables).
+
+**❌ Not yet:** Icon Button, Link, Button Group, Slider, Combobox, Date Picker, Calendar, Data Table, Table,
+Item, RadioGroup wrapper, Toggle/Toggle Group, Input Group, Input OTP, Attachment, Aspect Ratio, Description
+List, Accordion, Collapsible, Separator, Skeleton, Navigation Menu, Sidebar, Tabs, Breadcrumb, Stepper,
+Pagination, Alert, Toast/Toast Manager, Empty, Spinner, Modal, ConfirmDialog, Drawer/Slideover, Dropdown Menu,
+Tooltip, Popover, Hover Card.
+
+Next batch, in priority order (most-used first): Modal/Drawer, Tabs, Alert/Toast, Dropdown Menu, Tooltip/Popover,
+Stepper, Pagination, Accordion.
+
 ## Cross-check against the LendGuard app's own design-system branch
 
 Per instruction, [Satish0024/S_PPT (design-system branch)](https://github.com/Satish0024/S_PPT/tree/design-system) —
