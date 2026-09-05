@@ -105,6 +105,7 @@ const nav = [
     group: "System",
     links: [
       { to: "/patterns", label: "Patterns" },
+      { to: "/screens", label: "Screens" },
       { to: "/accessibility", label: "Accessibility" },
     ],
   },
