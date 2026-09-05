@@ -149,7 +149,7 @@ export default function Layout() {
   return (
     <div className="site-shell">
       <aside className="site-sidebar">
-        <div className="site-logo"><CoreLogo size={20} /> CORE</div>
+        <div className="site-logo"><CoreLogo size={22} /></div>
         {nav.map((g) => (
           <div className="site-nav-group" key={g.group}>
             <div className="site-nav-title">{g.group}</div>
@@ -169,8 +169,8 @@ export default function Layout() {
       <div className="site-main">
         <div className="site-topbar">
           <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <CoreLogo size={18} />
-            <strong style={{ fontSize: 14 }}>CORE Design System</strong>
+            <CoreLogo size={20} />
+            <strong style={{ fontSize: 14, color: "var(--site-text-faint)", fontWeight: 500 }}>Design System</strong>
           </span>
           <span style={{ display: "flex", alignItems: "center", gap: 14 }}>
             <span style={{ fontSize: 12, color: "var(--site-text-faint)" }}>v0.1.0 · White-label foundation</span>
