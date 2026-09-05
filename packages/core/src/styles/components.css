@@ -726,7 +726,7 @@
   border-bottom: 1px solid var(--core-color-border-subtle);
 }
 .cds-app-body { display: flex; flex: 1; min-height: 0; align-items: stretch; }
-.cds-app-sidebar {
+.cds-app-shell-sidebar {
   flex-shrink: 0;
   background: var(--core-card-bg);
   border-right: 1px solid var(--core-color-border-subtle);

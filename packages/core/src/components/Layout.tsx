@@ -22,7 +22,7 @@ export function AppShell({
     <div className="cds-app-shell">
       {header && <header className="cds-app-header">{header}</header>}
       <div className="cds-app-body">
-        {sidebar && <aside className="cds-app-sidebar">{sidebar}</aside>}
+        {sidebar && <aside className="cds-app-shell-sidebar">{sidebar}</aside>}
         <main className="cds-app-main">{children}</main>
       </div>
       {footer && <footer className="cds-app-footer">{footer}</footer>}

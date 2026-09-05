@@ -29,5 +29,27 @@
   "badge.radius": "{radius.full}",
   "focusRing.color": "{color.focus.ring}",
   "focusRing.width": "{border.width.focus}",
-  "focusRing.offset": "2px"
+  "focusRing.offset": "2px",
+
+  "sidebar.radius": "{radius.lg}",
+  "sidebar.item.radius": "{radius.md}",
+  "sidebar.item.text": "{color.text.secondary}",
+  "sidebar.item.activeBg": "{color.action.primary.tintBg}",
+  "sidebar.item.activeText": "{color.action.primary.tintText}",
+  "sidebar.item.hoverBg": "{color.surface.sunken}",
+  "sidebar.icon.bg": "{color.surface.sunken}",
+  "sidebar.icon.activeBg": "{color.surface.default}",
+  "sidebar.icon.radius": "{radius.md}",
+
+  "stepper.marker.size": "28px",
+  "stepper.marker.radius": "{radius.full}",
+  "stepper.marker.upcomingBg": "{color.surface.sunken}",
+  "stepper.marker.upcomingText": "{color.text.tertiary}",
+  "stepper.marker.currentBg": "{color.action.primary.bg}",
+  "stepper.marker.currentText": "{color.action.primary.text}",
+  "stepper.marker.completeBg": "{color.status.success.text}",
+  "stepper.marker.completeText": "{color.neutral.0}",
+  "stepper.connector.color": "{color.border.default}",
+  "stepper.connector.completeColor": "{color.status.success.text}",
+  "stepper.title.currentColor": "{color.action.primary.bg}"
 }
