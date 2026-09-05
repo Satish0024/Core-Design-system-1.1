@@ -21,30 +21,83 @@ export function Table<T extends { id: string | number }>({ columns, rows, densit
 }
 
 export interface SortableColumn<T> extends Column<T> { sortable?: boolean; sortValue?: (row: T) => string | number; }
-export function DataTable<T extends { id: string | number }>({ columns, rows, pageSize = 5 }: { columns: SortableColumn<T>[]; rows: T[]; pageSize?: number }) {
+export interface TableFilterDef { key: string; label: string; options: Array<{ value: string; label: string }> }
+
+export function DataTable<T extends { id: string | number }>({
+  columns, rows, pageSize = 5, searchable = false, searchPlaceholder = "Search…", filters,
+}: {
+  columns: SortableColumn<T>[]; rows: T[]; pageSize?: number;
+  searchable?: boolean; searchPlaceholder?: string; filters?: TableFilterDef[];
+}) {
   const [sort, setSort] = useState<{ key: string; dir: 1 | -1 } | null>(null);
   const [page, setPage] = useState(1);
+  const [query, setQuery] = useState("");
+  const [filterValues, setFilterValues] = useState<Record<string, string>>({});
+
+  const filtered = useMemo(() => {
+    let result = rows;
+    if (query.trim()) {
+      const q = query.trim().toLowerCase();
+      result = result.filter((row) =>
+        columns.some((c) => String((row as any)[c.key] ?? "").toLowerCase().includes(q))
+      );
+    }
+    for (const [key, value] of Object.entries(filterValues)) {
+      if (!value) continue;
+      result = result.filter((row) => String((row as any)[key]) === value);
+    }
+    return result;
+  }, [rows, query, filterValues, columns]);
 
   const sorted = useMemo(() => {
-    if (!sort) return rows;
+    if (!sort) return filtered;
     const col = columns.find((c) => c.key === sort.key);
-    if (!col) return rows;
+    if (!col) return filtered;
     const getVal = col.sortValue ?? ((r: T) => (r as any)[col.key]);
-    return [...rows].sort((a, b) => {
+    return [...filtered].sort((a, b) => {
       const av = getVal(a), bv = getVal(b);
       return av > bv ? sort.dir : av < bv ? -sort.dir : 0;
     });
-  }, [rows, sort, columns]);
+  }, [filtered, sort, columns]);
 
   const pageCount = Math.max(1, Math.ceil(sorted.length / pageSize));
-  const pageRows = sorted.slice((page - 1) * pageSize, page * pageSize);
+  const page_ = Math.min(page, pageCount);
+  const pageRows = sorted.slice((page_ - 1) * pageSize, page_ * pageSize);
 
   const toggleSort = (key: string) => {
     setSort((prev) => (prev?.key === key ? { key, dir: prev.dir === 1 ? -1 : 1 } : { key, dir: 1 }));
   };
 
+  const hasToolbar = searchable || (filters && filters.length > 0);
+
   return (
     <div>
+      {hasToolbar && (
+        <div className="cds-table-toolbar">
+          {searchable && (
+            <input
+              className="cds-input cds-table-search"
+              type="search"
+              placeholder={searchPlaceholder}
+              value={query}
+              onChange={(e) => { setQuery(e.target.value); setPage(1); }}
+              aria-label="Search table"
+            />
+          )}
+          {filters?.map((f) => (
+            <select
+              key={f.key}
+              className="cds-select cds-table-filter"
+              aria-label={f.label}
+              value={filterValues[f.key] ?? ""}
+              onChange={(e) => { setFilterValues((prev) => ({ ...prev, [f.key]: e.target.value })); setPage(1); }}
+            >
+              <option value="">{f.label}: All</option>
+              {f.options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+            </select>
+          ))}
+        </div>
+      )}
       <div className="cds-table-wrap">
         <table className="cds-table">
           <thead>
@@ -62,7 +115,9 @@ export function DataTable<T extends { id: string | number }>({ columns, rows, pa
             </tr>
           </thead>
           <tbody>
-            {pageRows.map((row) => (
+            {pageRows.length === 0 ? (
+              <tr><td colSpan={columns.length} className="cds-table-empty">No results match your search or filters.</td></tr>
+            ) : pageRows.map((row) => (
               <tr key={row.id}>
                 {columns.map((c) => <td key={c.key}>{c.render ? c.render(row) : (row as any)[c.key]}</td>)}
               </tr>
@@ -71,10 +126,10 @@ export function DataTable<T extends { id: string | number }>({ columns, rows, pa
         </table>
       </div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 12, fontSize: 13, color: "var(--core-color-text-secondary)" }}>
-        <span>Page {page} of {pageCount} — {sorted.length} rows</span>
+        <span>Page {page_} of {pageCount} — {sorted.length} rows</span>
         <div className="cds-pagination">
-          <button className="cds-page-btn" onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page <= 1}>‹ Prev</button>
-          <button className="cds-page-btn" onClick={() => setPage((p) => Math.min(pageCount, p + 1))} disabled={page >= pageCount}>Next ›</button>
+          <button className="cds-page-btn" onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page_ <= 1}>‹ Prev</button>
+          <button className="cds-page-btn" onClick={() => setPage((p) => Math.min(pageCount, p + 1))} disabled={page_ >= pageCount}>Next ›</button>
         </div>
       </div>
     </div>

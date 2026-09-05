@@ -3,11 +3,15 @@ import { Preview, CodeBlock } from "../Preview";
 import { Button } from "../../../../packages/core/src/components/Button";
 import { Modal, ConfirmDialog, Drawer, Tooltip, Popover, DropdownMenu } from "../../../../packages/core/src/components/Overlays";
 import { HoverCard } from "../../../../packages/core/src/components/HoverCard";
+import { Field, Input } from "../../../../packages/core/src/components/Field";
+import { Select } from "../../../../packages/core/src/components/FormControls";
+import { DescriptionList } from "../../../../packages/core/src/components/Primitives";
 
 export default function OverlaysPage() {
   const [modal, setModal] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [drawer, setDrawer] = useState(false);
+  const [slideover, setSlideover] = useState(false);
   const [showBalances, setShowBalances] = useState(true);
   const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
 
@@ -50,6 +54,46 @@ export default function OverlaysPage() {
       </div>
       <Drawer open={drawer} onClose={() => setDrawer(false)} title="Filter transactions">
         <p style={{ fontSize: 14, color: "var(--core-color-text-secondary)" }}>Filter controls would go here.</p>
+      </Drawer>
+
+      <h2 className="site-section-title" id="slideover">Slideover (form panel)</h2>
+      <p className="site-section-sub">
+        The same <code>Drawer</code> component with two extra slots: <code>actions</code> (Cancel/Save inline
+        with the title) and <code>aside</code> (a summary panel alongside the form) — the pattern used for
+        "Add Allocation"-style transaction forms.
+      </p>
+      <div className="site-panel site-panel--flush">
+        <Preview>
+          <Button onClick={() => setSlideover(true)}>Open "Add Allocation"</Button>
+        </Preview>
+      </div>
+      <Drawer
+        open={slideover}
+        onClose={() => setSlideover(false)}
+        title="Add Allocation"
+        width={520}
+        actions={<>
+          <Button variant="secondary" size="sm" onClick={() => setSlideover(false)}>Cancel</Button>
+          <Button size="sm" onClick={() => setSlideover(false)}>Save</Button>
+        </>}
+        aside={
+          <DescriptionList
+            orientation="inline"
+            items={[
+              { term: "Requested amount", value: "$0.00" },
+              { term: "Tax deduction", value: "$0.00" },
+              { term: "Withdrawal fee", value: "0%" },
+              { term: "Federal tax", value: "20%" },
+              { term: "Gross amount", value: "$0.00" },
+            ]}
+          />
+        }
+      >
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          <Field label="Recipient name">{(p) => <Input {...p} placeholder="e.g. Taylor Hale" />}</Field>
+          <Field label="Distribution mode">{(p) => <Select {...p} options={[{ value: "", label: "Select" }, { value: "lump", label: "Lump sum" }, { value: "installments", label: "Installments" }]} />}</Field>
+          <Field label="Withdrawal amount">{(p) => <Input {...p} placeholder="$0.00" />}</Field>
+        </div>
       </Drawer>
 
       <h2 className="site-section-title" id="dropdown-menu">Dropdown menu</h2>

@@ -45,13 +45,42 @@ export function ConfirmDialog({ open, onClose, onConfirm, title, description, da
   );
 }
 
-export function Drawer({ open, onClose, title, children, side = "right", width = 360 }: { open: boolean; onClose: () => void; title: string; children?: React.ReactNode; side?: "left" | "right"; width?: number }) {
+export interface DrawerProps {
+  open: boolean;
+  onClose: () => void;
+  title: string;
+  children?: React.ReactNode;
+  side?: "left" | "right";
+  width?: number;
+  /** Header action buttons (e.g. Cancel + Save) — renders inline with the title, before the close button. */
+  actions?: React.ReactNode;
+  /** Optional side panel (e.g. a fee/summary breakdown) rendered alongside the main content, like a Slideover. */
+  aside?: React.ReactNode;
+}
+
+/**
+ * Drawer / Slideover — a right- (or left-) anchored panel. The same component covers both the
+ * simple "Drawer" case (title + body) and the richer "Slideover" pattern (title + header actions +
+ * close button + an optional side-by-side summary panel) via the `actions`/`aside` props.
+ */
+export function Drawer({ open, onClose, title, children, side = "right", width = 360, actions, aside }: DrawerProps) {
   if (!open) return null;
   return (
     <div className="cds-overlay-scrim" onClick={onClose} style={{ display: "flex", justifyContent: side === "right" ? "flex-end" : "flex-start" }}>
       <div className="cds-drawer" role="dialog" aria-modal="true" aria-label={title} style={{ width, maxWidth: "90vw" }} onClick={(e) => e.stopPropagation()}>
-        <h2 className="cds-modal-title">{title}</h2>
-        {children}
+        <div className="cds-drawer-header">
+          <h2 className="cds-modal-title" style={{ margin: 0 }}>{title}</h2>
+          <div className="cds-drawer-header-actions">
+            {actions}
+            <button type="button" className="cds-drawer-close" aria-label="Close" onClick={onClose}>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1L11 11M11 1L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+        <div className={aside ? "cds-drawer-body cds-drawer-body--split" : "cds-drawer-body"}>
+          <div className="cds-drawer-main">{children}</div>
+          {aside && <div className="cds-drawer-aside">{aside}</div>}
+        </div>
       </div>
     </div>
   );

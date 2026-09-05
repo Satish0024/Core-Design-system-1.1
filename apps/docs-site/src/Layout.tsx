@@ -94,6 +94,7 @@ const nav = [
       { to: "/components/overlays#modal", label: "Modal" },
       { to: "/components/overlays#confirm-dialog", label: "Confirmation Dialog" },
       { to: "/components/overlays#drawer", label: "Drawer" },
+      { to: "/components/overlays#slideover", label: "Slideover" },
       { to: "/components/overlays#dropdown-menu", label: "Dropdown Menu" },
       { to: "/components/overlays#tooltip", label: "Tooltip" },
       { to: "/components/overlays#popover", label: "Popover" },

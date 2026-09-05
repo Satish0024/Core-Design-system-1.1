@@ -2,26 +2,38 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Preview } from "../Preview";
 import { Button } from "../../../../packages/core/src/components/Button";
-import { Card, Badge, Alert } from "../../../../packages/core/src/components/Misc";
+import { Card, Badge } from "../../../../packages/core/src/components/Misc";
 
 export default function Home() {
   return (
     <div>
-      <div style={{ margin: "-40px -32px 40px" }} className="hero">
-        <div className="hero-eyebrow">White-label · Accessible · Token-driven</div>
-        <h1>One system. Every client brand.</h1>
-        <p>
-          CORE is the design foundation for the participant and admin portals — a token-driven,
-          Bootstrap-grid-based system that any client theme can skin without forking a single component.
-        </p>
-        <div className="hero-actions">
-          <Link className="btn-hero primary" to="/foundations/color">Explore Foundations →</Link>
-          <Link className="btn-hero ghost" to="/components/actions">Browse Components</Link>
+      <section className="hero" aria-labelledby="hero-heading">
+        <img
+          className="hero-art"
+          src={`${import.meta.env.BASE_URL}hero-core.jpg`}
+          alt=""
+          aria-hidden="true"
+        />
+        <div className="hero-copy">
+          <p className="hero-eyebrow">Build · Branded · Accessible</p>
+          <h1 id="hero-heading">Design once. Scale everywhere.</h1>
+          <p>
+            A flexible, token-driven design system to help every client brand ship
+            consistent, accessible and beautiful experiences.
+          </p>
+          <div className="hero-actions">
+            <Link className="btn-hero primary" to="/components/actions">
+              Explore Components →
+            </Link>
+            <Link className="btn-hero ghost" to="/foundations/color">
+              View Foundations
+            </Link>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div className="stat-cards" style={{ padding: "0 0 40px" }}>
-        <div className="stat-card"><div className="num">6</div><div className="lbl">Component groups</div></div>
+      <div className="stat-cards">
+        <div className="stat-card"><div className="num">50</div><div className="lbl">Components ready</div></div>
         <div className="stat-card"><div className="num">3</div><div className="lbl">Token tiers</div></div>
         <div className="stat-card"><div className="num">2</div><div className="lbl">Client themes proven</div></div>
         <div className="stat-card"><div className="num">AA</div><div className="lbl">WCAG 2.2 target</div></div>

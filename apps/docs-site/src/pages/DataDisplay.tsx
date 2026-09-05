@@ -82,12 +82,26 @@ export default function DataDisplay() {
         </div>
       </div>
 
-      <h2 className="site-section-title" id="data-table">Data Table (sortable, paginated)</h2>
-      <p className="site-section-sub">Click a column header to sort. Extends Table with client-side sort + pagination for larger lists.</p>
+      <h2 className="site-section-title" id="data-table">Data Table (sortable, filterable, paginated)</h2>
+      <p className="site-section-sub">Click a column header to sort, type to search, or pick a status filter — all client-side, combined together.</p>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
           <DataTable
             pageSize={4}
+            searchable
+            searchPlaceholder="Search transactions…"
+            filters={[
+              { key: "status", label: "Status", options: [
+                { value: "success", label: "Posted" },
+                { value: "warning", label: "Pending" },
+                { value: "danger", label: "Failed" },
+              ] },
+              { key: "type", label: "Type", options: [
+                { value: "Contribution", label: "Contribution" },
+                { value: "Dividend", label: "Dividend" },
+                { value: "Fee", label: "Fee" },
+              ] },
+            ]}
             columns={[
               { key: "date", header: "Date", sortable: true },
               { key: "type", header: "Type", sortable: true },

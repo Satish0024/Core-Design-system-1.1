@@ -23,7 +23,7 @@ export function Card({ className = "", style, variant = "default", onClick, chil
   );
 }
 
-export type BadgeTone = "neutral" | "success" | "warning" | "danger" | "info";
+export type BadgeTone = "neutral" | "success" | "warning" | "danger" | "info" | "secondary" | "tertiary";
 export type BadgeStyle = "soft" | "outline" | "solid";
 export type BadgeSize = "sm" | "md";
 export function Badge({ tone = "neutral", variant = "soft", size = "md", children }: { tone?: BadgeTone; variant?: BadgeStyle; size?: BadgeSize; children: React.ReactNode }) {

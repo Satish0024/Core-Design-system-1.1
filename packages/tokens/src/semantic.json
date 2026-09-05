@@ -46,7 +46,19 @@
     "color.categorical.2": "{color.accent.plum.500}",
     "color.categorical.3": "{color.accent.ocean.500}",
     "color.categorical.4": "{color.accent.teal.500}",
-    "color.categorical.5": "{color.accent.amber.500}"
+    "color.categorical.5": "{color.accent.amber.500}",
+    "color.palette.secondary.solidBg": "{color.secondary.600}",
+    "color.palette.secondary.solidBgHover": "{color.secondary.700}",
+    "color.palette.secondary.solidText": "{color.neutral.0}",
+    "color.palette.secondary.tintBg": "{color.secondary.50}",
+    "color.palette.secondary.text": "{color.secondary.700}",
+    "color.palette.secondary.border": "{color.secondary.300}",
+    "color.palette.tertiary.solidBg": "{color.tertiary.600}",
+    "color.palette.tertiary.solidBgHover": "{color.tertiary.700}",
+    "color.palette.tertiary.solidText": "{color.neutral.0}",
+    "color.palette.tertiary.tintBg": "{color.tertiary.50}",
+    "color.palette.tertiary.text": "{color.tertiary.700}",
+    "color.palette.tertiary.border": "{color.tertiary.300}"
   },
   "dark": {
     "color.bg.page": "{color.neutral.950}",
@@ -95,6 +107,18 @@
     "color.categorical.2": "{color.accent.plum.500}",
     "color.categorical.3": "{color.accent.ocean.500}",
     "color.categorical.4": "{color.accent.teal.500}",
-    "color.categorical.5": "{color.accent.amber.500}"
+    "color.categorical.5": "{color.accent.amber.500}",
+    "color.palette.secondary.solidBg": "{color.secondary.500}",
+    "color.palette.secondary.solidBgHover": "{color.secondary.400}",
+    "color.palette.secondary.solidText": "{color.neutral.950}",
+    "color.palette.secondary.tintBg": "{color.secondary.900}",
+    "color.palette.secondary.text": "{color.secondary.300}",
+    "color.palette.secondary.border": "{color.secondary.700}",
+    "color.palette.tertiary.solidBg": "{color.tertiary.500}",
+    "color.palette.tertiary.solidBgHover": "{color.tertiary.400}",
+    "color.palette.tertiary.solidText": "{color.neutral.950}",
+    "color.palette.tertiary.tintBg": "{color.tertiary.900}",
+    "color.palette.tertiary.text": "{color.tertiary.300}",
+    "color.palette.tertiary.border": "{color.tertiary.700}"
   }
 }
