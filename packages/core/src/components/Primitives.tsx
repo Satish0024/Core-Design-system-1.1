@@ -45,3 +45,54 @@ export function Collapsible({ trigger, children, defaultOpen = false }: { trigge
     </div>
   );
 }
+
+export type IconSize = "sm" | "md" | "lg";
+/**
+ * Wraps a Font Awesome class name (e.g. "fa-solid fa-user") with CORE's icon
+ * sizing tokens and, optionally, interactive hover/focus affordance for a
+ * bare clickable icon (prefer IconButton when it needs a click handler).
+ */
+export function Icon({ name, size = "md", label, interactive = false, className = "", ...rest }: { name: string; size?: IconSize; label?: string; interactive?: boolean; className?: string } & React.HTMLAttributes<HTMLSpanElement>) {
+  return (
+    <span
+      className={`cds-icon cds-icon--${size} ${interactive ? "cds-icon--interactive" : ""} ${className}`}
+      role={label ? "img" : "presentation"}
+      aria-label={label}
+      aria-hidden={label ? undefined : true}
+      tabIndex={interactive ? 0 : undefined}
+      {...rest}
+    >
+      <i className={name} aria-hidden="true" />
+    </span>
+  );
+}
+
+export function Kbd({ children }: { children: React.ReactNode }) {
+  return <kbd className="cds-kbd">{children}</kbd>;
+}
+
+export function AspectRatio({ ratio = 16 / 9, children }: { ratio?: number; children: React.ReactNode }) {
+  return (
+    <div className="cds-aspect-ratio" style={{ paddingBottom: `${100 / ratio}%` }}>
+      {children}
+    </div>
+  );
+}
+
+export interface DescriptionItem { term: string; value: React.ReactNode; }
+/**
+ * Label/value pairs — profile details, plan summaries, review screens.
+ * Semantic <dl>/<dt>/<dd>, so a screen reader announces each pair as a unit.
+ */
+export function DescriptionList({ items, orientation = "stacked", columns = 1 }: { items: DescriptionItem[]; orientation?: "stacked" | "inline"; columns?: 1 | 2 | 3 }) {
+  return (
+    <dl className={`cds-description-list cds-description-list--${orientation}`} style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
+      {items.map((item, i) => (
+        <div className="cds-description-item" key={i}>
+          <dt className="cds-description-term">{item.term}</dt>
+          <dd className="cds-description-value">{item.value}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}

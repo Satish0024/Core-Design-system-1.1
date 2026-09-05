@@ -18,7 +18,7 @@ export function Field({ label, hint, error, required, children }: FieldProps) {
     <div className="cds-field">
       <label className="cds-label" htmlFor={id}>
         {label}
-        {required && <span aria-hidden="true"> *</span>}
+        {required && <span className="cds-required-mark" aria-hidden="true"> *</span>}
       </label>
       {children({
         id,
@@ -36,9 +36,33 @@ export function Field({ label, hint, error, required, children }: FieldProps) {
   );
 }
 
-export const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
-  ({ className = "", ...rest }, ref) => (
-    <input ref={ref} className={`cds-input ${className}`} {...rest} />
+export type FieldVisualStyle = "default" | "solid" | "flush";
+
+export const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement> & { variant?: FieldVisualStyle }>(
+  ({ className = "", variant = "default", ...rest }, ref) => (
+    <input ref={ref} className={`cds-input cds-field-style--${variant} ${className}`} {...rest} />
   )
 );
 Input.displayName = "Input";
+
+export interface InputWithIconProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  leadingIcon?: React.ReactNode;
+  trailingIcon?: React.ReactNode;
+}
+/** Input with a first-class leading/trailing icon slot (e.g. a search or currency icon). */
+export const InputWithIcon = React.forwardRef<HTMLInputElement, InputWithIconProps>(
+  ({ className = "", leadingIcon, trailingIcon, ...rest }, ref) => (
+    <div className="cds-input-affix-wrap">
+      {leadingIcon && <span className="cds-input-icon cds-input-icon--leading" aria-hidden="true">{leadingIcon}</span>}
+      <input
+        ref={ref}
+        className={`cds-input ${className}`}
+        data-has-leading={!!leadingIcon}
+        data-has-trailing={!!trailingIcon}
+        {...rest}
+      />
+      {trailingIcon && <span className="cds-input-icon cds-input-icon--trailing" aria-hidden="true">{trailingIcon}</span>}
+    </div>
+  )
+);
+InputWithIcon.displayName = "InputWithIcon";

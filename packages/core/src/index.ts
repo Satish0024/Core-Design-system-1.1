@@ -12,4 +12,5 @@ export * from "./components/HoverCard";
 export * from "./components/Combobox";
 export * from "./components/Calendar";
 export * from "./components/Attachment";
+export * from "./components/ToastManager";
 import "./styles/components.css";

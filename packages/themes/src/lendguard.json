@@ -1,12 +1,19 @@
 {
   "id": "lendguard",
   "label": "LendGuard (dummy client)",
-  "meta": { "logoText": "LendGuard", "density": "comfortable", "radiusScale": "soft" },
+  "meta": {
+    "logoText": "LendGuard",
+    "density": "comfortable",
+    "radiusScale": "soft",
+    "logo": "/brand/lendguard/logo-lockup-light.svg",
+    "logoOnDark": "/brand/lendguard/logo-lockup-dark.svg",
+    "logoSource": "Pulled from the real LendGuard app (Satish0024/S_PPT, design-system branch) — color and logo only, per instruction. No layout, component, or CSS from that repo was referenced."
+  },
   "overrides": {
-    "color.brand.50": "#EAF3EE", "color.brand.100": "#CDE4D6", "color.brand.200": "#9FCBAF",
-    "color.brand.300": "#6EAF85", "color.brand.400": "#489568", "color.brand.500": "#2C7A4F",
-    "color.brand.600": "#20613D", "color.brand.700": "#194C31", "color.brand.800": "#143C27",
-    "color.brand.900": "#0F2D1D", "color.brand.950": "#091D13",
+    "color.brand.50": "#F0F6FA", "color.brand.100": "#DCEBF3", "color.brand.200": "#B3D4E5",
+    "color.brand.300": "#86BAD6", "color.brand.400": "#4998C1", "color.brand.500": "#1B7EB2",
+    "color.brand.600": "#0270A9", "color.brand.700": "#025C8B", "color.brand.800": "#014A70",
+    "color.brand.900": "#013854", "color.brand.950": "#012639",
     "font.family.base": "'Source Sans 3', -apple-system, 'Segoe UI', sans-serif",
     "radius.sm": "10px", "radius.md": "14px", "radius.lg": "18px", "radius.xl": "22px"
   }

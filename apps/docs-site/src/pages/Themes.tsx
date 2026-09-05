@@ -4,9 +4,14 @@ import { Card, Badge } from "../../../../packages/core/src/components/Misc";
 import { Field, Input } from "../../../../packages/core/src/components/Field";
 
 const themes = [
-  { id: "core", label: "CORE", note: "Reference theme — default brand, default radius, comfortable density." },
-  { id: "lendguard", label: "LendGuard", note: "Dummy client — green brand, soft/rounded radius, Source Sans typeface." },
-  { id: "clientb", label: "Northbridge", note: "Dummy client — blue brand, sharp radius, IBM Plex typeface, compact density." },
+  { id: "core", label: "CORE", note: "Reference theme — default brand, default radius, comfortable density.", logo: null },
+  {
+    id: "lendguard",
+    label: "LendGuard",
+    note: "Dummy client — real brand blue (#0270A9) and real logo, sourced from the LendGuard app's own design-system branch. Nothing else (layout, components, CSS) was referenced from that repo.",
+    logo: "/brand/lendguard/logo-lockup-light.svg",
+  },
+  { id: "clientb", label: "Northbridge", note: "Dummy client — blue brand, sharp radius, IBM Plex typeface, compact density.", logo: null },
 ];
 
 export default function Themes() {
@@ -24,6 +29,7 @@ export default function Themes() {
           <p className="site-section-sub">{t.note}</p>
           <div className="site-panel site-panel--flush">
             <div className="preview-surface" data-theme={t.id} data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
+              {t.logo && <img src={t.logo} alt={`${t.label} logo`} style={{ height: 28, marginRight: 8 }} />}
               <Button>Primary action</Button>
               <Button variant="secondary">Secondary</Button>
               <Badge tone="success">Active</Badge>
@@ -37,6 +43,17 @@ export default function Themes() {
           </div>
         </div>
       ))}
+
+      <h2 className="site-section-title">Provenance note</h2>
+      <div className="site-panel">
+        <p style={{ margin: 0, fontSize: 14, color: "var(--site-text-dim)", lineHeight: 1.7 }}>
+          LendGuard's brand color (<code>#0270A9</code>) and logo assets were pulled directly from the real
+          LendGuard app's own <code>design-system</code> branch (its brand is already defined there) — nothing
+          else from that codebase was used. CORE's components, tokens, layout, and CSS remain entirely
+          independent, per the project's own scope rule that CORE is never derived from an existing product's
+          visual design.
+        </p>
+      </div>
 
       <h2 className="site-section-title">What a theme may change</h2>
       <table className="spec-table">

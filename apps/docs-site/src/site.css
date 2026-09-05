@@ -1,7 +1,11 @@
 /* Docs site editorial shell — intentionally independent of CORE tokens.
    This is the "marketing/docs chrome" layer, not a CORE theme. */
 
-:root {
+/* Site chrome supports its own light/dark mode via [data-site-mode] on <html>,
+   independent of the CORE component preview theme (which uses [data-theme]/[data-mode]
+   on preview-surface wrappers). Defaults to dark. */
+:root,
+html[data-site-mode="dark"] {
   --site-bg: #0B0C10;
   --site-bg-elevated: #111219;
   --site-bg-hover: #181923;
@@ -12,6 +16,24 @@
   --site-accent: #7C6CF6;
   --site-accent-soft: #7C6CF622;
   --site-code-bg: #14151D;
+  --site-code-text: #C9CBE0;
+  --site-radius: 10px;
+  --site-font: 'Inter', -apple-system, sans-serif;
+  --site-mono: 'JetBrains Mono', monospace;
+}
+
+html[data-site-mode="light"] {
+  --site-bg: #FAFAFC;
+  --site-bg-elevated: #FFFFFF;
+  --site-bg-hover: #F1F1F6;
+  --site-border: #E3E3EC;
+  --site-text: #16161D;
+  --site-text-dim: #55566B;
+  --site-text-faint: #85869C;
+  --site-accent: #6952E2;
+  --site-accent-soft: #6952E220;
+  --site-code-bg: #F1F1F6;
+  --site-code-text: #33344A;
   --site-radius: 10px;
   --site-font: 'Inter', -apple-system, sans-serif;
   --site-mono: 'JetBrains Mono', monospace;
@@ -116,7 +138,7 @@ a { color: inherit; }
 
 pre.code-block {
   background: var(--site-code-bg); border: 1px solid var(--site-border); border-radius: 10px;
-  padding: 16px 18px; font-family: var(--site-mono); font-size: 12.5px; color: #C9CBE0;
+  padding: 16px 18px; font-family: var(--site-mono); font-size: 12.5px; color: var(--site-code-text);
   overflow-x: auto; margin: 0;
 }
 

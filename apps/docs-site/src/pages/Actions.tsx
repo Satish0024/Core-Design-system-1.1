@@ -1,12 +1,12 @@
 import React from "react";
 import { Preview, CodeBlock } from "../Preview";
-import { Button } from "../../../../packages/core/src/components/Button";
+import { Button, IconButton, Link } from "../../../../packages/core/src/components/Button";
 import { ButtonGroup } from "../../../../packages/core/src/components/Primitives";
 
 export default function Actions() {
   return (
     <div>
-      <h1 className="site-h1">Button</h1>
+      <h1 className="site-h1" id="button">Button</h1>
       <p className="site-lede">Primary / Secondary / Tertiary / Destructive hierarchy. Every variant shares focus, disabled, and loading behavior.</p>
 
       <h2 className="site-section-title">Variants</h2>
@@ -37,7 +37,28 @@ export default function Actions() {
         </Preview>
       </div>
 
-      <h2 className="site-section-title">Button Group</h2>
+      <h2 className="site-section-title" id="icon-button">Icon Button</h2>
+      <p className="site-section-sub">Square, icon-only — every instance requires an <code>aria-label</code> (enforced by the TypeScript prop, not just a convention).</p>
+      <div className="site-panel site-panel--flush">
+        <Preview>
+          <IconButton variant="secondary" size="sm" aria-label="Close"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1L11 11M11 1L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg></IconButton>
+          <IconButton variant="secondary" size="md" aria-label="Settings"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" strokeWidth="1.4"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg></IconButton>
+          <IconButton variant="primary" size="lg" aria-label="Add"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg></IconButton>
+          <IconButton variant="destructive" size="md" aria-label="Delete"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 4.5h10M6.5 4.5V3a1 1 0 011-1h1a1 1 0 011 1v1.5M4.5 4.5v8a1 1 0 001 1h5a1 1 0 001-1v-8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg></IconButton>
+        </Preview>
+      </div>
+
+      <h2 className="site-section-title" id="link">Link</h2>
+      <p className="site-section-sub">Inline text link — distinct from Tertiary button, which is used for a standalone action, not inline in a sentence.</p>
+      <div className="site-panel site-panel--flush">
+        <Preview>
+          <span style={{ fontSize: 14, color: "var(--core-color-text-primary)" }}>
+            Read our <Link href="#">plan disclosure documents</Link> before enrolling.
+          </span>
+        </Preview>
+      </div>
+
+      <h2 className="site-section-title" id="button-group">Button Group</h2>
       <p className="site-section-sub">Segmented actions that belong together — buttons merge borders into one control.</p>
       <div className="site-panel site-panel--flush">
         <Preview>

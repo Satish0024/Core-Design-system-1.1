@@ -1,8 +1,8 @@
 import React from "react";
 import { Preview, CodeBlock } from "../Preview";
 import { Card, Badge } from "../../../../packages/core/src/components/Misc";
-import { Table, DataTable, Avatar, Progress } from "../../../../packages/core/src/components/DataDisplay";
-import { Item } from "../../../../packages/core/src/components/Primitives";
+import { Table, DataTable, Avatar, AvatarGroup, Progress } from "../../../../packages/core/src/components/DataDisplay";
+import { Item, AspectRatio, DescriptionList } from "../../../../packages/core/src/components/Primitives";
 import { Button } from "../../../../packages/core/src/components/Button";
 
 const manyRows = [
@@ -28,34 +28,46 @@ export default function DataDisplay() {
       <h1 className="site-h1">Card, Badge, Table, Avatar &amp; Progress</h1>
       <p className="site-lede">The core containers and readouts for metrics, lists, and summaries across both portals.</p>
 
-      <h2 className="site-section-title">Card</h2>
+      <h2 className="site-section-title" id="card">Card</h2>
+      <p className="site-section-sub">Three variants: default (elevated), outlined (flat border, for dense layouts), and interactive (clickable, hover/focus states).</p>
       <div className="site-panel site-panel--flush">
         <Preview>
-          <Card style={{ minWidth: 240 }}>
-            <div style={{ fontSize: 13, color: "var(--core-color-text-secondary)" }}>Current balance</div>
-            <div style={{ fontSize: 28, fontWeight: 700, marginTop: 4 }}>$84,213.05</div>
-            <Badge tone="success">+2.4% this quarter</Badge>
+          <Card style={{ minWidth: 220 }}>
+            <div style={{ fontSize: 13, color: "var(--core-color-text-secondary)" }}>Default</div>
+            <div style={{ fontSize: 20, fontWeight: 700, marginTop: 4 }}>$84,213.05</div>
           </Card>
-          <Card style={{ minWidth: 240 }}>
-            <div style={{ fontSize: 13, color: "var(--core-color-text-secondary)" }}>Next contribution</div>
-            <div style={{ fontSize: 28, fontWeight: 700, marginTop: 4 }}>Oct 15</div>
-            <Badge tone="info">Scheduled</Badge>
+          <Card variant="outlined" style={{ minWidth: 220 }}>
+            <div style={{ fontSize: 13, color: "var(--core-color-text-secondary)" }}>Outlined</div>
+            <div style={{ fontSize: 20, fontWeight: 700, marginTop: 4 }}>Oct 15</div>
+          </Card>
+          <Card variant="interactive" style={{ minWidth: 220 }} onClick={() => {}}>
+            <div style={{ fontSize: 13, color: "var(--core-color-text-secondary)" }}>Interactive — click me</div>
+            <div style={{ fontSize: 20, fontWeight: 700, marginTop: 4 }}>Roth 401(k)</div>
           </Card>
         </Preview>
       </div>
 
-      <h2 className="site-section-title">Badge tones</h2>
+      <h2 className="site-section-title" id="badge">Badge</h2>
+      <p className="site-section-sub">5 tones × 3 styles (soft/outline/solid) × 2 sizes.</p>
       <div className="site-panel site-panel--flush">
-        <Preview>
-          <Badge tone="neutral">Neutral</Badge>
-          <Badge tone="success">Success</Badge>
-          <Badge tone="warning">Warning</Badge>
-          <Badge tone="danger">Danger</Badge>
-          <Badge tone="info">Info</Badge>
-        </Preview>
+        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch", gap: 12 }}>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {(["neutral", "success", "warning", "danger", "info"] as const).map((t) => <Badge key={t} tone={t} variant="soft">{t}</Badge>)}
+          </div>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {(["neutral", "success", "warning", "danger", "info"] as const).map((t) => <Badge key={t} tone={t} variant="outline">{t}</Badge>)}
+          </div>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {(["neutral", "success", "warning", "danger", "info"] as const).map((t) => <Badge key={t} tone={t} variant="solid">{t}</Badge>)}
+          </div>
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            <Badge tone="info" size="md">Medium</Badge>
+            <Badge tone="info" size="sm">Small</Badge>
+          </div>
+        </div>
       </div>
 
-      <h2 className="site-section-title">Table</h2>
+      <h2 className="site-section-title" id="table">Table</h2>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
           <Table
@@ -70,7 +82,7 @@ export default function DataDisplay() {
         </div>
       </div>
 
-      <h2 className="site-section-title">Data Table (sortable, paginated)</h2>
+      <h2 className="site-section-title" id="data-table">Data Table (sortable, paginated)</h2>
       <p className="site-section-sub">Click a column header to sort. Extends Table with client-side sort + pagination for larger lists.</p>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
@@ -87,7 +99,7 @@ export default function DataDisplay() {
         </div>
       </div>
 
-      <h2 className="site-section-title">Item (generic list row)</h2>
+      <h2 className="site-section-title" id="item">Item (generic list row)</h2>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
           <Item title="Roth 401(k)" description="62% of portfolio" action={<Button variant="secondary" size="sm">Manage</Button>} />
@@ -95,22 +107,77 @@ export default function DataDisplay() {
         </div>
       </div>
 
-      <h2 className="site-section-title">Avatar</h2>
+      <h2 className="site-section-title" id="description-list">Description List</h2>
+      <p className="site-section-sub">Label/value pairs — profile details, plan summaries, review screens. Semantic <code>&lt;dl&gt;/&lt;dt&gt;/&lt;dd&gt;</code>, announced as a unit by screen readers.</p>
+      <div className="site-panel site-panel--flush">
+        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
+          <div style={{ width: "100%" }}>
+            <div className="site-nav-title" style={{ padding: "0 0 8px" }}>Stacked, 2 columns</div>
+            <DescriptionList
+              columns={2}
+              items={[
+                { term: "Name", value: "Jordan Lee" },
+                { term: "Marital status", value: "Married" },
+                { term: "Date of birth", value: "Apr 8, 1994" },
+                { term: "SSN", value: "XXX-XX-4182" },
+              ]}
+            />
+          </div>
+        </div>
+        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", borderTop: "1px solid var(--core-color-border-subtle)" }}>
+          <div style={{ width: "100%", maxWidth: 320 }}>
+            <div className="site-nav-title" style={{ padding: "0 0 8px" }}>Inline (row-separated)</div>
+            <DescriptionList
+              orientation="inline"
+              items={[
+                { term: "Plan balance", value: "$12,840.00" },
+                { term: "Vested balance", value: "$9,620.00" },
+              ]}
+            />
+          </div>
+        </div>
+      </div>
+
+      <h2 className="site-section-title" id="avatar">Avatar</h2>
+      <p className="site-section-sub">Sizes, status indicator, and grouped/stacked avatars.</p>
       <div className="site-panel site-panel--flush">
         <Preview>
           <Avatar name="Jordan Lee" size="sm" />
           <Avatar name="Jordan Lee" size="md" />
           <Avatar name="Jordan Lee" size="lg" />
+          <Avatar name="Jordan Lee" size="lg" status="online" />
+          <Avatar name="Jordan Lee" size="lg" status="away" />
+          <Avatar name="Jordan Lee" size="lg" status="offline" />
+          <AvatarGroup avatars={[{ name: "Jordan Lee" }, { name: "Sam Park" }, { name: "Ada Osei" }, { name: "Lee Kim" }, { name: "Nia Brooks" }]} max={3} />
         </Preview>
       </div>
 
-      <h2 className="site-section-title">Progress</h2>
+      <h2 className="site-section-title" id="progress">Progress</h2>
+      <p className="site-section-sub">Determinate for a known percentage; indeterminate while duration is unknown (e.g. a submission in flight).</p>
       <div className="site-panel site-panel--flush">
         <Preview>
-          <div style={{ width: 280 }}>
+          <div style={{ width: 280, display: "flex", flexDirection: "column", gap: 20 }}>
             <Progress value={68} label="Retirement readiness — 68%" />
+            <Progress indeterminate label="Submitting your request…" />
           </div>
         </Preview>
+      </div>
+
+      <h2 className="site-section-title" id="aspect-ratio">Aspect Ratio</h2>
+      <p className="site-section-sub">Locks a media container to a ratio regardless of content size — for illustrations, video embeds, or document previews.</p>
+      <div className="site-panel site-panel--flush">
+        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
+          <div style={{ width: 240 }}>
+            <AspectRatio ratio={16 / 9}>
+              <div style={{ background: "var(--core-color-surface-sunken)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: "var(--core-color-text-tertiary)", borderRadius: "var(--core-radius-md)" }}>16:9</div>
+            </AspectRatio>
+          </div>
+          <div style={{ width: 160 }}>
+            <AspectRatio ratio={1}>
+              <div style={{ background: "var(--core-color-surface-sunken)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: "var(--core-color-text-tertiary)", borderRadius: "var(--core-radius-md)" }}>1:1</div>
+            </AspectRatio>
+          </div>
+        </div>
       </div>
 
       <h2 className="site-section-title">Accessibility</h2>

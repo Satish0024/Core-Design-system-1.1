@@ -1,12 +1,33 @@
 import React, { useId } from "react";
 
-export function Card({ className = "", style, children }: { className?: string; style?: React.CSSProperties; children: React.ReactNode }) {
-  return <div className={`cds-card ${className}`} style={style}>{children}</div>;
+export type CardVariant = "default" | "outlined" | "interactive";
+export interface CardProps {
+  className?: string;
+  style?: React.CSSProperties;
+  variant?: CardVariant;
+  onClick?: () => void;
+  children: React.ReactNode;
+}
+export function Card({ className = "", style, variant = "default", onClick, children }: CardProps) {
+  const interactive = variant === "interactive" || !!onClick;
+  const Tag = interactive ? "button" : "div";
+  return (
+    <Tag
+      className={`cds-card cds-card--${variant} ${className}`}
+      style={style}
+      onClick={onClick}
+      type={interactive ? "button" : undefined}
+    >
+      {children}
+    </Tag>
+  );
 }
 
 export type BadgeTone = "neutral" | "success" | "warning" | "danger" | "info";
-export function Badge({ tone = "neutral", children }: { tone?: BadgeTone; children: React.ReactNode }) {
-  return <span className={`cds-badge cds-badge--${tone}`}>{children}</span>;
+export type BadgeStyle = "soft" | "outline" | "solid";
+export type BadgeSize = "sm" | "md";
+export function Badge({ tone = "neutral", variant = "soft", size = "md", children }: { tone?: BadgeTone; variant?: BadgeStyle; size?: BadgeSize; children: React.ReactNode }) {
+  return <span className={`cds-badge cds-badge--${tone} cds-badge-style--${variant} cds-badge-size--${size}`}>{children}</span>;
 }
 
 export type AlertTone = "success" | "warning" | "danger" | "info";

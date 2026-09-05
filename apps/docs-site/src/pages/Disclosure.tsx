@@ -1,14 +1,28 @@
 import React from "react";
 import { Preview, CodeBlock } from "../Preview";
 import { Accordion, Separator, Skeleton } from "../../../../packages/core/src/components/Disclosure";
+import { Collapsible } from "../../../../packages/core/src/components/Primitives";
+import { Button } from "../../../../packages/core/src/components/Button";
 
 export default function DisclosurePage() {
   return (
     <div>
-      <h1 className="site-h1">Accordion, Separator &amp; Skeleton</h1>
+      <h1 className="site-h1">Accordion, Collapsible, Separator &amp; Skeleton</h1>
       <p className="site-lede">Progressive disclosure and loading placeholders — used for FAQ-style content and long lists of optional details.</p>
 
-      <h2 className="site-section-title">Accordion</h2>
+      <h2 className="site-section-title" id="collapsible">Collapsible</h2>
+      <p className="site-section-sub">The generic single-panel primitive Accordion is built on — use it directly for a one-off show/hide section.</p>
+      <div className="site-panel site-panel--flush">
+        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
+          <Collapsible trigger={(open, toggle) => <Button variant="tertiary" size="sm" onClick={toggle}>{open ? "Hide" : "Show"} advanced options {open ? "▲" : "▼"}</Button>}>
+            <div style={{ padding: "12px 0", fontSize: 14, color: "var(--core-color-text-secondary)" }}>
+              Advanced contribution options: catch-up contributions, after-tax contributions, in-plan Roth conversions.
+            </div>
+          </Collapsible>
+        </div>
+      </div>
+
+      <h2 className="site-section-title" id="accordion">Accordion</h2>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
           <div style={{ maxWidth: 480 }}>
@@ -24,7 +38,7 @@ export default function DisclosurePage() {
         </div>
       </div>
 
-      <h2 className="site-section-title">Separator</h2>
+      <h2 className="site-section-title" id="separator">Separator</h2>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
           <span style={{ fontSize: 14, color: "var(--core-color-text-primary)" }}>Section above</span>
@@ -33,7 +47,7 @@ export default function DisclosurePage() {
         </div>
       </div>
 
-      <h2 className="site-section-title">Skeleton (loading placeholder)</h2>
+      <h2 className="site-section-title" id="skeleton">Skeleton (loading placeholder)</h2>
       <div className="site-panel site-panel--flush">
         <Preview>
           <div style={{ display: "flex", flexDirection: "column", gap: 8, width: 240 }}>

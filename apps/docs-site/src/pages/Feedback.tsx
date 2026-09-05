@@ -4,6 +4,17 @@ import { Alert } from "../../../../packages/core/src/components/Misc";
 import { Toast, Spinner } from "../../../../packages/core/src/components/Overlays";
 import { Empty } from "../../../../packages/core/src/components/Primitives";
 import { Button } from "../../../../packages/core/src/components/Button";
+import { ToastProvider, useToast } from "../../../../packages/core/src/components/ToastManager";
+
+function ToastManagerDemo() {
+  const { push } = useToast();
+  return (
+    <Preview>
+      <Button onClick={() => push({ tone: "success", title: "Changes saved", description: "Auto-dismisses in 4s." })}>Trigger success toast</Button>
+      <Button variant="destructive" onClick={() => push({ tone: "danger", title: "Couldn't connect", description: "Retry in a moment." })}>Trigger error toast</Button>
+    </Preview>
+  );
+}
 
 export default function Feedback() {
   return (
@@ -11,7 +22,7 @@ export default function Feedback() {
       <h1 className="site-h1">Alert, Toast &amp; Loading</h1>
       <p className="site-lede">Inline, persistent feedback for page-level state; toasts for transient confirmation; spinners for in-progress work.</p>
 
-      <h2 className="site-section-title">Alert (persistent, page-level)</h2>
+      <h2 className="site-section-title" id="alert">Alert (persistent, page-level)</h2>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
           <Alert tone="success" title="Enrollment complete">You're contributing 6% starting next pay cycle.</Alert>
@@ -21,7 +32,7 @@ export default function Feedback() {
         </div>
       </div>
 
-      <h2 className="site-section-title">Toast (transient, corner notification)</h2>
+      <h2 className="site-section-title" id="toast">Toast (transient, corner notification)</h2>
       <p className="site-section-sub">Auto-dismisses after a few seconds. Same tone system as Alert, but for quick confirmations rather than page state.</p>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
@@ -30,7 +41,15 @@ export default function Feedback() {
         </div>
       </div>
 
-      <h2 className="site-section-title">Empty state</h2>
+      <h2 className="site-section-title" id="toast-manager">Toast manager (stacking + auto-dismiss)</h2>
+      <p className="site-section-sub">Wrap the app once in <code>&lt;ToastProvider&gt;</code>, then call <code>useToast().push(...)</code> anywhere — toasts stack bottom-right and auto-dismiss.</p>
+      <div className="site-panel site-panel--flush">
+        <ToastProvider>
+          <ToastManagerDemo />
+        </ToastProvider>
+      </div>
+
+      <h2 className="site-section-title" id="empty">Empty state</h2>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
           <Empty
@@ -41,7 +60,7 @@ export default function Feedback() {
         </div>
       </div>
 
-      <h2 className="site-section-title">Loading</h2>
+      <h2 className="site-section-title" id="spinner">Loading</h2>
       <div className="site-panel site-panel--flush">
         <Preview>
           <Spinner />

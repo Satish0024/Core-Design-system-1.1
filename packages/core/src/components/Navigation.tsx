@@ -1,36 +1,40 @@
 import React, { useState } from "react";
 
 export interface TabItem { id: string; label: string; content?: React.ReactNode; }
-export function Tabs({ items, defaultId }: { items: TabItem[]; defaultId?: string }) {
+export function Tabs({ items, defaultId, orientation = "horizontal" }: { items: TabItem[]; defaultId?: string; orientation?: "horizontal" | "vertical" }) {
   const [active, setActive] = useState(defaultId ?? items[0]?.id);
+  const vertical = orientation === "vertical";
   return (
-    <div>
-      <div className="cds-tabs" role="tablist">
+    <div className={vertical ? "cds-tabs-layout--vertical" : undefined}>
+      <div className={`cds-tabs ${vertical ? "cds-tabs--vertical" : ""}`} role="tablist" aria-orientation={orientation}>
         {items.map((t) => (
           <button
             key={t.id}
             role="tab"
             aria-selected={active === t.id}
-            className="cds-tab"
+            className={`cds-tab ${vertical ? "cds-tab--vertical" : ""}`}
             onClick={() => setActive(t.id)}
           >
             {t.label}
           </button>
         ))}
       </div>
-      <div role="tabpanel" style={{ paddingTop: 16 }}>
+      <div role="tabpanel" style={vertical ? { flex: 1, minWidth: 0 } : { paddingTop: 16 }}>
         {items.find((t) => t.id === active)?.content}
       </div>
     </div>
   );
 }
 
-export function Breadcrumb({ items }: { items: Array<{ label: string; href?: string }> }) {
+export type BreadcrumbSeparator = "slash" | "line" | "dot" | "none";
+const separatorGlyph: Record<BreadcrumbSeparator, string> = { slash: "/", line: "|", dot: "•", none: "" };
+
+export function Breadcrumb({ items, separator = "slash" }: { items: Array<{ label: string; href?: string }>; separator?: BreadcrumbSeparator }) {
   return (
-    <nav aria-label="Breadcrumb" className="cds-breadcrumb">
+    <nav aria-label="Breadcrumb" className={`cds-breadcrumb cds-breadcrumb--${separator}`}>
       {items.map((item, i) => (
         <React.Fragment key={item.label}>
-          {i > 0 && <span aria-hidden="true">/</span>}
+          {i > 0 && separator !== "none" && <span className="cds-breadcrumb-sep" aria-hidden="true">{separatorGlyph[separator]}</span>}
           {item.href && i < items.length - 1 ? (
             <a href={item.href}>{item.label}</a>
           ) : (
@@ -68,6 +72,29 @@ export function AppSidebar({ items }: { items: SidebarItem[] }) {
         </button>
       ))}
     </nav>
+  );
+}
+
+export interface StepDef { label: string; description?: string; }
+export function Stepper({ steps, currentIndex }: { steps: StepDef[]; currentIndex: number }) {
+  return (
+    <ol className="cds-stepper" aria-label="Progress">
+      {steps.map((step, i) => {
+        const state = i < currentIndex ? "complete" : i === currentIndex ? "current" : "upcoming";
+        return (
+          <li key={step.label} className={`cds-step cds-step--${state}`} aria-current={state === "current" ? "step" : undefined}>
+            <span className="cds-step-marker" aria-hidden="true">
+              {state === "complete" ? "✓" : i + 1}
+            </span>
+            <span className="cds-step-label">
+              <span className="cds-step-title">{step.label}</span>
+              {step.description && <span className="cds-step-desc">{step.description}</span>}
+            </span>
+            {i < steps.length - 1 && <span className="cds-step-connector" aria-hidden="true" />}
+          </li>
+        );
+      })}
+    </ol>
   );
 }
 

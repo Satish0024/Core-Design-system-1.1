@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from "react";
 
 export interface Column<T> { key: string; header: string; render?: (row: T) => React.ReactNode; }
-export function Table<T extends { id: string | number }>({ columns, rows, density = "comfortable" }: { columns: Column<T>[]; rows: T[]; density?: "comfortable" | "compact" }) {
+export function Table<T extends { id: string | number }>({ columns, rows, density = "comfortable", zebra = false }: { columns: Column<T>[]; rows: T[]; density?: "comfortable" | "compact"; zebra?: boolean }) {
   return (
     <div className="cds-table-wrap">
-      <table className="cds-table" data-density={density}>
+      <table className="cds-table" data-density={density} data-zebra={zebra}>
         <thead>
           <tr>{columns.map((c) => <th key={c.key} scope="col">{c.header}</th>)}</tr>
         </thead>
@@ -82,21 +82,47 @@ export function DataTable<T extends { id: string | number }>({ columns, rows, pa
 }
 
 export type AvatarSize = "sm" | "md" | "lg";
-export function Avatar({ name, src, size = "md" }: { name: string; src?: string; size?: AvatarSize }) {
+export type AvatarStatus = "online" | "away" | "offline";
+export function Avatar({ name, src, size = "md", status }: { name: string; src?: string; size?: AvatarSize; status?: AvatarStatus }) {
   const initials = name.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase();
   return (
-    <span className={`cds-avatar cds-avatar--${size}`} role="img" aria-label={name}>
-      {src ? <img src={src} alt="" /> : initials}
+    <span className="cds-avatar-wrap">
+      <span className={`cds-avatar cds-avatar--${size}`} role="img" aria-label={name}>
+        {src ? <img src={src} alt="" /> : initials}
+      </span>
+      {status && <span className={`cds-avatar-status cds-avatar-status--${status}`} aria-label={`Status: ${status}`} />}
     </span>
   );
 }
 
-export function Progress({ value, label }: { value: number; label?: string }) {
+export function AvatarGroup({ avatars, max = 4 }: { avatars: Array<{ name: string; src?: string }>; max?: number }) {
+  const shown = avatars.slice(0, max);
+  const overflow = avatars.length - shown.length;
+  return (
+    <span className="cds-avatar-group">
+      {shown.map((a, i) => (
+        <span className="cds-avatar-group-item" key={i}><Avatar name={a.name} src={a.src} size="sm" /></span>
+      ))}
+      {overflow > 0 && (
+        <span className="cds-avatar-group-item cds-avatar cds-avatar--sm" aria-label={`${overflow} more`}>+{overflow}</span>
+      )}
+    </span>
+  );
+}
+
+export function Progress({ value, label, indeterminate = false }: { value?: number; label?: string; indeterminate?: boolean }) {
   return (
     <div>
       {label && <div style={{ fontSize: 12, marginBottom: 4, color: "var(--core-color-text-secondary)" }}>{label}</div>}
-      <div className="cds-progress" role="progressbar" aria-valuenow={value} aria-valuemin={0} aria-valuemax={100}>
-        <div className="cds-progress-bar" style={{ width: `${Math.min(100, Math.max(0, value))}%` }} />
+      <div
+        className={`cds-progress ${indeterminate ? "cds-progress--indeterminate" : ""}`}
+        role="progressbar"
+        aria-valuenow={indeterminate ? undefined : value}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-busy={indeterminate || undefined}
+      >
+        <div className="cds-progress-bar" style={indeterminate ? undefined : { width: `${Math.min(100, Math.max(0, value ?? 0))}%` }} />
       </div>
     </div>
   );

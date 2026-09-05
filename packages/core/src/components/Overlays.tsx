@@ -45,11 +45,11 @@ export function ConfirmDialog({ open, onClose, onConfirm, title, description, da
   );
 }
 
-export function Drawer({ open, onClose, title, children }: { open: boolean; onClose: () => void; title: string; children?: React.ReactNode }) {
+export function Drawer({ open, onClose, title, children, side = "right", width = 360 }: { open: boolean; onClose: () => void; title: string; children?: React.ReactNode; side?: "left" | "right"; width?: number }) {
   if (!open) return null;
   return (
-    <div className="cds-overlay-scrim" onClick={onClose} style={{ display: "flex", justifyContent: "flex-end" }}>
-      <div className="cds-drawer" role="dialog" aria-modal="true" aria-label={title} onClick={(e) => e.stopPropagation()}>
+    <div className="cds-overlay-scrim" onClick={onClose} style={{ display: "flex", justifyContent: side === "right" ? "flex-end" : "flex-start" }}>
+      <div className="cds-drawer" role="dialog" aria-modal="true" aria-label={title} style={{ width, maxWidth: "90vw" }} onClick={(e) => e.stopPropagation()}>
         <h2 className="cds-modal-title">{title}</h2>
         {children}
       </div>
@@ -71,7 +71,72 @@ export function Tooltip({ label, children }: { label: string; children: React.Re
   );
 }
 
-export interface MenuItemDef { label: string; onSelect?: () => void; danger?: boolean; separatorAfter?: boolean; }
+export interface MenuItemDef {
+  label: string;
+  onSelect?: () => void;
+  danger?: boolean;
+  separatorAfter?: boolean;
+  type?: "item" | "checkbox" | "radio" | "submenu";
+  checked?: boolean;
+  onCheckedChange?: (v: boolean) => void;
+  items?: MenuItemDef[]; // for type "submenu"
+}
+
+function MenuItems({ items, onDone }: { items: MenuItemDef[]; onDone: () => void }) {
+  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+  return (
+    <>
+      {items.map((item) => (
+        <React.Fragment key={item.label}>
+          {item.type === "submenu" ? (
+            <div
+              className="cds-menu-submenu-trigger"
+              onMouseEnter={() => setOpenSubmenu(item.label)}
+              onMouseLeave={() => setOpenSubmenu(null)}
+            >
+              <button role="menuitem" aria-haspopup="menu" className="cds-menu-item">
+                {item.label} <span aria-hidden="true">›</span>
+              </button>
+              {openSubmenu === item.label && item.items && (
+                <div className="cds-menu cds-menu-submenu" role="menu">
+                  <MenuItems items={item.items} onDone={onDone} />
+                </div>
+              )}
+            </div>
+          ) : item.type === "checkbox" ? (
+            <button
+              role="menuitemcheckbox"
+              aria-checked={item.checked}
+              className="cds-menu-item cds-menu-item--check"
+              onClick={() => item.onCheckedChange?.(!item.checked)}
+            >
+              {item.label} <span className="cds-menu-item-check-mark" data-checked={item.checked}>✓</span>
+            </button>
+          ) : item.type === "radio" ? (
+            <button
+              role="menuitemradio"
+              aria-checked={item.checked}
+              className="cds-menu-item cds-menu-item--radio"
+              onClick={() => { item.onSelect?.(); onDone(); }}
+            >
+              {item.label} <span className="cds-menu-item-check-mark" data-checked={item.checked}>●</span>
+            </button>
+          ) : (
+            <button
+              role="menuitem"
+              className={`cds-menu-item ${item.danger ? "cds-menu-item--danger" : ""}`}
+              onClick={() => { item.onSelect?.(); onDone(); }}
+            >
+              {item.label}
+            </button>
+          )}
+          {item.separatorAfter && <hr className="cds-menu-separator" />}
+        </React.Fragment>
+      ))}
+    </>
+  );
+}
+
 export function DropdownMenu({ trigger, items }: { trigger: React.ReactElement; items: MenuItemDef[] }) {
   const [open, setOpen] = useState(false);
   return (
@@ -79,31 +144,28 @@ export function DropdownMenu({ trigger, items }: { trigger: React.ReactElement; 
       {React.cloneElement(trigger, { onClick: () => setOpen((o) => !o), "aria-haspopup": "menu", "aria-expanded": open })}
       {open && (
         <div className="cds-menu" role="menu" style={{ position: "absolute", top: "calc(100% + 6px)", right: 0, zIndex: 30 }} onMouseLeave={() => setOpen(false)}>
-          {items.map((item, i) => (
-            <React.Fragment key={item.label}>
-              <button
-                role="menuitem"
-                className={`cds-menu-item ${item.danger ? "cds-menu-item--danger" : ""}`}
-                onClick={() => { item.onSelect?.(); setOpen(false); }}
-              >
-                {item.label}
-              </button>
-              {item.separatorAfter && <hr className="cds-menu-separator" />}
-            </React.Fragment>
-          ))}
+          <MenuItems items={items} onDone={() => setOpen(false)} />
         </div>
       )}
     </span>
   );
 }
 
-export function Popover({ trigger, children }: { trigger: React.ReactElement; children: React.ReactNode }) {
+export type PopoverPlacement = "top" | "right" | "bottom" | "left";
+const popoverPlacementStyle: Record<PopoverPlacement, React.CSSProperties> = {
+  bottom: { top: "calc(100% + 8px)", left: 0 },
+  top: { bottom: "calc(100% + 8px)", left: 0 },
+  right: { left: "calc(100% + 8px)", top: 0 },
+  left: { right: "calc(100% + 8px)", top: 0 },
+};
+
+export function Popover({ trigger, children, placement = "bottom" }: { trigger: React.ReactElement; children: React.ReactNode; placement?: PopoverPlacement }) {
   const [open, setOpen] = useState(false);
   return (
     <span style={{ position: "relative", display: "inline-block" }}>
       {React.cloneElement(trigger, { onClick: () => setOpen((o) => !o) })}
       {open && (
-        <div className="cds-popover" style={{ position: "absolute", top: "calc(100% + 8px)", left: 0, zIndex: 30 }}>
+        <div className="cds-popover" style={{ position: "absolute", zIndex: 30, ...popoverPlacementStyle[placement] }}>
           {children}
         </div>
       )}
@@ -116,13 +178,19 @@ export function Spinner({ label = "Loading" }: { label?: string }) {
 }
 
 export type ToastTone = "success" | "danger" | "warning" | "info";
-export function Toast({ tone = "info", title, children }: { tone?: ToastTone; title: string; children?: React.ReactNode }) {
+export function Toast({ tone = "info", title, timestamp, onClose, children }: { tone?: ToastTone; title: string; timestamp?: string; onClose?: () => void; children?: React.ReactNode }) {
   return (
-    <div className={`cds-toast cds-toast--${tone}`} role="status">
-      <div>
-        <strong style={{ display: "block" }}>{title}</strong>
-        {children}
+    <div className={`cds-toast cds-toast--${tone}`} role={tone === "danger" ? "alert" : "status"}>
+      <div className="cds-toast-header">
+        <strong className="cds-toast-title">{title}</strong>
+        {timestamp && <span className="cds-toast-timestamp">{timestamp}</span>}
+        {onClose && (
+          <button type="button" className="cds-toast-close" aria-label="Dismiss notification" onClick={onClose}>
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 1L9 9M9 1L1 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+          </button>
+        )}
       </div>
+      {children && <div className="cds-toast-body">{children}</div>}
     </div>
   );
 }

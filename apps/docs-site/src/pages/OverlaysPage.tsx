@@ -8,13 +8,15 @@ export default function OverlaysPage() {
   const [modal, setModal] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [drawer, setDrawer] = useState(false);
+  const [showBalances, setShowBalances] = useState(true);
+  const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
 
   return (
     <div>
       <h1 className="site-h1">Modal, Drawer, Tooltip, Popover &amp; Confirmation</h1>
       <p className="site-lede">Overlays interrupt the current flow — used sparingly, always dismissible via Escape or an explicit action.</p>
 
-      <h2 className="site-section-title">Modal</h2>
+      <h2 className="site-section-title" id="modal">Modal</h2>
       <div className="site-panel site-panel--flush">
         <Preview>
           <Button onClick={() => setModal(true)}>Open modal</Button>
@@ -24,7 +26,7 @@ export default function OverlaysPage() {
         This will replace your current primary beneficiary on file.
       </Modal>
 
-      <h2 className="site-section-title">Confirmation dialog</h2>
+      <h2 className="site-section-title" id="confirm-dialog">Confirmation dialog</h2>
       <p className="site-section-sub">A specialized Modal for destructive or hard-to-reverse actions — always names the consequence, never just "Are you sure?"</p>
       <div className="site-panel site-panel--flush">
         <Preview>
@@ -40,7 +42,7 @@ export default function OverlaysPage() {
         danger
       />
 
-      <h2 className="site-section-title">Drawer</h2>
+      <h2 className="site-section-title" id="drawer">Drawer</h2>
       <div className="site-panel site-panel--flush">
         <Preview>
           <Button variant="secondary" onClick={() => setDrawer(true)}>Open filters</Button>
@@ -50,7 +52,7 @@ export default function OverlaysPage() {
         <p style={{ fontSize: 14, color: "var(--core-color-text-secondary)" }}>Filter controls would go here.</p>
       </Drawer>
 
-      <h2 className="site-section-title">Dropdown menu</h2>
+      <h2 className="site-section-title" id="dropdown-menu">Dropdown menu</h2>
       <div className="site-panel site-panel--flush">
         <Preview>
           <DropdownMenu
@@ -58,13 +60,23 @@ export default function OverlaysPage() {
             items={[
               { label: "View details" },
               { label: "Download statement", separatorAfter: true },
+              { label: "Show balances", type: "checkbox", checked: showBalances, onCheckedChange: setShowBalances },
+              {
+                label: "Sort by",
+                type: "submenu",
+                items: [
+                  { label: "Newest first", type: "radio", checked: sortOrder === "newest", onSelect: () => setSortOrder("newest") },
+                  { label: "Oldest first", type: "radio", checked: sortOrder === "oldest", onSelect: () => setSortOrder("oldest") },
+                ],
+                separatorAfter: true,
+              },
               { label: "Close account", danger: true },
             ]}
           />
         </Preview>
       </div>
 
-      <h2 className="site-section-title">Tooltip</h2>
+      <h2 className="site-section-title" id="tooltip">Tooltip</h2>
       <div className="site-panel site-panel--flush">
         <Preview>
           <Tooltip label="Your vested balance after employer match">
@@ -73,7 +85,7 @@ export default function OverlaysPage() {
         </Preview>
       </div>
 
-      <h2 className="site-section-title">Popover</h2>
+      <h2 className="site-section-title" id="popover">Popover</h2>
       <div className="site-panel site-panel--flush">
         <Preview>
           <Popover trigger={<Button variant="secondary">Account actions</Button>}>
@@ -85,8 +97,18 @@ export default function OverlaysPage() {
           </Popover>
         </Preview>
       </div>
+      <p className="site-section-sub">Placement — flips to whichever side fits (top/right/bottom/left):</p>
+      <div className="site-panel site-panel--flush">
+        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", padding: 60 }}>
+          {(["top", "right", "bottom", "left"] as const).map((pl) => (
+            <Popover key={pl} placement={pl} trigger={<Button variant="secondary" size="sm">{pl}</Button>}>
+              <div style={{ fontSize: 13, minWidth: 100 }}>Popover on {pl}</div>
+            </Popover>
+          ))}
+        </div>
+      </div>
 
-      <h2 className="site-section-title">Hover card</h2>
+      <h2 className="site-section-title" id="hover-card">Hover card</h2>
       <p className="site-section-sub">Richer than a Tooltip — for a preview of an entity (fund, account, person) without navigating away.</p>
       <div className="site-panel site-panel--flush">
         <Preview>
