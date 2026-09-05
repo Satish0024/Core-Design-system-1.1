@@ -4,6 +4,7 @@ import { Accordion, Separator, Skeleton } from "../../../../packages/core/src/co
 import { Collapsible } from "../../../../packages/core/src/components/Primitives";
 import { Button } from "../../../../packages/core/src/components/Button";
 import { Badge } from "../../../../packages/core/src/components/Misc";
+import { AutoAnatomy, AutoAnatomyLegend } from "../AutoAnatomy";
 
 export default function DisclosurePage() {
   return (
@@ -12,7 +13,25 @@ export default function DisclosurePage() {
       <p className="site-lede">Progressive disclosure and loading placeholders — used for FAQ-style content and long lists of optional details.</p>
 
       <h2 className="site-section-title" id="collapsible">Collapsible</h2>
-      <p className="site-section-sub">The generic single-panel primitive Accordion is built on — use it directly for a one-off show/hide section.</p>
+      <p className="site-section-sub">Anatomy — the generic single-panel primitive Accordion is built on — use it directly for a one-off show/hide section.</p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Trigger — any element, toggles open state", anchor: "top" },
+          { n: 2, label: "Panel — animates height, hidden when closed", anchor: "bottom" },
+        ]}>
+          <div style={{ width: 260 }}>
+            <Collapsible trigger={(open, toggle) => <Button variant="tertiary" size="sm" onClick={toggle}>{open ? "Hide" : "Show"} advanced options {open ? "▲" : "▼"}</Button>}>
+              <div style={{ padding: "12px 0", fontSize: 14, color: "var(--core-color-text-secondary)" }}>
+                Advanced contribution options: catch-up, after-tax, Roth conversions.
+              </div>
+            </Collapsible>
+          </div>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Trigger: any focusable element; owns aria-expanded/aria-controls", anchor: "top" },
+          { n: 2, label: "Panel: role=\"region\", height-animated open/close", anchor: "bottom" },
+        ]} />
+      </div>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
           <Collapsible trigger={(open, toggle) => <Button variant="tertiary" size="sm" onClick={toggle}>{open ? "Hide" : "Show"} advanced options {open ? "▲" : "▼"}</Button>}>
@@ -24,7 +43,29 @@ export default function DisclosurePage() {
       </div>
 
       <h2 className="site-section-title" id="accordion">Accordion</h2>
-      <p className="site-section-sub">Default (bordered) variant, with a disabled item — its trigger can't be opened and reads as such to a screen reader.</p>
+      <p className="site-section-sub">Anatomy — default (bordered) variant, with a disabled item — its trigger can't be opened and reads as such to a screen reader.</p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Trigger — full-width, 44px min height", anchor: "top" },
+          { n: 2, label: "Chevron — rotates 180° open/closed", anchor: "right" },
+          { n: 3, label: "Border — 1px, radius on outer corners only", anchor: "left" },
+        ]}>
+          <div style={{ width: 320 }}>
+            <Accordion
+              defaultOpenIds={["vesting"]}
+              items={[
+                { id: "vesting", title: "What is vesting?", content: "Vesting is the schedule by which you gain full ownership of employer contributions." },
+                { id: "loans", title: "Can I take a loan?", content: "Yes, up to 50% of your vested balance." },
+              ]}
+            />
+          </div>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Trigger: full-width button, 44px min height for touch target", anchor: "top" },
+          { n: 2, label: "Chevron: rotates 180° between closed/open, aria-hidden", anchor: "right" },
+          { n: 3, label: "Border: 1px, radius on the group's outer corners only", anchor: "left" },
+        ]} />
+      </div>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
           <div style={{ maxWidth: 480 }}>
@@ -75,6 +116,23 @@ export default function DisclosurePage() {
       </div>
 
       <h2 className="site-section-title" id="separator">Separator</h2>
+      <p className="site-section-sub">Anatomy — 1px hairline, carries structural meaning to assistive tech.</p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Thickness — 1px, border-color token", anchor: "center", offset: 50 },
+          { n: 2, label: "Full-bleed width of its container", anchor: "left" },
+        ]}>
+          <div style={{ width: 240 }}>
+            <span style={{ fontSize: 14, color: "var(--core-color-text-primary)" }}>Section above</span>
+            <Separator />
+            <span style={{ fontSize: 14, color: "var(--core-color-text-primary)" }}>Section below</span>
+          </div>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Thickness: 1px, color.border.subtle", anchor: "center" },
+          { n: 2, label: "Stretches full-bleed to its container's width", anchor: "left" },
+        ]} />
+      </div>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
           <span style={{ fontSize: 14, color: "var(--core-color-text-primary)" }}>Section above</span>
@@ -84,6 +142,23 @@ export default function DisclosurePage() {
       </div>
 
       <h2 className="site-section-title" id="skeleton">Skeleton (loading placeholder)</h2>
+      <p className="site-section-sub">Anatomy — shimmering block matching the shape of the content it stands in for.</p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Radius — matches the real content's shape", anchor: "top" },
+          { n: 2, label: "Shimmer — animated gradient sweep", anchor: "bottom" },
+        ]}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8, width: 200 }}>
+            <Skeleton height={14} width="60%" />
+            <Skeleton height={28} width="90%" />
+            <Skeleton height={14} width="40%" />
+          </div>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Radius: matches the real content it replaces (text vs. block)", anchor: "top" },
+          { n: 2, label: "Shimmer: looping gradient animation, aria-hidden", anchor: "bottom" },
+        ]} />
+      </div>
       <div className="site-panel site-panel--flush">
         <Preview>
           <div style={{ display: "flex", flexDirection: "column", gap: 8, width: 240 }}>
