@@ -90,24 +90,9 @@ export default function Color() {
       <p className="site-lede">
         <strong style={{ color: "var(--site-text)" }}>Primary is used throughout</strong> the product — every
         default button, link, and focus state. Secondary and Tertiary are real, distinct colors too, but used
-        sparingly, only in the specific cases listed below. The table covers 95% of cases; the numbered sections
-        after it explain the reasoning.
+        sparingly, only in the specific cases below. The sections that follow build up the reasoning; the quick
+        reference table after the full color scales covers 95% of cases in one lookup.
       </p>
-
-      <h2 className="site-section-title">Quick reference — what to use where</h2>
-      <div className="site-panel site-panel--flush">
-        <table className="quickref-table">
-          <thead><tr><th>If you're building this…</th><th>…use this color</th></tr></thead>
-          <tbody>
-            {quickRef.map((r) => (
-              <tr key={r.use}>
-                <td>{r.use}</td>
-                <td><span className="quickref-swatch" style={{ background: r.hex }} />{r.token} <span style={{ color: "var(--site-text-faint)", fontFamily: "var(--site-mono)", fontSize: 11 }}>{r.hex}</span></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
 
       <SectionTitle title="Primary — used throughout" />
       <p className="site-section-sub">
@@ -277,6 +262,21 @@ export default function Color() {
         <Ramp name="warning" scale={color.warning} />
         <Ramp name="danger" scale={color.danger} />
         <Ramp name="info" scale={color.info} />
+      </div>
+
+      <h2 className="site-section-title">Quick reference — what to use where</h2>
+      <div className="site-panel site-panel--flush">
+        <table className="quickref-table">
+          <thead><tr><th>If you're building this…</th><th>…use this color</th></tr></thead>
+          <tbody>
+            {quickRef.map((r) => (
+              <tr key={r.use}>
+                <td>{r.use}</td>
+                <td><span className="quickref-swatch" style={{ background: r.hex }} />{r.token} <span style={{ color: "var(--site-text-faint)", fontFamily: "var(--site-mono)", fontSize: 11 }}>{r.hex}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       <h2 className="site-section-title">How this survives a client theme swap</h2>
