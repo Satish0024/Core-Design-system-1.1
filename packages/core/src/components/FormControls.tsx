@@ -17,6 +17,7 @@ export interface SelectProps {
   disabled?: boolean;
   placeholder?: string;
   className?: string;
+  style?: React.CSSProperties;
   id?: string;
   name?: string;
   "aria-describedby"?: string;
@@ -32,7 +33,7 @@ export interface SelectProps {
  * keyboard support (Up/Down/Home/End/Enter/Escape/typeahead).
  */
 export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
-  ({ options, value, defaultValue, onChange, variant = "default", size = "md", disabled, placeholder = "Select…", className = "", id, name, ...aria }, ref) => {
+  ({ options, value, defaultValue, onChange, variant = "default", size = "md", disabled, placeholder = "Select…", className = "", style, id, name, ...aria }, ref) => {
     const [open, setOpen] = useState(false);
     const [internalValue, setInternalValue] = useState(defaultValue ?? "");
     const [activeIndex, setActiveIndex] = useState(0);
@@ -83,7 +84,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
     };
 
     return (
-      <div className="cds-select-wrap" ref={wrapRef}>
+      <div className="cds-select-wrap" style={style} ref={wrapRef}>
         <button
           ref={(node) => {
             triggerRef.current = node;

@@ -9,6 +9,7 @@ import { Slider } from "../../../../packages/core/src/components/Primitives";
 import { Combobox } from "../../../../packages/core/src/components/Combobox";
 import { Calendar, DatePicker } from "../../../../packages/core/src/components/Calendar";
 import { Dropzone, AttachmentList, AttachmentFile } from "../../../../packages/core/src/components/Attachment";
+import { AutoAnatomy, AutoAnatomyLegend } from "../AutoAnatomy";
 
 const employers = [
   { value: "acme", label: "Acme Corporation" },
@@ -46,6 +47,20 @@ export default function Forms() {
           <tr><td>Icon slot (InputWithIcon)</td><td>Icon at 12px from edge, input padding extends to 34px on that side</td></tr>
         </tbody>
       </table>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Placeholder text", anchor: "center", offset: 50 },
+          { n: 2, label: "Height — 40px", anchor: "left" },
+          { n: 3, label: "Padding — 12px", anchor: "bottom" },
+        ]}>
+          <Input placeholder="e.g. 00214" style={{ width: 200 }} />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Placeholder: input.placeholder color, never used as a label replacement", anchor: "center" },
+          { n: 2, label: "Height: 40px fixed", anchor: "left" },
+          { n: 3, label: "Horizontal padding: 12px each side", anchor: "bottom" },
+        ]} />
+      </div>
       <p className="site-section-sub" style={{ marginTop: 0 }}>Default, hint, error, disabled:</p>
       <div className="site-panel site-panel--flush">
         <Preview>
@@ -83,6 +98,18 @@ export default function Forms() {
           </div>
         </Preview>
       </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Resize handle — bottom-right, vertical only", anchor: "bottom-right" },
+          { n: 2, label: "Min-height — 88px", anchor: "left" }
+        ]}>
+          <Textarea placeholder="Add context…" rows={3} style={{ width: 220 }} />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Resize handle: vertical-only drag, bottom-right corner", anchor: "bottom-right" },
+          { n: 2, label: "Min-height: 88px, grows with content", anchor: "left" }
+        ]} />
+      </div>
 
       <h2 className="site-section-title" id="select">Select</h2>
       <table className="spec-table" style={{ marginBottom: 20 }}>
@@ -111,6 +138,18 @@ export default function Forms() {
             )}</Field>
           </div>
         </Preview>
+      </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Caret — fixed, indicates a popup listbox", anchor: "right" },
+          { n: 2, label: "Height — 40px (md)", anchor: "left" }
+        ]}>
+          <Select options={[{ value: "a", label: "Roth 401(k)" }]} value="a" placeholder="Select…" style={{ width: 200 }} />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Caret: static (no rotation), signals a listbox popup will open below", anchor: "right" },
+          { n: 2, label: "Height: 32px (sm) / 40px (md)", anchor: "left" }
+        ]} />
       </div>
 
       <h2 className="site-section-title" id="checkbox-radio">Checkbox &amp; Radio Group</h2>
@@ -157,6 +196,18 @@ export default function Forms() {
           <Checkbox label="Verified" tone="success" defaultChecked />
         </Preview>
       </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Box — 18×18px (md)", anchor: "left" },
+          { n: 2, label: "Label gap — 8px", anchor: "right" }
+        ]}>
+          <Checkbox label="Verified" defaultChecked />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Box: 14/18/22px per size, checked-state uses tone color", anchor: "left" },
+          { n: 2, label: "Label gap: 8px between box and text", anchor: "right" }
+        ]} />
+      </div>
 
       <h2 className="site-section-title" id="switch">Switch</h2>
       <table className="spec-table" style={{ marginBottom: 20 }}>
@@ -171,6 +222,18 @@ export default function Forms() {
           <Switch label="Enable auto-escalation" checked={on} onChange={setOn} />
         </Preview>
       </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Track — 36×20px", anchor: "left" },
+          { n: 2, label: "Thumb travel — 16px", anchor: "bottom" }
+        ]}>
+          <Switch label="Enable auto-escalation" checked={on} onChange={setOn} />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Track: 36×20px, fully rounded", anchor: "left" },
+          { n: 2, label: "Thumb: 16×16px, travels 16px, 2px inset from track edge", anchor: "bottom" }
+        ]} />
+      </div>
 
       <h2 className="site-section-title" id="toggle">Toggle &amp; Toggle Group</h2>
       <div className="site-panel site-panel--flush">
@@ -178,6 +241,18 @@ export default function Forms() {
           <Toggle pressed={starred} onPressedChange={setStarred}>★ Favorite</Toggle>
           <ToggleGroup value={view} onChange={setView} options={[{ value: "list", label: "List" }, { value: "grid", label: "Grid" }]} />
         </Preview>
+      </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Group padding — 2px around segments", anchor: "top" },
+          { n: 2, label: "Active segment — raised, subtle shadow", anchor: "bottom" }
+        ]}>
+          <ToggleGroup value={view} onChange={setView} options={[{ value: "list", label: "List" }, { value: "grid", label: "Grid" }]} />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Group container: 2px padding, surface-sunken background", anchor: "top" },
+          { n: 2, label: "Active segment: surface-raised background + 1px shadow, no color change", anchor: "bottom" }
+        ]} />
       </div>
 
       <h2 className="site-section-title" id="input-group">Input group (prefix / suffix)</h2>
@@ -195,12 +270,36 @@ export default function Forms() {
           </div>
         </Preview>
       </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Addon — same height as input, no gap", anchor: "left" },
+          { n: 2, label: "Shared border, no double line", anchor: "bottom" }
+        ]}>
+          <InputGroup prefix="$"><Input defaultValue="250" style={{ width: 140 }} /></InputGroup>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Addon: matches input height exactly, surface-sunken background", anchor: "left" },
+          { n: 2, label: "Border: addon and input share one continuous border, radius only on outer corners", anchor: "bottom" }
+        ]} />
+      </div>
 
       <h2 className="site-section-title" id="input-otp">Input OTP (2FA / verification codes)</h2>
       <div className="site-panel site-panel--flush">
         <Preview>
           <InputOTP value={otp} onChange={setOtp} length={6} />
         </Preview>
+      </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Digit box — 40×44px", anchor: "left" },
+          { n: 2, label: "Gap between boxes — 8px", anchor: "bottom" }
+        ]}>
+          <InputOTP value="12" onChange={() => {}} length={6} />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Digit box: 40×44px, auto-advances focus on entry", anchor: "left" },
+          { n: 2, label: "Gap: 8px between boxes", anchor: "bottom" }
+        ]} />
       </div>
 
       <h2 className="site-section-title" id="slider">Slider</h2>
@@ -213,6 +312,18 @@ export default function Forms() {
           </div>
         </Preview>
       </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Thumb — 18px, draggable + arrow-key steppable", anchor: "top" },
+          { n: 2, label: "Track — 4px, fully rounded", anchor: "bottom" }
+        ]}>
+          <div style={{ width: 220 }}><Slider value={12} min={0} max={25} onChange={() => {}} formatValue={(v) => `${v}%`} /></div>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Thumb: 18×18px circle, keyboard-operable via arrow keys", anchor: "top" },
+          { n: 2, label: "Track: 4px height, fully rounded, filled portion uses Primary", anchor: "bottom" }
+        ]} />
+      </div>
 
       <h2 className="site-section-title" id="combobox">Combobox (searchable select)</h2>
       <div className="site-panel site-panel--flush">
@@ -224,6 +335,18 @@ export default function Forms() {
           </div>
         </Preview>
       </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Input — same box style as Input", anchor: "top" },
+          { n: 2, label: "Popup listbox — opens below, 4px gap", anchor: "bottom" }
+        ]}>
+          <Combobox options={employers} value="" onChange={() => {}} placeholder="Search employer…" />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Input: identical visual style to a plain Input, so it doesn't look like a different control", anchor: "top" },
+          { n: 2, label: "Popup: 4px gap, elevation.3 shadow, max-height 220px", anchor: "bottom" }
+        ]} />
+      </div>
 
       <h2 className="site-section-title" id="date-picker">Date Picker</h2>
       <div className="site-panel site-panel--flush">
@@ -233,6 +356,18 @@ export default function Forms() {
           </div>
         </Preview>
       </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Read-only display field — opens Calendar in a Popover", anchor: "top" },
+          { n: 2, label: "Calendar icon — decorative, click target is the whole field", anchor: "right" }
+        ]}>
+          <DatePicker value={undefined} onChange={() => {}} />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Field: read-only, click anywhere on it to open", anchor: "top" },
+          { n: 2, label: "Whole field is the click target, not just the calendar icon", anchor: "right" }
+        ]} />
+      </div>
 
       <h2 className="site-section-title" id="calendar">Calendar (inline)</h2>
       <p className="site-section-sub">The same component DatePicker uses in a Popover — usable directly for date-range pickers or an always-visible calendar.</p>
@@ -240,6 +375,18 @@ export default function Forms() {
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
           <Calendar selected={dob} onSelect={setDob} maxDate={new Date()} />
         </div>
+      </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Day cell — 32×32px", anchor: "left" },
+          { n: 2, label: "Selected day — filled Primary circle", anchor: "bottom" }
+        ]}>
+          <Calendar selected={undefined} onSelect={() => {}} maxDate={new Date()} />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Day cell: 32×32px, 7-column grid", anchor: "left" },
+          { n: 2, label: "Selected: Primary fill; disabled days use text.disabled", anchor: "bottom" }
+        ]} />
       </div>
 
       <h2 className="site-section-title" id="input-icon">Input with icon</h2>
@@ -263,6 +410,18 @@ export default function Forms() {
             <AttachmentList files={files} onRemove={(id) => setFiles((prev) => prev.filter((f) => f.id !== id))} />
           </div>
         </Preview>
+      </div>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Dashed border — 1.5px, drop target", anchor: "top" },
+          { n: 2, label: "Padding — 28px", anchor: "bottom" }
+        ]}>
+          <div style={{ width: 280 }}><Dropzone onFiles={() => {}} /></div>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Border: 1.5px dashed, indicates a drop target visually", anchor: "top" },
+          { n: 2, label: "Padding: 28px, surface-sunken background", anchor: "bottom" }
+        ]} />
       </div>
 
       <h2 className="site-section-title">Accessibility</h2>

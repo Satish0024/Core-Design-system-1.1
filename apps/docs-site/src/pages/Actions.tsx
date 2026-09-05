@@ -100,7 +100,19 @@ export default function Actions() {
       </div>
 
       <h2 className="site-section-title" id="link">Link</h2>
-      <p className="site-section-sub">Inline text link — distinct from Tertiary button, which is used for a standalone action, not inline in a sentence.</p>
+      <p className="site-section-sub">Anatomy — inline text link, distinct from Tertiary button (which is a standalone action, not inline text).</p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Underline — always visible, not hover-only", anchor: "bottom" },
+          { n: 2, label: "Color — Primary's own text color", anchor: "top" },
+        ]}>
+          <Link href="#">plan disclosure documents</Link>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Underline: always on (2px offset), never hover-only — a link must be identifiable without a pointer", anchor: "bottom" },
+          { n: 2, label: "Color: color.action.tertiary.text — same hue as Primary", anchor: "top" },
+        ]} />
+      </div>
       <div className="site-panel site-panel--flush">
         <Preview>
           <span style={{ fontSize: 14, color: "var(--core-color-text-primary)" }}>
@@ -110,7 +122,23 @@ export default function Actions() {
       </div>
 
       <h2 className="site-section-title" id="button-group">Button Group</h2>
-      <p className="site-section-sub">Segmented actions that belong together — buttons merge borders into one control.</p>
+      <p className="site-section-sub">Anatomy — segmented actions that belong together, buttons merge borders into one control.</p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Shared border — 1px between segments, no double border", anchor: "bottom" },
+          { n: 2, label: "Outer radius only on first/last segment", anchor: "right" },
+        ]}>
+          <ButtonGroup>
+            <Button variant="secondary" size="sm">Day</Button>
+            <Button variant="secondary" size="sm">Week</Button>
+            <Button variant="secondary" size="sm">Month</Button>
+          </ButtonGroup>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Segments share a 1px border (-1px margin overlap) so it never doubles up", anchor: "bottom" },
+          { n: 2, label: "Only the first and last segment keep button.radius on their outer corner", anchor: "right" },
+        ]} />
+      </div>
       <div className="site-panel site-panel--flush">
         <Preview>
           <ButtonGroup>
