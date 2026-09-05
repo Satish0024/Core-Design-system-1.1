@@ -14,18 +14,26 @@ let this drift from `packages/core/src/components/`.
 
 ## Anatomy rollout tracker
 
-Every component needs an "Anatomy" section (exact sizing/padding/font per size — visual numbered-callout diagram
-for the highest-traffic ones, a spec table for the rest). Button got the full visual diagram treatment first as
-the template ([Anatomy.tsx](apps/docs-site/src/Anatomy.tsx)); this list is the honest state, not "all 50 done":
+Every component has a full visual numbered-callout Anatomy diagram (self-measuring via
+[AutoAnatomy.tsx](apps/docs-site/src/AutoAnatomy.tsx), which reads each component's real rendered bounding box
+and places leader lines/chips off its edges — no hand-coded pixel coordinates per component). Button was built
+first as the hand-coordinate template ([Anatomy.tsx](apps/docs-site/src/Anatomy.tsx)); every component after it
+uses AutoAnatomy.
 
-**✅ Has Anatomy (10):** Button (full diagram + table), Input, Textarea, Select, Checkbox/Radio, Switch, Badge,
-Card, Avatar, Progress (spec tables).
+**✅ Has a full visual Anatomy diagram (all components):**
+- **Actions:** Button, Icon Button, Link, Button Group
+- **Forms:** Input, Textarea, Select, Checkbox, Switch, Toggle, Toggle Group, Input Group, Input OTP, Slider,
+  Combobox, Date Picker, Calendar, Attachment/Dropzone
+- **Data Display:** Card, Badge, Table, Data Table, Item, Description List, Avatar, Progress, Aspect Ratio
+- **Disclosure:** Collapsible, Accordion, Separator, Skeleton
+- **Navigation:** Navigation Menu, Sidebar, Tabs, Breadcrumb, Stepper, Pagination
+- **Feedback:** Alert, Toast, Empty, Spinner
+- **Overlays:** Modal, ConfirmDialog, Drawer/Slideover, Dropdown Menu, Tooltip, Popover, Hover Card
 
-**❌ Not yet:** Icon Button, Link, Button Group, Slider, Combobox, Date Picker, Calendar, Data Table, Table,
-Item, RadioGroup wrapper, Toggle/Toggle Group, Input Group, Input OTP, Attachment, Aspect Ratio, Description
-List, Accordion, Collapsible, Separator, Skeleton, Navigation Menu, Sidebar, Tabs, Breadcrumb, Stepper,
-Pagination, Alert, Toast/Toast Manager, Empty, Spinner, Modal, ConfirmDialog, Drawer/Slideover, Dropdown Menu,
-Tooltip, Popover, Hover Card.
+Note: overlay components that only render while open (Modal, ConfirmDialog, Drawer, Dropdown Menu, Tooltip,
+Popover, Hover Card) use a static always-visible mock built from the same tokens/markup as the real component,
+since AutoAnatomy needs a persistently-mounted element to measure — the live triggerable component still sits
+below each diagram for interaction.
 
 Next batch, in priority order (most-used first): Modal/Drawer, Tabs, Alert/Toast, Dropdown Menu, Tooltip/Popover,
 Stepper, Pagination, Accordion.
