@@ -71,6 +71,32 @@ export function Tooltip({ label, children }: { label: string; children: React.Re
   );
 }
 
+export interface MenuItemDef { label: string; onSelect?: () => void; danger?: boolean; separatorAfter?: boolean; }
+export function DropdownMenu({ trigger, items }: { trigger: React.ReactElement; items: MenuItemDef[] }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <span style={{ position: "relative", display: "inline-block" }}>
+      {React.cloneElement(trigger, { onClick: () => setOpen((o) => !o), "aria-haspopup": "menu", "aria-expanded": open })}
+      {open && (
+        <div className="cds-menu" role="menu" style={{ position: "absolute", top: "calc(100% + 6px)", right: 0, zIndex: 30 }} onMouseLeave={() => setOpen(false)}>
+          {items.map((item, i) => (
+            <React.Fragment key={item.label}>
+              <button
+                role="menuitem"
+                className={`cds-menu-item ${item.danger ? "cds-menu-item--danger" : ""}`}
+                onClick={() => { item.onSelect?.(); setOpen(false); }}
+              >
+                {item.label}
+              </button>
+              {item.separatorAfter && <hr className="cds-menu-separator" />}
+            </React.Fragment>
+          ))}
+        </div>
+      )}
+    </span>
+  );
+}
+
 export function Popover({ trigger, children }: { trigger: React.ReactElement; children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   return (

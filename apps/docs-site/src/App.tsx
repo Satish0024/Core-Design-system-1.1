@@ -10,6 +10,7 @@ import Motion from "./pages/Motion";
 import Actions from "./pages/Actions";
 import Forms from "./pages/Forms";
 import DataDisplay from "./pages/DataDisplay";
+import DisclosurePage from "./pages/Disclosure";
 import NavigationPage from "./pages/NavigationPage";
 import Feedback from "./pages/Feedback";
 import OverlaysPage from "./pages/OverlaysPage";
@@ -30,6 +31,7 @@ export default function App() {
         <Route path="/components/actions" element={<Actions />} />
         <Route path="/components/forms" element={<Forms />} />
         <Route path="/components/data-display" element={<DataDisplay />} />
+        <Route path="/components/disclosure" element={<DisclosurePage />} />
         <Route path="/components/navigation" element={<NavigationPage />} />
         <Route path="/components/feedback" element={<Feedback />} />
         <Route path="/components/overlays" element={<OverlaysPage />} />

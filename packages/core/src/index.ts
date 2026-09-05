@@ -5,4 +5,6 @@ export * from "./components/FormControls";
 export * from "./components/DataDisplay";
 export * from "./components/Navigation";
 export * from "./components/Overlays";
+export * from "./components/Disclosure";
+export * from "./components/ToggleInputs";
 import "./styles/components.css";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Preview, CodeBlock } from "../Preview";
 import { Button } from "../../../../packages/core/src/components/Button";
-import { Modal, ConfirmDialog, Drawer, Tooltip, Popover } from "../../../../packages/core/src/components/Overlays";
+import { Modal, ConfirmDialog, Drawer, Tooltip, Popover, DropdownMenu } from "../../../../packages/core/src/components/Overlays";
 
 export default function OverlaysPage() {
   const [modal, setModal] = useState(false);
@@ -48,6 +48,20 @@ export default function OverlaysPage() {
       <Drawer open={drawer} onClose={() => setDrawer(false)} title="Filter transactions">
         <p style={{ fontSize: 14, color: "var(--core-color-text-secondary)" }}>Filter controls would go here.</p>
       </Drawer>
+
+      <h2 className="site-section-title">Dropdown menu</h2>
+      <div className="site-panel site-panel--flush">
+        <Preview>
+          <DropdownMenu
+            trigger={<Button variant="secondary">Row actions ▾</Button>}
+            items={[
+              { label: "View details" },
+              { label: "Download statement", separatorAfter: true },
+              { label: "Close account", danger: true },
+            ]}
+          />
+        </Preview>
+      </div>
 
       <h2 className="site-section-title">Tooltip</h2>
       <div className="site-panel site-panel--flush">

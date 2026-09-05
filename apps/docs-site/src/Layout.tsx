@@ -19,6 +19,7 @@ const nav = [
       { to: "/components/actions", label: "Actions" },
       { to: "/components/forms", label: "Forms" },
       { to: "/components/data-display", label: "Data Display" },
+      { to: "/components/disclosure", label: "Disclosure" },
       { to: "/components/navigation", label: "Navigation" },
       { to: "/components/feedback", label: "Feedback" },
       { to: "/components/overlays", label: "Overlays" },

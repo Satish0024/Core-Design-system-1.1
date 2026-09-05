@@ -3,10 +3,14 @@ import { Preview, CodeBlock } from "../Preview";
 import { Field, Input } from "../../../../packages/core/src/components/Field";
 import { Switch } from "../../../../packages/core/src/components/Misc";
 import { Textarea, Select, Checkbox, Radio } from "../../../../packages/core/src/components/FormControls";
+import { Toggle, ToggleGroup, InputGroup, InputOTP } from "../../../../packages/core/src/components/ToggleInputs";
 
 export default function Forms() {
   const [on, setOn] = useState(true);
   const [plan, setPlan] = useState("roth");
+  const [view, setView] = useState<"list" | "grid">("list");
+  const [starred, setStarred] = useState(false);
+  const [otp, setOtp] = useState("");
   return (
     <div>
       <h1 className="site-h1">Form Controls</h1>
@@ -73,6 +77,37 @@ export default function Forms() {
       <div className="site-panel site-panel--flush">
         <Preview>
           <Switch label="Enable auto-escalation" checked={on} onChange={setOn} />
+        </Preview>
+      </div>
+
+      <h2 className="site-section-title">Toggle &amp; Toggle Group</h2>
+      <div className="site-panel site-panel--flush">
+        <Preview>
+          <Toggle pressed={starred} onPressedChange={setStarred}>★ Favorite</Toggle>
+          <ToggleGroup value={view} onChange={setView} options={[{ value: "list", label: "List" }, { value: "grid", label: "Grid" }]} />
+        </Preview>
+      </div>
+
+      <h2 className="site-section-title">Input group (prefix / suffix)</h2>
+      <div className="site-panel site-panel--flush">
+        <Preview>
+          <div style={{ width: 200 }}>
+            <Field label="Contribution amount">{(p) => (
+              <InputGroup prefix="$"><Input {...p} defaultValue="250" /></InputGroup>
+            )}</Field>
+          </div>
+          <div style={{ width: 160 }}>
+            <Field label="Contribution %">{(p) => (
+              <InputGroup suffix="%"><Input {...p} defaultValue="6" /></InputGroup>
+            )}</Field>
+          </div>
+        </Preview>
+      </div>
+
+      <h2 className="site-section-title">Input OTP (2FA / verification codes)</h2>
+      <div className="site-panel site-panel--flush">
+        <Preview>
+          <InputOTP value={otp} onChange={setOtp} length={6} />
         </Preview>
       </div>
 
