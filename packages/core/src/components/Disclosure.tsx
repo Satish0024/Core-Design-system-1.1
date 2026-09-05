@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 
-export interface AccordionItem { id: string; title: string; content: React.ReactNode; }
-export function Accordion({ items, allowMultiple = false, defaultOpenIds = [] }: { items: AccordionItem[]; allowMultiple?: boolean; defaultOpenIds?: string[] }) {
+export interface AccordionItem { id: string; title: string; content: React.ReactNode; disabled?: boolean; }
+export function Accordion({ items, allowMultiple = false, defaultOpenIds = [], variant = "bordered" }: { items: AccordionItem[]; allowMultiple?: boolean; defaultOpenIds?: string[]; variant?: "bordered" | "flush" }) {
   const [open, setOpen] = useState<Set<string>>(new Set(defaultOpenIds));
-  const toggle = (id: string) => {
+  const toggle = (id: string, disabled?: boolean) => {
+    if (disabled) return;
     setOpen((prev) => {
       const next = allowMultiple ? new Set(prev) : new Set<string>();
       if (prev.has(id)) next.delete(id); else next.add(id);
@@ -11,9 +12,9 @@ export function Accordion({ items, allowMultiple = false, defaultOpenIds = [] }:
     });
   };
   return (
-    <div className="cds-accordion">
+    <div className={`cds-accordion cds-accordion--${variant}`}>
       {items.map((item) => {
-        const isOpen = open.has(item.id);
+        const isOpen = open.has(item.id) && !item.disabled;
         return (
           <div className="cds-accordion-item" key={item.id}>
             <h3 style={{ margin: 0 }}>
@@ -21,8 +22,10 @@ export function Accordion({ items, allowMultiple = false, defaultOpenIds = [] }:
                 className="cds-accordion-trigger"
                 aria-expanded={isOpen}
                 aria-controls={`panel-${item.id}`}
+                aria-disabled={item.disabled}
+                disabled={item.disabled}
                 id={`trigger-${item.id}`}
-                onClick={() => toggle(item.id)}
+                onClick={() => toggle(item.id, item.disabled)}
               >
                 {item.title}
                 <svg className="cds-accordion-chevron" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">

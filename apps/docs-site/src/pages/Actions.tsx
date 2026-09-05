@@ -2,12 +2,48 @@ import React from "react";
 import { Preview, CodeBlock } from "../Preview";
 import { Button, IconButton, Link } from "../../../../packages/core/src/components/Button";
 import { ButtonGroup } from "../../../../packages/core/src/components/Primitives";
+import { Anatomy, AnatomyLegend } from "../Anatomy";
 
 export default function Actions() {
   return (
     <div>
       <h1 className="site-h1" id="button">Button</h1>
       <p className="site-lede">Primary / Secondary / Tertiary / Destructive hierarchy. Every variant shares focus, disabled, and loading behavior.</p>
+
+      <h2 className="site-section-title">Anatomy</h2>
+      <p className="site-section-sub">The reference dimensions every Button instance is built from — the template used for every component's Anatomy section going forward.</p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <div style={{ width: 420 }}>
+          <Anatomy
+            points={[
+              { n: 1, label: "Label — 14px / 600 weight, centered", x: 40, y: 60, leaderTo: { x: 210, y: 80 } },
+              { n: 2, label: "Height — 40px (md)", x: 40, y: 140, leaderTo: { x: 130, y: 100 } },
+              { n: 3, label: "Horizontal padding — 16px each side", x: 380, y: 140, leaderTo: { x: 275, y: 90 } },
+            ]}
+          >
+            <Button style={{ width: 160 }}>Save changes</Button>
+          </Anatomy>
+        </div>
+        <AnatomyLegend
+          points={[
+            { n: 1, label: "Label: 14px / weight 600, centered both axes", x: 0, y: 0, leaderTo: { x: 0, y: 0 } },
+            { n: 2, label: "Height: 32px (sm) / 40px (md) / 48px (lg)", x: 0, y: 0, leaderTo: { x: 0, y: 0 } },
+            { n: 3, label: "Padding: 12px (sm) / 16px (md) / 20px (lg) horizontal", x: 0, y: 0, leaderTo: { x: 0, y: 0 } },
+          ]}
+        />
+      </div>
+      <table className="spec-table">
+        <thead><tr><th>Property</th><th>Small</th><th>Medium (default)</th><th>Large</th></tr></thead>
+        <tbody>
+          <tr><td>Height</td><td>32px</td><td>40px</td><td>48px</td></tr>
+          <tr><td>Horizontal padding</td><td>12px</td><td>16px</td><td>20px</td></tr>
+          <tr><td>Font size</td><td>13px</td><td>14px</td><td>16px</td></tr>
+          <tr><td>Font weight</td><td colSpan={3}>600 (semibold) — all sizes</td></tr>
+          <tr><td>Corner radius</td><td colSpan={3}><code>button.radius</code> — 6px on CORE, themeable per client</td></tr>
+          <tr><td>Icon-to-label gap (if icon present)</td><td colSpan={3}>8px</td></tr>
+          <tr><td>Minimum touch target</td><td>32×32px</td><td>40×40px</td><td>48×48px</td></tr>
+        </tbody>
+      </table>
 
       <h2 className="site-section-title">Variants</h2>
       <div className="site-panel site-panel--flush">

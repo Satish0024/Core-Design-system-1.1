@@ -481,6 +481,18 @@
 .cds-accordion-chevron { transition: transform var(--core-motion-duration-base, 180ms) ease; color: var(--core-color-text-tertiary); flex-shrink: 0; }
 .cds-accordion-trigger[aria-expanded="true"] .cds-accordion-chevron { transform: rotate(180deg); }
 .cds-accordion-panel { padding: 0 16px 16px; font-size: var(--core-font-size-md); color: var(--core-color-text-secondary); }
+.cds-accordion-trigger:disabled { cursor: not-allowed; color: var(--core-color-text-disabled); }
+.cds-accordion-trigger:disabled:hover { background: none; }
+.cds-accordion-trigger:disabled .cds-accordion-chevron { color: var(--core-color-text-disabled); }
+
+/* Flush variant — no outer border/radius, used when nesting inside another
+   container that already has its own border (e.g. a table cell or a card). */
+.cds-accordion--flush { border: none; border-radius: 0; }
+.cds-accordion--flush .cds-accordion-trigger { padding-left: 0; padding-right: 0; }
+.cds-accordion--flush .cds-accordion-panel { padding-left: 0; padding-right: 0; }
+
+/* Accordion nested inside a table cell (expandable row-detail pattern) */
+.cds-table-accordion-row td { padding: 0 16px !important; }
 
 .cds-separator { border: none; background: var(--core-color-border-default); }
 .cds-separator--h { height: 1px; width: 100%; margin: 16px 0; }
