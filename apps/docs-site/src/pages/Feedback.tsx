@@ -5,6 +5,7 @@ import { Toast, Spinner } from "../../../../packages/core/src/components/Overlay
 import { Empty } from "../../../../packages/core/src/components/Primitives";
 import { Button } from "../../../../packages/core/src/components/Button";
 import { ToastProvider, useToast } from "../../../../packages/core/src/components/ToastManager";
+import { AutoAnatomy, AutoAnatomyLegend } from "../AutoAnatomy";
 
 function ToastManagerDemo() {
   const { push } = useToast();
@@ -23,6 +24,23 @@ export default function Feedback() {
       <p className="site-lede">Inline, persistent feedback for page-level state; toasts for transient confirmation; spinners for in-progress work.</p>
 
       <h2 className="site-section-title" id="alert">Alert (persistent, page-level)</h2>
+      <p className="site-section-sub">Anatomy — tone icon, title, body; color is never the only signal.</p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Tone icon — distinct shape per tone, not color alone", anchor: "left" },
+          { n: 2, label: "Title — 14px/600, body 14px/400 below", anchor: "top" },
+          { n: 3, label: "Left accent bar — 4px, tone color", anchor: "bottom-left" },
+        ]}>
+          <div style={{ width: 340 }}>
+            <Alert tone="warning" title="Beneficiary missing">Add a beneficiary to finish setting up your account.</Alert>
+          </div>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Tone icon: distinct shape per tone (check/warning/x/info) — never color alone", anchor: "left" },
+          { n: 2, label: "Title 14px/600 semibold, body 14px/400 regular below it", anchor: "top" },
+          { n: 3, label: "Left accent bar: 4px wide, tone color, radius matches container", anchor: "bottom-left" },
+        ]} />
+      </div>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
           <Alert tone="success" title="Enrollment complete">You're contributing 6% starting next pay cycle.</Alert>
@@ -33,7 +51,19 @@ export default function Feedback() {
       </div>
 
       <h2 className="site-section-title" id="toast">Toast (transient, corner notification)</h2>
-      <p className="site-section-sub">Auto-dismisses after a few seconds. Same tone system as Alert, but for quick confirmations rather than page state.</p>
+      <p className="site-section-sub">Anatomy — auto-dismisses after a few seconds. Same tone system as Alert, but for quick confirmations rather than page state.</p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Elevation — shadow.lg, floats above page content", anchor: "bottom" },
+          { n: 2, label: "Max width — 360px, wraps long body text", anchor: "right" },
+        ]}>
+          <Toast tone="success" title="Changes saved">Your contribution rate was updated.</Toast>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Elevation: shadow.lg — floats above page content, corner-anchored", anchor: "bottom" },
+          { n: 2, label: "Max width: 360px, body text wraps rather than truncating", anchor: "right" },
+        ]} />
+      </div>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
           <Toast tone="success" title="Changes saved">Your contribution rate was updated.</Toast>
@@ -50,6 +80,19 @@ export default function Feedback() {
       </div>
 
       <h2 className="site-section-title" id="empty">Empty state</h2>
+      <p className="site-section-sub">Anatomy — illustration/icon, title, description, and an optional recovery action.</p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Title — 16px/600, centered", anchor: "top" },
+          { n: 2, label: "Action — optional, secondary button, not primary", anchor: "bottom" },
+        ]}>
+          <Empty title="No transactions yet" description="Once you make your first contribution, it will show up here." action={<Button variant="secondary" size="sm">Learn how contributions work</Button>} />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Title: 16px/600, centered above the description", anchor: "top" },
+          { n: 2, label: "Action: optional, always Secondary variant — never competes with page's Primary CTA", anchor: "bottom" },
+        ]} />
+      </div>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
           <Empty
@@ -61,6 +104,19 @@ export default function Feedback() {
       </div>
 
       <h2 className="site-section-title" id="spinner">Loading</h2>
+      <p className="site-section-sub">Anatomy — indeterminate rotation, pairs with a text label rather than standing alone.</p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Size — 16/20/24px matching icon-size scale", anchor: "top" },
+          { n: 2, label: "Stroke — 2px, brand color, indeterminate rotation", anchor: "bottom" },
+        ]}>
+          <Spinner />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Size: 16/20/24px, matches the icon-size token scale", anchor: "top" },
+          { n: 2, label: "Stroke: 2px, brand color, continuous rotation extended under reduced-motion", anchor: "bottom" },
+        ]} />
+      </div>
       <div className="site-panel site-panel--flush">
         <Preview>
           <Spinner />
