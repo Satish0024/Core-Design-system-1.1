@@ -1,0 +1,65 @@
+{
+  "color": {
+    "brand": {
+      "50": "#F1F0FE", "100": "#E1DEFD", "200": "#C3BEFB", "300": "#A095F5",
+      "400": "#8172ED", "500": "#6952E2", "600": "#5539CE", "700": "#432CAA",
+      "800": "#352387", "900": "#291B68", "950": "#1A1145"
+    },
+    "neutral": {
+      "0": "#FFFFFF", "50": "#F7F7F9", "100": "#EEEEF2", "200": "#DFDFE6",
+      "300": "#C4C4CF", "400": "#9E9EAD", "500": "#787887", "600": "#5C5C6B",
+      "700": "#454452", "800": "#2E2D38", "900": "#1D1C24", "950": "#111017",
+      "1000": "#000000"
+    },
+    "success": {
+      "50": "#EDFAF2", "100": "#D2F2E0", "300": "#7EDCAC", "500": "#22A369",
+      "600": "#178451", "700": "#116840", "900": "#0A3D26"
+    },
+    "warning": {
+      "50": "#FFF8EA", "100": "#FEEBBE", "300": "#FBCB6B", "500": "#E89A1C",
+      "600": "#C27A10", "700": "#95590A", "900": "#5C3505"
+    },
+    "danger": {
+      "50": "#FDEFEF", "100": "#FAD4D4", "300": "#EF8E8E", "500": "#D8434A",
+      "600": "#B72E38", "700": "#8F212A", "900": "#571119"
+    },
+    "info": {
+      "50": "#EBF6FD", "100": "#CFEAFB", "300": "#84C7F1", "500": "#2E8CD6",
+      "600": "#1D6DB0", "700": "#155187", "900": "#0B2E4E"
+    },
+    "accent": {
+      "slate":   { "500": "#5C6B7A", "700": "#3D4854" },
+      "plum":    { "500": "#8E3B5C", "700": "#652841" },
+      "ocean":   { "500": "#2C5F8A", "700": "#1E4363" },
+      "teal":    { "500": "#1E8C82", "700": "#155F59" },
+      "amber":   { "500": "#B4791E", "700": "#7E5314" }
+    }
+  },
+  "space": { "0": "0px", "1": "4px", "2": "8px", "3": "12px", "4": "16px", "5": "20px", "6": "24px", "8": "32px", "10": "40px", "12": "48px", "16": "64px", "20": "80px", "24": "96px" },
+  "radius": { "none": "0px", "xs": "4px", "sm": "6px", "md": "8px", "lg": "12px", "xl": "16px", "full": "9999px" },
+  "elevation": {
+    "0": "none",
+    "1": "0 1px 2px rgba(17,16,23,0.06), 0 1px 1px rgba(17,16,23,0.04)",
+    "2": "0 2px 6px rgba(17,16,23,0.08), 0 1px 2px rgba(17,16,23,0.05)",
+    "3": "0 8px 16px rgba(17,16,23,0.10), 0 2px 4px rgba(17,16,23,0.06)",
+    "4": "0 16px 32px rgba(17,16,23,0.14), 0 4px 8px rgba(17,16,23,0.08)"
+  },
+  "border": { "width.hairline": "1px", "width.default": "1px", "width.thick": "2px", "width.focus": "2px" },
+  "font": {
+    "family.base": "'Inter', -apple-system, 'Segoe UI', sans-serif",
+    "family.mono": "'JetBrains Mono', 'SFMono-Regular', Menlo, monospace",
+    "size.xs": "12px", "size.sm": "13px", "size.md": "14px", "size.lg": "16px",
+    "size.xl": "18px", "size.2xl": "22px", "size.3xl": "28px", "size.4xl": "36px", "size.5xl": "48px",
+    "weight.regular": "400", "weight.medium": "500", "weight.semibold": "600", "weight.bold": "700",
+    "lineHeight.tight": "1.2", "lineHeight.snug": "1.35", "lineHeight.normal": "1.5", "lineHeight.relaxed": "1.65",
+    "letterSpacing.tight": "-0.02em", "letterSpacing.normal": "0", "letterSpacing.wide": "0.02em"
+  },
+  "motion": {
+    "duration.instant": "80ms", "duration.fast": "120ms", "duration.base": "180ms", "duration.slow": "280ms",
+    "easing.standard": "cubic-bezier(0.2, 0, 0, 1)", "easing.decelerate": "cubic-bezier(0, 0, 0, 1)", "easing.accelerate": "cubic-bezier(0.3, 0, 1, 1)"
+  },
+  "size": {
+    "control.sm": "32px", "control.md": "40px", "control.lg": "48px",
+    "icon.sm": "16px", "icon.md": "20px", "icon.lg": "24px"
+  }
+}

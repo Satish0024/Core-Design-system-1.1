@@ -1,0 +1,13 @@
+{
+  "id": "lendguard",
+  "label": "LendGuard (dummy client)",
+  "meta": { "logoText": "LendGuard", "density": "comfortable", "radiusScale": "soft" },
+  "overrides": {
+    "color.brand.50": "#EAF3EE", "color.brand.100": "#CDE4D6", "color.brand.200": "#9FCBAF",
+    "color.brand.300": "#6EAF85", "color.brand.400": "#489568", "color.brand.500": "#2C7A4F",
+    "color.brand.600": "#20613D", "color.brand.700": "#194C31", "color.brand.800": "#143C27",
+    "color.brand.900": "#0F2D1D", "color.brand.950": "#091D13",
+    "font.family.base": "'Source Sans 3', -apple-system, 'Segoe UI', sans-serif",
+    "radius.sm": "10px", "radius.md": "14px", "radius.lg": "18px", "radius.xl": "22px"
+  }
+}
