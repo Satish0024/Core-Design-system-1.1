@@ -18,6 +18,7 @@ import Feedback from "./pages/Feedback";
 import OverlaysPage from "./pages/OverlaysPage";
 import Patterns from "./pages/Patterns";
 import Screens from "./pages/Screens";
+import Tokens from "./pages/Tokens";
 import Themes from "./pages/Themes";
 import Accessibility from "./pages/Accessibility";
 
@@ -42,6 +43,7 @@ export default function App() {
         <Route path="/components/overlays" element={<OverlaysPage />} />
         <Route path="/patterns" element={<Patterns />} />
         <Route path="/screens" element={<Screens />} />
+        <Route path="/tokens" element={<Tokens />} />
         <Route path="/themes" element={<Themes />} />
         <Route path="/accessibility" element={<Accessibility />} />
       </Route>

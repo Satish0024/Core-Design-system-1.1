@@ -111,4 +111,172 @@ writeFileSync(
   themeFiles.map((f) => `@import "./${f.replace(".json", ".css")}";`).join("\n") + "\n"
 );
 
+// ---------------------------------------------------------------------------
+// SCSS variables — a Bootstrap-shaped export for teams that compile with Sass
+// (Bootstrap itself, or any Sass build). Everything below is resolved from the
+// same primitives/semantic/component JSON as the CSS themes above — nothing
+// here is a typed-in literal. Values are the CORE theme's light-mode resolution;
+// runtime theming (dark mode, white-label brand swap) stays on the CSS custom
+// properties in core.css / <theme>.css, which is the source of truth at
+// runtime — this file is for compile-time Sass logic (mixins, math, conditional
+// imports) and for bridging into Bootstrap's own $variables.
+// ---------------------------------------------------------------------------
+
+const lightDict = { ...flatPrimitives, ...semantic.light };
+function res(value) { return resolve(value, lightDict); }
+function px(value) { return typeof value === "string" && value.endsWith("px") ? parseFloat(value) : null; }
+function toRem(value) {
+  const n = px(value);
+  return n === null ? value : `${n / 16}rem`;
+}
+function scssName(key) { return `$core-${key.replace(/\./g, "-")}`; }
+
+function section(title) {
+  return `\n// ---------------------------------------------------------------------------\n// ${title}\n// ---------------------------------------------------------------------------`;
+}
+
+// Curated, human-named aliases — same shape as a typical enterprise token set
+// (brand / neutral / semantics / elevation), each pointing at a real resolved
+// semantic or primitive token rather than a hand-picked value.
+const brandAliases = {
+  "brand-border-primary-default": "color.brand.500",
+  "brand-border-primary-hover": "color.brand.600",
+  "brand-border-primary-disabled": "color.brand.300",
+  "brand-text-primary-default": "color.brand.500",
+  "brand-text-primary-hover": "color.brand.600",
+  "brand-text-primary-active": "color.brand.700",
+  "brand-text-primary-disabled": "color.brand.300",
+  "brand-text-primary-oncolor": "color.neutral.0",
+  "brand-background-primary-strong": "color.action.primary.bg",
+  "brand-background-primary-hover": "color.action.primary.bgHover",
+  "brand-background-primary-active": "color.action.primary.bgActive",
+  "brand-background-primary-disabled": "color.brand.200",
+  "brand-background-primary-light": "color.brand.50",
+};
+
+const neutralAliases = {
+  "neutral-surface-layer-01": "color.neutral.0",
+  "neutral-surface-layer-02": "color.neutral.50",
+  "neutral-surface-layer-03": "color.neutral.100",
+  "neutral-surface-layer-04": "color.neutral.200",
+  "neutral-surface-high-contrast": "color.neutral.800",
+  "neutral-text-default": "color.text.primary",
+  "neutral-text-subtle": "color.text.secondary",
+  "neutral-text-subtle-least": "color.text.tertiary",
+  "neutral-text-oncolor": "color.text.inverse",
+  "neutral-border-subtle": "color.border.subtle",
+  "neutral-border-light": "color.border.default",
+  "neutral-border-strong": "color.border.strong",
+  "neutral-border-inverse": "color.neutral.0",
+};
+
+const semanticsAliases = {
+  "semantics-critical-border": "color.status.danger.border",
+  "semantics-critical-text": "color.status.danger.text",
+  "semantics-critical-background-light": "color.status.danger.bg",
+  "semantics-critical-background-strong": "color.danger.500",
+  "semantics-success-border": "color.status.success.border",
+  "semantics-success-text": "color.status.success.text",
+  "semantics-success-background-light": "color.status.success.bg",
+  "semantics-success-background-strong": "color.success.500",
+  "semantics-warning-border": "color.status.warning.border",
+  "semantics-warning-text": "color.status.warning.text",
+  "semantics-warning-background-light": "color.status.warning.bg",
+  "semantics-warning-background-strong": "color.warning.500",
+  "semantics-highlight-border": "color.status.info.border",
+  "semantics-highlight-text": "color.status.info.text",
+  "semantics-highlight-background-light": "color.status.info.bg",
+  "semantics-highlight-background-strong": "color.info.500",
+  "semantics-disabled-background": "color.neutral.50",
+  "semantics-disabled-border": "color.neutral.200",
+  "semantics-disabled-text": "color.neutral.400",
+};
+
+const elevationAliases = {
+  "elevation-01": "elevation.1",
+  "elevation-02": "elevation.2",
+  "elevation-03": "elevation.3",
+  "elevation-04": "elevation.4",
+};
+
+function buildAliasBlock(aliases) {
+  return Object.entries(aliases)
+    .map(([name, refKey]) => `$core-${name}: ${res(`{${refKey}}`)}; // ${refKey}`)
+    .join("\n");
+}
+
+// Font size scale, in rem — generated from the real `font.size.*` primitives
+// (not a hand-typed modular scale), same px→rem math Bootstrap itself uses.
+const fontSizeLines = Object.entries(primitives.font)
+  .filter(([k]) => k.startsWith("size."))
+  .map(([k, v]) => `$core-font-size-${k.replace("size.", "")}: ${toRem(v)}; // ${v}`)
+  .join("\n");
+
+// Spacing scale, in rem — generated from the real `space.*` primitives.
+const spacingLines = Object.entries(primitives.space)
+  .map(([k, v]) => `$core-spacing-${k}: ${toRem(v)}; // ${v}`)
+  .join("\n");
+const spacerBase = toRem(primitives.space["4"]); // 16px — the base "1 spacer" unit
+
+// Raw resolved semantic + component tokens, one $variable per CSS custom
+// property already emitted above — the exhaustive, unopinionated export.
+const rawSemanticLines = Object.entries(semantic.light)
+  .map(([key, raw]) => `${scssName(key)}: ${res(raw)};`)
+  .join("\n");
+const rawComponentLines = Object.entries(component)
+  .map(([key, raw]) => `${scssName(key)}: ${res(raw)};`)
+  .join("\n");
+
+const scssParts = [
+  `// CORE Design System — SCSS token variables`,
+  `// Auto-generated from packages/tokens/src/*.json — do not edit by hand.`,
+  `// Resolved from the "core" theme, light mode. For dark mode / white-label`,
+  `// theming at runtime, use the CSS custom properties in core.css instead —`,
+  `// these $variables are for Sass build-time logic and for bridging CORE's`,
+  `// tokens into Bootstrap's own variables (see the bridge section at the`,
+  `// bottom of this file).`,
+  section("Brand"),
+  buildAliasBlock(brandAliases),
+  section("Neutral"),
+  buildAliasBlock(neutralAliases),
+  section("Semantics"),
+  buildAliasBlock(semanticsAliases),
+  section("Elevation"),
+  buildAliasBlock(elevationAliases),
+  section("Font size"),
+  fontSizeLines,
+  section("Spacing"),
+  `$core-spacer: ${spacerBase}; // base unit — matches Bootstrap's $spacer\n${spacingLines}`,
+  section("Radius"),
+  Object.entries(primitives.radius).map(([k, v]) => `$core-radius-${k}: ${v};`).join("\n"),
+  section("All resolved semantic tokens (light mode)"),
+  rawSemanticLines,
+  section("All resolved component tokens"),
+  rawComponentLines,
+  section("Bootstrap variable bridge — @import this file before Bootstrap's own\n// scss/_variables.scss so these take effect"),
+  [
+    `$primary: $core-brand-background-primary-strong;`,
+    `$secondary: ${res("{color.secondary.600}")};`,
+    `$success: $core-semantics-success-background-strong;`,
+    `$warning: $core-semantics-warning-background-strong;`,
+    `$danger: $core-semantics-critical-background-strong;`,
+    `$info: $core-semantics-highlight-background-strong;`,
+    `$light: $core-neutral-surface-layer-02;`,
+    `$dark: $core-neutral-surface-high-contrast;`,
+    `$body-bg: ${res("{color.bg.page}")};`,
+    `$body-color: $core-neutral-text-default;`,
+    `$border-color: $core-neutral-border-light;`,
+    `$border-radius: $core-radius-sm;`,
+    `$border-radius-lg: $core-radius-lg;`,
+    `$font-family-base: ${res("{font.family.base}")};`,
+    `$font-size-base: $core-font-size-md;`,
+    `$spacer: $core-spacer;`,
+    `$box-shadow: $core-elevation-01;`,
+    `$box-shadow-lg: $core-elevation-03;`,
+  ].join("\n"),
+];
+
+writeFileSync(path.join(outDir, "core.tokens.scss"), scssParts.join("\n\n") + "\n");
+console.log(`✓ Built packages/tokens/dist/core.tokens.scss`);
+
 console.log(`✓ Built ${themeFiles.length} theme CSS files into packages/tokens/dist/`);

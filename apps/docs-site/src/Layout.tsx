@@ -106,6 +106,7 @@ const nav = [
     links: [
       { to: "/patterns", label: "Patterns" },
       { to: "/screens", label: "Screens" },
+      { to: "/tokens", label: "Tokens (SCSS)" },
       { to: "/accessibility", label: "Accessibility" },
     ],
   },
