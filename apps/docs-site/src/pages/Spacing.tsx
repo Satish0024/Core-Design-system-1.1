@@ -4,9 +4,9 @@ import primitives from "../../../../packages/tokens/src/primitives.json";
 export default function Spacing() {
   const space = (primitives as any).space as Record<string, string>;
   const controls = [
-    { label: "Small", h: "32px", pad: "0 12px", font: "13px" },
-    { label: "Medium", h: "40px", pad: "0 16px", font: "14px" },
-    { label: "Large", h: "48px", pad: "0 20px", font: "16px" },
+    { label: "Small", h: "32px", pad: "0 12px", font: "14px" },
+    { label: "Medium", h: "40px", pad: "0 16px", font: "16px" },
+    { label: "Large", h: "48px", pad: "0 20px", font: "18px" },
   ];
   return (
     <div>

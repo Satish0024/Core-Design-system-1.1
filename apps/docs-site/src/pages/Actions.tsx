@@ -37,7 +37,7 @@ export default function Actions() {
         <tbody>
           <tr><td>Height</td><td>32px</td><td>40px</td><td>48px</td></tr>
           <tr><td>Horizontal padding</td><td>12px</td><td>16px</td><td>20px</td></tr>
-          <tr><td>Font size</td><td>13px</td><td>14px</td><td>16px</td></tr>
+          <tr><td>Font size</td><td>14px</td><td>16px</td><td>18px</td></tr>
           <tr><td>Font weight</td><td colSpan={3}>600 (semibold) — all sizes</td></tr>
           <tr><td>Corner radius</td><td colSpan={3}><code>button.radius</code> — 6px on CORE, themeable per client</td></tr>
           <tr><td>Icon-to-label gap (if icon present)</td><td colSpan={3}>8px</td></tr>

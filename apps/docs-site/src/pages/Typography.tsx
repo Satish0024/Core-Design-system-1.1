@@ -31,6 +31,43 @@ export default function Typography() {
         client; size, weight, and line-height are CORE-owned and do not vary by brand.
       </p>
 
+      <h2 className="site-section-title">Font family — Inclusive Sans</h2>
+      <p className="site-section-sub">
+        CORE's default typeface is <strong style={{ color: "var(--site-text)" }}>Inclusive Sans</strong>, the same
+        typeface LendGuard's own app uses — chosen for clear letterform distinction at small sizes (a real
+        accessibility property: it visually separates I / l / 1 and O / 0, which many UI fonts don't). It's a
+        free, open-source Google Font (SIL Open Font License 1.1) — no license to buy, no attribution required,
+        safe to self-host or load from Google Fonts.
+      </p>
+      <div className="site-panel">
+        <div style={{ display: "flex", gap: 24, alignItems: "center", flexWrap: "wrap", marginBottom: 20 }}>
+          <a className="btn-hero primary" href="https://fonts.google.com/specimen/Inclusive+Sans" target="_blank" rel="noreferrer">
+            ⬇ Download on Google Fonts
+          </a>
+          <a className="btn-hero ghost" href="https://fonts.google.com/specimen/Inclusive+Sans/about" target="_blank" rel="noreferrer">
+            View license (SIL OFL 1.1)
+          </a>
+        </div>
+        <div style={{ fontFamily: "'Inclusive Sans', sans-serif", fontSize: 40, fontWeight: 400, lineHeight: 1.3, marginBottom: 8 }}>
+          Aa Bb Cc Retirement
+        </div>
+        <div style={{ fontFamily: "'Inclusive Sans', sans-serif", fontSize: 18, fontWeight: 400, color: "var(--site-text-dim)", marginBottom: 4 }}>
+          abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ
+        </div>
+        <div style={{ fontFamily: "'Inclusive Sans', sans-serif", fontSize: 18, fontWeight: 400, color: "var(--site-text-dim)", marginBottom: 20 }}>
+          0123456789 Il1 O0 — the letterforms this font was chosen to keep distinct
+        </div>
+        <table className="spec-table">
+          <thead><tr><th>Weight</th><th>Sample</th><th>Used for</th></tr></thead>
+          <tbody>
+            <tr><td>400 Regular</td><td style={{ fontFamily: "'Inclusive Sans', sans-serif", fontWeight: 400 }}>Retirement savings, simplified.</td><td>Body text, placeholder, helper</td></tr>
+            <tr><td>500 Medium</td><td style={{ fontFamily: "'Inclusive Sans', sans-serif", fontWeight: 500 }}>Retirement savings, simplified.</td><td>Captions, secondary labels</td></tr>
+            <tr><td>600 Semibold</td><td style={{ fontFamily: "'Inclusive Sans', sans-serif", fontWeight: 600 }}>Retirement savings, simplified.</td><td>Headings, labels, buttons, links</td></tr>
+            <tr><td>700 Bold</td><td style={{ fontFamily: "'Inclusive Sans', sans-serif", fontWeight: 700 }}>Retirement savings, simplified.</td><td>Emphasis, strong callouts</td></tr>
+          </tbody>
+        </table>
+      </div>
+
       <h2 className="site-section-title">Is Display (48px) used on dashboards?</h2>
       <div className="site-panel">
         <p style={{ margin: 0, fontSize: 14, color: "var(--site-text-dim)", lineHeight: 1.7 }}>
@@ -89,7 +126,7 @@ export default function Typography() {
       <h2 className="site-section-title">ADA / WCAG notes on sizing</h2>
       <div className="site-panel">
         <ul style={{ margin: 0, paddingLeft: 18, color: "var(--site-text-dim)", lineHeight: 1.8, fontSize: 14 }}>
-          <li>WCAG does not set a minimum font size, but body text below 13px is a usability risk — <strong style={{ color: "var(--site-text)" }}>Body Small (13px) and Caption/Label Small (12px) must never carry required or safety-critical information</strong> on their own.</li>
+          <li>WCAG does not set a minimum font size, but body text below 14px is a usability risk — <strong style={{ color: "var(--site-text)" }}>Body Small (12px) and Caption/Label Small (12px) must never carry required or safety-critical information</strong> on their own.</li>
           <li>Text ≥18px normal weight, or ≥14px at 700 weight, only needs 3:1 contrast (WCAG "large text"); everything smaller needs 4.5:1 — see the size-class column above.</li>
           <li>Line length for Body Medium/Large should stay under ~80 characters; enforced by container max-widths in patterns, not by the type tokens themselves.</li>
           <li>All roles scale via <code>rem</code>-equivalent tokens in implementation so they respect the user's browser zoom/OS text-size setting.</li>
