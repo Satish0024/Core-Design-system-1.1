@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Preview, CodeBlock } from "../Preview";
 import { Tabs, Breadcrumb, Pagination, NavigationMenu, AppSidebar, Stepper } from "../../../../packages/core/src/components/Navigation";
 import { Icon } from "../../../../packages/core/src/components/Primitives";
+import { AutoAnatomy, AutoAnatomyLegend } from "../AutoAnatomy";
 
 export default function NavigationPage() {
   const [page, setPage] = useState(3);
@@ -11,6 +12,19 @@ export default function NavigationPage() {
       <p className="site-lede">Wayfinding components — where you are, how you got here, how to move through a list.</p>
 
       <h2 className="site-section-title" id="navigation-menu">Navigation menu (top nav)</h2>
+      <p className="site-section-sub">Anatomy — the current item is underlined, not just recolored, so it survives color-blindness and grayscale print.</p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Current item — underline + weight, not color alone", anchor: "bottom" },
+          { n: 2, label: "Items — 16px horizontal gap", anchor: "top" },
+        ]}>
+          <NavigationMenu items={[{ label: "Dashboard", current: true }, { label: "Accounts" }, { label: "Documents" }]} />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Current item: underline + bolder weight — never color alone", anchor: "bottom" },
+          { n: 2, label: "Item spacing: 16px horizontal gap between labels", anchor: "top" },
+        ]} />
+      </div>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
           <NavigationMenu items={[{ label: "Dashboard", current: true }, { label: "Accounts" }, { label: "Documents" }, { label: "Support" }]} />
@@ -18,7 +32,25 @@ export default function NavigationPage() {
       </div>
 
       <h2 className="site-section-title" id="sidebar">App sidebar</h2>
-      <p className="site-section-sub">With icons, matching a real app shell — icon + label per item, active item highlighted.</p>
+      <p className="site-section-sub">Anatomy — icon + label per item, active item highlighted with a filled background, not just a colored icon.</p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "flex-start", flexWrap: "wrap", background: "var(--core-color-bg-page)", padding: "24px 32px" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Active item — filled background, full width", anchor: "left" },
+          { n: 2, label: "Icon — fixed 16px column, aligned across items", anchor: "top" },
+          { n: 3, label: "Width — 240px fixed (desktop)", anchor: "right" },
+        ]}>
+          <AppSidebar items={[
+            { label: "Dashboard", icon: <Icon name="fa-solid fa-grip" size="sm" />, current: true },
+            { label: "Investment Portfolio", icon: <Icon name="fa-solid fa-wallet" size="sm" /> },
+            { label: "Transactions", icon: <Icon name="fa-solid fa-right-left" size="sm" /> },
+          ]} />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Active item: filled background spans the sidebar's full width", anchor: "left" },
+          { n: 2, label: "Icon: fixed 16px column so labels stay left-aligned across items", anchor: "top" },
+          { n: 3, label: "Width: 240px fixed on desktop, collapses to icon-only under 1024px", anchor: "right" },
+        ]} />
+      </div>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", padding: 0 }}>
           <AppSidebar
@@ -34,6 +66,22 @@ export default function NavigationPage() {
       </div>
 
       <h2 className="site-section-title" id="tabs">Tabs</h2>
+      <p className="site-section-sub">Anatomy — active tab has an underline indicator; the whole strip is an ARIA <code>tablist</code>.</p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Active indicator — 2px underline, animates between tabs", anchor: "bottom" },
+          { n: 2, label: "Tab — 40px min height touch target", anchor: "top" },
+        ]}>
+          <Tabs items={[
+            { id: "overview", label: "Overview", content: <p style={{ fontSize: 14, color: "var(--core-color-text-secondary)" }}>Overview content.</p> },
+            { id: "transactions", label: "Transactions", content: <p style={{ fontSize: 14 }}>Transactions content.</p> },
+          ]} />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Indicator: 2px underline, animated slide between tabs on change", anchor: "bottom" },
+          { n: 2, label: "Tab: 40px min-height touch target, arrow-key navigable", anchor: "top" },
+        ]} />
+      </div>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
           <Tabs
@@ -62,6 +110,19 @@ export default function NavigationPage() {
       </div>
 
       <h2 className="site-section-title" id="breadcrumb">Breadcrumb</h2>
+      <p className="site-section-sub">Anatomy — the current page is plain text, not a link, and carries <code>aria-current="page"</code>.</p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Current page — plain text, not a link", anchor: "top" },
+          { n: 2, label: "Separator — 8px gap each side", anchor: "bottom" },
+        ]}>
+          <Breadcrumb items={[{ label: "Home", href: "#" }, { label: "Accounts", href: "#" }, { label: "Transactions" }]} />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Current page: plain text (no href), aria-current=\"page\"", anchor: "top" },
+          { n: 2, label: "Separator: 8px gap each side, aria-hidden", anchor: "bottom" },
+        ]} />
+      </div>
       <div className="site-panel site-panel--flush">
         <Preview>
           <Breadcrumb items={[{ label: "Home", href: "#" }, { label: "Accounts", href: "#" }, { label: "Transactions" }]} />
@@ -77,7 +138,21 @@ export default function NavigationPage() {
       </div>
 
       <h2 className="site-section-title" id="stepper">Stepper</h2>
-      <p className="site-section-sub">Drives multi-step flows — enrollment, transaction requests. Complete / current / upcoming states.</p>
+      <p className="site-section-sub">Anatomy — drives multi-step flows: complete / current / upcoming states, each visually distinct.</p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Complete — filled circle + checkmark", anchor: "top-left" },
+          { n: 2, label: "Current — outlined circle, bold label", anchor: "top" },
+          { n: 3, label: "Connector — fills as steps complete", anchor: "bottom" },
+        ]}>
+          <Stepper currentIndex={1} steps={[{ label: "Personal info" }, { label: "Investment elections" }, { label: "Review" }]} />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Complete: filled circle + checkmark icon", anchor: "top-left" },
+          { n: 2, label: "Current: outlined circle, bold label, aria-current=\"step\"", anchor: "top" },
+          { n: 3, label: "Connector: line between steps, fills proportionally as steps complete", anchor: "bottom" },
+        ]} />
+      </div>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
           <Stepper
@@ -110,6 +185,19 @@ export default function NavigationPage() {
       </div>
 
       <h2 className="site-section-title" id="pagination">Pagination</h2>
+      <p className="site-section-sub">Anatomy — active page number, disabled edges, 40×40px minimum touch targets.</p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Active page — filled background, aria-current", anchor: "top" },
+          { n: 2, label: "Prev/Next — disabled at range edges", anchor: "left" },
+        ]}>
+          <Pagination page={page} pageCount={8} onChange={setPage} />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Active page: filled background, aria-current=\"page\"", anchor: "top" },
+          { n: 2, label: "Prev/Next: 40×40px targets, disabled + non-focusable at range edges", anchor: "left" },
+        ]} />
+      </div>
       <div className="site-panel site-panel--flush">
         <Preview>
           <Pagination page={page} pageCount={8} onChange={setPage} />
