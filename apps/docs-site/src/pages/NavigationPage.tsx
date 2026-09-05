@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Preview, CodeBlock } from "../Preview";
 import { Tabs, Breadcrumb, Pagination, NavigationMenu, AppSidebar, Stepper } from "../../../../packages/core/src/components/Navigation";
+import { Icon } from "../../../../packages/core/src/components/Primitives";
 
 export default function NavigationPage() {
   const [page, setPage] = useState(3);
@@ -17,9 +18,18 @@ export default function NavigationPage() {
       </div>
 
       <h2 className="site-section-title" id="sidebar">App sidebar</h2>
+      <p className="site-section-sub">With icons, matching a real app shell — icon + label per item, active item highlighted.</p>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", padding: 0 }}>
-          <AppSidebar items={[{ label: "Dashboard", current: true }, { label: "Transactions" }, { label: "Statements" }, { label: "Settings" }]} />
+          <AppSidebar
+            items={[
+              { label: "Dashboard", icon: <Icon name="fa-solid fa-grip" size="sm" />, current: true },
+              { label: "Investment Portfolio", icon: <Icon name="fa-solid fa-wallet" size="sm" /> },
+              { label: "Transactions", icon: <Icon name="fa-solid fa-right-left" size="sm" /> },
+              { label: "My Profile", icon: <Icon name="fa-solid fa-user" size="sm" /> },
+              { label: "Document Center", icon: <Icon name="fa-solid fa-file-lines" size="sm" /> },
+            ]}
+          />
         </div>
       </div>
 
@@ -77,6 +87,23 @@ export default function NavigationPage() {
               { label: "Investment elections" },
               { label: "Beneficiaries" },
               { label: "Review & submit" },
+            ]}
+          />
+        </div>
+      </div>
+
+      <p className="site-section-sub">Vertical orientation — for a multi-step request flow's left-side nav (e.g. a withdrawal request: Details → Allocation → Fees → Documents → Summary).</p>
+      <div className="site-panel site-panel--flush">
+        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
+          <Stepper
+            orientation="vertical"
+            currentIndex={1}
+            steps={[
+              { label: "Withdrawal Details" },
+              { label: "Withdrawal Allocation" },
+              { label: "Fee Details" },
+              { label: "Upload Documents" },
+              { label: "Withdrawal Request Summary" },
             ]}
           />
         </div>

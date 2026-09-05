@@ -88,6 +88,15 @@
 .cds-step-connector { flex: 1; height: 2px; background: var(--core-color-border-default); margin: 0 10px; }
 .cds-step--complete .cds-step-connector { background: var(--core-color-action-primary-bg); }
 
+/* Stepper: vertical orientation — e.g. a multi-step request flow's left-side nav.
+   Steps stack top-to-bottom; within each step, the marker stays beside its label. */
+.cds-stepper--vertical { flex-direction: column; width: auto; min-width: 220px; align-items: stretch; }
+.cds-step--vertical { align-items: flex-start; flex: 0 0 auto; padding-bottom: 28px; }
+.cds-step--vertical:last-child { padding-bottom: 0; }
+.cds-step--vertical .cds-step-connector {
+  position: absolute; left: 13px; top: 28px; bottom: 0; width: 2px; height: auto; flex: none; margin: 0;
+}
+
 .cds-field { display: flex; flex-direction: column; gap: 6px; }
 .cds-label { font-size: var(--core-font-size-sm); font-weight: var(--core-font-weight-medium); color: var(--core-color-text-primary); }
 .cds-hint { font-size: var(--core-font-size-xs); color: var(--core-color-text-tertiary); }

@@ -76,13 +76,14 @@ export function AppSidebar({ items }: { items: SidebarItem[] }) {
 }
 
 export interface StepDef { label: string; description?: string; }
-export function Stepper({ steps, currentIndex }: { steps: StepDef[]; currentIndex: number }) {
+export function Stepper({ steps, currentIndex, orientation = "horizontal" }: { steps: StepDef[]; currentIndex: number; orientation?: "horizontal" | "vertical" }) {
+  const vertical = orientation === "vertical";
   return (
-    <ol className="cds-stepper" aria-label="Progress">
+    <ol className={`cds-stepper ${vertical ? "cds-stepper--vertical" : ""}`} aria-label="Progress" aria-orientation={orientation}>
       {steps.map((step, i) => {
         const state = i < currentIndex ? "complete" : i === currentIndex ? "current" : "upcoming";
         return (
-          <li key={step.label} className={`cds-step cds-step--${state}`} aria-current={state === "current" ? "step" : undefined}>
+          <li key={step.label} className={`cds-step cds-step--${state} ${vertical ? "cds-step--vertical" : ""}`} aria-current={state === "current" ? "step" : undefined}>
             <span className="cds-step-marker" aria-hidden="true">
               {state === "complete" ? "✓" : i + 1}
             </span>
