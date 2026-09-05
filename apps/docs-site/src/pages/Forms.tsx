@@ -33,7 +33,20 @@ export default function Forms() {
       <h1 className="site-h1">Form Controls</h1>
       <p className="site-lede">Label, hint, and error are wired together via <code>aria-describedby</code> and <code>aria-invalid</code> automatically — no manual id plumbing.</p>
 
-      <h2 className="site-section-title" id="input">Text input — default, hint, error, disabled</h2>
+      <h2 className="site-section-title" id="input">Input</h2>
+      <p className="site-section-sub">Anatomy</p>
+      <table className="spec-table" style={{ marginBottom: 20 }}>
+        <thead><tr><th>Property</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Height</td><td>40px (single fixed size — no sm/lg variant yet)</td></tr>
+          <tr><td>Horizontal padding</td><td>12px</td></tr>
+          <tr><td>Font size</td><td>16px (matches control-md text scale)</td></tr>
+          <tr><td>Border</td><td>1px, radius <code>input.radius</code> (6px on CORE)</td></tr>
+          <tr><td>Focus ring</td><td>3px, 25% opacity, offset 0 (box-shadow, not outline)</td></tr>
+          <tr><td>Icon slot (InputWithIcon)</td><td>Icon at 12px from edge, input padding extends to 34px on that side</td></tr>
+        </tbody>
+      </table>
+      <p className="site-section-sub" style={{ marginTop: 0 }}>Default, hint, error, disabled:</p>
       <div className="site-panel site-panel--flush">
         <Preview>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 220px)", gap: 20 }}>
@@ -55,6 +68,14 @@ export default function Forms() {
       </div>
 
       <h2 className="site-section-title" id="textarea">Textarea</h2>
+      <table className="spec-table" style={{ marginBottom: 20 }}>
+        <thead><tr><th>Property</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Min height</td><td>88px (grows with content, resizable vertically)</td></tr>
+          <tr><td>Padding</td><td>10px vertical, 12px horizontal</td></tr>
+          <tr><td>Font size</td><td>16px</td></tr>
+        </tbody>
+      </table>
       <div className="site-panel site-panel--flush">
         <Preview>
           <div style={{ width: 320 }}>
@@ -64,6 +85,15 @@ export default function Forms() {
       </div>
 
       <h2 className="site-section-title" id="select">Select</h2>
+      <table className="spec-table" style={{ marginBottom: 20 }}>
+        <thead><tr><th>Property</th><th>Small</th><th>Medium (default)</th></tr></thead>
+        <tbody>
+          <tr><td>Height</td><td>32px</td><td>40px</td></tr>
+          <tr><td>Padding</td><td>0 32px 0 10px</td><td>0 36px 0 12px</td></tr>
+          <tr><td>Font size</td><td>14px</td><td>16px</td></tr>
+          <tr><td>Listbox popup</td><td colSpan={2}>Max height 260px, 4px padding, options 8px/10px padding, 6px radius</td></tr>
+        </tbody>
+      </table>
       <div className="site-panel site-panel--flush">
         <Preview>
           <div style={{ width: 220 }}>
@@ -84,6 +114,14 @@ export default function Forms() {
       </div>
 
       <h2 className="site-section-title" id="checkbox-radio">Checkbox &amp; Radio Group</h2>
+      <table className="spec-table" style={{ marginBottom: 20 }}>
+        <thead><tr><th>Property</th><th>Small</th><th>Medium (default)</th><th>Large</th></tr></thead>
+        <tbody>
+          <tr><td>Box size</td><td>14×14px</td><td>18×18px</td><td>22×22px</td></tr>
+          <tr><td>Border</td><td colSpan={3}>1.5px, radius 5px (checkbox) / 50% (radio)</td></tr>
+          <tr><td>Label gap</td><td colSpan={3}>8px between box and label text</td></tr>
+        </tbody>
+      </table>
       <p className="site-section-sub">Checkbox includes an indeterminate state (e.g. "select all" when some but not all rows are checked). Radio Group manages a single selected value with <code>role="radiogroup"</code>.</p>
       <div className="site-panel site-panel--flush">
         <Preview>
@@ -121,6 +159,13 @@ export default function Forms() {
       </div>
 
       <h2 className="site-section-title" id="switch">Switch</h2>
+      <table className="spec-table" style={{ marginBottom: 20 }}>
+        <thead><tr><th>Property</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Track</td><td>36×20px, fully rounded</td></tr>
+          <tr><td>Thumb</td><td>16×16px, 2px inset, travels 16px on toggle</td></tr>
+        </tbody>
+      </table>
       <div className="site-panel site-panel--flush">
         <Preview>
           <Switch label="Enable auto-escalation" checked={on} onChange={setOn} />

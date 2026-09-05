@@ -29,6 +29,14 @@ export default function DataDisplay() {
       <p className="site-lede">The core containers and readouts for metrics, lists, and summaries across both portals.</p>
 
       <h2 className="site-section-title" id="card">Card</h2>
+      <table className="spec-table" style={{ marginBottom: 20 }}>
+        <thead><tr><th>Property</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Padding</td><td>20px</td></tr>
+          <tr><td>Border radius</td><td><code>card.radius</code> — 8px on CORE</td></tr>
+          <tr><td>Shadow</td><td><code>elevation.1</code> (default/outlined) — none on interactive until hover (<code>elevation.2</code>)</td></tr>
+        </tbody>
+      </table>
       <p className="site-section-sub">Three variants: default (elevated), outlined (flat border, for dense layouts), and interactive (clickable, hover/focus states).</p>
       <div className="site-panel site-panel--flush">
         <Preview>
@@ -48,6 +56,14 @@ export default function DataDisplay() {
       </div>
 
       <h2 className="site-section-title" id="badge">Badge</h2>
+      <table className="spec-table" style={{ marginBottom: 20 }}>
+        <thead><tr><th>Property</th><th>Small</th><th>Medium (default)</th></tr></thead>
+        <tbody>
+          <tr><td>Padding</td><td>1px 7px</td><td>2px 10px</td></tr>
+          <tr><td>Font size</td><td>10px</td><td>12px</td></tr>
+          <tr><td>Radius</td><td colSpan={2}>Fully rounded (<code>badge.radius</code>)</td></tr>
+        </tbody>
+      </table>
       <p className="site-section-sub">5 tones × 3 styles (soft/outline/solid) × 2 sizes.</p>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch", gap: 12 }}>
@@ -153,6 +169,14 @@ export default function DataDisplay() {
       </div>
 
       <h2 className="site-section-title" id="avatar">Avatar</h2>
+      <table className="spec-table" style={{ marginBottom: 20 }}>
+        <thead><tr><th>Property</th><th>Small</th><th>Medium (default)</th><th>Large</th></tr></thead>
+        <tbody>
+          <tr><td>Size</td><td>24×24px</td><td>36×36px</td><td>48×48px</td></tr>
+          <tr><td>Font size</td><td>10px</td><td>13px</td><td>16px</td></tr>
+          <tr><td>Status dot</td><td colSpan={3}>9×9px, 2px border matching surface color, bottom-right</td></tr>
+        </tbody>
+      </table>
       <p className="site-section-sub">Sizes, status indicator, and grouped/stacked avatars.</p>
       <div className="site-panel site-panel--flush">
         <Preview>
@@ -167,6 +191,13 @@ export default function DataDisplay() {
       </div>
 
       <h2 className="site-section-title" id="progress">Progress</h2>
+      <table className="spec-table" style={{ marginBottom: 20 }}>
+        <thead><tr><th>Property</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Track height</td><td>8px, fully rounded</td></tr>
+          <tr><td>Indeterminate segment</td><td>40% width, animates left to right over 1.2s</td></tr>
+        </tbody>
+      </table>
       <p className="site-section-sub">Determinate for a known percentage; indeterminate while duration is unknown (e.g. a submission in flight).</p>
       <div className="site-panel site-panel--flush">
         <Preview>
