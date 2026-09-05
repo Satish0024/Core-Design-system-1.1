@@ -1,7 +1,19 @@
 import React from "react";
 import { Preview, CodeBlock } from "../Preview";
 import { Card, Badge } from "../../../../packages/core/src/components/Misc";
-import { Table, Avatar, Progress } from "../../../../packages/core/src/components/DataDisplay";
+import { Table, DataTable, Avatar, Progress } from "../../../../packages/core/src/components/DataDisplay";
+import { Item } from "../../../../packages/core/src/components/Primitives";
+import { Button } from "../../../../packages/core/src/components/Button";
+
+const manyRows = [
+  { id: 1, date: "Sep 01, 2026", type: "Contribution", amount: 412.5, status: "success" as const },
+  { id: 2, date: "Aug 15, 2026", type: "Dividend", amount: 18.2, status: "success" as const },
+  { id: 3, date: "Aug 01, 2026", type: "Contribution", amount: 412.5, status: "warning" as const },
+  { id: 4, date: "Jul 15, 2026", type: "Fee", amount: -4, status: "danger" as const },
+  { id: 5, date: "Jul 01, 2026", type: "Contribution", amount: 400, status: "success" as const },
+  { id: 6, date: "Jun 15, 2026", type: "Dividend", amount: 15.1, status: "success" as const },
+  { id: 7, date: "Jun 01, 2026", type: "Contribution", amount: 400, status: "success" as const },
+];
 
 const rows = [
   { id: 1, date: "Sep 01, 2026", type: "Contribution", amount: "$412.50", status: "success" as const },
@@ -55,6 +67,31 @@ export default function DataDisplay() {
             ]}
             rows={rows}
           />
+        </div>
+      </div>
+
+      <h2 className="site-section-title">Data Table (sortable, paginated)</h2>
+      <p className="site-section-sub">Click a column header to sort. Extends Table with client-side sort + pagination for larger lists.</p>
+      <div className="site-panel site-panel--flush">
+        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
+          <DataTable
+            pageSize={4}
+            columns={[
+              { key: "date", header: "Date", sortable: true },
+              { key: "type", header: "Type", sortable: true },
+              { key: "amount", header: "Amount", sortable: true, render: (r) => `$${r.amount.toFixed(2)}` },
+              { key: "status", header: "Status", render: (r) => <Badge tone={r.status}>{r.status === "success" ? "Posted" : r.status === "warning" ? "Pending" : "Failed"}</Badge> },
+            ]}
+            rows={manyRows}
+          />
+        </div>
+      </div>
+
+      <h2 className="site-section-title">Item (generic list row)</h2>
+      <div className="site-panel site-panel--flush">
+        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
+          <Item title="Roth 401(k)" description="62% of portfolio" action={<Button variant="secondary" size="sm">Manage</Button>} />
+          <Item title="Traditional 401(k)" description="38% of portfolio" action={<Button variant="secondary" size="sm">Manage</Button>} />
         </div>
       </div>
 

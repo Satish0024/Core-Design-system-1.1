@@ -1,6 +1,7 @@
 import React from "react";
 import { Preview, CodeBlock } from "../Preview";
 import { Button } from "../../../../packages/core/src/components/Button";
+import { ButtonGroup } from "../../../../packages/core/src/components/Primitives";
 
 export default function Actions() {
   return (
@@ -33,6 +34,18 @@ export default function Actions() {
           <Button>Default</Button>
           <Button disabled>Disabled</Button>
           <Button loading>Loading</Button>
+        </Preview>
+      </div>
+
+      <h2 className="site-section-title">Button Group</h2>
+      <p className="site-section-sub">Segmented actions that belong together — buttons merge borders into one control.</p>
+      <div className="site-panel site-panel--flush">
+        <Preview>
+          <ButtonGroup>
+            <Button variant="secondary" size="sm">Day</Button>
+            <Button variant="secondary" size="sm">Week</Button>
+            <Button variant="secondary" size="sm">Month</Button>
+          </ButtonGroup>
         </Preview>
       </div>
 

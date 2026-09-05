@@ -42,6 +42,35 @@ export function Breadcrumb({ items }: { items: Array<{ label: string; href?: str
   );
 }
 
+export interface NavMenuItem { label: string; href?: string; current?: boolean; onClick?: () => void; }
+export function NavigationMenu({ items }: { items: NavMenuItem[] }) {
+  return (
+    <nav className="cds-navmenu" aria-label="Main">
+      {items.map((item) =>
+        item.href ? (
+          <a key={item.label} href={item.href} className="cds-navmenu-link" aria-current={item.current ? "page" : undefined}>{item.label}</a>
+        ) : (
+          <button key={item.label} className="cds-navmenu-link" aria-current={item.current ? "page" : undefined} onClick={item.onClick}>{item.label}</button>
+        )
+      )}
+    </nav>
+  );
+}
+
+export interface SidebarItem { label: string; icon?: React.ReactNode; current?: boolean; onClick?: () => void; }
+export function AppSidebar({ items }: { items: SidebarItem[] }) {
+  return (
+    <nav className="cds-app-sidebar" aria-label="Sidebar">
+      {items.map((item) => (
+        <button key={item.label} className="cds-app-sidebar-link" aria-current={item.current ? "page" : undefined} onClick={item.onClick}>
+          {item.icon}
+          {item.label}
+        </button>
+      ))}
+    </nav>
+  );
+}
+
 export function Pagination({ page, pageCount, onChange }: { page: number; pageCount: number; onChange: (p: number) => void }) {
   const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
   return (

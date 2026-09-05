@@ -2,6 +2,8 @@ import React from "react";
 import { Preview, CodeBlock } from "../Preview";
 import { Alert } from "../../../../packages/core/src/components/Misc";
 import { Toast, Spinner } from "../../../../packages/core/src/components/Overlays";
+import { Empty } from "../../../../packages/core/src/components/Primitives";
+import { Button } from "../../../../packages/core/src/components/Button";
 
 export default function Feedback() {
   return (
@@ -25,6 +27,17 @@ export default function Feedback() {
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
           <Toast tone="success" title="Changes saved">Your contribution rate was updated.</Toast>
           <Toast tone="danger" title="Couldn't connect">Check your internet connection and retry.</Toast>
+        </div>
+      </div>
+
+      <h2 className="site-section-title">Empty state</h2>
+      <div className="site-panel site-panel--flush">
+        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
+          <Empty
+            title="No transactions yet"
+            description="Once you make your first contribution, it will show up here."
+            action={<Button variant="secondary" size="sm">Learn how contributions work</Button>}
+          />
         </div>
       </div>
 

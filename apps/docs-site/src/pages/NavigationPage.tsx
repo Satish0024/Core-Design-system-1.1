@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Preview, CodeBlock } from "../Preview";
-import { Tabs, Breadcrumb, Pagination } from "../../../../packages/core/src/components/Navigation";
+import { Tabs, Breadcrumb, Pagination, NavigationMenu, AppSidebar } from "../../../../packages/core/src/components/Navigation";
 
 export default function NavigationPage() {
   const [page, setPage] = useState(3);
@@ -8,6 +8,20 @@ export default function NavigationPage() {
     <div>
       <h1 className="site-h1">Tabs, Breadcrumb &amp; Pagination</h1>
       <p className="site-lede">Wayfinding components — where you are, how you got here, how to move through a list.</p>
+
+      <h2 className="site-section-title">Navigation menu (top nav)</h2>
+      <div className="site-panel site-panel--flush">
+        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
+          <NavigationMenu items={[{ label: "Dashboard", current: true }, { label: "Accounts" }, { label: "Documents" }, { label: "Support" }]} />
+        </div>
+      </div>
+
+      <h2 className="site-section-title">App sidebar</h2>
+      <div className="site-panel site-panel--flush">
+        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", padding: 0 }}>
+          <AppSidebar items={[{ label: "Dashboard", current: true }, { label: "Transactions" }, { label: "Statements" }, { label: "Settings" }]} />
+        </div>
+      </div>
 
       <h2 className="site-section-title">Tabs</h2>
       <div className="site-panel site-panel--flush">

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Preview, CodeBlock } from "../Preview";
 import { Button } from "../../../../packages/core/src/components/Button";
 import { Modal, ConfirmDialog, Drawer, Tooltip, Popover, DropdownMenu } from "../../../../packages/core/src/components/Overlays";
+import { HoverCard } from "../../../../packages/core/src/components/HoverCard";
 
 export default function OverlaysPage() {
   const [modal, setModal] = useState(false);
@@ -82,6 +83,16 @@ export default function OverlaysPage() {
               <a href="#" style={{ color: "var(--core-color-action-destructive-bg)", textDecoration: "none" }}>Close account</a>
             </div>
           </Popover>
+        </Preview>
+      </div>
+
+      <h2 className="site-section-title">Hover card</h2>
+      <p className="site-section-sub">Richer than a Tooltip — for a preview of an entity (fund, account, person) without navigating away.</p>
+      <div className="site-panel site-panel--flush">
+        <Preview>
+          <HoverCard trigger={<a href="#" style={{ color: "var(--core-color-action-tertiary-text)" }}>S&amp;P 500 Index Fund</a>} title="S&P 500 Index Fund (VFIAX)">
+            Expense ratio 0.04% · 1-yr return +18.2% · $2.1B in this plan
+          </HoverCard>
         </Preview>
       </div>
 
