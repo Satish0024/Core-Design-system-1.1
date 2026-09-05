@@ -1,5 +1,4 @@
 import React from "react";
-import { CoreLogo } from "../CoreLogo";
 
 export default function LogoPage() {
   return (
@@ -11,17 +10,20 @@ export default function LogoPage() {
       </p>
 
       <h2 className="site-section-title">CORE mark</h2>
-      <p className="site-section-sub">Three overlapping tiles in the brand purple ramp — a deliberately simple, original mark (not derived from any client or reference asset), suggesting layered foundations: tokens → components → themes.</p>
+      <p className="site-section-sub">
+        Two surface-matched variants — navy wordmark for light backgrounds, lavender for dark — pulled from the
+        LendGuard app's own internal design-system page (color and logo only, as instructed).
+      </p>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" style={{ background: "#0B0C10", gap: 40 }}>
           <div style={{ textAlign: "center" }}>
-            <CoreLogo size={64} />
+            <img src="/brand/core/core-logo-dark.svg" alt="CORE, dark-surface variant" height={64} />
             <div style={{ fontSize: 11, color: "#9A9AAC", marginTop: 8 }}>On dark</div>
           </div>
         </div>
         <div className="preview-surface" style={{ background: "#FFFFFF", gap: 40, borderTop: "1px solid var(--site-border)" }}>
           <div style={{ textAlign: "center" }}>
-            <CoreLogo size={64} />
+            <img src="/brand/core/core-logo-light.svg" alt="CORE, light-surface variant" height={64} />
             <div style={{ fontSize: 11, color: "#55566B", marginTop: 8 }}>On light</div>
           </div>
         </div>
