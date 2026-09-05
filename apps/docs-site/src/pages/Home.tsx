@@ -32,13 +32,6 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="stat-cards">
-        <div className="stat-card"><div className="num">50</div><div className="lbl">Components ready</div></div>
-        <div className="stat-card"><div className="num">3</div><div className="lbl">Token tiers</div></div>
-        <div className="stat-card"><div className="num">2</div><div className="lbl">Client themes proven</div></div>
-        <div className="stat-card"><div className="num">AA</div><div className="lbl">WCAG 2.2 target</div></div>
-      </div>
-
       <h2 className="site-section-title">Live preview</h2>
       <p className="site-lede" style={{ marginBottom: 20 }}>
         Every example on this site renders real CORE components, not screenshots.

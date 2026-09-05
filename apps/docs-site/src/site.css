@@ -97,7 +97,10 @@ a { color: inherit; }
   border-radius: 14px;
   padding: 28px;
 }
-.site-panel--flush { padding: 0; overflow: hidden; }
+/* No overflow:hidden here on purpose — it was clipping every dropdown/combobox/popover
+   that lives inside a flush panel. Corner-rounding for flush content (tables, code blocks)
+   is each child's own responsibility (e.g. .cds-table-wrap has its own border-radius). */
+.site-panel--flush { padding: 0; }
 
 .preview-surface {
   border-radius: 12px;

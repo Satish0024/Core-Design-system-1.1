@@ -23,6 +23,7 @@ export default function RadiusElevation() {
       </div>
 
       <h2 className="site-section-title">Elevation</h2>
+      <p className="site-section-sub">Four levels, each two stacked shadows (a tight contact shadow + a soft ambient one) — never invent a one-off shadow value in a component.</p>
       <div className="site-panel site-grid cols-4" style={{ background: "#1b1c26" }}>
         {Object.entries(elevation).filter(([k]) => k !== "0").map(([step, val]) => (
           <div key={step} style={{ textAlign: "center" }}>
@@ -30,6 +31,43 @@ export default function RadiusElevation() {
             <div style={{ marginTop: 8, fontSize: 12, fontFamily: "var(--site-mono)", color: "var(--site-text-dim)" }}>elevation.{step}</div>
           </div>
         ))}
+      </div>
+
+      <h2 className="site-section-title">Elevation — exact values &amp; usage</h2>
+      <div className="site-panel site-panel--flush">
+        <table className="spec-table">
+          <thead><tr><th>Token</th><th>Offset Y / Blur / Spread</th><th>Opacity</th><th>CSS value</th><th>Use for</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>elevation.1</code></td>
+              <td>1px / 2px / 0 <br />+ 1px / 1px / 0</td>
+              <td>6% / 4%</td>
+              <td style={{ fontFamily: "var(--site-mono)", fontSize: 11 }}>{elevation["1"]}</td>
+              <td>Resting cards, table rows — the default Card shadow.</td>
+            </tr>
+            <tr>
+              <td><code>elevation.2</code></td>
+              <td>2px / 6px / 0 <br />+ 1px / 2px / 0</td>
+              <td>8% / 5%</td>
+              <td style={{ fontFamily: "var(--site-mono)", fontSize: 11 }}>{elevation["2"]}</td>
+              <td>Hovered interactive cards, raised buttons on press-release.</td>
+            </tr>
+            <tr>
+              <td><code>elevation.3</code></td>
+              <td>8px / 16px / 0 <br />+ 2px / 4px / 0</td>
+              <td>10% / 6%</td>
+              <td style={{ fontFamily: "var(--site-mono)", fontSize: 11 }}>{elevation["3"]}</td>
+              <td>Popovers, dropdown menus, select listboxes, tooltips — anything floating above content.</td>
+            </tr>
+            <tr>
+              <td><code>elevation.4</code></td>
+              <td>16px / 32px / 0 <br />+ 4px / 8px / 0</td>
+              <td>14% / 8%</td>
+              <td style={{ fontFamily: "var(--site-mono)", fontSize: 11 }}>{elevation["4"]}</td>
+              <td>Modal, Drawer/Slideover — the highest layer, above a scrim.</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   );

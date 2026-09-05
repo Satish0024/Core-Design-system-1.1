@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 
 export interface Column<T> { key: string; header: string; render?: (row: T) => React.ReactNode; }
-export function Table<T extends { id: string | number }>({ columns, rows, density = "comfortable", zebra = false }: { columns: Column<T>[]; rows: T[]; density?: "comfortable" | "compact"; zebra?: boolean }) {
+export function Table<T extends { id: string | number }>({ columns, rows, density = "comfortable", zebra = true }: { columns: Column<T>[]; rows: T[]; density?: "comfortable" | "compact"; zebra?: boolean }) {
   return (
     <div className="cds-table-wrap">
       <table className="cds-table" data-density={density} data-zebra={zebra}>
@@ -24,10 +24,10 @@ export interface SortableColumn<T> extends Column<T> { sortable?: boolean; sortV
 export interface TableFilterDef { key: string; label: string; options: Array<{ value: string; label: string }> }
 
 export function DataTable<T extends { id: string | number }>({
-  columns, rows, pageSize = 5, searchable = false, searchPlaceholder = "Search…", filters,
+  columns, rows, pageSize = 5, searchable = false, searchPlaceholder = "Search…", filters, zebra = true,
 }: {
   columns: SortableColumn<T>[]; rows: T[]; pageSize?: number;
-  searchable?: boolean; searchPlaceholder?: string; filters?: TableFilterDef[];
+  searchable?: boolean; searchPlaceholder?: string; filters?: TableFilterDef[]; zebra?: boolean;
 }) {
   const [sort, setSort] = useState<{ key: string; dir: 1 | -1 } | null>(null);
   const [page, setPage] = useState(1);
@@ -99,7 +99,7 @@ export function DataTable<T extends { id: string | number }>({
         </div>
       )}
       <div className="cds-table-wrap">
-        <table className="cds-table">
+        <table className="cds-table" data-zebra={zebra}>
           <thead>
             <tr>
               {columns.map((c) => (

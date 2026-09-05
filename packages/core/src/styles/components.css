@@ -228,15 +228,33 @@
 }
 .cds-textarea[aria-invalid="true"] { border-color: var(--core-input-borderError); }
 
-.cds-select-wrap { position: relative; }
+.cds-select-wrap { position: relative; display: inline-block; width: 100%; }
 .cds-select {
   height: var(--core-size-control-md); padding: 0 36px 0 12px; width: 100%;
   border-radius: var(--core-input-radius); border: 1px solid var(--core-input-border);
   background: var(--core-input-bg); color: var(--core-input-text); font-size: var(--core-font-size-md);
-  appearance: none; cursor: pointer;
+  cursor: pointer; text-align: left; font-family: inherit; display: block;
 }
+.cds-select--sm { height: var(--core-size-control-sm); font-size: var(--core-font-size-sm); padding: 0 32px 0 10px; }
+.cds-select--lg { height: var(--core-size-control-lg); font-size: var(--core-font-size-lg); padding: 0 40px 0 14px; }
+.cds-select:hover { border-color: var(--core-input-borderHover); }
 .cds-select:focus-visible { outline: none; border-color: var(--core-input-borderFocus); box-shadow: 0 0 0 3px color-mix(in srgb, var(--core-input-borderFocus) 25%, transparent); }
+.cds-select[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
+.cds-select-placeholder { color: var(--core-input-placeholder); }
 .cds-select-caret { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--core-color-text-tertiary); font-size: 10px; }
+.cds-select-listbox {
+  position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 40; max-height: 260px; overflow-y: auto;
+  margin: 0; padding: 4px; list-style: none; background: var(--core-card-bg); border: 1px solid var(--core-card-border);
+  border-radius: var(--core-radius-md); box-shadow: var(--core-elevation-3, 0 8px 16px rgba(0,0,0,0.12));
+}
+.cds-select-option {
+  display: flex; align-items: center; gap: 6px; padding: 8px 10px; border-radius: var(--core-radius-sm);
+  font-size: var(--core-font-size-md); color: var(--core-color-text-primary); cursor: pointer;
+}
+.cds-select-option--active { background: var(--core-color-surface-sunken); }
+.cds-select-option[aria-selected="true"] { font-weight: 600; }
+.cds-select-option--disabled { opacity: 0.5; cursor: not-allowed; }
+.cds-select-check { width: 14px; color: var(--core-color-action-primary-bg); flex-shrink: 0; }
 
 /* ---------- Checkbox / Radio ---------- */
 .cds-checkbox, .cds-radio { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-size: var(--core-font-size-md); color: var(--core-color-text-primary); }

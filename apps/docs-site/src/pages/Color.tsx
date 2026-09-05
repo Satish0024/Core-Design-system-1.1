@@ -72,6 +72,7 @@ const SECTION_ORDER = [
   "Button emphasis levels — a separate system from the colors above",
   "Tag colors — for labeling only, never for buttons",
   "Grays — text, backgrounds, borders",
+  "Text colors — exactly which text uses which color",
   "Status colors — messages only",
   "Light & dark mode",
 ];
@@ -181,6 +182,52 @@ export default function Color() {
         <Swatch name="Border / divider" hex={color.neutral["200"]} note="Lines between things" />
         <Swatch name="Secondary text" hex={color.neutral["600"]} note="Helper text, timestamps" />
         <Swatch name="Main text" hex={color.neutral["900"]} note="Headings, body copy" />
+      </div>
+
+      <SectionTitle title="Text colors — exactly which text uses which color" />
+      <p className="site-section-sub">Four text roles, each with one fixed color — never pick a text color outside this table.</p>
+      <div className="site-panel site-panel--flush">
+        <table className="spec-table">
+          <thead><tr><th>Text role</th><th>Color</th><th>Token</th><th>Use for</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span className="quickref-swatch" style={{ background: color.neutral["900"] }} />Primary text</td>
+              <td>{color.neutral["900"]}</td>
+              <td><code>color.text.primary</code></td>
+              <td>Headings, body copy, input values — the default for anything meant to be read carefully.</td>
+            </tr>
+            <tr>
+              <td><span className="quickref-swatch" style={{ background: color.neutral["600"] }} />Secondary text</td>
+              <td>{color.neutral["600"]}</td>
+              <td><code>color.text.secondary</code></td>
+              <td>Helper text, field hints, table sub-labels, de-emphasized descriptions.</td>
+            </tr>
+            <tr>
+              <td><span className="quickref-swatch" style={{ background: color.neutral["500"] }} />Tertiary text</td>
+              <td>{color.neutral["500"]}</td>
+              <td><code>color.text.tertiary</code></td>
+              <td>Placeholder text, timestamps, disabled-adjacent labels, icon-only tooltips.</td>
+            </tr>
+            <tr>
+              <td><span className="quickref-swatch" style={{ background: color.neutral["400"] }} />Disabled text</td>
+              <td>{color.neutral["400"]}</td>
+              <td><code>color.text.disabled</code></td>
+              <td>Text inside a disabled control only — never for text a user should still read.</td>
+            </tr>
+            <tr>
+              <td><span className="quickref-swatch" style={{ background: color.brand["700"] }} />Link / interactive text</td>
+              <td>{color.brand["700"]}</td>
+              <td><code>color.action.tertiary.text</code></td>
+              <td>Inline text links and Tertiary buttons — see <a href="/components/actions#link" style={{ color: "var(--site-accent)" }}>Link</a>.</td>
+            </tr>
+            <tr>
+              <td><span className="quickref-swatch" style={{ background: "#FFFFFF" }} />Text on a filled Primary surface</td>
+              <td>#FFFFFF</td>
+              <td><code>color.action.primary.text</code></td>
+              <td>Text/icons sitting directly on a solid Primary button or badge.</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <SectionTitle title="Status colors — messages only" />
