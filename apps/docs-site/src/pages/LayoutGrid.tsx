@@ -347,7 +347,7 @@ export default function LayoutGrid() {
         No sidebar, no header — standalone page. On mobile, the brand panel sits above the form.
       </p>
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", padding: 0, overflow: "hidden", borderRadius: "var(--core-radius-md)" }}>
-        <Grid columns={12} gap="0">
+        <Grid columns={12} gap="2" style={{ gap: 0 }}>
           <GridCol span={12} spanMd={6}>
             <div style={{
               background: "linear-gradient(135deg, var(--core-color-brand-700), var(--core-color-brand-900))",
