@@ -157,22 +157,6 @@ export default function LayoutGrid() {
         ]} />
       </div>
 
-      <h2 className="site-section-title" id="sidebar-variants">Sidebar — responsive across all three variants</h2>
-      <p className="site-section-sub">
-        The <code>shell</code> variant (the one used inside <code>AppShell</code>) changes shape at every breakpoint —
-        see it live on the <a href="#/components/navigation#sidebar" style={{ color: "var(--site-accent)" }}>Navigation</a> page by resizing your browser below ~768px.
-      </p>
-      <div className="site-panel site-panel--flush">
-        <table className="spec-table">
-          <thead><tr><th>Width</th><th>Shell sidebar becomes</th></tr></thead>
-          <tbody>
-            <tr><td>≥ 768px (desktop)</td><td>Full labeled column, {layout["sidebar.width"]} wide, icon + label side by side</td></tr>
-            <tr><td>576–767px (tablet)</td><td>Icon-only rail, {layout["sidebar.railWidth"]} wide — labels stay in the DOM for screen readers, visually hidden</td></tr>
-            <tr><td>&lt; 576px (phone)</td><td>Fixed bottom tab bar, full width — icon over a <em>visible</em> short label, matching the reference app's own mobile nav</td></tr>
-          </tbody>
-        </table>
-      </div>
-
       <h2 className="site-section-title" id="grid">Grid &amp; Container</h2>
       <p className="site-section-sub">
         A 12-column grid inside a width-clamped Container, mobile-first
