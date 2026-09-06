@@ -161,6 +161,7 @@ pre.code-block {
 .dodont .box.do .tag { color: var(--site-success); }
 .dodont .box.dont .tag { color: var(--site-danger); }
 
+/* ---- Hero ---- */
 .hero {
   --hero-ink: #16161d;
   --hero-muted: #5a5b70;
@@ -171,23 +172,29 @@ pre.code-block {
   margin: -40px -32px 32px;
   border-radius: 0;
   overflow: hidden;
-  background-color: #f4f2ff;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: #f4f2ff;
   color: var(--hero-ink);
-  min-height: clamp(320px, 33vw, 480px);
-  display: flex;
-  align-items: center;
 }
+
+/* Image always fills full width — drives the hero height on desktop */
+.hero-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Text overlays the image on desktop */
 .hero-copy {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-width: 46%;
-  padding: 48px 24px 48px 48px;
+  max-width: 48%;
+  padding: 40px 24px 40px 48px;
 }
 .hero-eyebrow {
   font-size: 12px;
@@ -229,51 +236,25 @@ pre.code-block {
   gap: 8px;
   transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
 }
-.btn-hero.primary {
-  background: var(--hero-cta);
-  color: #fff;
-}
+.btn-hero.primary { background: var(--hero-cta); color: #fff; }
 .btn-hero.primary:hover { background: var(--hero-cta-hover); }
-.btn-hero.ghost {
-  background: #fff;
-  border: 1px solid #d8d9e6;
-  color: var(--hero-ink);
-}
+.btn-hero.ghost { background: #fff; border: 1px solid #d8d9e6; color: var(--hero-ink); }
 .btn-hero.ghost:hover { background: #f6f6fb; border-color: #c5c6d6; }
-.btn-hero:focus-visible {
-  outline: 3px solid var(--hero-cta);
-  outline-offset: 2px;
-}
+.btn-hero:focus-visible { outline: 3px solid var(--hero-cta); outline-offset: 2px; }
 
-/* ---- Hero responsive ---- */
-@media (max-width: 1100px) {
-  .hero-copy { max-width: 52%; }
-}
+/* ---- Hero responsive — stack on narrow screens ---- */
 @media (max-width: 900px) {
-  .hero {
-    min-height: 0;
-    flex-direction: column;
-    align-items: stretch;
-    background-position: top center;
-    background-size: 100% auto;
-    padding-top: 0;
-  }
-  .hero::before {
-    content: "";
-    display: block;
-    width: 100%;
-    padding-top: 33.3%;
-  }
   .hero-copy {
+    position: relative;
+    inset: auto;
     max-width: none;
-    padding: 24px 24px 32px;
-    background: #f4f2ff;
+    padding: 28px 24px 32px;
   }
-  .hero h1 { font-size: clamp(26px, 5vw, 36px); }
+  .hero h1 { font-size: clamp(26px, 5.5vw, 36px); }
   .hero-copy > p { max-width: none; }
 }
 @media (max-width: 520px) {
-  .hero-copy { padding: 20px 20px 28px; }
+  .hero-copy { padding: 24px 20px 28px; }
   .hero-actions { flex-direction: column; align-items: stretch; }
   .btn-hero { justify-content: center; }
 }

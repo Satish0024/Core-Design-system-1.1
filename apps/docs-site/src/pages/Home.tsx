@@ -7,11 +7,14 @@ import { Card, Badge } from "../../../../packages/core/src/components/Misc";
 export default function Home() {
   return (
     <div>
-      <section
-        className="hero"
-        aria-labelledby="hero-heading"
-        style={{ backgroundImage: `url(${import.meta.env.BASE_URL}hero-core.jpg)` }}
-      >
+      <section className="hero" aria-labelledby="hero-heading">
+        <img
+          className="hero-art"
+          src={`${import.meta.env.BASE_URL}hero-core.jpg`}
+          alt=""
+          aria-hidden="true"
+          draggable="false"
+        />
         <div className="hero-copy">
           <p className="hero-eyebrow">Our Digital Foundation</p>
           <h1 id="hero-heading">Built once. Used across everything.</h1>

@@ -12,6 +12,20 @@ const gradient = (primitives as any).gradient;
 // here and it appears in the table with zero other changes.
 const MODE_SECTIONS: Array<{ title: string; tokens: Array<{ label: string; key: string }> }> = [
   {
+    title: "Brand colors — Primary, Secondary, Tertiary",
+    tokens: [
+      { label: "Primary — default", key: "color.action.primary.bg" },
+      { label: "Primary — hover", key: "color.action.primary.bgHover" },
+      { label: "Primary — active", key: "color.action.primary.bgActive" },
+      { label: "Secondary — solid", key: "color.palette.secondary.solidBg" },
+      { label: "Secondary — solid hover", key: "color.palette.secondary.solidBgHover" },
+      { label: "Secondary — tint background", key: "color.palette.secondary.tintBg" },
+      { label: "Tertiary — solid", key: "color.palette.tertiary.solidBg" },
+      { label: "Tertiary — solid hover", key: "color.palette.tertiary.solidBgHover" },
+      { label: "Tertiary — tint background", key: "color.palette.tertiary.tintBg" },
+    ],
+  },
+  {
     title: "Backgrounds & surfaces",
     tokens: [
       { label: "Page background", key: "color.bg.page" },
