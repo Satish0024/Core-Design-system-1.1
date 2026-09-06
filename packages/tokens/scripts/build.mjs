@@ -11,6 +11,7 @@ const themesDir = path.resolve(root, "../themes/src");
 const primitives = JSON.parse(readFileSync(path.join(root, "src/primitives.json"), "utf-8"));
 const semantic = JSON.parse(readFileSync(path.join(root, "src/semantic.json"), "utf-8"));
 const component = JSON.parse(readFileSync(path.join(root, "src/component.json"), "utf-8"));
+const typography = JSON.parse(readFileSync(path.join(root, "src/typography.json"), "utf-8"));
 
 function flatten(obj, prefix = "", out = {}) {
   for (const [k, v] of Object.entries(obj)) {
@@ -74,6 +75,25 @@ function buildPrimitiveBlock(overriddenPrimitives) {
     // gradient that references other primitives (e.g. {color.brand.500})
     // picks up a theme's overridden brand color automatically.
     lines.push(`  ${toCssVarName(key)}: ${resolve(value, overriddenPrimitives)};`);
+  }
+  // Semantic typography roles (Bootstrap-aligned h1–h6, lead, body, …).
+  // Desktop sizes are the canonical CSS vars; mobile is available as
+  // --core-typography-{role}-mobile-* for RFS-style media queries.
+  for (const [role, spec] of Object.entries(typography)) {
+    const family = resolve(spec.family, overriddenPrimitives);
+    lines.push(`  ${toCssVarName(`typography.${role}.family`)}: ${family};`);
+    for (const bp of ["desktop", "mobile"]) {
+      const t = spec[bp];
+      lines.push(`  ${toCssVarName(`typography.${role}.${bp}.size`)}: ${t.size};`);
+      lines.push(`  ${toCssVarName(`typography.${role}.${bp}.weight`)}: ${t.weight};`);
+      lines.push(`  ${toCssVarName(`typography.${role}.${bp}.lineHeight`)}: ${t.lineHeight};`);
+      lines.push(`  ${toCssVarName(`typography.${role}.${bp}.letterSpacing`)}: ${t.letterSpacing};`);
+    }
+    // Convenience aliases — desktop size/weight as the default role tokens
+    lines.push(`  ${toCssVarName(`typography.${role}.size`)}: ${spec.desktop.size};`);
+    lines.push(`  ${toCssVarName(`typography.${role}.weight`)}: ${spec.desktop.weight};`);
+    lines.push(`  ${toCssVarName(`typography.${role}.lineHeight`)}: ${spec.desktop.lineHeight};`);
+    lines.push(`  ${toCssVarName(`typography.${role}.letterSpacing`)}: ${spec.desktop.letterSpacing};`);
   }
   return lines.join("\n");
 }
@@ -275,6 +295,12 @@ const scssParts = [
   buildAliasBlock(elevationAliases),
   section("Font size"),
   fontSizeLines,
+  section("Typography roles (Bootstrap-aligned)"),
+  Object.entries(typography).flatMap(([role, spec]) => [
+    `$core-typography-${role}-size: ${toRem(spec.desktop.size)}; // ${spec.desktop.size} — ${spec.bootstrap || role}`,
+    `$core-typography-${role}-weight: ${spec.desktop.weight};`,
+    `$core-typography-${role}-line-height: ${spec.desktop.lineHeight};`,
+  ]).join("\n"),
   section("Spacing"),
   `$core-spacer: ${spacerBase}; // base unit — matches Bootstrap's $spacer\n${spacingLines}`,
   section("Radius"),
@@ -300,6 +326,17 @@ const scssParts = [
     `$border-radius-lg: $core-radius-lg;`,
     `$font-family-base: ${res("{font.family.base}")};`,
     `$font-size-base: $core-font-size-md;`,
+    `$font-size-sm: $core-font-size-sm;`,
+    `$font-size-lg: $core-font-size-lg;`,
+    `$h1-font-size: $core-typography-h1-size;`,
+    `$h2-font-size: $core-typography-h2-size;`,
+    `$h3-font-size: $core-typography-h3-size;`,
+    `$h4-font-size: $core-typography-h4-size;`,
+    `$h5-font-size: $core-typography-h5-size;`,
+    `$h6-font-size: $core-typography-h6-size;`,
+    `$lead-font-size: $core-typography-lead-size;`,
+    `$headings-font-weight: 700;`,
+    `$headings-line-height: 1.2;`,
     `$spacer: $core-spacer;`,
     `$box-shadow: $core-elevation-01;`,
     `$box-shadow-lg: $core-elevation-03;`,

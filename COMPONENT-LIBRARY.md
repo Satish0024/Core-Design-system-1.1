@@ -144,7 +144,7 @@ Status legend: ✅ Built · ⚠️ Partial (thin variants) · ❌ Not started ·
 | 61 | Toggle | — (button `.active`) | Toggle | ✅ | `ToggleInputs.tsx` | pressed state |
 | 62 | Toggle Group | Button group (checkbox/radio) | ToggleGroup | ✅ | `ToggleInputs.tsx` | single-select segmented toggle |
 | 63 | Tooltip | Tooltips | Tooltip | ✅ | `Overlays.tsx` | hover + focus triggered |
-| 64 | Typography | Typography utilities | — | ✅ | (Foundations page, not a component) | Display/H1–H5/Body/Label/Caption/Numeric, desktop+mobile |
+| 64 | Typography | Typography utilities | — | ✅ | (Foundations page, not a component) | Display/H1–H6/Lead/Body/Label/Caption/Numeric, Bootstrap-aligned rem scale |
 
 ## Additional components beyond the shadcn baseline
 
