@@ -32,7 +32,7 @@ export default function LayoutGrid() {
           <div style={{ width: 420, border: "1px solid var(--core-color-border-subtle)", borderRadius: "var(--core-card-radius)", overflow: "hidden" }}>
             <div className="cds-app-header">
               <AppHeader
-                brand="LendGuard"
+                brand="Meridian"
                 actions={<>
                   <IconButton variant="tertiary" size="sm" shape="circle" aria-label="Help"><Icon name="fa-solid fa-circle-question" size="sm" /></IconButton>
                   <Avatar name="Taylor Hale" size="sm" />
@@ -57,7 +57,7 @@ export default function LayoutGrid() {
         ]}>
           <div style={{ width: 420, border: "1px solid var(--core-color-border-subtle)", borderRadius: "var(--core-card-radius)", overflow: "hidden" }}>
             <div className="cds-app-footer">
-              <AppFooter copyright="© 2026 LendGuard." links={<><a href="#">Privacy</a><a href="#">Terms</a></>} />
+              <AppFooter copyright="© 2026 Meridian." links={<><a href="#">Privacy</a><a href="#">Terms</a></>} />
             </div>
           </div>
         </AutoAnatomy>
@@ -122,9 +122,9 @@ export default function LayoutGrid() {
       <h2 className="site-section-title">Code</h2>
       <div className="site-panel site-panel--flush">
         <pre style={{ margin: 0, padding: 20, fontSize: 13, overflowX: "auto" }}>{`<AppShell
-  header={<AppHeader brand="LendGuard" actions={<Avatar name="Taylor Hale" size="sm" />} />}
+  header={<AppHeader brand="Meridian" actions={<Avatar name="Taylor Hale" size="sm" />} />}
   sidebar={<AppSidebar items={navItems} />}
-  footer={<AppFooter copyright="© 2026 LendGuard." links={<a href="/privacy">Privacy</a>} />}
+  footer={<AppFooter copyright="© 2026 Meridian." links={<a href="/privacy">Privacy</a>} />}
 >
   <Grid columns={12} gap="6">
     <GridCol span={12} spanMd={8}>...</GridCol>

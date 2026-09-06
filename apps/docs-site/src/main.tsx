@@ -4,7 +4,7 @@ import { HashRouter } from "react-router-dom";
 import App from "./App";
 import "./site.css";
 import "@tokens/core.css";
-import "@tokens/lendguard.css";
+import "@tokens/meridian.css";
 import "@tokens/clientb.css";
 import "../../../packages/core/src/styles/components.css";
 

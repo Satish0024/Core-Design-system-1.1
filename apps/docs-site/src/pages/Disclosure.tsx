@@ -99,7 +99,7 @@ export default function DisclosurePage() {
                         title: "My Deferral — view detail",
                         content: (
                           <div style={{ display: "flex", gap: 24, fontSize: 13 }}>
-                            <span>Plan: LendGuard 401(k)</span>
+                            <span>Plan: Meridian 401(k)</span>
                             <span>Pay period: Feb 14–28, 2026</span>
                             <span>Post date: Feb 28, 2026</span>
                           </div>

@@ -21,7 +21,7 @@ const NAV_ITEMS = [
 function ScreenHeader({ userName }: { userName: string }) {
   return (
     <AppHeader
-      brand="LendGuard"
+      brand="Meridian"
       actions={
         <>
           <IconButton variant="tertiary" size="sm" shape="circle" aria-label="Help"><Icon name="fa-solid fa-circle-question" size="sm" /></IconButton>
@@ -35,7 +35,7 @@ function ScreenHeader({ userName }: { userName: string }) {
 function ScreenFooter() {
   return (
     <AppFooter
-      copyright={`© ${new Date().getFullYear()} LendGuard. All rights reserved.`}
+      copyright={`© ${new Date().getFullYear()} Meridian. All rights reserved.`}
       links={<><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Support</a></>}
     />
   );
@@ -74,7 +74,7 @@ export default function Screens() {
         ]}>
           <Grid columns={2} gap="4" style={{ width: 720, minHeight: 380, borderRadius: "var(--core-card-radius)", overflow: "hidden", border: "1px solid var(--core-color-border-subtle)" }}>
             <div style={{ background: "var(--core-color-brand-600, var(--core-card-bg))", color: "white", display: "flex", flexDirection: "column", justifyContent: "center", padding: "var(--core-space-8)", gridColumn: "span 1" }}>
-              <div style={{ fontWeight: 700, fontSize: "var(--core-font-size-xl)", marginBottom: "var(--core-space-3)" }}>LendGuard</div>
+              <div style={{ fontWeight: 700, fontSize: "var(--core-font-size-xl)", marginBottom: "var(--core-space-3)" }}>Meridian</div>
               <h2 style={{ fontSize: "var(--core-font-size-lg)", margin: 0 }}>Your retirement, on track.</h2>
               <p style={{ opacity: 0.85, fontSize: "var(--core-font-size-sm)" }}>Sign in to review your plans, contributions, and investment performance.</p>
             </div>
@@ -135,7 +135,7 @@ export default function Screens() {
                   <Card style={{ marginBottom: "var(--core-space-6)" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "var(--core-space-4)" }}>
                       <div>
-                        <div style={{ fontWeight: 600 }}>LendGuard 401(k) Plan <Badge tone="info" size="sm">Participating</Badge></div>
+                        <div style={{ fontWeight: 600 }}>Meridian 401(k) Plan <Badge tone="info" size="sm">Participating</Badge></div>
                         <div style={{ fontSize: "var(--core-font-size-xs)", color: "var(--core-color-text-secondary)", marginTop: "var(--core-space-1)" }}>401(K) · ID 134342</div>
                       </div>
                       <Badge tone="info" size="sm">Participating</Badge>

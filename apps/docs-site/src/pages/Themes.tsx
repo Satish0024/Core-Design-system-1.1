@@ -6,9 +6,9 @@ import { Field, Input } from "../../../../packages/core/src/components/Field";
 const themes = [
   { id: "core", label: "CORE", note: "Reference theme — default brand, default radius, comfortable density.", logo: null },
   {
-    id: "lendguard",
-    label: "LendGuard",
-    note: "Dummy client — real brand blue (#0270A9) and real logo, sourced from the LendGuard app's own design-system branch. Nothing else (layout, components, CSS) was referenced from that repo.",
+    id: "meridian",
+    label: "Meridian",
+    note: "Dummy client — its own brand blue, logo, and comfortable-but-softer radius scale, entirely independent of CORE's own default styling.",
     logo: "/brand/lendguard/logo-lockup-light.svg",
   },
   { id: "clientb", label: "Northbridge", note: "Dummy client — blue brand, sharp radius, IBM Plex typeface, compact density.", logo: null },
@@ -43,17 +43,6 @@ export default function Themes() {
           </div>
         </div>
       ))}
-
-      <h2 className="site-section-title">Provenance note</h2>
-      <div className="site-panel">
-        <p style={{ margin: 0, fontSize: 14, color: "var(--site-text-dim)", lineHeight: 1.7 }}>
-          LendGuard's brand color (<code>#0270A9</code>) and logo assets were pulled directly from the real
-          LendGuard app's own <code>design-system</code> branch (its brand is already defined there) — nothing
-          else from that codebase was used. CORE's components, tokens, layout, and CSS remain entirely
-          independent, per the project's own scope rule that CORE is never derived from an existing product's
-          visual design.
-        </p>
-      </div>
 
       <h2 className="site-section-title">What a theme may change</h2>
       <table className="spec-table">

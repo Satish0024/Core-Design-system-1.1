@@ -8,7 +8,7 @@ export default function RadiusElevation() {
     <div>
       <h1 className="site-h1">Radius &amp; Elevation</h1>
       <p className="site-lede">
-        Client themes may shift the permitted radius range (LendGuard runs soft/rounded, Northbridge runs sharp),
+        Client themes may shift the permitted radius range (Meridian runs soft/rounded, Northbridge runs sharp),
         but the token names and elevation scale stay fixed.
       </p>
 

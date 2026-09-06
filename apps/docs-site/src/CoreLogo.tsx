@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 /**
- * CORE's logomark — pulled from the LendGuard app's own internal design-system
- * page (public/core-logo.svg + core-logo-dark.svg, alt="Design System" there),
- * per instruction. Two variants ship: light-surface (navy) and dark-surface
- * (lavender) — picked automatically from the site's current light/dark mode.
+ * CORE's own logomark, used only on this documentation site — never inside a
+ * themed client application (see the Logo page's usage rules). Two variants
+ * ship: light-surface (navy) and dark-surface (lavender) — picked
+ * automatically from the site's current light/dark mode.
  */
 export function CoreLogo({ size = 22 }: { size?: number }) {
   const [mode, setMode] = useState<"light" | "dark">(

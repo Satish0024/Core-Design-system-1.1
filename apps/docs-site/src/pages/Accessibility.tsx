@@ -10,7 +10,7 @@ interface Criterion { id: string; name: string; level: Level; status: Status; no
 // job when assembling pages (CORE can't guarantee it alone), "content" = whoever writes
 // the actual page content/copy.
 const CRITERIA: Criterion[] = [
-  { id: "1.1.1", name: "Non-text Content", level: "A", status: "product", note: "CORE's Icon/Avatar/Image slots accept alt text — the app must supply meaningful values." },
+  { id: "1.1.1", name: "Non-text Content", level: "A", status: "product", note: "CORE's Icon/Avatar/Image slots accept alt text — the app must supply meaningful values. Chart (LineChartCard/BarChartCard) goes further on its own: every chart's SVG is aria-hidden and ships a real visually-hidden <table> with the same data, not just a summary label." },
   { id: "1.2.1", name: "Audio-only and Video-only (Prerecorded)", level: "A", status: "content", note: "No CORE component plays media; applies if the app embeds any." },
   { id: "1.2.2", name: "Captions (Prerecorded)", level: "A", status: "content", note: "Same as above." },
   { id: "1.2.3", name: "Audio Description or Media Alternative (Prerecorded)", level: "A", status: "content", note: "Same as above." },
@@ -63,7 +63,7 @@ const CRITERIA: Criterion[] = [
   { id: "3.3.4", name: "Error Prevention (Legal, Financial, Data)", level: "AA", status: "product", note: "ConfirmDialog exists for this exact purpose (e.g. withdrawal requests) — the app must use it before irreversible submits." },
   { id: "3.3.7", name: "Redundant Entry", level: "A", status: "product", note: "New in WCAG 2.2 — don't ask for the same info twice in one flow (e.g. Stepper-based requests); an app-flow concern." },
   { id: "3.3.8", name: "Accessible Authentication (Minimum)", level: "AA", status: "product", note: "New in WCAG 2.2 — InputOTP must not be the only path (no cognitive-function test without an alternative); an app/auth-flow concern." },
-  { id: "4.1.2", name: "Name, Role, Value", level: "A", status: "component", note: "Every custom control (Select, Combobox, Switch, Tabs, Accordion, Slider…) uses correct ARIA role/state, verified per component." },
+  { id: "4.1.2", name: "Name, Role, Value", level: "A", status: "component", note: "Every custom control (Select, Combobox, Switch, Tabs, Accordion, Slider…) uses correct ARIA role/state, verified per component. Fixed this pass: DataTable's column filters used a real native <select> instead of the custom Select — the only component found relying on the browser's own control instead of CORE's." },
   { id: "4.1.3", name: "Status Messages", level: "AA", status: "component", note: "Toast/Alert/inline validation use aria-live regions (role=\"status\"/\"alert\") so updates are announced without moving focus." },
 ];
 

@@ -34,7 +34,7 @@ export default function Typography() {
       <h2 className="site-section-title">Font family — Inclusive Sans</h2>
       <p className="site-section-sub">
         CORE's default typeface is <strong style={{ color: "var(--site-text)" }}>Inclusive Sans</strong>, the same
-        typeface LendGuard's own app uses — chosen for clear letterform distinction at small sizes (a real
+        typeface chosen for clear letterform distinction at small sizes (a real
         accessibility property: it visually separates I / l / 1 and O / 0, which many UI fonts don't). It's a
         free, open-source Google Font (SIL Open Font License 1.1) — no license to buy, no attribution required,
         safe to self-host or load from Google Fonts.

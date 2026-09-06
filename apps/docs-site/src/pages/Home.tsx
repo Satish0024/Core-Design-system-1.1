@@ -1,5 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Preview } from "../Preview";
+import { Button } from "../../../../packages/core/src/components/Button";
+import { Card, Badge } from "../../../../packages/core/src/components/Misc";
 
 export default function Home() {
   return (
@@ -13,11 +16,12 @@ export default function Home() {
           draggable="false"
         />
         <div className="hero-copy">
-          <p className="hero-eyebrow">Our Digital Foundation</p>
-          <h1 id="hero-heading">Built once. Used across everything.</h1>
+          <p className="hero-eyebrow">Design system for CORE</p>
+          <h1 id="hero-heading">One design system for the CORE platform.</h1>
           <p>
-            A unified design system that gives our teams a shared foundation for
-            creating and evolving digital products across the company.
+            CORE is Congruent's cloud-native, AI-powered 401(k) recordkeeping platform — built for recordkeepers,
+            TPAs, and retirement plan providers. This design system is the shared foundation every CORE surface
+            (participant portal, admin portal, and every white-labeled client instance) is built from.
           </p>
           <div className="hero-actions">
             <Link className="btn-hero primary" to="/components/actions">
@@ -32,21 +36,21 @@ export default function Home() {
 
       <h2 className="site-section-title">Live preview</h2>
       <p className="site-lede" style={{ marginBottom: 20 }}>
-        The LendGuard participant portal, built entirely from CORE components and tokens — not a mockup.
+        Every example on this site renders real CORE components, not screenshots.
       </p>
-      <div className="site-panel site-panel--flush" style={{ overflow: "hidden" }}>
-        <video
-          className="home-preview-video"
-          src={`${import.meta.env.BASE_URL}video/dashboard-preview.mp4`}
-          autoPlay
-          loop
-          muted
-          playsInline
-          controls
-          style={{ display: "block", width: "100%", height: "auto" }}
-        >
-          Your browser doesn't support embedded video. <a href={`${import.meta.env.BASE_URL}video/dashboard-preview.mp4`}>Download the preview</a> instead.
-        </video>
+      <div className="site-panel site-panel--flush">
+        <Preview>
+          <Button>Primary action</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="tertiary">Tertiary</Button>
+          <Button variant="destructive">Destructive</Button>
+          <Badge tone="success">Active</Badge>
+          <Badge tone="warning">Pending</Badge>
+          <Card style={{ minWidth: 220 } as React.CSSProperties}>
+            <strong>Contribution rate</strong>
+            <p style={{ margin: "6px 0 0", fontSize: 13, color: "var(--core-color-text-secondary)" }}>6% of salary</p>
+          </Card>
+        </Preview>
       </div>
 
       <h2 className="site-section-title">How the layers fit together</h2>
@@ -57,7 +61,7 @@ export default function Home() {
         └─ Primitive Tokens → Semantic Tokens → Component Tokens
              └─ CORE Components (behavior + accessibility owned by CORE)
                   └─ CORE Patterns (forms, tables, dashboards, states)
-                       └─ Client Theme (LendGuard, Northbridge, ...)
+                       └─ Client Theme (per recordkeeper/TPA white-label)
                             └─ Product Application (Participant / Admin Portal)`}
         </pre>
       </div>

@@ -1,5 +1,5 @@
 // Resolves primitive -> semantic -> component tokens into CSS custom properties
-// per theme (core / lendguard / clientb) and per mode (light / dark).
+// per theme (core / meridian / clientb) and per mode (light / dark).
 import { readFileSync, writeFileSync, mkdirSync, readdirSync } from "fs";
 import { fileURLToPath } from "url";
 import path from "path";
