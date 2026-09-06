@@ -11,11 +11,11 @@ import { Drawer } from "../../../../packages/core/src/components/Overlays";
 import { AutoAnatomy, AutoAnatomyLegend } from "../AutoAnatomy";
 
 const NAV_ITEMS = [
-  { label: "Dashboard", icon: <Icon name="fa-solid fa-grip" size="sm" />, current: true },
-  { label: "Investment Portfolio", icon: <Icon name="fa-solid fa-wallet" size="sm" /> },
-  { label: "Transactions", icon: <Icon name="fa-solid fa-right-left" size="sm" /> },
-  { label: "My Profile", icon: <Icon name="fa-solid fa-user" size="sm" /> },
-  { label: "Document Center", icon: <Icon name="fa-solid fa-file-lines" size="sm" /> },
+  { label: "Dashboard", icon: <Icon name="fa-solid fa-grip" size="lg" />, current: true },
+  { label: "Investment Portfolio", icon: <Icon name="fa-solid fa-wallet" size="lg" /> },
+  { label: "Transactions", icon: <Icon name="fa-solid fa-right-left" size="lg" /> },
+  { label: "My Profile", icon: <Icon name="fa-solid fa-user" size="lg" /> },
+  { label: "Document Center", icon: <Icon name="fa-solid fa-file-lines" size="lg" /> },
 ];
 
 function ScreenHeader({ userName }: { userName: string }) {
@@ -111,7 +111,7 @@ export default function Screens() {
           <div style={{ width: 860 }}>
             <AppShell
               header={<ScreenHeader userName="Taylor Hale" />}
-              sidebar={<AppSidebar items={NAV_ITEMS} variant="panel" />}
+              sidebar={<AppSidebar items={NAV_ITEMS} variant="rail" />}
               footer={<ScreenFooter />}
             >
               <div style={{ fontSize: "var(--core-font-size-lg)", fontWeight: 700, marginBottom: "var(--core-space-4)" }}>Hi Taylor 👋</div>
@@ -154,7 +154,7 @@ export default function Screens() {
           { n: 3, label: "Zebra rows — alternating background for scanability", anchor: "bottom" },
         ]}>
           <div style={{ width: 860 }}>
-            <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={[{ ...NAV_ITEMS[0], current: false }, NAV_ITEMS[1], { ...NAV_ITEMS[2], current: true }, NAV_ITEMS[3], NAV_ITEMS[4]]} variant="panel" />} footer={<ScreenFooter />}>
+            <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={[{ ...NAV_ITEMS[0], current: false }, NAV_ITEMS[1], { ...NAV_ITEMS[2], current: true }, NAV_ITEMS[3], NAV_ITEMS[4]]} variant="rail" />} footer={<ScreenFooter />}>
               <Breadcrumb items={[{ label: "Home", href: "#" }, { label: "Transactions" }]} />
               <div style={{ height: "var(--core-space-4)" }} />
               <Card>
@@ -191,7 +191,7 @@ export default function Screens() {
           { n: 3, label: "Step actions — Back / Continue, bottom-right", anchor: "bottom-right" },
         ]}>
           <div style={{ width: 860 }}>
-            <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} variant="panel" />} footer={<ScreenFooter />}>
+            <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} variant="rail" />} footer={<ScreenFooter />}>
               <Card>
                 <Stepper
                   currentIndex={stepIndex}
@@ -241,7 +241,7 @@ export default function Screens() {
           { n: 2, label: "Slideover — docked right, form + aside summary", anchor: "right" },
         ]}>
           <div style={{ width: 860, position: "relative" }}>
-            <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} variant="panel" />} footer={<ScreenFooter />}>
+            <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} variant="rail" />} footer={<ScreenFooter />}>
               <div style={{ fontSize: "var(--core-font-size-lg)", fontWeight: 700, marginBottom: "var(--core-space-4)" }}>Hi Taylor 👋</div>
               <Button onClick={() => setDrawerOpen(true)}>Open "Add Allocation"</Button>
             </AppShell>
@@ -284,7 +284,7 @@ export default function Screens() {
           { n: 3, label: "Destructive — isolated, confirms before acting", anchor: "bottom-right" },
         ]}>
           <div style={{ width: 860 }}>
-            <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} variant="panel" />} footer={<ScreenFooter />}>
+            <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} variant="rail" />} footer={<ScreenFooter />}>
               <Card>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "var(--core-space-6)" }}>
                   <div style={{ fontWeight: 700, fontSize: "var(--core-font-size-lg)" }}>My Profile</div>

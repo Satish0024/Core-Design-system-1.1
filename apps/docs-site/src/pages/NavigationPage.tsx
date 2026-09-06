@@ -84,6 +84,31 @@ export default function NavigationPage() {
         </div>
       </div>
 
+      <p className="site-section-sub"><code>variant="rail"</code> — a compact icon-over-label rail. A left accent bar + tinted band mark the active item; icons are plain, no badge. Same tokens as the row layout above, so it's light/dark aware, not a fixed chrome.</p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "flex-start", flexWrap: "wrap", background: "var(--core-color-bg-page)", padding: "24px 32px" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Active item — accent bar + tinted band", anchor: "left" },
+          { n: 2, label: "Icon — plain, no badge, centered above label", anchor: "top" },
+          { n: 3, label: "Border — right edge, matches app-shell divider", anchor: "right" },
+        ]}>
+          <AppSidebar
+            variant="rail"
+            items={[
+              { label: "Dashboard", icon: <Icon name="fa-solid fa-grip" size="lg" />, current: true },
+              { label: "Investment Portfolio", icon: <Icon name="fa-solid fa-wallet" size="lg" /> },
+              { label: "Transactions", icon: <Icon name="fa-solid fa-right-left" size="lg" /> },
+              { label: "My Profile", icon: <Icon name="fa-solid fa-user" size="lg" /> },
+              { label: "Document Center", icon: <Icon name="fa-solid fa-file-lines" size="lg" /> },
+            ]}
+          />
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Active item: sidebar.rail.accentBar left edge + the same sidebar.item.activeBg tint used by the row layout", anchor: "left" },
+          { n: 2, label: "Icon: plain (currentColor), centered above a wrapping label — no badge container", anchor: "top" },
+          { n: 3, label: "Border: color.border.subtle, same divider the app-shell header/footer use", anchor: "right" },
+        ]} />
+      </div>
+
       <h2 className="site-section-title" id="tabs">Tabs</h2>
       <p className="site-section-sub">Anatomy — active tab has an underline indicator; the whole strip is an ARIA <code>tablist</code>.</p>
       <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>

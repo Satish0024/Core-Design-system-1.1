@@ -669,6 +669,27 @@
    width, no background/border of its own, sized to its container instead. */
 .cds-app-sidebar--panel { width: auto; background: none; border-right: none; padding: 0; gap: 4px; }
 
+/* Rail variant — a compact icon-over-label rail: centered stacked items, a
+   left accent bar + tinted band marking the active item, no icon badge.
+   Same mode-aware tokens as the "shell" row layout (sidebar.item.*,
+   sidebar.rail.*), so it goes light/dark with the rest of the app — not a
+   fixed-dark chrome. */
+.cds-app-sidebar--rail {
+  width: var(--core-space-24); background: var(--core-sidebar-rail-bg); border-right: 1px solid var(--core-color-border-subtle);
+  padding: var(--core-space-4) 0; gap: var(--core-space-2); align-items: stretch;
+}
+.cds-app-sidebar--rail .cds-app-sidebar-link {
+  flex-direction: column; align-items: center; justify-content: flex-start; text-align: center;
+  gap: var(--core-space-1); padding: var(--core-space-3) var(--core-space-2); border-radius: 0;
+  color: var(--core-sidebar-item-text); font-size: var(--core-font-size-xs); font-weight: 600;
+  box-shadow: inset 3px 0 0 0 transparent;
+}
+.cds-app-sidebar--rail .cds-app-sidebar-link:hover { color: var(--core-color-text-primary); background: var(--core-sidebar-item-hoverBg); }
+.cds-app-sidebar--rail .cds-app-sidebar-link[aria-current="page"] {
+  background: var(--core-sidebar-item-activeBg); color: var(--core-sidebar-item-activeText);
+  box-shadow: inset 3px 0 0 0 var(--core-sidebar-rail-accentBar); font-weight: 700;
+}
+
 /* Sidebar nav item — an icon badge + label, with a tinted (not solid) pill for
    the active row. This same pair of classes (cds-sidenav-item / cds-sidenav-icon)
    is meant to be reused anywhere a vertical nav list needs this treatment (the
@@ -708,6 +729,11 @@
 }
 .cds-sidenav-label { display: flex; flex-direction: column; line-height: 1.25; }
 .cds-sidenav-sublabel { font-size: var(--core-font-size-xs); font-weight: 400; color: var(--core-color-text-tertiary); }
+
+/* Plain icon — no badge container, used by the rail variant: the icon is
+   large and colored by the item's own text color (currentColor), matching
+   the reference's icon-over-label rail rather than an icon-in-a-badge row. */
+.cds-sidenav-icon-plain { display: inline-flex; align-items: center; justify-content: center; font-size: var(--core-size-icon-lg); line-height: 1; color: currentColor; }
 
 /* ---------- Icon (Font Awesome wrapper) ---------- */
 .cds-icon { display: inline-flex; align-items: center; justify-content: center; line-height: 1; }
@@ -777,12 +803,11 @@
   border-bottom: 1px solid var(--core-color-border-subtle);
 }
 .cds-app-body { display: flex; flex: 1; min-height: 0; align-items: stretch; }
-.cds-app-shell-sidebar {
-  flex-shrink: 0;
-  background: var(--core-card-bg);
-  border-right: 1px solid var(--core-color-border-subtle);
-  padding: var(--core-space-4) var(--core-space-2);
-}
+/* Deliberately undecorated: the AppShell's sidebar slot supplies layout only
+   (flex-shrink so it doesn't get squeezed). Every AppSidebar variant already
+   carries its own full chrome — background, border, padding — so adding any
+   here would double up with it (that was a real bug, fixed once already). */
+.cds-app-shell-sidebar { flex-shrink: 0; }
 .cds-app-main { flex: 1; min-width: 0; padding: var(--core-space-6); }
 .cds-app-footer {
   padding: var(--core-space-4) var(--core-space-6);

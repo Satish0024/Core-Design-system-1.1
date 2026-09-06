@@ -62,21 +62,30 @@ export function NavigationMenu({ items }: { items: NavMenuItem[] }) {
 }
 
 export interface SidebarItem { label: string; icon?: React.ReactNode; current?: boolean; onClick?: () => void; }
+export type SidebarVariant = "shell" | "panel" | "rail";
 /**
- * A vertical nav list — icon-in-a-badge + label, with a tinted pill (not a
- * solid fill) marking the active row and its icon badge going solid.
- * `variant="shell"` (default) is the full app-shell sidebar: fixed width,
- * its own background and right border. `variant="panel"` drops those so the
- * exact same list can sit inside a Card as a settings-style sub-nav (e.g. a
- * Profile page's Personal/Bank/Employment list) — one visual system, two
- * places to use it.
+ * A vertical nav list, in three variants:
+ * - `"shell"` (default) — icon-in-a-badge + label side by side, a tinted pill
+ *   marking the active row. The full app-shell sidebar: fixed width, its own
+ *   background and right border.
+ * - `"panel"` — the same row layout, no shell chrome, for embedding in a Card
+ *   as a settings-style sub-nav (e.g. a Profile page's Personal/Bank/
+ *   Employment list).
+ * - `"rail"` — a compact icon-over-label rail: centered stacked items, a left
+ *   accent bar + tinted band on the active item, no icon badge. Goes
+ *   light/dark with the rest of the app, same as the other two variants.
  */
-export function AppSidebar({ items, variant = "shell", "aria-label": ariaLabel = "Sidebar" }: { items: SidebarItem[]; variant?: "shell" | "panel"; "aria-label"?: string }) {
+export function AppSidebar({ items, variant = "shell", "aria-label": ariaLabel = "Sidebar" }: { items: SidebarItem[]; variant?: SidebarVariant; "aria-label"?: string }) {
+  const stacked = variant === "rail";
   return (
-    <nav className={`cds-app-sidebar ${variant === "panel" ? "cds-app-sidebar--panel" : ""}`} aria-label={ariaLabel}>
+    <nav className={`cds-app-sidebar cds-app-sidebar--${variant}`} aria-label={ariaLabel}>
       {items.map((item) => (
         <button key={item.label} className="cds-app-sidebar-link" aria-current={item.current ? "page" : undefined} onClick={item.onClick}>
-          {item.icon && <span className="cds-sidenav-icon" aria-hidden="true">{item.icon}</span>}
+          {item.icon && (
+            stacked
+              ? <span className="cds-sidenav-icon-plain" aria-hidden="true">{item.icon}</span>
+              : <span className="cds-sidenav-icon" aria-hidden="true">{item.icon}</span>
+          )}
           <span className="cds-sidenav-label">{item.label}</span>
         </button>
       ))}
