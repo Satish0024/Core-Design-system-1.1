@@ -270,7 +270,7 @@ export default function Color() {
 
       <SectionTitle title="Primary — used throughout" />
       <p className="site-section-sub">
-        One purple. It's the default for every primary button, active link, selected nav item, and focus outline.
+        One blue. It's the default for every primary button, active link, selected nav item, and focus outline.
         When in doubt, this is the color — Primary should be what the product reaches for first, everywhere.
       </p>
       <div className="site-panel site-grid cols-3">
