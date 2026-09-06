@@ -23,7 +23,8 @@ uses AutoAnatomy.
 **✅ Has a full visual Anatomy diagram (all components):**
 - **Actions:** Button, Icon Button, Link, Button Group
 - **Forms:** Input, Textarea, Select, Checkbox, Switch, Toggle, Toggle Group, Input Group, Input OTP, Slider,
-  Combobox, Date Picker, Calendar, Attachment/Dropzone
+  Combobox, Date Picker, Calendar, Attachment/Dropzone, Payment & Bank Detail Fields (card number, expiration/CVC,
+  routing/account number)
 - **Data Display:** Card, Badge, Table, Data Table, Item, Description List, Avatar, Progress, Aspect Ratio
 - **Disclosure:** Collapsible, Accordion, Separator, Skeleton
 - **Navigation:** Navigation Menu, Sidebar, Tabs, Breadcrumb, Stepper, Pagination
@@ -68,7 +69,7 @@ reference (in addition to shadcn/Bootstrap above) — no code, CSS, or layout fr
 | **Tabs & step navigator** | Tabs covered; the **Stepper** (step navigator) was missing — now added (`Stepper` in `Navigation.tsx`) |
 | Tables (zebra striping) | Table existed but had no zebra option — now added (`zebra` prop) |
 | Dialogs & modals | ✅ covered |
-| Chart legend ("+N more" overflow) | Not built — correctly deferred, since CORE has no chart component yet (see Chart, ⛔ below) |
+| Chart legend ("+N more" overflow) | Chart itself now built (`Chart.tsx`, see #15 above); the "+N more" legend-overflow truncation specifically is not yet implemented |
 | Accessibility toolbar (vision profile, read-aloud, voice nav, text scaling) | Not built — this is an app-level feature (Web Speech API integration), not a reusable design-system component; flagged as a notable pattern but out of scope for CORE itself |
 | Link (used inline in their forms/content) | Was missing as an explicit component — now added (`Link` in `Button.tsx`), distinct from Tertiary button |
 
@@ -94,7 +95,7 @@ Status legend: ✅ Built · ⚠️ Partial (thin variants) · ❌ Not started ·
 | 12 | Calendar | Datepicker (via plugin, not core BS) | Calendar | ✅ | `Calendar.tsx` | month grid, prev/next, min/max disable |
 | 13 | Card | Card | Card | ✅ | `Misc.tsx` | default/outlined/interactive variants |
 | 14 | Carousel | Carousel | — | ⛔ | — | marketing pattern, excluded by scope doc |
-| 15 | Chart | — | — | ⛔ | — | defer to a dedicated charting library, not a CORE primitive |
+| 15 | Chart | — | LineChartCard / BarChartCard | ✅ | `Chart.tsx` | Built on [Recharts](https://recharts.org/) (MIT); CORE owns tokens for every color/font/stroke and provides a visually-hidden data-table alternative for WCAG 1.1.1 |
 | 16 | Checkbox | Forms (checks) | Checkbox | ✅ | `FormControls.tsx` | checked/unchecked/disabled/indeterminate |
 | 17 | Collapsible | Collapse | Collapsible | ✅ | `Primitives.tsx` | generic single-panel disclosure primitive |
 | 18 | Combobox | — | Combobox | ✅ | `Combobox.tsx` | search/filter, keyboard-navigable option list |
@@ -124,7 +125,7 @@ Status legend: ✅ Built · ⚠️ Partial (thin variants) · ❌ Not started ·
 | 42 | Pagination | Pagination | Pagination | ✅ | `Navigation.tsx` | prev/next, page numbers, current |
 | 43 | Popover | Popovers | Popover | ✅ | `Overlays.tsx` | click-triggered floating panel |
 | 44 | Progress | Progress | Progress | ✅ | `DataDisplay.tsx` | determinate + indeterminate (animated) |
-| 45 | Questionnaire *(New)* | — | — | ⛔ | — | shadcn-specific pattern, no portal equivalent yet |
+| 45 | Questionnaire *(New)* | — | Questionnaire | ✅ | `Questionnaire.tsx` | Single-question-per-step flow (e.g. risk tolerance), composed from Progress + RadioGroup + Button |
 | 46 | Radio Group | Forms (radios) | RadioGroup | ✅ | `FormControls.tsx` | `role="radiogroup"`, managed value/onChange |
 | 47 | Resizable | — | — | ⛔ | — | pane-resize, not needed in a portal |
 | 48 | Scroll Area | — | — | ⛔ | — | native scroll is sufficient |
@@ -197,10 +198,10 @@ own the way every other component gets.
 
 ## Summary
 
-- **✅ Fully built:** 47 from the shadcn baseline + 7 additional (Icon Button, Link, Stepper, App Header, App Footer, App Shell, Grid/Container) = 54
+- **✅ Fully built:** 49 from the shadcn baseline (Chart and Questionnaire now built) + 7 additional (Icon Button, Link, Stepper, App Header, App Footer, App Shell, Grid/Container) = 56
 - **⚠️ Built but thin:** 3 (Dropdown Menu, Input, Toast)
 - **❌ Not started, in scope:** 2 (Aspect Ratio, Kbd)
-- **⛔ Out of scope:** 12 (chat components, Carousel, Chart, Command, Context Menu, Menubar, Resizable, Scroll Area, Direction, Marker, Questionnaire)
+- **⛔ Out of scope:** 10 (chat components, Carousel, Command, Context Menu, Menubar, Resizable, Scroll Area, Direction, Marker)
 
 ## Hardening pass — status
 
