@@ -6,6 +6,7 @@ import Color from "./pages/Color";
 import Typography from "./pages/Typography";
 import Spacing from "./pages/Spacing";
 import RadiusElevation from "./pages/RadiusElevation";
+import Responsive from "./pages/Responsive";
 import Motion from "./pages/Motion";
 import Icons from "./pages/Icons";
 import LogoPage from "./pages/Logo";
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="/foundations/typography" element={<Typography />} />
         <Route path="/foundations/spacing" element={<Spacing />} />
         <Route path="/foundations/radius-elevation" element={<RadiusElevation />} />
+        <Route path="/foundations/responsive" element={<Responsive />} />
         <Route path="/foundations/motion" element={<Motion />} />
         <Route path="/foundations/icons" element={<Icons />} />
         <Route path="/foundations/logo" element={<LogoPage />} />

@@ -12,6 +12,7 @@ const nav = [
       { to: "/foundations/typography", label: "Typography" },
       { to: "/foundations/spacing", label: "Spacing & Sizing" },
       { to: "/foundations/radius-elevation", label: "Radius & Elevation" },
+      { to: "/foundations/responsive", label: "Responsive & Mobile" },
       { to: "/foundations/icons", label: "Icons" },
       { to: "/foundations/motion", label: "Motion" },
     ],
