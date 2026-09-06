@@ -53,6 +53,15 @@
     "overlay.scrim": "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%)"
   },
   "space": { "0": "0px", "1": "4px", "2": "8px", "3": "12px", "4": "16px", "5": "20px", "6": "24px", "8": "32px", "10": "40px", "12": "48px", "16": "64px", "20": "80px", "24": "96px" },
+  "breakpoint": {
+    "sm": "576px", "md": "768px", "lg": "992px", "xl": "1200px", "xxl": "1400px"
+  },
+  "container": {
+    "maxWidth.sm": "540px", "maxWidth.md": "720px", "maxWidth.lg": "960px",
+    "maxWidth.xl": "1140px", "maxWidth.xxl": "1320px", "gutter": "24px"
+  },
+  "grid": { "columns": "12" },
+  "layout": { "header.height": "64px", "footer.minHeight": "56px", "sidebar.width": "220px", "sidebar.railWidth": "96px" },
   "radius": { "none": "0px", "xs": "4px", "sm": "6px", "md": "8px", "lg": "12px", "xl": "16px", "full": "9999px" },
   "elevation": {
     "0": "none",

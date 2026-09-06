@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { Select } from "./FormControls";
 
 export interface Column<T> { key: string; header: string; render?: (row: T) => React.ReactNode; }
 export function Table<T extends { id: string | number }>({ columns, rows, density = "comfortable", zebra = true }: { columns: Column<T>[]; rows: T[]; density?: "comfortable" | "compact"; zebra?: boolean }) {
@@ -85,16 +86,14 @@ export function DataTable<T extends { id: string | number }>({
             />
           )}
           {filters?.map((f) => (
-            <select
+            <Select
               key={f.key}
-              className="cds-select cds-table-filter"
+              style={{ width: "auto", minWidth: 140 }}
               aria-label={f.label}
               value={filterValues[f.key] ?? ""}
+              options={[{ value: "", label: `${f.label}: All` }, ...f.options]}
               onChange={(e) => { setFilterValues((prev) => ({ ...prev, [f.key]: e.target.value })); setPage(1); }}
-            >
-              <option value="">{f.label}: All</option>
-              {f.options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
-            </select>
+            />
           ))}
         </div>
       )}

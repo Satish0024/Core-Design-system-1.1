@@ -328,7 +328,10 @@
 /* ---------- Table ---------- */
 .cds-table-toolbar { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
 .cds-table-search { max-width: 240px; }
-.cds-table-filter { width: auto; min-width: 140px; }
+/* Filter width is set inline via the Select's own `style` prop (DataTable
+   passes { width: "auto", minWidth: 140 }) rather than a class — className
+   on Select lands on its inner trigger button, not the flex-item wrapper
+   that needs sizing here. */
 .cds-table-empty { text-align: center; padding: 32px 16px; color: var(--core-color-text-tertiary); font-size: var(--core-font-size-sm); }
 .cds-table-wrap { overflow-x: auto; border: 1px solid var(--core-color-border-default); border-radius: var(--core-radius-md); }
 .cds-table { width: 100%; border-collapse: collapse; font-size: var(--core-font-size-md); }
@@ -798,9 +801,11 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--core-space-4);
-  padding: var(--core-space-3) var(--core-space-6);
+  min-height: var(--core-layout-header-height);
+  padding: 0 var(--core-space-6);
   background: var(--core-card-bg);
   border-bottom: 1px solid var(--core-color-border-subtle);
+  box-sizing: border-box;
 }
 .cds-app-body { display: flex; flex: 1; min-height: 0; align-items: stretch; }
 /* Deliberately undecorated: the AppShell's sidebar slot supplies layout only
@@ -810,14 +815,35 @@
 .cds-app-shell-sidebar { flex-shrink: 0; }
 .cds-app-main { flex: 1; min-width: 0; padding: var(--core-space-6); }
 .cds-app-footer {
-  padding: var(--core-space-4) var(--core-space-6);
+  display: flex; align-items: center;
+  min-height: var(--core-layout-footer-minHeight);
+  padding: var(--core-space-3) var(--core-space-6);
   border-top: 1px solid var(--core-color-border-subtle);
   font-size: var(--core-font-size-xs);
   color: var(--core-color-text-secondary);
   background: var(--core-card-bg);
+  box-sizing: border-box;
+  width: 100%;
 }
 
-.cds-container { max-width: 1200px; margin: 0 auto; padding-left: var(--core-space-6); padding-right: var(--core-space-6); width: 100%; box-sizing: border-box; }
+/* Container — Bootstrap's own breakpoint/max-width scale (container.maxWidth.*
+   primitives, resolved from the same breakpoint.* values as the grid below):
+   fluid (100%) until a breakpoint is reached, then clamped to that
+   breakpoint's max-width so line lengths stay readable on very wide screens.
+   CSS @media conditions can't reference custom properties, so the pixel
+   values below are literals — but they're required to match
+   packages/tokens/src/primitives.json's breakpoint/container scale exactly;
+   see the Layout & Grid foundations page for the single documented source. */
+.cds-container {
+  width: 100%; margin: 0 auto; box-sizing: border-box;
+  padding-left: var(--core-container-gutter); padding-right: var(--core-container-gutter);
+}
+@media (min-width: 576px)  { .cds-container { max-width: var(--core-container-maxWidth-sm); } }
+@media (min-width: 768px)  { .cds-container { max-width: var(--core-container-maxWidth-md); } }
+@media (min-width: 992px)  { .cds-container { max-width: var(--core-container-maxWidth-lg); } }
+@media (min-width: 1200px) { .cds-container { max-width: var(--core-container-maxWidth-xl); } }
+@media (min-width: 1400px) { .cds-container { max-width: var(--core-container-maxWidth-xxl); } }
+.cds-container--fluid { max-width: none !important; }
 
 .cds-grid { display: grid; }
 .cds-grid--gap-2 { gap: var(--core-space-2); }
@@ -826,6 +852,7 @@
 .cds-grid--gap-6 { gap: var(--core-space-6); }
 .cds-grid--gap-8 { gap: var(--core-space-8); }
 .cds-grid-col { min-width: 0; }
+/* breakpoint.md (768px) — a GridCol's `spanMd` takes over from `span` here. */
 @media (min-width: 768px) {
   .cds-grid-col { grid-column: span var(--cds-grid-col-span-md, 12) !important; }
 }
