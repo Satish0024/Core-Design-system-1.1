@@ -61,5 +61,9 @@
   "stepper.connector.completeColor": "{color.status.success.bgStrong}",
   "stepper.title.currentColor": "{color.action.primary.bg}",
   "stepper.title.completeColor": "{color.text.primary}",
-  "stepper.status.text": "{color.text.tertiary}"
+  "stepper.status.text": "{color.text.tertiary}",
+
+  "promoCard.bg": "{gradient.brand.subtle}",
+  "promoCard.text": "{color.neutral.0}",
+  "promoCard.radius": "{radius.lg}"
 }

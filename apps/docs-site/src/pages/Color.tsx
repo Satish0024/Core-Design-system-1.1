@@ -4,6 +4,7 @@ import { ContrastBadge } from "../ContrastBadge";
 import { RoleSwatch } from "../RoleSwatch";
 
 const color = (primitives as any).color;
+const gradient = (primitives as any).gradient;
 
 const roleVars: Array<{ label: string; var: string }> = [
   { label: "Page background", var: "--core-color-bg-page" },
@@ -32,6 +33,18 @@ const quickRef = [
   { use: "Informational notices", hex: color.info["600"], token: "Info" },
   { use: "Category tags, chart series (never a button)", hex: color.accent.slate["500"], token: "Tag color 1 of 5" },
 ];
+
+function GradientSwatch({ name, css, token }: { name: string; css: string; token: string }) {
+  return (
+    <div className="token-swatch">
+      <div className="chip" style={{ background: css }} />
+      <div className="meta">
+        <div className="name">{name}</div>
+        <div className="value"><code>{token}</code></div>
+      </div>
+    </div>
+  );
+}
 
 function Swatch({ name, hex, note, border }: { name: string; hex: string; note?: string; border?: boolean }) {
   return (
@@ -74,6 +87,7 @@ const SECTION_ORDER = [
   "Grays — text, backgrounds, borders",
   "Text colors — exactly which text uses which color",
   "Status colors — messages only",
+  "Gradients — promo/hero surfaces only, never text or buttons",
   "Light & dark mode",
 ];
 
@@ -221,6 +235,43 @@ export default function Color() {
         {(["success", "warning", "danger", "info"] as const).map((s) => (
           <Swatch key={s} name={s[0].toUpperCase() + s.slice(1)} hex={color[s]["600"]} note={s === "danger" ? "Also used for the Delete/destructive button" : "Message text/icon color"} />
         ))}
+      </div>
+
+      <SectionTitle title="Gradients — promo/hero surfaces only, never text or buttons" />
+      <p className="site-section-sub">
+        Two-stop scale-based gradients — each generated from the same brand/secondary/tertiary ramps above (a
+        gradient token references <code>{"{color.brand.500}"}</code> etc. directly, so it re-colors automatically
+        under a client theme, same as everything else). Reserved for promotional/feature cards and hero banners —
+        a large, low-density surface where a subtle depth cue helps. <strong style={{ color: "var(--site-text)" }}>
+        Never on buttons, badges, or text</strong> — those stay flat, token-driven solid colors so they read
+        consistently at small sizes and pass contrast checks predictably.
+      </p>
+      <div className="site-panel site-grid cols-3">
+        <GradientSwatch name="Brand / subtle" css={gradient["brand.subtle"]} token="gradient.brand.subtle" />
+        <GradientSwatch name="Brand / vivid" css={gradient["brand.vivid"]} token="gradient.brand.vivid" />
+        <GradientSwatch name="Secondary / subtle" css={gradient["secondary.subtle"]} token="gradient.secondary.subtle" />
+        <GradientSwatch name="Tertiary / subtle" css={gradient["tertiary.subtle"]} token="gradient.tertiary.subtle" />
+        <GradientSwatch name="Overlay scrim" css={gradient["overlay.scrim"]} token="gradient.overlay.scrim" />
+      </div>
+      <div className="site-panel site-panel--flush">
+        <table className="spec-table">
+          <thead><tr><th>Token</th><th>Use for</th></tr></thead>
+          <tbody>
+            <tr><td><code>gradient.brand.subtle</code></td><td>Feature/promo cards on a page — e.g. a "Retirement readiness" or upsell card, via the <code>promoCard.bg</code> component token</td></tr>
+            <tr><td><code>gradient.brand.vivid</code></td><td>Larger hero banners where a bolder, three-stop version of the brand ramp reads better at scale</td></tr>
+            <tr><td><code>gradient.secondary.subtle</code> / <code>tertiary.subtle</code></td><td>The same promo-card pattern when it needs to visually differ from a Primary-colored one nearby</td></tr>
+            <tr><td><code>gradient.overlay.scrim</code></td><td>A dark bottom-fade over a photo/illustration so white text sitting on it stays legible — not a decorative gradient</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div className="site-panel site-panel--flush">
+        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
+          <div style={{ width: 260, borderRadius: "var(--core-promoCard-radius)", background: "var(--core-promoCard-bg)", color: "var(--core-promoCard-text)", padding: 20 }}>
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", opacity: 0.85 }}>Retirement readiness</div>
+            <div style={{ fontSize: 16, fontWeight: 700, margin: "6px 0 10px" }}>See how your inputs affect your savings.</div>
+            <div style={{ fontSize: 13, fontWeight: 600, textDecoration: "underline" }}>Get started →</div>
+          </div>
+        </div>
       </div>
 
       <SectionTitle title="Light & dark mode" />

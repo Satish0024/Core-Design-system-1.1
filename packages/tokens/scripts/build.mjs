@@ -23,15 +23,31 @@ function flatten(obj, prefix = "", out = {}) {
 
 const flatPrimitives = flatten(primitives);
 
+// Resolves `{token.path}` references in a value. A value that is *exactly*
+// one reference resolves to that token's own value (any type — string,
+// number, etc). A value with references *embedded* in a larger string (e.g.
+// a gradient's `linear-gradient(135deg, {color.brand.500}, {color.brand.700})`)
+// resolves each embedded reference in place — every referenced token must
+// itself resolve to a string in that case.
 function resolve(value, dict, depth = 0) {
   if (depth > 10) throw new Error(`Reference cycle resolving ${value}`);
   if (typeof value !== "string") return value;
-  const match = value.match(/^\{(.+)\}$/);
-  if (!match) return value;
-  const refKey = match[1];
-  const refVal = dict[refKey];
-  if (refVal === undefined) throw new Error(`Unresolved token reference: {${refKey}}`);
-  return resolve(refVal, dict, depth + 1);
+  const fullMatch = value.match(/^\{(.+)\}$/);
+  if (fullMatch) {
+    const refVal = dict[fullMatch[1]];
+    if (refVal === undefined) throw new Error(`Unresolved token reference: {${fullMatch[1]}}`);
+    return resolve(refVal, dict, depth + 1);
+  }
+  if (value.includes("{")) {
+    return value.replace(/\{([^{}]+)\}/g, (_, refKey) => {
+      const refVal = dict[refKey];
+      if (refVal === undefined) throw new Error(`Unresolved token reference: {${refKey}}`);
+      const resolved = resolve(refVal, dict, depth + 1);
+      if (typeof resolved !== "string") throw new Error(`Cannot embed non-string token {${refKey}} inside a larger value`);
+      return resolved;
+    });
+  }
+  return value;
 }
 
 function toCssVarName(key) {
@@ -54,7 +70,10 @@ function buildModeBlock(mode) {
 function buildPrimitiveBlock(overriddenPrimitives) {
   const lines = [];
   for (const [key, value] of Object.entries(overriddenPrimitives)) {
-    lines.push(`  ${toCssVarName(key)}: ${value};`);
+    // Resolved against the primitive scale itself, so a primitive like a
+    // gradient that references other primitives (e.g. {color.brand.500})
+    // picks up a theme's overridden brand color automatically.
+    lines.push(`  ${toCssVarName(key)}: ${resolve(value, overriddenPrimitives)};`);
   }
   return lines.join("\n");
 }
@@ -74,12 +93,23 @@ for (const file of themeFiles) {
   function resolveWithTheme(value, extra, depth = 0) {
     if (depth > 10) throw new Error(`Reference cycle resolving ${value}`);
     if (typeof value !== "string") return value;
-    const match = value.match(/^\{(.+)\}$/);
-    if (!match) return value;
-    const refKey = match[1];
-    const refVal = extra[refKey] !== undefined ? extra[refKey] : mergedPrimitives[refKey];
-    if (refVal === undefined) throw new Error(`Unresolved token reference: {${refKey}}`);
-    return resolveWithTheme(refVal, extra, depth + 1);
+    const lookup = (refKey) => (extra[refKey] !== undefined ? extra[refKey] : mergedPrimitives[refKey]);
+    const fullMatch = value.match(/^\{(.+)\}$/);
+    if (fullMatch) {
+      const refVal = lookup(fullMatch[1]);
+      if (refVal === undefined) throw new Error(`Unresolved token reference: {${fullMatch[1]}}`);
+      return resolveWithTheme(refVal, extra, depth + 1);
+    }
+    if (value.includes("{")) {
+      return value.replace(/\{([^{}]+)\}/g, (_, refKey) => {
+        const refVal = lookup(refKey);
+        if (refVal === undefined) throw new Error(`Unresolved token reference: {${refKey}}`);
+        const resolved = resolveWithTheme(refVal, extra, depth + 1);
+        if (typeof resolved !== "string") throw new Error(`Cannot embed non-string token {${refKey}} inside a larger value`);
+        return resolved;
+      });
+    }
+    return value;
   }
 
   const cssParts = [`/* Theme: ${theme.label} — generated file, do not edit by hand */`];

@@ -45,6 +45,13 @@
       "amber":   { "500": "#B4791E", "700": "#7E5314" }
     }
   },
+  "gradient": {
+    "brand.subtle": "linear-gradient(135deg, {color.brand.500} 0%, {color.brand.700} 100%)",
+    "brand.vivid": "linear-gradient(135deg, {color.brand.400} 0%, {color.brand.600} 55%, {color.brand.900} 100%)",
+    "secondary.subtle": "linear-gradient(135deg, {color.secondary.400} 0%, {color.secondary.600} 100%)",
+    "tertiary.subtle": "linear-gradient(135deg, {color.tertiary.400} 0%, {color.tertiary.600} 100%)",
+    "overlay.scrim": "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%)"
+  },
   "space": { "0": "0px", "1": "4px", "2": "8px", "3": "12px", "4": "16px", "5": "20px", "6": "24px", "8": "32px", "10": "40px", "12": "48px", "16": "64px", "20": "80px", "24": "96px" },
   "radius": { "none": "0px", "xs": "4px", "sm": "6px", "md": "8px", "lg": "12px", "xl": "16px", "full": "9999px" },
   "elevation": {
