@@ -698,12 +698,12 @@
 .cds-navmenu-link[aria-current="page"] { color: var(--core-color-action-primary-bg); background: var(--core-color-surface-sunken); }
 
 .cds-app-sidebar { width: var(--core-layout-sidebar-width); background: var(--core-color-surface-raised); border-right: 1px solid var(--core-color-border-default); padding: 16px 10px; display: flex; flex-direction: column; gap: 2px; }
-/* Below breakpoint.md, the full labeled shell sidebar collapses to
-   icon-only (rail width) rather than eating ~40% of a phone's width —
-   labels stay in the DOM (visually-hidden, not display:none) so screen
-   readers still get them. The rail/panel variants are unaffected: rail is
-   already this compact, and panel is sized by whatever Card it sits in. */
-@media (max-width: 767px) {
+
+/* Tablet range (sm–md, 576–767px): the full labeled shell sidebar collapses
+   to icon-only (rail width) rather than eating ~40% of the width. Labels
+   stay in the DOM (visually-hidden, not display:none) for screen readers.
+   The rail/panel variants are unaffected. */
+@media (min-width: 576px) and (max-width: 767px) {
   .cds-app-sidebar:not(.cds-app-sidebar--panel):not(.cds-app-sidebar--rail) {
     width: var(--core-layout-sidebar-railWidth);
   }
@@ -712,6 +712,33 @@
   }
   .cds-app-sidebar:not(.cds-app-sidebar--panel):not(.cds-app-sidebar--rail) .cds-app-sidebar-link {
     justify-content: center;
+  }
+}
+
+/* Phone range (below breakpoint.sm, 576px): the shell sidebar becomes a
+   fixed bottom tab bar — icon over a *visible* short label, row instead of
+   column, spanning the full width — matching the reference app's actual
+   mobile navigation pattern rather than a cramped vertical rail down the
+   side of a 360px screen. AppMain gets bottom padding so the last bit of
+   content isn't hidden behind the fixed bar (see .cds-app-main below). */
+@media (max-width: 575px) {
+  .cds-app-sidebar:not(.cds-app-sidebar--panel) {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+    width: 100%; flex-direction: row; justify-content: space-around;
+    border-right: none; border-top: 1px solid var(--core-color-border-default);
+    padding: var(--core-space-2) var(--core-space-1);
+    padding-bottom: max(var(--core-space-2), env(safe-area-inset-bottom));
+    gap: 0; box-shadow: var(--core-elevation-2);
+  }
+  .cds-app-sidebar:not(.cds-app-sidebar--panel) .cds-app-sidebar-link {
+    flex: 1; flex-direction: column; align-items: center; justify-content: center;
+    gap: 2px; padding: var(--core-space-1); font-size: 11px; text-align: center;
+  }
+  .cds-app-sidebar:not(.cds-app-sidebar--panel) .cds-sidenav-label {
+    position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal;
+  }
+  .cds-app-sidebar:not(.cds-app-sidebar--panel) .cds-sidenav-icon {
+    width: 26px; height: 26px;
   }
 }
 /* Panel variant — the same nav list embedded inside a Card (e.g. a settings
@@ -861,6 +888,13 @@
    here would double up with it (that was a real bug, fixed once already). */
 .cds-app-shell-sidebar { flex-shrink: 0; }
 .cds-app-main { flex: 1; min-width: 0; padding: var(--core-space-6); }
+/* Room for the fixed bottom tab bar the shell sidebar becomes on phones,
+   so the last bit of page content isn't hidden underneath it. */
+@media (max-width: 575px) {
+  .cds-app-body:has(> .cds-app-shell-sidebar > .cds-app-sidebar:not(.cds-app-sidebar--panel)) .cds-app-main {
+    padding-bottom: calc(var(--core-space-6) + 64px + env(safe-area-inset-bottom));
+  }
+}
 .cds-app-footer {
   display: flex; align-items: center;
   min-height: var(--core-layout-footer-minHeight);
