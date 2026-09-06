@@ -56,6 +56,10 @@
 .cds-icon-btn--sm { width: var(--core-size-control-sm); height: var(--core-size-control-sm); }
 .cds-icon-btn--md { width: var(--core-size-control-md); height: var(--core-size-control-md); }
 .cds-icon-btn--lg { width: var(--core-size-control-lg); height: var(--core-size-control-lg); }
+/* Circle shape — the header/toolbar ghost-icon treatment (ⓘ Help, ☾ theme
+   toggle, avatar-adjacent actions): fully round instead of button.radius. */
+.cds-icon-btn--circle { border-radius: var(--core-iconButton-ghost-radius); }
+.cds-icon-btn--circle.cds-icon-btn--tertiary:hover:not(:disabled) { background: var(--core-iconButton-ghost-hoverBg); }
 .cds-icon-btn--primary { background: var(--core-button-primary-bg); color: var(--core-button-primary-text); }
 .cds-icon-btn--primary:hover:not(:disabled) { background: var(--core-button-primary-bgHover); }
 .cds-icon-btn--secondary { background: var(--core-button-secondary-bg); color: var(--core-color-text-secondary); border-color: var(--core-button-secondary-border); }
@@ -70,23 +74,32 @@
 .cds-link:hover { color: var(--core-color-action-tertiary-textHover); }
 .cds-link:focus-visible { outline: var(--core-focusRing-width) solid var(--core-focusRing-color); outline-offset: 2px; border-radius: 2px; }
 
-/* ---------- Stepper ---------- */
+/* ---------- Stepper ----------
+   Three genuinely distinct states, not just color-on/off: complete is its own
+   success color (a solid check, done), current is the loudest — solid primary
+   fill + bold label — and upcoming is a soft filled circle (no heavy border)
+   so it reads as "not yet", not as an outlined twin of the current step. */
 .cds-stepper { display: flex; list-style: none; margin: 0; padding: 0; width: 100%; }
 .cds-step { display: flex; align-items: center; flex: 1; position: relative; }
 .cds-step:last-child { flex: 0 0 auto; }
 .cds-step-marker {
-  width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 700; flex-shrink: 0; border: 2px solid var(--core-color-border-strong);
-  color: var(--core-color-text-tertiary); background: var(--core-color-surface-default); z-index: 1;
+  width: var(--core-stepper-marker-size); height: var(--core-stepper-marker-size); border-radius: var(--core-stepper-marker-radius);
+  display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0;
+  border: none; color: var(--core-stepper-marker-upcomingText); background: var(--core-stepper-marker-upcomingBg);
+  z-index: 1; transition: background 150ms ease, color 150ms ease;
 }
-.cds-step--complete .cds-step-marker { background: var(--core-color-action-primary-bg); border-color: var(--core-color-action-primary-bg); color: var(--core-color-action-primary-text); }
-.cds-step--current .cds-step-marker { border-color: var(--core-color-action-primary-bg); color: var(--core-color-action-primary-bg); }
+.cds-step--complete .cds-step-marker { background: var(--core-stepper-marker-completeBg); color: var(--core-stepper-marker-completeText); }
+.cds-step--current .cds-step-marker { background: var(--core-stepper-marker-currentBg); color: var(--core-stepper-marker-currentText); }
 .cds-step-label { margin-left: 10px; display: flex; flex-direction: column; }
 .cds-step-title { font-size: var(--core-font-size-sm); font-weight: 600; color: var(--core-color-text-primary); }
+.cds-step--current .cds-step-title { color: var(--core-stepper-title-currentColor); font-weight: 700; }
+.cds-step--complete .cds-step-title { color: var(--core-stepper-title-completeColor); }
 .cds-step--upcoming .cds-step-title { color: var(--core-color-text-tertiary); font-weight: 500; }
 .cds-step-desc { font-size: var(--core-font-size-xs); color: var(--core-color-text-tertiary); }
-.cds-step-connector { flex: 1; height: 2px; background: var(--core-color-border-default); margin: 0 10px; }
-.cds-step--complete .cds-step-connector { background: var(--core-color-action-primary-bg); }
+.cds-step-status { display: flex; align-items: center; gap: 5px; font-size: var(--core-font-size-xs); font-weight: 600; color: var(--core-stepper-status-text); margin-top: 2px; }
+.cds-step-status-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+.cds-step-connector { flex: 1; height: 2px; background: var(--core-stepper-connector-color); margin: 0 10px; }
+.cds-step--complete .cds-step-connector { background: var(--core-stepper-connector-completeColor); }
 
 /* Stepper: vertical orientation — e.g. a multi-step request flow's left-side nav.
    Steps stack top-to-bottom; within each step, the marker stays beside its label. */
@@ -651,12 +664,50 @@
 .cds-navmenu-link[aria-current="page"] { color: var(--core-color-action-primary-bg); background: var(--core-color-surface-sunken); }
 
 .cds-app-sidebar { width: 220px; background: var(--core-color-surface-raised); border-right: 1px solid var(--core-color-border-default); padding: 16px 10px; display: flex; flex-direction: column; gap: 2px; }
-.cds-app-sidebar-link {
-  display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: var(--core-radius-sm);
-  font-size: var(--core-font-size-md); color: var(--core-color-text-secondary); text-decoration: none; cursor: pointer; background: none; border: none; width: 100%; text-align: left;
+/* Panel variant — the same nav list embedded inside a Card (e.g. a settings
+   page's Personal/Bank/Employment sub-nav) instead of the app shell: no fixed
+   width, no background/border of its own, sized to its container instead. */
+.cds-app-sidebar--panel { width: auto; background: none; border-right: none; padding: 0; gap: 4px; }
+
+/* Sidebar nav item — an icon badge + label, with a tinted (not solid) pill for
+   the active row. This same pair of classes (cds-sidenav-item / cds-sidenav-icon)
+   is meant to be reused anywhere a vertical nav list needs this treatment (the
+   app-level AppSidebar and a settings-style sub-nav alike), so the two contexts
+   read as one system instead of two different navs. */
+.cds-app-sidebar-link,
+.cds-sidenav-item {
+  display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: var(--core-sidebar-item-radius);
+  font-size: var(--core-font-size-md); font-weight: 500; color: var(--core-sidebar-item-text);
+  text-decoration: none; cursor: pointer; background: none; border: none; width: 100%; text-align: left;
+  transition: background 120ms ease, color 120ms ease;
 }
-.cds-app-sidebar-link:hover { background: var(--core-color-surface-sunken); color: var(--core-color-text-primary); }
-.cds-app-sidebar-link[aria-current="page"] { background: var(--core-color-action-primary-bg); color: var(--core-color-action-primary-text); font-weight: 600; }
+.cds-app-sidebar-link:hover,
+.cds-sidenav-item:hover {
+  background: var(--core-sidebar-item-hoverBg);
+  color: var(--core-color-text-primary);
+}
+.cds-app-sidebar-link[aria-current="page"],
+.cds-sidenav-item[aria-current="page"],
+.cds-sidenav-item[data-active="true"] {
+  background: var(--core-sidebar-item-activeBg);
+  color: var(--core-sidebar-item-activeText);
+  font-weight: 600;
+}
+
+.cds-sidenav-icon {
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 30px; height: 30px; border-radius: var(--core-sidebar-icon-radius);
+  background: var(--core-sidebar-icon-bg); color: var(--core-sidebar-icon-text);
+  transition: background 120ms ease, color 120ms ease;
+}
+.cds-app-sidebar-link[aria-current="page"] .cds-sidenav-icon,
+.cds-sidenav-item[aria-current="page"] .cds-sidenav-icon,
+.cds-sidenav-item[data-active="true"] .cds-sidenav-icon {
+  background: var(--core-sidebar-icon-activeBg);
+  color: var(--core-sidebar-icon-activeText);
+}
+.cds-sidenav-label { display: flex; flex-direction: column; line-height: 1.25; }
+.cds-sidenav-sublabel { font-size: var(--core-font-size-xs); font-weight: 400; color: var(--core-color-text-tertiary); }
 
 /* ---------- Icon (Font Awesome wrapper) ---------- */
 .cds-icon { display: inline-flex; align-items: center; justify-content: center; line-height: 1; }

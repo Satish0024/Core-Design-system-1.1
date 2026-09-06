@@ -34,12 +34,17 @@
   "sidebar.radius": "{radius.lg}",
   "sidebar.item.radius": "{radius.md}",
   "sidebar.item.text": "{color.text.secondary}",
+  "sidebar.item.hoverBg": "{color.surface.sunken}",
   "sidebar.item.activeBg": "{color.action.primary.tintBg}",
   "sidebar.item.activeText": "{color.action.primary.tintText}",
-  "sidebar.item.hoverBg": "{color.surface.sunken}",
-  "sidebar.icon.bg": "{color.surface.sunken}",
-  "sidebar.icon.activeBg": "{color.surface.default}",
   "sidebar.icon.radius": "{radius.md}",
+  "sidebar.icon.bg": "{color.surface.sunken}",
+  "sidebar.icon.text": "{color.text.secondary}",
+  "sidebar.icon.activeBg": "{color.action.primary.bg}",
+  "sidebar.icon.activeText": "{color.action.primary.text}",
+
+  "iconButton.ghost.radius": "{radius.full}",
+  "iconButton.ghost.hoverBg": "{color.surface.sunken}",
 
   "stepper.marker.size": "28px",
   "stepper.marker.radius": "{radius.full}",
@@ -47,9 +52,11 @@
   "stepper.marker.upcomingText": "{color.text.tertiary}",
   "stepper.marker.currentBg": "{color.action.primary.bg}",
   "stepper.marker.currentText": "{color.action.primary.text}",
-  "stepper.marker.completeBg": "{color.status.success.text}",
-  "stepper.marker.completeText": "{color.neutral.0}",
+  "stepper.marker.completeBg": "{color.status.success.bgStrong}",
+  "stepper.marker.completeText": "{color.status.success.textOnStrong}",
   "stepper.connector.color": "{color.border.default}",
-  "stepper.connector.completeColor": "{color.status.success.text}",
-  "stepper.title.currentColor": "{color.action.primary.bg}"
+  "stepper.connector.completeColor": "{color.status.success.bgStrong}",
+  "stepper.title.currentColor": "{color.action.primary.bg}",
+  "stepper.title.completeColor": "{color.text.primary}",
+  "stepper.status.text": "{color.text.tertiary}"
 }

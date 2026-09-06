@@ -62,20 +62,37 @@ export function NavigationMenu({ items }: { items: NavMenuItem[] }) {
 }
 
 export interface SidebarItem { label: string; icon?: React.ReactNode; current?: boolean; onClick?: () => void; }
-export function AppSidebar({ items }: { items: SidebarItem[] }) {
+/**
+ * A vertical nav list — icon-in-a-badge + label, with a tinted pill (not a
+ * solid fill) marking the active row and its icon badge going solid.
+ * `variant="shell"` (default) is the full app-shell sidebar: fixed width,
+ * its own background and right border. `variant="panel"` drops those so the
+ * exact same list can sit inside a Card as a settings-style sub-nav (e.g. a
+ * Profile page's Personal/Bank/Employment list) — one visual system, two
+ * places to use it.
+ */
+export function AppSidebar({ items, variant = "shell", "aria-label": ariaLabel = "Sidebar" }: { items: SidebarItem[]; variant?: "shell" | "panel"; "aria-label"?: string }) {
   return (
-    <nav className="cds-app-sidebar" aria-label="Sidebar">
+    <nav className={`cds-app-sidebar ${variant === "panel" ? "cds-app-sidebar--panel" : ""}`} aria-label={ariaLabel}>
       {items.map((item) => (
         <button key={item.label} className="cds-app-sidebar-link" aria-current={item.current ? "page" : undefined} onClick={item.onClick}>
-          {item.icon}
-          {item.label}
+          {item.icon && <span className="cds-sidenav-icon" aria-hidden="true">{item.icon}</span>}
+          <span className="cds-sidenav-label">{item.label}</span>
         </button>
       ))}
     </nav>
   );
 }
 
-export interface StepDef { label: string; description?: string; }
+export interface StepDef {
+  label: string;
+  description?: string;
+  /** Optional small status line under the description (e.g. "In progress") —
+   *  only rendered for the current step, since that's the one whose progress
+   *  is actually ambiguous; complete/upcoming are already unambiguous from
+   *  the marker + title color alone. */
+  status?: string;
+}
 export function Stepper({ steps, currentIndex, orientation = "horizontal" }: { steps: StepDef[]; currentIndex: number; orientation?: "horizontal" | "vertical" }) {
   const vertical = orientation === "vertical";
   return (
@@ -90,6 +107,9 @@ export function Stepper({ steps, currentIndex, orientation = "horizontal" }: { s
             <span className="cds-step-label">
               <span className="cds-step-title">{step.label}</span>
               {step.description && <span className="cds-step-desc">{step.description}</span>}
+              {state === "current" && step.status && (
+                <span className="cds-step-status"><span className="cds-step-status-dot" aria-hidden="true" />{step.status}</span>
+              )}
             </span>
             {i < steps.length - 1 && <span className="cds-step-connector" aria-hidden="true" />}
           </li>

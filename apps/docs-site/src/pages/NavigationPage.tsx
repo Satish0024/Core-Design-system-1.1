@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Preview, CodeBlock } from "../Preview";
 import { Tabs, Breadcrumb, Pagination, NavigationMenu, AppSidebar, Stepper } from "../../../../packages/core/src/components/Navigation";
 import { Icon } from "../../../../packages/core/src/components/Primitives";
+import { Card } from "../../../../packages/core/src/components/Misc";
 import { AutoAnatomy, AutoAnatomyLegend } from "../AutoAnatomy";
 
 export default function NavigationPage() {
@@ -32,12 +33,12 @@ export default function NavigationPage() {
       </div>
 
       <h2 className="site-section-title" id="sidebar">App sidebar</h2>
-      <p className="site-section-sub">Anatomy — icon + label per item, active item highlighted with a filled background, not just a colored icon.</p>
+      <p className="site-section-sub">Anatomy — icon in its own badge, active item gets a tinted pill (not a solid fill) and its icon badge goes solid.</p>
       <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "flex-start", flexWrap: "wrap", background: "var(--core-color-bg-page)", padding: "24px 32px" }}>
         <AutoAnatomy points={[
-          { n: 1, label: "Active item — filled background, full width", anchor: "left" },
-          { n: 2, label: "Icon — fixed 16px column, aligned across items", anchor: "top" },
-          { n: 3, label: "Width — 240px fixed (desktop)", anchor: "right" },
+          { n: 1, label: "Active item — tinted pill, full width", anchor: "left" },
+          { n: 2, label: "Icon badge — solid-fills only when active", anchor: "top" },
+          { n: 3, label: "Width — 220px fixed (desktop)", anchor: "right" },
         ]}>
           <AppSidebar items={[
             { label: "Dashboard", icon: <Icon name="fa-solid fa-grip" size="sm" />, current: true },
@@ -46,9 +47,9 @@ export default function NavigationPage() {
           ]} />
         </AutoAnatomy>
         <AutoAnatomyLegend points={[
-          { n: 1, label: "Active item: filled background spans the sidebar's full width", anchor: "left" },
-          { n: 2, label: "Icon: fixed 16px column so labels stay left-aligned across items", anchor: "top" },
-          { n: 3, label: "Width: 240px fixed on desktop, collapses to icon-only under 1024px", anchor: "right" },
+          { n: 1, label: "Active item: tinted pill (sidebar.item.activeBg) spans the sidebar's full width — not a solid fill", anchor: "left" },
+          { n: 2, label: "Icon badge: soft neutral at rest, solid primary-filled only on the active row", anchor: "top" },
+          { n: 3, label: "Width: 220px fixed on desktop, collapses to icon-only under 1024px", anchor: "right" },
         ]} />
       </div>
       <div className="site-panel site-panel--flush">
@@ -62,6 +63,24 @@ export default function NavigationPage() {
               { label: "Document Center", icon: <Icon name="fa-solid fa-file-lines" size="sm" /> },
             ]}
           />
+        </div>
+      </div>
+
+      <p className="site-section-sub"><code>variant="panel"</code> — the exact same nav list, restyled to sit inside a Card as a settings-style sub-nav (e.g. a Profile page's Personal/Bank/Employment list) instead of the app shell. One visual system, two places to use it.</p>
+      <div className="site-panel site-panel--flush">
+        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
+          <Card style={{ maxWidth: 220, padding: 8 }}>
+            <AppSidebar
+              variant="panel"
+              aria-label="Profile sections"
+              items={[
+                { label: "Personal Details", icon: <Icon name="fa-solid fa-heart" size="sm" />, current: true },
+                { label: "Bank Details", icon: <Icon name="fa-solid fa-building-columns" size="sm" /> },
+                { label: "Employment Information", icon: <Icon name="fa-solid fa-briefcase" size="sm" /> },
+                { label: "Beneficiary Details", icon: <Icon name="fa-solid fa-users" size="sm" /> },
+              ]}
+            />
+          </Card>
         </div>
       </div>
 
@@ -141,16 +160,18 @@ export default function NavigationPage() {
       <p className="site-section-sub">Anatomy — drives multi-step flows: complete / current / upcoming states, each visually distinct.</p>
       <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
         <AutoAnatomy points={[
-          { n: 1, label: "Complete — filled circle + checkmark", anchor: "top-left" },
-          { n: 2, label: "Current — outlined circle, bold label", anchor: "top" },
-          { n: 3, label: "Connector — fills as steps complete", anchor: "bottom" },
+          { n: 1, label: "Complete — solid success-green circle + checkmark", anchor: "top-left" },
+          { n: 2, label: "Current — solid primary circle, bold label", anchor: "top" },
+          { n: 3, label: "Upcoming — soft filled circle, muted label", anchor: "top-right" },
+          { n: 4, label: "Connector — fills success-green as steps complete", anchor: "bottom" },
         ]}>
           <Stepper currentIndex={1} steps={[{ label: "Personal info" }, { label: "Investment elections" }, { label: "Review" }]} />
         </AutoAnatomy>
         <AutoAnatomyLegend points={[
-          { n: 1, label: "Complete: filled circle + checkmark icon", anchor: "top-left" },
-          { n: 2, label: "Current: outlined circle, bold label, aria-current=\"step\"", anchor: "top" },
-          { n: 3, label: "Connector: line between steps, fills proportionally as steps complete", anchor: "bottom" },
+          { n: 1, label: "Complete: solid success-green circle + checkmark — its own color, not a primary-tinted twin of \"current\"", anchor: "top-left" },
+          { n: 2, label: "Current: solid primary-filled circle, bold primary-colored label, aria-current=\"step\"", anchor: "top" },
+          { n: 3, label: "Upcoming: soft filled circle (no heavy border), muted label — reads as \"not yet\"", anchor: "top-right" },
+          { n: 4, label: "Connector: line between steps, turns success-green once that step completes", anchor: "bottom" },
         ]} />
       </div>
       <div className="site-panel site-panel--flush">
@@ -174,11 +195,11 @@ export default function NavigationPage() {
             orientation="vertical"
             currentIndex={1}
             steps={[
-              { label: "Withdrawal Details" },
-              { label: "Withdrawal Allocation" },
-              { label: "Fee Details" },
-              { label: "Upload Documents" },
-              { label: "Withdrawal Request Summary" },
+              { label: "Withdrawal Details", description: "Specify the withdrawal type and amount." },
+              { label: "Withdrawal Allocation", description: "Choose which sources to withdraw from.", status: "In progress" },
+              { label: "Fee Details", description: "Review applicable fees and tax withholding." },
+              { label: "Upload Documents", description: "Attach any required supporting forms." },
+              { label: "Withdrawal Request Summary", description: "Review the request before submitting." },
             ]}
           />
         </div>

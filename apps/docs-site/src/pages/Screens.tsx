@@ -23,7 +23,7 @@ function ScreenHeader({ userName }: { userName: string }) {
     <>
       <div style={{ fontWeight: 700, fontSize: "var(--core-font-size-lg)" }}>LendGuard</div>
       <div style={{ display: "flex", alignItems: "center", gap: "var(--core-space-4)" }}>
-        <IconButton variant="tertiary" size="sm" aria-label="Help"><Icon name="fa-solid fa-circle-question" size="sm" /></IconButton>
+        <IconButton variant="tertiary" size="sm" shape="circle" aria-label="Help"><Icon name="fa-solid fa-circle-question" size="sm" /></IconButton>
         <Avatar name={userName} size="sm" />
       </div>
     </>
@@ -111,7 +111,7 @@ export default function Screens() {
           <div style={{ width: 860 }}>
             <AppShell
               header={<ScreenHeader userName="Taylor Hale" />}
-              sidebar={<AppSidebar items={NAV_ITEMS} />}
+              sidebar={<AppSidebar items={NAV_ITEMS} variant="panel" />}
               footer={<ScreenFooter />}
             >
               <div style={{ fontSize: "var(--core-font-size-lg)", fontWeight: 700, marginBottom: "var(--core-space-4)" }}>Hi Taylor 👋</div>
@@ -154,7 +154,7 @@ export default function Screens() {
           { n: 3, label: "Zebra rows — alternating background for scanability", anchor: "bottom" },
         ]}>
           <div style={{ width: 860 }}>
-            <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={[{ ...NAV_ITEMS[0], current: false }, NAV_ITEMS[1], { ...NAV_ITEMS[2], current: true }, NAV_ITEMS[3], NAV_ITEMS[4]]} />} footer={<ScreenFooter />}>
+            <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={[{ ...NAV_ITEMS[0], current: false }, NAV_ITEMS[1], { ...NAV_ITEMS[2], current: true }, NAV_ITEMS[3], NAV_ITEMS[4]]} variant="panel" />} footer={<ScreenFooter />}>
               <Breadcrumb items={[{ label: "Home", href: "#" }, { label: "Transactions" }]} />
               <div style={{ height: "var(--core-space-4)" }} />
               <Card>
@@ -191,11 +191,15 @@ export default function Screens() {
           { n: 3, label: "Step actions — Back / Continue, bottom-right", anchor: "bottom-right" },
         ]}>
           <div style={{ width: 860 }}>
-            <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} />} footer={<ScreenFooter />}>
+            <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} variant="panel" />} footer={<ScreenFooter />}>
               <Card>
                 <Stepper
                   currentIndex={stepIndex}
-                  steps={[{ label: "Withdrawal Details" }, { label: "Allocation" }, { label: "Review & Submit" }]}
+                  steps={[
+                    { label: "Withdrawal Details", status: "In progress" },
+                    { label: "Allocation", status: "In progress" },
+                    { label: "Review & Submit", status: "In progress" },
+                  ]}
                 />
                 <div style={{ margin: "var(--core-space-6) 0" }}>
                   {stepIndex === 0 && (
@@ -237,7 +241,7 @@ export default function Screens() {
           { n: 2, label: "Slideover — docked right, form + aside summary", anchor: "right" },
         ]}>
           <div style={{ width: 860, position: "relative" }}>
-            <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} />} footer={<ScreenFooter />}>
+            <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} variant="panel" />} footer={<ScreenFooter />}>
               <div style={{ fontSize: "var(--core-font-size-lg)", fontWeight: 700, marginBottom: "var(--core-space-4)" }}>Hi Taylor 👋</div>
               <Button onClick={() => setDrawerOpen(true)}>Open "Add Allocation"</Button>
             </AppShell>
@@ -245,7 +249,7 @@ export default function Screens() {
             <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: 320, background: "var(--core-card-bg)", boxShadow: "var(--core-elevation-4)", padding: "var(--core-space-6)" }}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--core-space-4)" }}>
                 <div style={{ fontWeight: 600, fontSize: "var(--core-font-size-lg)" }}>Add Allocation</div>
-                <IconButton variant="tertiary" size="sm" aria-label="Close"><Icon name="fa-solid fa-xmark" size="sm" /></IconButton>
+                <IconButton variant="tertiary" size="sm" shape="circle" aria-label="Close"><Icon name="fa-solid fa-xmark" size="sm" /></IconButton>
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-4)" }}>
                 <Field label="Withdrawal amount">{(p) => <Input {...p} placeholder="$0.00" />}</Field>
@@ -280,7 +284,7 @@ export default function Screens() {
           { n: 3, label: "Destructive — isolated, confirms before acting", anchor: "bottom-right" },
         ]}>
           <div style={{ width: 860 }}>
-            <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} />} footer={<ScreenFooter />}>
+            <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} variant="panel" />} footer={<ScreenFooter />}>
               <Card>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "var(--core-space-6)" }}>
                   <div style={{ fontWeight: 700, fontSize: "var(--core-font-size-lg)" }}>My Profile</div>
