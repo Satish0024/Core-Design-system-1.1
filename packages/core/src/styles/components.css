@@ -881,6 +881,8 @@
   border-bottom: 1px solid var(--core-color-border-subtle);
   box-sizing: border-box;
 }
+.cds-app-header-brand { display: flex; align-items: center; gap: var(--core-space-2); font-weight: 700; font-size: var(--core-font-size-lg); color: var(--core-color-text-primary); min-width: 0; }
+.cds-app-header-actions { display: flex; align-items: center; gap: var(--core-space-4); flex-shrink: 0; }
 .cds-app-body { display: flex; flex: 1; min-height: 0; align-items: stretch; }
 /* Deliberately undecorated: the AppShell's sidebar slot supplies layout only
    (flex-shrink so it doesn't get squeezed). Every AppSidebar variant already
@@ -906,6 +908,10 @@
   box-sizing: border-box;
   width: 100%;
 }
+.cds-app-footer-inner { display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: var(--core-space-2); }
+.cds-app-footer-links { display: flex; gap: var(--core-space-4); flex-wrap: wrap; }
+.cds-app-footer-links a { color: inherit; text-decoration: none; }
+.cds-app-footer-links a:hover { text-decoration: underline; }
 
 /* Container — Bootstrap's own breakpoint/max-width scale (container.maxWidth.*
    primitives, resolved from the same breakpoint.* values as the grid below):

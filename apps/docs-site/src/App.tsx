@@ -7,6 +7,7 @@ import Typography from "./pages/Typography";
 import Spacing from "./pages/Spacing";
 import RadiusElevation from "./pages/RadiusElevation";
 import Responsive from "./pages/Responsive";
+import LayoutGrid from "./pages/LayoutGrid";
 import Motion from "./pages/Motion";
 import Icons from "./pages/Icons";
 import LogoPage from "./pages/Logo";
@@ -33,6 +34,7 @@ export default function App() {
         <Route path="/foundations/spacing" element={<Spacing />} />
         <Route path="/foundations/radius-elevation" element={<RadiusElevation />} />
         <Route path="/foundations/responsive" element={<Responsive />} />
+        <Route path="/foundations/layout-grid" element={<LayoutGrid />} />
         <Route path="/foundations/motion" element={<Motion />} />
         <Route path="/foundations/icons" element={<Icons />} />
         <Route path="/foundations/logo" element={<LogoPage />} />

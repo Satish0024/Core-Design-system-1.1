@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AppShell, Container, Grid, GridCol } from "../../../../packages/core/src/components/Layout";
+import { AppShell, AppHeader, AppFooter, Container, Grid, GridCol } from "../../../../packages/core/src/components/Layout";
 import { AppSidebar, Breadcrumb, Stepper } from "../../../../packages/core/src/components/Navigation";
 import { Button, IconButton } from "../../../../packages/core/src/components/Button";
 import { Card, Badge } from "../../../../packages/core/src/components/Misc";
@@ -20,26 +20,24 @@ const NAV_ITEMS = [
 
 function ScreenHeader({ userName }: { userName: string }) {
   return (
-    <>
-      <div style={{ fontWeight: 700, fontSize: "var(--core-font-size-lg)" }}>LendGuard</div>
-      <div style={{ display: "flex", alignItems: "center", gap: "var(--core-space-4)" }}>
-        <IconButton variant="tertiary" size="sm" shape="circle" aria-label="Help"><Icon name="fa-solid fa-circle-question" size="sm" /></IconButton>
-        <Avatar name={userName} size="sm" />
-      </div>
-    </>
+    <AppHeader
+      brand="LendGuard"
+      actions={
+        <>
+          <IconButton variant="tertiary" size="sm" shape="circle" aria-label="Help"><Icon name="fa-solid fa-circle-question" size="sm" /></IconButton>
+          <Avatar name={userName} size="sm" />
+        </>
+      }
+    />
   );
 }
 
 function ScreenFooter() {
   return (
-    <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
-      <span>© {new Date().getFullYear()} LendGuard. All rights reserved.</span>
-      <span style={{ display: "flex", gap: "var(--core-space-4)" }}>
-        <a href="#" style={{ color: "inherit" }}>Privacy</a>
-        <a href="#" style={{ color: "inherit" }}>Terms</a>
-        <a href="#" style={{ color: "inherit" }}>Support</a>
-      </span>
-    </div>
+    <AppFooter
+      copyright={`© ${new Date().getFullYear()} LendGuard. All rights reserved.`}
+      links={<><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Support</a></>}
+    />
   );
 }
 

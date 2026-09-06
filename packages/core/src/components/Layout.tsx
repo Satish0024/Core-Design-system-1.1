@@ -30,6 +30,30 @@ export function AppShell({
   );
 }
 
+/** The two slots every app header needs: a brand/logo on the left, account/
+ *  utility actions on the right. AppShell's `header` prop already supplies
+ *  the flex row (space-between) and chrome (background, border, height) —
+ *  this just fills the two ends of it consistently. */
+export function AppHeader({ brand, actions }: { brand: React.ReactNode; actions?: React.ReactNode }) {
+  return (
+    <>
+      <div className="cds-app-header-brand">{brand}</div>
+      {actions && <div className="cds-app-header-actions">{actions}</div>}
+    </>
+  );
+}
+
+/** Copyright/legal text on the left, links on the right — wraps to stack on
+ *  narrow screens rather than truncating either side. */
+export function AppFooter({ copyright, links }: { copyright: React.ReactNode; links?: React.ReactNode }) {
+  return (
+    <div className="cds-app-footer-inner">
+      <span>{copyright}</span>
+      {links && <div className="cds-app-footer-links">{links}</div>}
+    </div>
+  );
+}
+
 export function Container({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return <div className={`cds-container ${className}`}>{children}</div>;
 }

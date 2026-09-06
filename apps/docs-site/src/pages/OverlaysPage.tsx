@@ -49,6 +49,12 @@ export default function OverlaysPage() {
           <Button onClick={() => setModal(true)}>Open modal</Button>
         </Preview>
       </div>
+      <p className="site-section-sub">
+        <strong style={{ color: "var(--site-text)" }}>Responsive:</strong> the dimmed scrim carries edge padding
+        (<code>space.4</code>) at every width, so on a phone the modal never touches the screen edge — it just
+        gets closer to full-width as the viewport shrinks, capped at <code>max-width: 480px</code> on anything
+        wider. Try it below ~400px wide.
+      </p>
       <Modal open={modal} onClose={() => setModal(false)} title="Update beneficiary" actions={<><Button variant="secondary" onClick={() => setModal(false)}>Cancel</Button><Button onClick={() => setModal(false)}>Save</Button></>}>
         This will replace your current primary beneficiary on file.
       </Modal>
@@ -127,6 +133,13 @@ export default function OverlaysPage() {
           <Button onClick={() => setSlideover(true)}>Open "Add Allocation"</Button>
         </Preview>
       </div>
+      <p className="site-section-sub">
+        <strong style={{ color: "var(--site-text)" }}>Responsive:</strong> the drawer itself is already{" "}
+        <code>width: 90vw</code> capped, so on a phone it's nearly full-screen. Below <code>breakpoint.sm</code>{" "}
+        (576px) the <code>aside</code> summary panel stops sitting beside the form — a side-by-side split has no
+        room left once the drawer itself is only ~330px wide — and stacks full-width below it instead. This was
+        a real bug (the aside used to get squeezed into the same row) fixed on the Responsive &amp; Mobile page.
+      </p>
       <Drawer
         open={slideover}
         onClose={() => setSlideover(false)}
