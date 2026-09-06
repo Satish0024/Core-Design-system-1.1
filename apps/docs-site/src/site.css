@@ -105,6 +105,16 @@ a { color: inherit; }
   margin-bottom: 20px;
 }
 .site-panel:last-child { margin-bottom: 0; }
+/* Themed panels ([data-theme]) always render on a light CORE bg, so
+   re-pin site text vars to their light-mode values inside them —
+   prevents white-on-white text when the site chrome is in dark mode. */
+.site-panel[data-theme] {
+  --site-text: #16161D;
+  --site-text-dim: #55566B;
+  --site-text-faint: #85869C;
+  --site-accent: #0270A9;
+  --site-border: #E3E3EC;
+}
 /* No overflow:hidden here on purpose — it was clipping every dropdown/combobox/popover
    that lives inside a flush panel. Corner-rounding for flush content (tables, code blocks)
    is each child's own responsibility (e.g. .cds-table-wrap has its own border-radius). */
