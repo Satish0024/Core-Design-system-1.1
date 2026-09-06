@@ -1,21 +1,167 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import primitives from "../../../../packages/tokens/src/primitives.json";
 import { ContrastBadge } from "../ContrastBadge";
-import { RoleSwatch } from "../RoleSwatch";
+import { rgbStringToHex } from "../lib/contrast";
 
 const color = (primitives as any).color;
 const gradient = (primitives as any).gradient;
 
-const roleVars: Array<{ label: string; var: string }> = [
-  { label: "Page background", var: "--core-color-bg-page" },
-  { label: "Card background", var: "--core-color-surface-raised" },
-  { label: "Main text", var: "--core-color-text-primary" },
-  { label: "Secondary / helper text", var: "--core-color-text-secondary" },
-  { label: "Borders / dividers", var: "--core-color-border-default" },
-  { label: "Primary button", var: "--core-color-action-primary-bg" },
-  { label: "Success message background", var: "--core-color-status-success-bg" },
-  { label: "Error message background", var: "--core-color-status-danger-bg" },
+// Every semantic color token that has a light/dark distinction, grouped the
+// same way the rest of this page is — generated from real token keys
+// (--core-<key with dots as dashes>), not a hand-picked handful. Add a token
+// here and it appears in the table with zero other changes.
+const MODE_SECTIONS: Array<{ title: string; tokens: Array<{ label: string; key: string }> }> = [
+  {
+    title: "Backgrounds & surfaces",
+    tokens: [
+      { label: "Page background", key: "color.bg.page" },
+      { label: "Canvas background", key: "color.bg.canvas" },
+      { label: "Surface — default", key: "color.surface.default" },
+      { label: "Surface — raised (cards)", key: "color.surface.raised" },
+      { label: "Surface — sunken", key: "color.surface.sunken" },
+      { label: "Surface — overlay", key: "color.surface.overlay" },
+    ],
+  },
+  {
+    title: "Text",
+    tokens: [
+      { label: "Text — primary", key: "color.text.primary" },
+      { label: "Text — secondary", key: "color.text.secondary" },
+      { label: "Text — tertiary", key: "color.text.tertiary" },
+      { label: "Text — disabled", key: "color.text.disabled" },
+      { label: "Text — inverse", key: "color.text.inverse" },
+      { label: "Text — on brand", key: "color.text.onBrand" },
+    ],
+  },
+  {
+    title: "Borders & focus",
+    tokens: [
+      { label: "Border — subtle", key: "color.border.subtle" },
+      { label: "Border — default", key: "color.border.default" },
+      { label: "Border — strong", key: "color.border.strong" },
+      { label: "Border — focus", key: "color.border.focus" },
+      { label: "Focus ring", key: "color.focus.ring" },
+    ],
+  },
+  {
+    title: "Primary action",
+    tokens: [
+      { label: "Background", key: "color.action.primary.bg" },
+      { label: "Background — hover", key: "color.action.primary.bgHover" },
+      { label: "Background — active", key: "color.action.primary.bgActive" },
+      { label: "Text (on background)", key: "color.action.primary.text" },
+      { label: "Tint background", key: "color.action.primary.tintBg" },
+      { label: "Tint text", key: "color.action.primary.tintText" },
+    ],
+  },
+  {
+    title: "Secondary action",
+    tokens: [
+      { label: "Background", key: "color.action.secondary.bg" },
+      { label: "Background — hover", key: "color.action.secondary.bgHover" },
+      { label: "Border", key: "color.action.secondary.border" },
+      { label: "Text", key: "color.action.secondary.text" },
+    ],
+  },
+  {
+    title: "Tertiary action",
+    tokens: [
+      { label: "Text", key: "color.action.tertiary.text" },
+      { label: "Text — hover", key: "color.action.tertiary.textHover" },
+    ],
+  },
+  {
+    title: "Destructive action",
+    tokens: [
+      { label: "Background", key: "color.action.destructive.bg" },
+      { label: "Background — hover", key: "color.action.destructive.bgHover" },
+      { label: "Text", key: "color.action.destructive.text" },
+    ],
+  },
+  {
+    title: "Status — success",
+    tokens: [
+      { label: "Background (tint)", key: "color.status.success.bg" },
+      { label: "Text", key: "color.status.success.text" },
+      { label: "Border", key: "color.status.success.border" },
+      { label: "Background (strong)", key: "color.status.success.bgStrong" },
+      { label: "Text on strong", key: "color.status.success.textOnStrong" },
+    ],
+  },
+  {
+    title: "Status — warning",
+    tokens: [
+      { label: "Background (tint)", key: "color.status.warning.bg" },
+      { label: "Text", key: "color.status.warning.text" },
+      { label: "Border", key: "color.status.warning.border" },
+    ],
+  },
+  {
+    title: "Status — danger",
+    tokens: [
+      { label: "Background (tint)", key: "color.status.danger.bg" },
+      { label: "Text", key: "color.status.danger.text" },
+      { label: "Border", key: "color.status.danger.border" },
+    ],
+  },
+  {
+    title: "Status — info",
+    tokens: [
+      { label: "Background (tint)", key: "color.status.info.bg" },
+      { label: "Text", key: "color.status.info.text" },
+      { label: "Border", key: "color.status.info.border" },
+    ],
+  },
+  {
+    title: "Categorical (tags)",
+    tokens: [1, 2, 3, 4, 5].map((n) => ({ label: `Tag color ${n}`, key: `color.categorical.${n}` })),
+  },
+  {
+    title: "Secondary palette",
+    tokens: [
+      { label: "Solid background", key: "color.palette.secondary.solidBg" },
+      { label: "Solid background — hover", key: "color.palette.secondary.solidBgHover" },
+      { label: "Solid text", key: "color.palette.secondary.solidText" },
+      { label: "Tint background", key: "color.palette.secondary.tintBg" },
+      { label: "Text", key: "color.palette.secondary.text" },
+      { label: "Border", key: "color.palette.secondary.border" },
+    ],
+  },
+  {
+    title: "Tertiary palette",
+    tokens: [
+      { label: "Solid background", key: "color.palette.tertiary.solidBg" },
+      { label: "Solid background — hover", key: "color.palette.tertiary.solidBgHover" },
+      { label: "Solid text", key: "color.palette.tertiary.solidText" },
+      { label: "Tint background", key: "color.palette.tertiary.tintBg" },
+      { label: "Text", key: "color.palette.tertiary.text" },
+      { label: "Border", key: "color.palette.tertiary.border" },
+    ],
+  },
 ];
+
+/** One color chip, measured live under whichever [data-theme][data-mode]
+ *  ancestor it renders in — this is what makes a single component correct
+ *  for both the Light and Dark table columns without duplicating token math. */
+function ModeSwatchCell({ tokenKey }: { tokenKey: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [hex, setHex] = useState<string | null>(null);
+  const varName = `--core-${tokenKey.replace(/\./g, "-")}`;
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const bg = getComputedStyle(ref.current).backgroundColor;
+    setHex(rgbStringToHex(bg));
+  }, [tokenKey]);
+
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      <div ref={ref} style={{ width: 26, height: 26, borderRadius: 6, border: "1px solid var(--site-border)", background: `var(${varName})`, flexShrink: 0 }} />
+      <span style={{ fontFamily: "var(--site-mono)", fontSize: 11, color: "var(--site-text-dim)", minWidth: 62 }}>{hex}</span>
+      {hex && <ContrastBadge hex={hex} />}
+    </div>
+  );
+}
 
 const quickRef = [
   { use: "Primary button (Save, Submit, Continue) — the default for almost everything", hex: color.brand["600"], token: "Primary" },
@@ -276,30 +422,34 @@ export default function Color() {
 
       <SectionTitle title="Light & dark mode" />
       <p className="site-section-sub">
-        Every role above has a dark-mode equivalent already built in — flipping the mode only changes these CSS
-        variables, no component code changes. Contrast is measured live against each mode's real background.
+        Every semantic color role — backgrounds, text, borders, every action/status tone, tags, the secondary and
+        tertiary palettes — has a dark-mode equivalent already built in. Flipping the mode only changes these CSS
+        variables; no component code changes. Contrast (best of white/black text) is measured live against each
+        mode's <em>actual</em> rendered color, not looked up from a static table.
       </p>
-      <div className="site-grid cols-2">
-        <div>
-          <div className="site-nav-title" style={{ padding: "0 0 8px" }}>Light</div>
-          <div className="site-panel site-panel--flush">
-            <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
-              <div className="site-grid cols-2" style={{ width: "100%" }}>
-                {roleVars.map((r) => <RoleSwatch key={r.var} name={r.label} varName={r.var} />)}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div className="site-nav-title" style={{ padding: "0 0 8px" }}>Dark</div>
-          <div className="site-panel site-panel--flush">
-            <div className="preview-surface" data-theme="core" data-mode="dark" style={{ background: "var(--core-color-bg-page)" }}>
-              <div className="site-grid cols-2" style={{ width: "100%" }}>
-                {roleVars.map((r) => <RoleSwatch key={r.var} name={r.label} varName={r.var} />)}
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="site-panel site-panel--flush" style={{ overflowX: "auto" }}>
+        <table className="spec-table">
+          <thead><tr><th>Role</th><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+          <tbody>
+            {MODE_SECTIONS.map((section) => (
+              <React.Fragment key={section.title}>
+                <tr>
+                  <td colSpan={4} style={{ background: "var(--site-bg-elevated)", fontWeight: 700, fontSize: 12, textTransform: "uppercase", letterSpacing: "0.04em", color: "var(--site-text-dim)" }}>
+                    {section.title}
+                  </td>
+                </tr>
+                {section.tokens.map((t) => (
+                  <tr key={t.key}>
+                    <td>{t.label}</td>
+                    <td><code style={{ fontSize: 11 }}>{t.key}</code></td>
+                    <td data-theme="core" data-mode="light"><ModeSwatchCell tokenKey={t.key} /></td>
+                    <td data-theme="core" data-mode="dark"><ModeSwatchCell tokenKey={t.key} /></td>
+                  </tr>
+                ))}
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       <h2 className="site-section-title">Full color scales (reference)</h2>

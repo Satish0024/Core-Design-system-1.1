@@ -7,19 +7,17 @@ import { Card, Badge } from "../../../../packages/core/src/components/Misc";
 export default function Home() {
   return (
     <div>
-      <section className="hero" aria-labelledby="hero-heading">
-        <img
-          className="hero-art"
-          src={`${import.meta.env.BASE_URL}hero-core.jpg`}
-          alt=""
-          aria-hidden="true"
-        />
+      <section
+        className="hero"
+        aria-labelledby="hero-heading"
+        style={{ backgroundImage: `url(${import.meta.env.BASE_URL}hero-core.jpg)` }}
+      >
         <div className="hero-copy">
-          <p className="hero-eyebrow">Build · Branded · Accessible</p>
-          <h1 id="hero-heading">Design once. Scale everywhere.</h1>
+          <p className="hero-eyebrow">Our Digital Foundation</p>
+          <h1 id="hero-heading">Built once. Used across everything.</h1>
           <p>
-            A flexible, token-driven design system to help every client brand ship
-            consistent, accessible and beautiful experiences.
+            A unified design system that gives our teams a shared foundation for
+            creating and evolving digital products across the company.
           </p>
           <div className="hero-actions">
             <Link className="btn-hero primary" to="/components/actions">
