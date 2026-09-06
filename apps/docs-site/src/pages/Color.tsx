@@ -286,7 +286,23 @@ function Ramp({ name, scale }: { name: string; scale: Record<string, string> }) 
   );
 }
 
-// (Numbered section order removed — the page now uses the M3 accordion layout)
+const SECTION_ORDER = [
+  "Primary — used throughout",
+  "Secondary — used in specific cases",
+  "Tertiary — the rarest color",
+  "Button emphasis levels — a separate system from the colors above",
+  "Tag colors — for labeling only, never for buttons",
+  "Grays — text, backgrounds, borders",
+  "Text colors — exactly which text uses which color",
+  "Status colors — messages only",
+  "Gradients — promo/hero surfaces only, never text or buttons",
+];
+
+function SectionTitle({ title }: { title: string }) {
+  const n = SECTION_ORDER.indexOf(title);
+  if (n === -1) throw new Error(`SectionTitle "${title}" is missing from SECTION_ORDER`);
+  return <h2 className="site-section-title">{n + 1} · {title}</h2>;
+}
 
 export default function Color() {
   return (
@@ -309,7 +325,136 @@ export default function Color() {
       </p>
       <BaselineTokensSection />
 
-      <h2 className="site-section-title">Gradients — promo/hero surfaces only, never text or buttons</h2>
+      <SectionTitle title="Primary — used throughout" />
+      <p className="site-section-sub">
+        One blue. It's the default for every primary button, active link, selected nav item, and focus outline.
+        When in doubt, this is the color — Primary should be what the product reaches for first, everywhere.
+      </p>
+      <div className="site-panel site-grid cols-3">
+        <Swatch name="Primary / Default" hex={color.brand["600"]} note="Default button color" />
+        <Swatch name="Primary / Hover" hex={color.brand["700"]} note="Mouse-over / pressed state" />
+        <Swatch name="Primary / Text on light backgrounds" hex={color.brand["950"]} note="Rarely used — tinted headings only" />
+      </div>
+
+      <SectionTitle title="Secondary — used in specific cases" />
+      <p className="site-section-sub">
+        A genuine second hue (teal), not just a lighter Primary. Reach for it when something needs to stand apart
+        from the main action flow but still carry real emphasis — a highlighted secondary stat next to the
+        headline number, a "new" or "beta" indicator, an alternate call-to-action that must visually differ from
+        Primary because both appear together (e.g. "Compare plans" next to "Enroll now").
+        <strong style={{ color: "var(--site-text)" }}> It is not a lower-emphasis version of Primary</strong> —
+        for that, see the button-weight system below — it's a different color for a different meaning.
+      </p>
+      <div className="site-panel site-grid cols-3">
+        <Swatch name="Secondary / Solid" hex={color.secondary["600"]} note='Secondary-emphasis fills, e.g. a "Compare" button next to a Primary "Enroll"' />
+        <Swatch name="Secondary / Hover" hex={color.secondary["700"]} />
+        <Swatch name="Secondary / Tint background" hex={color.secondary["50"]} border note="Callout/badge background — pair with Secondary / Text below" />
+      </div>
+
+      <SectionTitle title="Tertiary — the rarest color" />
+      <p className="site-section-sub">
+        A third hue (amber/gold), used even less often than Secondary — reserved for the least common, most
+        supporting-role emphasis: a small "featured" badge, a subtle decorative accent, a tertiary data series
+        that must be visually distinguishable from both Primary and Secondary on the same screen.
+      </p>
+      <div className="site-panel site-grid cols-3">
+        <Swatch name="Tertiary / Solid" hex={color.tertiary["600"]} note="Rare — a featured/highlight badge" />
+        <Swatch name="Tertiary / Hover" hex={color.tertiary["700"]} />
+        <Swatch name="Tertiary / Tint background" hex={color.tertiary["50"]} border note="Callout/badge background — pair with Tertiary / Text" />
+      </div>
+
+      <SectionTitle title="Button emphasis levels — a separate system from the colors above" />
+      <p className="site-section-sub">
+        Don't confuse this with Secondary/Tertiary the *colors* above. A "Secondary button" and a "Tertiary
+        button" are about <strong style={{ color: "var(--site-text)" }}>visual weight</strong> (how loud an
+        action looks), not a different hue — both stay in Primary's own color family, just with less fill. This
+        keeps every screen's primary/secondary/tertiary *actions* calm even when Secondary/Tertiary *colors* are
+        also on screen for an unrelated reason (e.g. a teal "new" badge next to a plain gray Secondary button).
+      </p>
+      <div className="site-panel site-grid cols-3">
+        <Swatch name="Secondary button" hex="#FFFFFF" border note="Not the Secondary color (teal) above — a visual-weight level. White fill + gray border + dark text, one step down from Primary." />
+        <Swatch name="Secondary button border" hex={color.neutral["300"]} note="The border that gives Secondary its outline" />
+        <Swatch name="Tertiary button / link" hex={color.brand["700"]} note="No fill, no border — text only, in Primary's own color" />
+      </div>
+
+      <SectionTitle title="Tag colors — for labeling only, never for buttons" />
+      <p className="site-section-sub">
+        "Categorical" just means <em>used to tell categories apart</em> — like color-coding tabs in a filing
+        cabinet. Use these five only for things like category tags, filter chips, or chart legend colors, so
+        different groups are visually distinct. <strong style={{ color: "var(--site-text)" }}>Never use them for a
+        button</strong> — buttons are always Primary, Secondary, Tertiary, or Destructive, never a tag color.
+      </p>
+      <div className="site-panel site-grid cols-4">
+        <Swatch name="Tag color 1" hex={color.accent.slate["500"]} note='e.g. "General" tag' />
+        <Swatch name="Tag color 2" hex={color.accent.plum["500"]} note='e.g. "Beneficiary" tag' />
+        <Swatch name="Tag color 3" hex={color.accent.ocean["500"]} note='e.g. "Contribution" tag' />
+        <Swatch name="Tag color 4" hex={color.accent.teal["500"]} note='e.g. "Investment" tag' />
+        <Swatch name="Tag color 5" hex={color.accent.amber["500"]} note='e.g. "Loan" tag' />
+      </div>
+
+      <SectionTitle title="Grays — text, backgrounds, borders" />
+      <div className="site-panel site-grid cols-4">
+        <Swatch name="Page background" hex={color.neutral["50"]} note="Behind every screen" />
+        <Swatch name="Border / divider" hex={color.neutral["200"]} note="Lines between things" />
+        <Swatch name="Secondary text" hex={color.neutral["600"]} note="Helper text, timestamps" />
+        <Swatch name="Main text" hex={color.neutral["900"]} note="Headings, body copy" />
+      </div>
+
+      <SectionTitle title="Text colors — exactly which text uses which color" />
+      <p className="site-section-sub">Four text roles, each with one fixed color — never pick a text color outside this table.</p>
+      <div className="site-panel site-panel--flush">
+        <table className="spec-table">
+          <thead><tr><th>Text role</th><th>Color</th><th>Token</th><th>Use for</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span className="quickref-swatch" style={{ background: color.neutral["900"] }} />Primary text</td>
+              <td>{color.neutral["900"]}</td>
+              <td><code>color.text.primary</code></td>
+              <td>Headings, body copy, input values — the default for anything meant to be read carefully.</td>
+            </tr>
+            <tr>
+              <td><span className="quickref-swatch" style={{ background: color.neutral["600"] }} />Secondary text</td>
+              <td>{color.neutral["600"]}</td>
+              <td><code>color.text.secondary</code></td>
+              <td>Helper text, field hints, table sub-labels, de-emphasized descriptions.</td>
+            </tr>
+            <tr>
+              <td><span className="quickref-swatch" style={{ background: color.neutral["500"] }} />Tertiary text</td>
+              <td>{color.neutral["500"]}</td>
+              <td><code>color.text.tertiary</code></td>
+              <td>Placeholder text, timestamps, disabled-adjacent labels, icon-only tooltips.</td>
+            </tr>
+            <tr>
+              <td><span className="quickref-swatch" style={{ background: color.neutral["400"] }} />Disabled text</td>
+              <td>{color.neutral["400"]}</td>
+              <td><code>color.text.disabled</code></td>
+              <td>Text inside a disabled control only — never for text a user should still read.</td>
+            </tr>
+            <tr>
+              <td><span className="quickref-swatch" style={{ background: color.brand["700"] }} />Link / interactive text</td>
+              <td>{color.brand["700"]}</td>
+              <td><code>color.action.tertiary.text</code></td>
+              <td>Inline text links and Tertiary buttons — see <a href="/components/actions#link" style={{ color: "var(--site-accent)" }}>Link</a>.</td>
+            </tr>
+            <tr>
+              <td><span className="quickref-swatch" style={{ background: "#FFFFFF" }} />Text on a filled Primary surface</td>
+              <td>#FFFFFF</td>
+              <td><code>color.action.primary.text</code></td>
+              <td>Text/icons sitting directly on a solid Primary button or badge.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <SectionTitle title="Status colors — messages only" />
+      <p className="site-section-sub">One color per meaning: green = success, orange = warning, red = error/danger, blue = neutral info.</p>
+      <div className="site-panel site-grid cols-4">
+        {(["success", "warning", "danger", "info"] as const).map((s) => (
+          <Swatch key={s} name={s[0].toUpperCase() + s.slice(1)} hex={color[s]["600"]} note={s === "danger" ? "Also used for the Delete/destructive button" : "Message text/icon color"} />
+        ))}
+      </div>
+
+      <SectionTitle title="Gradients — promo/hero surfaces only, never text or buttons" />
       <p className="site-section-sub">
         Two-stop scale-based gradients — each generated from the same brand/secondary/tertiary ramps above (a
         gradient token references <code>{"{color.brand.500}"}</code> etc. directly, so it re-colors automatically
