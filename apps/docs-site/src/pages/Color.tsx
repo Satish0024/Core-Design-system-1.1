@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import primitives from "../../../../packages/tokens/src/primitives.json";
 import { ContrastBadge } from "../ContrastBadge";
 import { rgbStringToHex } from "../lib/contrast";
@@ -7,153 +7,7 @@ import { Collapsible } from "../../../../packages/core/src/components/Primitives
 const color = (primitives as any).color;
 const gradient = (primitives as any).gradient;
 
-// Every semantic color token that has a light/dark distinction, grouped the
-// same way the rest of this page is — generated from real token keys
-// (--core-<key with dots as dashes>), not a hand-picked handful. Add a token
-// here and it appears in the table with zero other changes.
-const MODE_SECTIONS: Array<{ title: string; tokens: Array<{ label: string; key: string }> }> = [
-  {
-    title: "Brand colors — Primary, Secondary, Tertiary",
-    tokens: [
-      { label: "Primary — default", key: "color.action.primary.bg" },
-      { label: "Primary — hover", key: "color.action.primary.bgHover" },
-      { label: "Primary — active", key: "color.action.primary.bgActive" },
-      { label: "Secondary — solid", key: "color.palette.secondary.solidBg" },
-      { label: "Secondary — solid hover", key: "color.palette.secondary.solidBgHover" },
-      { label: "Secondary — tint background", key: "color.palette.secondary.tintBg" },
-      { label: "Tertiary — solid", key: "color.palette.tertiary.solidBg" },
-      { label: "Tertiary — solid hover", key: "color.palette.tertiary.solidBgHover" },
-      { label: "Tertiary — tint background", key: "color.palette.tertiary.tintBg" },
-    ],
-  },
-  {
-    title: "Backgrounds & surfaces",
-    tokens: [
-      { label: "Page background", key: "color.bg.page" },
-      { label: "Canvas background", key: "color.bg.canvas" },
-      { label: "Surface — default", key: "color.surface.default" },
-      { label: "Surface — raised (cards)", key: "color.surface.raised" },
-      { label: "Surface — sunken", key: "color.surface.sunken" },
-      { label: "Surface — overlay", key: "color.surface.overlay" },
-    ],
-  },
-  {
-    title: "Text",
-    tokens: [
-      { label: "Text — primary", key: "color.text.primary" },
-      { label: "Text — secondary", key: "color.text.secondary" },
-      { label: "Text — tertiary", key: "color.text.tertiary" },
-      { label: "Text — disabled", key: "color.text.disabled" },
-      { label: "Text — inverse", key: "color.text.inverse" },
-      { label: "Text — on brand", key: "color.text.onBrand" },
-    ],
-  },
-  {
-    title: "Borders & focus",
-    tokens: [
-      { label: "Border — subtle", key: "color.border.subtle" },
-      { label: "Border — default", key: "color.border.default" },
-      { label: "Border — strong", key: "color.border.strong" },
-      { label: "Border — focus", key: "color.border.focus" },
-      { label: "Focus ring", key: "color.focus.ring" },
-    ],
-  },
-  {
-    title: "Primary action",
-    tokens: [
-      { label: "Background", key: "color.action.primary.bg" },
-      { label: "Background — hover", key: "color.action.primary.bgHover" },
-      { label: "Background — active", key: "color.action.primary.bgActive" },
-      { label: "Text (on background)", key: "color.action.primary.text" },
-      { label: "Tint background", key: "color.action.primary.tintBg" },
-      { label: "Tint text", key: "color.action.primary.tintText" },
-    ],
-  },
-  {
-    title: "Secondary action",
-    tokens: [
-      { label: "Background", key: "color.action.secondary.bg" },
-      { label: "Background — hover", key: "color.action.secondary.bgHover" },
-      { label: "Border", key: "color.action.secondary.border" },
-      { label: "Text", key: "color.action.secondary.text" },
-    ],
-  },
-  {
-    title: "Tertiary action",
-    tokens: [
-      { label: "Text", key: "color.action.tertiary.text" },
-      { label: "Text — hover", key: "color.action.tertiary.textHover" },
-    ],
-  },
-  {
-    title: "Destructive action",
-    tokens: [
-      { label: "Background", key: "color.action.destructive.bg" },
-      { label: "Background — hover", key: "color.action.destructive.bgHover" },
-      { label: "Text", key: "color.action.destructive.text" },
-    ],
-  },
-  {
-    title: "Status — success",
-    tokens: [
-      { label: "Background (tint)", key: "color.status.success.bg" },
-      { label: "Text", key: "color.status.success.text" },
-      { label: "Border", key: "color.status.success.border" },
-      { label: "Background (strong)", key: "color.status.success.bgStrong" },
-      { label: "Text on strong", key: "color.status.success.textOnStrong" },
-    ],
-  },
-  {
-    title: "Status — warning",
-    tokens: [
-      { label: "Background (tint)", key: "color.status.warning.bg" },
-      { label: "Text", key: "color.status.warning.text" },
-      { label: "Border", key: "color.status.warning.border" },
-    ],
-  },
-  {
-    title: "Status — danger",
-    tokens: [
-      { label: "Background (tint)", key: "color.status.danger.bg" },
-      { label: "Text", key: "color.status.danger.text" },
-      { label: "Border", key: "color.status.danger.border" },
-    ],
-  },
-  {
-    title: "Status — info",
-    tokens: [
-      { label: "Background (tint)", key: "color.status.info.bg" },
-      { label: "Text", key: "color.status.info.text" },
-      { label: "Border", key: "color.status.info.border" },
-    ],
-  },
-  {
-    title: "Categorical (tags)",
-    tokens: [1, 2, 3, 4, 5].map((n) => ({ label: `Tag color ${n}`, key: `color.categorical.${n}` })),
-  },
-  {
-    title: "Secondary palette",
-    tokens: [
-      { label: "Solid background", key: "color.palette.secondary.solidBg" },
-      { label: "Solid background — hover", key: "color.palette.secondary.solidBgHover" },
-      { label: "Solid text", key: "color.palette.secondary.solidText" },
-      { label: "Tint background", key: "color.palette.secondary.tintBg" },
-      { label: "Text", key: "color.palette.secondary.text" },
-      { label: "Border", key: "color.palette.secondary.border" },
-    ],
-  },
-  {
-    title: "Tertiary palette",
-    tokens: [
-      { label: "Solid background", key: "color.palette.tertiary.solidBg" },
-      { label: "Solid background — hover", key: "color.palette.tertiary.solidBgHover" },
-      { label: "Solid text", key: "color.palette.tertiary.solidText" },
-      { label: "Tint background", key: "color.palette.tertiary.tintBg" },
-      { label: "Text", key: "color.palette.tertiary.text" },
-      { label: "Border", key: "color.palette.tertiary.border" },
-    ],
-  },
-];
+/* (MODE_SECTIONS removed — replaced by the M3-style accordion in BaselineTokensSection) */
 
 /* ── Baseline Color Tokens ──────────────────────────────────────────────── */
 
@@ -262,6 +116,7 @@ function parseRgb(raw: string): [number, number, number] | null {
 function BaselineSwatch({ tokenKey, label }: { tokenKey: string; label: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [textColor, setTextColor] = useState("#fff");
+  const [hex, setHex] = useState("");
   const varName = `--core-${tokenKey.replace(/\./g, "-")}`;
 
   useEffect(() => {
@@ -271,6 +126,8 @@ function BaselineSwatch({ tokenKey, label }: { tokenKey: string; label: string }
     if (rgb) {
       const lum = luminance(...rgb);
       setTextColor(lum > 0.4 ? "#000" : "#fff");
+      const toHex = (n: number) => n.toString(16).padStart(2, "0").toUpperCase();
+      setHex(`#${toHex(rgb[0])}${toHex(rgb[1])}${toHex(rgb[2])}`);
     }
   }, [tokenKey]);
 
@@ -280,68 +137,88 @@ function BaselineSwatch({ tokenKey, label }: { tokenKey: string; label: string }
       style={{
         background: `var(${varName})`,
         color: textColor,
-        padding: "14px 12px 10px",
-        borderRadius: 8,
-        minHeight: 68,
+        padding: "16px 14px 12px",
+        borderRadius: 10,
+        minHeight: 80,
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        border: "1px solid rgba(128,128,128,0.15)",
-        transition: "background-color 0.2s",
+        border: "1px solid rgba(128,128,128,0.12)",
+        flex: "1 1 140px",
+        minWidth: 0,
       }}
     >
-      <span style={{ fontSize: 13, fontWeight: 600 }}>{label}</span>
-      <span style={{ fontSize: 10, fontFamily: "var(--site-mono)", opacity: 0.82, marginTop: 4 }}>{tokenKey}</span>
+      <span style={{ fontSize: 12, fontFamily: "var(--site-mono)", opacity: 0.75 }}>{hex}</span>
+      <span style={{ fontSize: 13, fontWeight: 600, marginTop: "auto", wordBreak: "break-word", lineHeight: 1.3 }}>{label}</span>
     </div>
   );
 }
 
-function BaselineModeColumn({ mode }: { mode: "light" | "dark" }) {
+function BaselineAccordionGroup({ group, mode }: { group: typeof BASELINE_GROUPS[number]; mode: "light" | "dark" }) {
+  const [open, setOpen] = useState(group.title === "Primary");
   return (
-    <div
-      data-theme="core"
-      data-mode={mode}
-      style={{
-        flex: "1 1 0",
-        minWidth: 280,
-        background: "var(--core-color-bg-page)",
-        borderRadius: 14,
-        padding: "24px 20px",
-        border: "1px solid var(--site-border)",
-      }}
-    >
-      <div
+    <div style={{ borderBottom: "1px solid var(--site-border)" }}>
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
         style={{
-          fontSize: 11,
-          fontWeight: 700,
-          textTransform: "uppercase" as const,
-          letterSpacing: "0.06em",
-          marginBottom: 20,
-          color: mode === "light" ? "#1D1C24" : "#F4F4F6",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          width: "100%",
+          padding: "14px 20px",
+          border: "none",
+          background: "transparent",
+          cursor: "pointer",
+          fontSize: 14,
+          fontWeight: 600,
+          color: "inherit",
+          fontFamily: "inherit",
         }}
       >
-        {mode === "light" ? "☀ Light mode" : "☾ Dark mode"}
+        <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ fontSize: 16, opacity: 0.5 }}>📁</span>
+          {group.title} colors
+        </span>
+        <span style={{ fontSize: 18, opacity: 0.5, transition: "transform 0.15s", transform: open ? "rotate(180deg)" : "none" }}>▾</span>
+      </button>
+      {open && (
+        <div data-theme="core" data-mode={mode} style={{ padding: "0 20px 20px", display: "flex", gap: 8, flexWrap: "wrap" }}>
+          {group.tokens.map((t) => (
+            <BaselineSwatch key={t.key} tokenKey={t.key} label={t.label} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function BaselineTokensSection() {
+  const [mode, setMode] = useState<"light" | "dark">("light");
+  return (
+    <div className="site-panel" style={{ padding: 0, overflow: "hidden" }}>
+      <div style={{ padding: "20px 20px 16px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
+        <select
+          value={mode}
+          onChange={(e) => setMode(e.target.value as "light" | "dark")}
+          style={{
+            padding: "6px 12px",
+            borderRadius: 20,
+            border: "1px solid var(--site-border)",
+            background: "var(--site-bg-elevated)",
+            fontSize: 13,
+            fontWeight: 600,
+            color: "inherit",
+            fontFamily: "inherit",
+            cursor: "pointer",
+          }}
+        >
+          <option value="light">Default, Light</option>
+          <option value="dark">Default, Dark</option>
+        </select>
       </div>
       {BASELINE_GROUPS.map((group) => (
-        <div key={group.title} style={{ marginBottom: 20 }}>
-          <div
-            style={{
-              fontSize: 11,
-              fontWeight: 700,
-              textTransform: "uppercase" as const,
-              letterSpacing: "0.04em",
-              color: mode === "light" ? "#5C5C6B" : "#9A9AAC",
-              marginBottom: 8,
-            }}
-          >
-            {group.title}
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: 6 }}>
-            {group.tokens.map((t) => (
-              <BaselineSwatch key={t.key} tokenKey={t.key} label={t.label} />
-            ))}
-          </div>
-        </div>
+        <BaselineAccordionGroup key={group.title} group={group} mode={mode} />
       ))}
     </div>
   );
@@ -349,28 +226,7 @@ function BaselineModeColumn({ mode }: { mode: "light" | "dark" }) {
 
 /* ── end Baseline Color Tokens ─────────────────────────────────────────── */
 
-/** One color chip, measured live under whichever [data-theme][data-mode]
- *  ancestor it renders in — this is what makes a single component correct
- *  for both the Light and Dark table columns without duplicating token math. */
-function ModeSwatchCell({ tokenKey }: { tokenKey: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [hex, setHex] = useState<string | null>(null);
-  const varName = `--core-${tokenKey.replace(/\./g, "-")}`;
-
-  useEffect(() => {
-    if (!ref.current) return;
-    const bg = getComputedStyle(ref.current).backgroundColor;
-    setHex(rgbStringToHex(bg));
-  }, [tokenKey]);
-
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-      <div ref={ref} style={{ width: 26, height: 26, borderRadius: 6, border: "1px solid var(--site-border)", background: `var(${varName})`, flexShrink: 0 }} />
-      <span style={{ fontFamily: "var(--site-mono)", fontSize: 11, color: "var(--site-text-dim)", minWidth: 62 }}>{hex}</span>
-      {hex && <ContrastBadge hex={hex} />}
-    </div>
-  );
-}
+/* (ModeSwatchCell removed — replaced by BaselineSwatch in the M3 accordion) */
 
 const quickRef = [
   { use: "Primary button (Save, Submit, Continue) — the default for almost everything", hex: color.brand["600"], token: "Primary" },
@@ -430,27 +286,7 @@ function Ramp({ name, scale }: { name: string; scale: Record<string, string> }) 
   );
 }
 
-// Single source of truth for numbered-section order — the number shown is always
-// this array's position (1-based), computed via indexOf, never a typed literal.
-// Reorder this array to renumber the page; nothing else needs to change.
-const SECTION_ORDER = [
-  "Primary — used throughout",
-  "Secondary — used in specific cases",
-  "Tertiary — the rarest color",
-  "Button emphasis levels — a separate system from the colors above",
-  "Tag colors — for labeling only, never for buttons",
-  "Grays — text, backgrounds, borders",
-  "Text colors — exactly which text uses which color",
-  "Status colors — messages only",
-  "Gradients — promo/hero surfaces only, never text or buttons",
-  "Light & dark mode",
-];
-
-function SectionTitle({ title }: { title: string }) {
-  const n = SECTION_ORDER.indexOf(title);
-  if (n === -1) throw new Error(`SectionTitle "${title}" is missing from SECTION_ORDER`);
-  return <h2 className="site-section-title">{n + 1} · {title}</h2>;
-}
+// (Numbered section order removed — the page now uses the M3 accordion layout)
 
 export default function Color() {
   return (
@@ -463,157 +299,17 @@ export default function Color() {
         reference table after the full color scales covers 95% of cases in one lookup.
       </p>
 
-      {/* ── Baseline Color Tokens ── */}
-      <h2 className="site-section-title">Baseline Color Tokens</h2>
+      {/* ── Baseline Color Tokens (M3-style accordion) ── */}
+      <h2 className="site-section-title">Baseline color tokens</h2>
       <p className="site-section-sub">
-        Every semantic color role in the system, resolved side-by-side for light and dark mode.
-        These colors update automatically when a client theme is applied — change the brand ramp
-        in <code style={{ color: "var(--site-accent)" }}>primitives.json</code> and every role
-        below re-derives.
+        Every semantic color role in the system. Toggle between Light and Dark to see how
+        each token resolves. These colors update automatically when a client theme is applied —
+        change the brand ramp in <code style={{ color: "var(--site-accent)" }}>primitives.json</code> and
+        every role below re-derives.
       </p>
-      <div
-        style={{
-          display: "flex",
-          gap: 16,
-          flexWrap: "wrap",
-          marginBottom: 20,
-        }}
-      >
-        <BaselineModeColumn mode="light" />
-        <BaselineModeColumn mode="dark" />
-      </div>
-      {/* ── end Baseline Color Tokens ── */}
+      <BaselineTokensSection />
 
-      <SectionTitle title="Primary — used throughout" />
-      <p className="site-section-sub">
-        One blue. It's the default for every primary button, active link, selected nav item, and focus outline.
-        When in doubt, this is the color — Primary should be what the product reaches for first, everywhere.
-      </p>
-      <div className="site-panel site-grid cols-3">
-        <Swatch name="Primary / Default" hex={color.brand["600"]} note="Default button color" />
-        <Swatch name="Primary / Hover" hex={color.brand["700"]} note="Mouse-over / pressed state" />
-        <Swatch name="Primary / Text on light backgrounds" hex={color.brand["950"]} note="Rarely used — tinted headings only" />
-      </div>
-
-      <SectionTitle title="Secondary — used in specific cases" />
-      <p className="site-section-sub">
-        A genuine second hue (teal), not just a lighter Primary. Reach for it when something needs to stand apart
-        from the main action flow but still carry real emphasis — a highlighted secondary stat next to the
-        headline number, a "new" or "beta" indicator, an alternate call-to-action that must visually differ from
-        Primary because both appear together (e.g. "Compare plans" next to "Enroll now").
-        <strong style={{ color: "var(--site-text)" }}> It is not a lower-emphasis version of Primary</strong> —
-        for that, see the button-weight system below — it's a different color for a different meaning.
-      </p>
-      <div className="site-panel site-grid cols-3">
-        <Swatch name="Secondary / Solid" hex={color.secondary["600"]} note='Secondary-emphasis fills, e.g. a "Compare" button next to a Primary "Enroll"' />
-        <Swatch name="Secondary / Hover" hex={color.secondary["700"]} />
-        <Swatch name="Secondary / Tint background" hex={color.secondary["50"]} border note="Callout/badge background — pair with Secondary / Text below" />
-      </div>
-
-      <SectionTitle title="Tertiary — the rarest color" />
-      <p className="site-section-sub">
-        A third hue (amber/gold), used even less often than Secondary — reserved for the least common, most
-        supporting-role emphasis: a small "featured" badge, a subtle decorative accent, a tertiary data series
-        that must be visually distinguishable from both Primary and Secondary on the same screen.
-      </p>
-      <div className="site-panel site-grid cols-3">
-        <Swatch name="Tertiary / Solid" hex={color.tertiary["600"]} note="Rare — a featured/highlight badge" />
-        <Swatch name="Tertiary / Hover" hex={color.tertiary["700"]} />
-        <Swatch name="Tertiary / Tint background" hex={color.tertiary["50"]} border note="Callout/badge background — pair with Tertiary / Text" />
-      </div>
-
-      <SectionTitle title="Button emphasis levels — a separate system from the colors above" />
-      <p className="site-section-sub">
-        Don't confuse this with Secondary/Tertiary the *colors* above. A "Secondary button" and a "Tertiary
-        button" are about <strong style={{ color: "var(--site-text)" }}>visual weight</strong> (how loud an
-        action looks), not a different hue — both stay in Primary's own color family, just with less fill. This
-        keeps every screen's primary/secondary/tertiary *actions* calm even when Secondary/Tertiary *colors* are
-        also on screen for an unrelated reason (e.g. a teal "new" badge next to a plain gray Secondary button).
-      </p>
-      <div className="site-panel site-grid cols-3">
-        <Swatch name="Secondary button" hex="#FFFFFF" border note="Not the Secondary color (teal) above — a visual-weight level. White fill + gray border + dark text, one step down from Primary." />
-        <Swatch name="Secondary button border" hex={color.neutral["300"]} note="The border that gives Secondary its outline" />
-        <Swatch name="Tertiary button / link" hex={color.brand["700"]} note="No fill, no border — text only, in Primary's own color" />
-      </div>
-
-      <SectionTitle title="Tag colors — for labeling only, never for buttons" />
-      <p className="site-section-sub">
-        "Categorical" just means <em>used to tell categories apart</em> — like color-coding tabs in a filing
-        cabinet. Use these five only for things like category tags, filter chips, or chart legend colors, so
-        different groups are visually distinct. <strong style={{ color: "var(--site-text)" }}>Never use them for a
-        button</strong> — buttons are always Primary, Secondary, Tertiary, or Destructive, never a tag color.
-      </p>
-      <div className="site-panel site-grid cols-4">
-        <Swatch name="Tag color 1" hex={color.accent.slate["500"]} note='e.g. "General" tag' />
-        <Swatch name="Tag color 2" hex={color.accent.plum["500"]} note='e.g. "Beneficiary" tag' />
-        <Swatch name="Tag color 3" hex={color.accent.ocean["500"]} note='e.g. "Contribution" tag' />
-        <Swatch name="Tag color 4" hex={color.accent.teal["500"]} note='e.g. "Investment" tag' />
-        <Swatch name="Tag color 5" hex={color.accent.amber["500"]} note='e.g. "Loan" tag' />
-      </div>
-
-      <SectionTitle title="Grays — text, backgrounds, borders" />
-      <div className="site-panel site-grid cols-4">
-        <Swatch name="Page background" hex={color.neutral["50"]} note="Behind every screen" />
-        <Swatch name="Border / divider" hex={color.neutral["200"]} note="Lines between things" />
-        <Swatch name="Secondary text" hex={color.neutral["600"]} note="Helper text, timestamps" />
-        <Swatch name="Main text" hex={color.neutral["900"]} note="Headings, body copy" />
-      </div>
-
-      <SectionTitle title="Text colors — exactly which text uses which color" />
-      <p className="site-section-sub">Four text roles, each with one fixed color — never pick a text color outside this table.</p>
-      <div className="site-panel site-panel--flush">
-        <table className="spec-table">
-          <thead><tr><th>Text role</th><th>Color</th><th>Token</th><th>Use for</th></tr></thead>
-          <tbody>
-            <tr>
-              <td><span className="quickref-swatch" style={{ background: color.neutral["900"] }} />Primary text</td>
-              <td>{color.neutral["900"]}</td>
-              <td><code>color.text.primary</code></td>
-              <td>Headings, body copy, input values — the default for anything meant to be read carefully.</td>
-            </tr>
-            <tr>
-              <td><span className="quickref-swatch" style={{ background: color.neutral["600"] }} />Secondary text</td>
-              <td>{color.neutral["600"]}</td>
-              <td><code>color.text.secondary</code></td>
-              <td>Helper text, field hints, table sub-labels, de-emphasized descriptions.</td>
-            </tr>
-            <tr>
-              <td><span className="quickref-swatch" style={{ background: color.neutral["500"] }} />Tertiary text</td>
-              <td>{color.neutral["500"]}</td>
-              <td><code>color.text.tertiary</code></td>
-              <td>Placeholder text, timestamps, disabled-adjacent labels, icon-only tooltips.</td>
-            </tr>
-            <tr>
-              <td><span className="quickref-swatch" style={{ background: color.neutral["400"] }} />Disabled text</td>
-              <td>{color.neutral["400"]}</td>
-              <td><code>color.text.disabled</code></td>
-              <td>Text inside a disabled control only — never for text a user should still read.</td>
-            </tr>
-            <tr>
-              <td><span className="quickref-swatch" style={{ background: color.brand["700"] }} />Link / interactive text</td>
-              <td>{color.brand["700"]}</td>
-              <td><code>color.action.tertiary.text</code></td>
-              <td>Inline text links and Tertiary buttons — see <a href="/components/actions#link" style={{ color: "var(--site-accent)" }}>Link</a>.</td>
-            </tr>
-            <tr>
-              <td><span className="quickref-swatch" style={{ background: "#FFFFFF" }} />Text on a filled Primary surface</td>
-              <td>#FFFFFF</td>
-              <td><code>color.action.primary.text</code></td>
-              <td>Text/icons sitting directly on a solid Primary button or badge.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <SectionTitle title="Status colors — messages only" />
-      <p className="site-section-sub">One color per meaning: green = success, orange = warning, red = error/danger, blue = neutral info.</p>
-      <div className="site-panel site-grid cols-4">
-        {(["success", "warning", "danger", "info"] as const).map((s) => (
-          <Swatch key={s} name={s[0].toUpperCase() + s.slice(1)} hex={color[s]["600"]} note={s === "danger" ? "Also used for the Delete/destructive button" : "Message text/icon color"} />
-        ))}
-      </div>
-
-      <SectionTitle title="Gradients — promo/hero surfaces only, never text or buttons" />
+      <h2 className="site-section-title">Gradients — promo/hero surfaces only, never text or buttons</h2>
       <p className="site-section-sub">
         Two-stop scale-based gradients — each generated from the same brand/secondary/tertiary ramps above (a
         gradient token references <code>{"{color.brand.500}"}</code> etc. directly, so it re-colors automatically
@@ -648,48 +344,6 @@ export default function Color() {
             <div style={{ fontSize: 13, fontWeight: 600, textDecoration: "underline" }}>Get started →</div>
           </div>
         </div>
-      </div>
-
-      <SectionTitle title="Light & dark mode" />
-      <p className="site-section-sub">
-        Every semantic color role — backgrounds, text, borders, every action/status tone, tags, the secondary and
-        tertiary palettes — has a dark-mode equivalent already built in. Flipping the mode only changes these CSS
-        variables; no component code changes. Contrast (best of white/black text) is measured live against each
-        mode's <em>actual</em> rendered color, not looked up from a static table.
-      </p>
-      <div className="site-panel site-panel--flush">
-        <Collapsible
-          trigger={(open, toggle) => (
-            <button type="button" className="cds-btn cds-btn--secondary cds-btn--sm" onClick={toggle} style={{ margin: 20 }}>
-              {open ? "Hide" : "Show"} the full light/dark table ({MODE_SECTIONS.reduce((n, s) => n + s.tokens.length, 0)} tokens) {open ? "▲" : "▼"}
-            </button>
-          )}
-        >
-          <div style={{ overflowX: "auto" }}>
-            <table className="spec-table">
-              <thead><tr><th>Role</th><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
-              <tbody>
-                {MODE_SECTIONS.map((section) => (
-                  <React.Fragment key={section.title}>
-                    <tr>
-                      <td colSpan={4} style={{ background: "var(--site-bg-elevated)", fontWeight: 700, fontSize: 12, textTransform: "uppercase", letterSpacing: "0.04em", color: "var(--site-text-dim)" }}>
-                        {section.title}
-                      </td>
-                    </tr>
-                    {section.tokens.map((t) => (
-                      <tr key={t.key}>
-                        <td>{t.label}</td>
-                        <td><code style={{ fontSize: 11 }}>{t.key}</code></td>
-                        <td data-theme="core" data-mode="light"><ModeSwatchCell tokenKey={t.key} /></td>
-                        <td data-theme="core" data-mode="dark"><ModeSwatchCell tokenKey={t.key} /></td>
-                      </tr>
-                    ))}
-                  </React.Fragment>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Collapsible>
       </div>
 
       <h2 className="site-section-title">Full color scales (reference)</h2>

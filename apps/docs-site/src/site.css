@@ -326,9 +326,6 @@ table.spec-table code { font-family: var(--site-mono); font-size: 12px; color: v
 .page-nav-label {
   font-size: 15px;
   font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 @media (max-width: 520px) {
   .page-nav { flex-direction: column; gap: 10px; }

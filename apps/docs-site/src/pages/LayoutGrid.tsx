@@ -174,27 +174,10 @@ export default function LayoutGrid() {
       </div>
 
       <h2 className="site-section-title" id="grid">Grid &amp; Container</h2>
-      <p className="site-section-sub">Anatomy — a 12-column grid inside a width-clamped Container, mobile-first (full width until a column's <code>spanMd</code> takes over).</p>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Column — spans a fraction of 12", anchor: "top" },
-          { n: 2, label: "Gap — space.6 (24px) between columns", anchor: "bottom" },
-        ]}>
-          <div style={{ width: 480 }}>
-            <Grid columns={12} gap="6">
-              <GridCol span={8}><Card style={{ textAlign: "center", fontSize: 13 }}>span 8</Card></GridCol>
-              <GridCol span={4}><Card style={{ textAlign: "center", fontSize: 13 }}>span 4</Card></GridCol>
-              <GridCol span={4}><Card style={{ textAlign: "center", fontSize: 13 }}>span 4</Card></GridCol>
-              <GridCol span={4}><Card style={{ textAlign: "center", fontSize: 13 }}>span 4</Card></GridCol>
-              <GridCol span={4}><Card style={{ textAlign: "center", fontSize: 13 }}>span 4</Card></GridCol>
-            </Grid>
-          </div>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Column: GridCol span={n} — a structural fraction of the 12-column track, not a pixel width", anchor: "top" },
-          { n: 2, label: "Gap: space.6 (24px), same token as the app-shell's own internal spacing", anchor: "bottom" },
-        ]} />
-      </div>
+      <p className="site-section-sub">
+        A 12-column grid inside a width-clamped Container, mobile-first
+        (full width until a column's <code>spanMd</code> takes over).
+      </p>
       <div className="site-panel site-panel--flush">
         <table className="spec-table">
           <thead><tr><th>Breakpoint</th><th>Container max-width</th></tr></thead>
@@ -209,15 +192,10 @@ export default function LayoutGrid() {
         </table>
       </div>
 
-      {/* ═══════════════════════════════════════════════════════════════
-           VISUAL GRID DEMOS — inserted between the breakpoint table & Code
-           ═══════════════════════════════════════════════════════════════ */}
-
-      {/* ── 1. Basic grid ─────────────────────────────────────────── */}
+      {/* ── Basic grid ──────────────────────────────────────────── */}
       <h2 className="site-section-title" id="basic-grid">Basic grid</h2>
       <p className="site-section-sub">
-        Colored blocks showing common span combinations on a 12-column grid.
-        Each label reads the column count that block spans.
+        Common span combinations on a 12-column grid. Each label reads the column count that block spans.
       </p>
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
         {/* Row 1 — full width */}

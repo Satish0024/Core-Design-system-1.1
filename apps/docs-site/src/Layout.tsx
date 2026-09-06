@@ -264,10 +264,7 @@ export default function Layout() {
       </aside>
       <div className="site-main">
         <div className="site-topbar">
-          <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <CoreLogo size={20} />
-            <strong style={{ fontSize: 14, color: "var(--site-text-faint)", fontWeight: 500 }}>Design System</strong>
-          </span>
+          <span />
           <span style={{ display: "flex", alignItems: "center", gap: 14 }}>
             <span style={{ fontSize: 12, color: "var(--site-text-faint)" }}>v0.1.0 · White-label foundation</span>
             <button
