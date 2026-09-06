@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import primitives from "../../../../packages/tokens/src/primitives.json";
 import { ContrastBadge } from "../ContrastBadge";
 import { rgbStringToHex } from "../lib/contrast";
+import { Collapsible } from "../../../../packages/core/src/components/Primitives";
 
 const color = (primitives as any).color;
 const gradient = (primitives as any).gradient;
@@ -441,57 +442,85 @@ export default function Color() {
         variables; no component code changes. Contrast (best of white/black text) is measured live against each
         mode's <em>actual</em> rendered color, not looked up from a static table.
       </p>
-      <div className="site-panel site-panel--flush" style={{ overflowX: "auto" }}>
-        <table className="spec-table">
-          <thead><tr><th>Role</th><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
-          <tbody>
-            {MODE_SECTIONS.map((section) => (
-              <React.Fragment key={section.title}>
-                <tr>
-                  <td colSpan={4} style={{ background: "var(--site-bg-elevated)", fontWeight: 700, fontSize: 12, textTransform: "uppercase", letterSpacing: "0.04em", color: "var(--site-text-dim)" }}>
-                    {section.title}
-                  </td>
-                </tr>
-                {section.tokens.map((t) => (
-                  <tr key={t.key}>
-                    <td>{t.label}</td>
-                    <td><code style={{ fontSize: 11 }}>{t.key}</code></td>
-                    <td data-theme="core" data-mode="light"><ModeSwatchCell tokenKey={t.key} /></td>
-                    <td data-theme="core" data-mode="dark"><ModeSwatchCell tokenKey={t.key} /></td>
-                  </tr>
+      <div className="site-panel site-panel--flush">
+        <Collapsible
+          trigger={(open, toggle) => (
+            <button type="button" className="cds-btn cds-btn--secondary cds-btn--sm" onClick={toggle} style={{ margin: 20 }}>
+              {open ? "Hide" : "Show"} the full light/dark table ({MODE_SECTIONS.reduce((n, s) => n + s.tokens.length, 0)} tokens) {open ? "▲" : "▼"}
+            </button>
+          )}
+        >
+          <div style={{ overflowX: "auto" }}>
+            <table className="spec-table">
+              <thead><tr><th>Role</th><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+              <tbody>
+                {MODE_SECTIONS.map((section) => (
+                  <React.Fragment key={section.title}>
+                    <tr>
+                      <td colSpan={4} style={{ background: "var(--site-bg-elevated)", fontWeight: 700, fontSize: 12, textTransform: "uppercase", letterSpacing: "0.04em", color: "var(--site-text-dim)" }}>
+                        {section.title}
+                      </td>
+                    </tr>
+                    {section.tokens.map((t) => (
+                      <tr key={t.key}>
+                        <td>{t.label}</td>
+                        <td><code style={{ fontSize: 11 }}>{t.key}</code></td>
+                        <td data-theme="core" data-mode="light"><ModeSwatchCell tokenKey={t.key} /></td>
+                        <td data-theme="core" data-mode="dark"><ModeSwatchCell tokenKey={t.key} /></td>
+                      </tr>
+                    ))}
+                  </React.Fragment>
                 ))}
-              </React.Fragment>
-            ))}
-          </tbody>
-        </table>
+              </tbody>
+            </table>
+          </div>
+        </Collapsible>
       </div>
 
       <h2 className="site-section-title">Full color scales (reference)</h2>
-      <p className="site-section-sub">You shouldn't need to pick from these directly — they're what the roles above are built from.</p>
-      <div className="site-panel">
-        <Ramp name="brand (primary)" scale={color.brand} />
-        <Ramp name="secondary" scale={color.secondary} />
-        <Ramp name="tertiary" scale={color.tertiary} />
-        <Ramp name="neutral" scale={color.neutral} />
-        <Ramp name="success" scale={color.success} />
-        <Ramp name="warning" scale={color.warning} />
-        <Ramp name="danger" scale={color.danger} />
-        <Ramp name="info" scale={color.info} />
+      <p className="site-section-sub">You shouldn't need to pick from these directly — they're what the roles above are built from. Closed by default — a lot of color to scroll past otherwise.</p>
+      <div className="site-panel site-panel--flush">
+        <Collapsible
+          trigger={(open, toggle) => (
+            <button type="button" className="cds-btn cds-btn--secondary cds-btn--sm" onClick={toggle} style={{ margin: 20 }}>
+              {open ? "Hide" : "Show"} all 8 color scales {open ? "▲" : "▼"}
+            </button>
+          )}
+        >
+          <div style={{ padding: "0 20px 20px" }}>
+            <Ramp name="brand (primary)" scale={color.brand} />
+            <Ramp name="secondary" scale={color.secondary} />
+            <Ramp name="tertiary" scale={color.tertiary} />
+            <Ramp name="neutral" scale={color.neutral} />
+            <Ramp name="success" scale={color.success} />
+            <Ramp name="warning" scale={color.warning} />
+            <Ramp name="danger" scale={color.danger} />
+            <Ramp name="info" scale={color.info} />
+          </div>
+        </Collapsible>
       </div>
 
       <h2 className="site-section-title">Quick reference — what to use where</h2>
       <div className="site-panel site-panel--flush">
-        <table className="quickref-table">
-          <thead><tr><th>If you're building this…</th><th>…use this color</th></tr></thead>
-          <tbody>
-            {quickRef.map((r) => (
-              <tr key={r.use}>
-                <td>{r.use}</td>
-                <td><span className="quickref-swatch" style={{ background: r.hex }} />{r.token} <span style={{ color: "var(--site-text-faint)", fontFamily: "var(--site-mono)", fontSize: 11 }}>{r.hex}</span></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Collapsible
+          trigger={(open, toggle) => (
+            <button type="button" className="cds-btn cds-btn--secondary cds-btn--sm" onClick={toggle} style={{ margin: 20 }}>
+              {open ? "Hide" : "Show"} the quick reference table ({quickRef.length} rows) {open ? "▲" : "▼"}
+            </button>
+          )}
+        >
+          <table className="quickref-table">
+            <thead><tr><th>If you're building this…</th><th>…use this color</th></tr></thead>
+            <tbody>
+              {quickRef.map((r) => (
+                <tr key={r.use}>
+                  <td>{r.use}</td>
+                  <td><span className="quickref-swatch" style={{ background: r.hex }} />{r.token} <span style={{ color: "var(--site-text-faint)", fontFamily: "var(--site-mono)", fontSize: 11 }}>{r.hex}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Collapsible>
       </div>
 
       <h2 className="site-section-title">How this survives a client theme swap</h2>
