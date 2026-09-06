@@ -167,13 +167,16 @@ pre.code-block {
   --hero-muted: #5a5b70;
   --hero-cta: #3b47d6;
   --hero-cta-hover: #2f3ac0;
+  --sidebar-w: 260px;
   position: relative;
   isolation: isolate;
-  margin: -40px -32px 32px;
   border-radius: 0;
   overflow: hidden;
   background: #f4f2ff;
   color: var(--hero-ink);
+  /* Break out of .site-content max-width — fill the full .site-main area */
+  width: calc(100vw - var(--sidebar-w));
+  margin: -40px 0 32px calc(-32px);
 }
 
 /* Image always fills full width — drives the hero height on desktop */
@@ -244,6 +247,11 @@ pre.code-block {
 
 /* ---- Hero responsive — stack on narrow screens ---- */
 @media (max-width: 900px) {
+  .hero {
+    --sidebar-w: 0px;
+    width: 100vw;
+    margin-left: -32px;
+  }
   .hero-copy {
     position: relative;
     inset: auto;
