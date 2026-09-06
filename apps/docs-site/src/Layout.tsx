@@ -264,7 +264,7 @@ export default function Layout() {
       </aside>
       <div className="site-main">
         <div className="site-topbar">
-          <span />
+          <span style={{ fontSize: 14, fontWeight: 600, color: "var(--site-text)" }}>Participant Portal</span>
           <span style={{ display: "flex", alignItems: "center", gap: 14 }}>
             <span style={{ fontSize: 12, color: "var(--site-text-faint)" }}>v0.1.0 · White-label foundation</span>
             <button
