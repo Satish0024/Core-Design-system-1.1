@@ -14,16 +14,16 @@ export default function LogoPage() {
         Two surface-matched variants — navy wordmark for light backgrounds, lavender for dark.
       </p>
       <div className="site-panel site-panel--flush">
-        <div className="preview-surface" style={{ background: "#0B0C10", gap: 40 }}>
+        <div className="preview-surface" data-theme="core" data-mode="dark" style={{ background: "var(--core-color-bg-page)", gap: 40, color: "var(--core-color-text-secondary)" }}>
           <div style={{ textAlign: "center" }}>
             <img src="/brand/core/core-logo-dark.svg" alt="CORE, dark-surface variant" height={64} />
-            <div style={{ fontSize: 11, color: "#9A9AAC", marginTop: 8 }}>On dark</div>
+            <div style={{ fontSize: 11, marginTop: 8 }}>On dark</div>
           </div>
         </div>
-        <div className="preview-surface" style={{ background: "#FFFFFF", gap: 40, borderTop: "1px solid var(--site-border)" }}>
+        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", gap: 40, color: "var(--core-color-text-secondary)", borderTop: "1px solid var(--site-border)" }}>
           <div style={{ textAlign: "center" }}>
             <img src="/brand/core/core-logo-light.svg" alt="CORE, light-surface variant" height={64} />
-            <div style={{ fontSize: 11, color: "#55566B", marginTop: 8 }}>On light</div>
+            <div style={{ fontSize: 11, marginTop: 8 }}>On light</div>
           </div>
         </div>
       </div>
@@ -34,10 +34,10 @@ export default function LogoPage() {
         automatically by the client theme's <code>meta.logo</code> / <code>meta.logoOnDark</code> fields.
       </p>
       <div className="site-panel site-panel--flush">
-        <div className="preview-surface" style={{ background: "#FFFFFF" }}>
+        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
           <img src="/brand/lendguard/logo-lockup-light.svg" alt="Meridian logo, light surface version" style={{ height: 36 }} />
         </div>
-        <div className="preview-surface" style={{ background: "#0B0C10", borderTop: "1px solid var(--site-border)" }}>
+        <div className="preview-surface" data-theme="core" data-mode="dark" style={{ background: "var(--core-color-bg-page)", borderTop: "1px solid var(--site-border)" }}>
           <img src="/brand/lendguard/logo-lockup-dark.svg" alt="Meridian logo, dark surface version" style={{ height: 36 }} />
         </div>
       </div>

@@ -22,8 +22,8 @@ const nav = [
     links: [
       { to: "/foundations/layout-grid#header", label: "App Header" },
       { to: "/foundations/layout-grid#footer", label: "App Footer" },
-      { to: "/foundations/layout-grid#sidebar-variants", label: "App Shell (Sidebar)" },
       { to: "/foundations/layout-grid#grid", label: "Grid & Container" },
+      { to: "/foundations/layout-grid#page-layouts", label: "Page Layouts" },
     ],
   },
   {

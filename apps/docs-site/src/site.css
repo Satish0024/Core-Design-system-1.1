@@ -114,6 +114,13 @@ a { color: inherit; }
   --site-text-faint: #85869C;
   --site-accent: #0270A9;
   --site-border: #E3E3EC;
+  color: var(--core-color-text-primary);
+}
+/* Light preview surfaces inherit body color (light gray in dark site mode).
+   Pin text to the CORE token so icons/labels stay visible on light demos. */
+.preview-surface[data-theme],
+.preview-surface[data-mode] {
+  color: var(--core-color-text-primary);
 }
 /* No overflow:hidden here on purpose — it was clipping every dropdown/combobox/popover
    that lives inside a flush panel. Corner-rounding for flush content (tables, code blocks)
@@ -257,11 +264,29 @@ pre.code-block {
   gap: 8px;
   transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
 }
-.btn-hero.primary { background: var(--hero-cta); color: #fff; }
-.btn-hero.primary:hover { background: var(--hero-cta-hover); }
-.btn-hero.ghost { background: #fff; border: 1px solid #d8d9e6; color: var(--hero-ink); }
-.btn-hero.ghost:hover { background: #f6f6fb; border-color: #c5c6d6; }
-.btn-hero:focus-visible { outline: 3px solid var(--hero-cta); outline-offset: 2px; }
+/* btn-hero is reused outside .hero (Typography, Icons, Motion) — fall back
+   to site chrome tokens so ghost/primary stay readable in dark mode. */
+.btn-hero.primary { background: var(--hero-cta, var(--site-accent)); color: #fff; }
+.btn-hero.primary:hover { background: var(--hero-cta-hover, var(--site-accent)); }
+.btn-hero.ghost {
+  background: var(--site-bg-elevated);
+  border: 1px solid var(--site-border);
+  color: var(--site-text);
+}
+.btn-hero.ghost:hover {
+  background: var(--site-bg-hover);
+  border-color: var(--site-border);
+}
+.hero .btn-hero.ghost {
+  background: #fff;
+  border-color: #d8d9e6;
+  color: var(--hero-ink);
+}
+.hero .btn-hero.ghost:hover {
+  background: #f6f6fb;
+  border-color: #c5c6d6;
+}
+.btn-hero:focus-visible { outline: 3px solid var(--hero-cta, var(--site-accent)); outline-offset: 2px; }
 
 /* ---- Hero responsive — stack on narrow screens ---- */
 @media (max-width: 900px) {
@@ -347,7 +372,7 @@ table.spec-table code { font-family: var(--site-mono); font-size: 12px; color: v
 .site-footer {
   margin-top: auto;
   border-top: 1px solid var(--site-border);
-  padding: 20px 40px;
+  padding: 20px 32px;
 }
 .site-footer-inner {
   display: flex;

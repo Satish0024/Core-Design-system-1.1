@@ -24,11 +24,11 @@ export default function RadiusElevation() {
 
       <h2 className="site-section-title">Elevation</h2>
       <p className="site-section-sub">Four levels, each two stacked shadows (a tight contact shadow + a soft ambient one) — never invent a one-off shadow value in a component.</p>
-      <div className="site-panel site-grid cols-4" style={{ background: "#1b1c26" }}>
+      <div className="site-panel site-grid cols-4" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
         {Object.entries(elevation).filter(([k]) => k !== "0").map(([step, val]) => (
           <div key={step} style={{ textAlign: "center" }}>
-            <div style={{ height: 70, background: "#F4F4F6", borderRadius: 10, boxShadow: val }} />
-            <div style={{ marginTop: 8, fontSize: 12, fontFamily: "var(--site-mono)", color: "var(--site-text-dim)" }}>elevation.{step}</div>
+            <div style={{ height: 70, background: "var(--core-color-bg-canvas)", borderRadius: "var(--core-radius-md)", boxShadow: val, border: "1px solid var(--core-color-border-subtle)" }} />
+            <div style={{ marginTop: 8, fontSize: 12, fontFamily: "var(--site-mono)", color: "var(--core-color-text-secondary)" }}>elevation.{step}</div>
           </div>
         ))}
       </div>

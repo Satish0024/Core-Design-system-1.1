@@ -43,15 +43,15 @@ export default function DataDisplay() {
         <Preview>
           <Card style={{ minWidth: 220 }}>
             <div style={{ fontSize: 13, color: "var(--core-color-text-secondary)" }}>Default</div>
-            <div style={{ fontSize: 20, fontWeight: 700, marginTop: 4 }}>$84,213.05</div>
+            <div style={{ fontSize: 20, fontWeight: 700, marginTop: 4, color: "var(--core-color-text-primary)" }}>$84,213.05</div>
           </Card>
           <Card variant="outlined" style={{ minWidth: 220 }}>
             <div style={{ fontSize: 13, color: "var(--core-color-text-secondary)" }}>Outlined</div>
-            <div style={{ fontSize: 20, fontWeight: 700, marginTop: 4 }}>Oct 15</div>
+            <div style={{ fontSize: 20, fontWeight: 700, marginTop: 4, color: "var(--core-color-text-primary)" }}>Oct 15</div>
           </Card>
           <Card variant="interactive" style={{ minWidth: 220 }} onClick={() => {}}>
             <div style={{ fontSize: 13, color: "var(--core-color-text-secondary)" }}>Interactive — click me</div>
-            <div style={{ fontSize: 20, fontWeight: 700, marginTop: 4 }}>Roth 401(k)</div>
+            <div style={{ fontSize: 20, fontWeight: 700, marginTop: 4, color: "var(--core-color-text-primary)" }}>Roth 401(k)</div>
           </Card>
         </Preview>
       </div>
@@ -60,7 +60,7 @@ export default function DataDisplay() {
           { n: 1, label: "Padding — 20px all sides", anchor: "top" },
           { n: 2, label: "Shadow — elevation.1", anchor: "bottom" }
         ]}>
-          <Card style={{ width: 200 }}><div style={{ fontSize: 13 }}>Balance</div><div style={{ fontSize: 20, fontWeight: 700 }}>$84,213</div></Card>
+          <Card style={{ width: 200 }}><div style={{ fontSize: 13, color: "var(--core-color-text-secondary)" }}>Balance</div><div style={{ fontSize: 20, fontWeight: 700, color: "var(--core-color-text-primary)" }}>$84,213</div></Card>
         </AutoAnatomy>
         <AutoAnatomyLegend points={[
           { n: 1, label: "Padding: 20px on every side", anchor: "top" },
