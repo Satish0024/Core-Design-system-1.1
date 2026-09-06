@@ -433,7 +433,12 @@
 
 /* ---------- Toast ---------- */
 .cds-toast {
-  display: flex; align-items: flex-start; gap: 10px; background: var(--core-color-surface-raised);
+  /* column, not row: cds-toast-header (title/timestamp/close) and
+     cds-toast-body (the description) are its two direct children and must
+     stack — a bare `display: flex` here was putting them side by side
+     instead, cramming the description into the same line as the timestamp
+     and close button. */
+  display: flex; flex-direction: column; background: var(--core-color-surface-raised);
   border: 1px solid var(--core-color-border-default); border-left: 3px solid var(--core-color-action-primary-bg);
   border-radius: var(--core-radius-md); padding: 12px 14px; box-shadow: var(--core-card-shadow);
   font-size: var(--core-font-size-sm); min-width: 280px; color: var(--core-color-text-primary);

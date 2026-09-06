@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 import { CoreLogo } from "./CoreLogo";
 
 const nav = [
@@ -145,25 +145,51 @@ function useSiteMode() {
   return { mode, toggle: () => setMode((m) => (m === "dark" ? "light" : "dark")) };
 }
 
+// A link is only "active" when both its pathname AND its hash (when it has
+// one) match the current location. Plain react-router `NavLink` only ever
+// compares pathname — every `#anchor` link sharing a page (e.g. all of
+// Overlays' Modal/Drawer/Popover/… links, which all point at
+// /components/overlays with a different hash each) would light up together,
+// since none of them differ by pathname. That was a real, reproduced bug.
+function isNavLinkActive(to: string, pathname: string, hash: string) {
+  const hashIndex = to.indexOf("#");
+  const toPath = hashIndex === -1 ? to : to.slice(0, hashIndex);
+  const toHash = hashIndex === -1 ? "" : to.slice(hashIndex);
+  if (pathname !== toPath) return false;
+  return toHash ? hash === toHash : true;
+}
+
 export default function Layout() {
   useAnchorScroll();
   const { mode, toggle } = useSiteMode();
+  const location = useLocation();
   return (
-    <div className="site-shell">
+    // data-theme/data-mode here is what makes every CORE component actually
+    // themed by default — --core-* custom properties only exist inside a
+    // [data-theme][data-mode] scope, nothing falls back to a bare :root.
+    // Individual demo boxes set their own data-theme/data-mode explicitly
+    // (to force a specific mode for a side-by-side comparison, say), but any
+    // *real* interactive component rendered outside one of those boxes — the
+    // live Modal/Drawer/Toast a page's own "Open modal" button toggles, for
+    // instance, not the static AutoAnatomy mockup above it — had no themed
+    // ancestor at all and rendered with zero styling, plain browser defaults.
+    // This is unrelated to the site's own light/dark chrome toggle
+    // ([data-site-mode] on <html>, driven by useSiteMode() below) — that's a
+    // separate --site-* variable system for the docs UI itself.
+    <div className="site-shell" data-theme="core" data-mode="light">
       <aside className="site-sidebar">
         <div className="site-logo"><CoreLogo size={22} /></div>
         {nav.map((g) => (
           <div className="site-nav-group" key={g.group}>
             <div className="site-nav-title">{g.group}</div>
             {g.links.map((l) => (
-              <NavLink
+              <Link
                 key={l.to}
                 to={l.to}
-                end={l.to === "/"}
-                className={({ isActive }) => "site-nav-link" + (isActive ? " active" : "")}
+                className={"site-nav-link" + (isNavLinkActive(l.to, location.pathname, location.hash) ? " active" : "")}
               >
                 {l.label}
-              </NavLink>
+              </Link>
             ))}
           </div>
         ))}
