@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Preview, CodeBlock } from "../Preview";
-import { Button } from "../../../../packages/core/src/components/Button";
+import { Button, IconButton } from "../../../../packages/core/src/components/Button";
 import { Modal, ConfirmDialog, Drawer, Tooltip, Popover, DropdownMenu } from "../../../../packages/core/src/components/Overlays";
 import { HoverCard } from "../../../../packages/core/src/components/HoverCard";
 import { Field, Input } from "../../../../packages/core/src/components/Field";
 import { Select } from "../../../../packages/core/src/components/FormControls";
-import { DescriptionList } from "../../../../packages/core/src/components/Primitives";
+import { DescriptionList, Icon } from "../../../../packages/core/src/components/Primitives";
 import { AutoAnatomy, AutoAnatomyLegend } from "../AutoAnatomy";
 
 export default function OverlaysPage() {
@@ -234,6 +234,36 @@ export default function OverlaysPage() {
           </Tooltip>
         </Preview>
       </div>
+
+      <p className="site-section-sub">
+        From an icon — the most common trigger in a dense form or table: a bare info glyph next to a label,
+        never relying on the icon's shape alone to communicate its meaning (that's what the tooltip text is for).
+      </p>
+      <div className="site-panel site-panel--flush">
+        <Preview>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14 }}>
+            Vested balance
+            <Tooltip label="The portion of employer contributions you keep if you leave today.">
+              <IconButton variant="tertiary" size="sm" shape="circle" aria-label="What is vested balance?">
+                <Icon name="fa-solid fa-circle-info" size="sm" />
+              </IconButton>
+            </Tooltip>
+          </span>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14 }}>
+            Federal tax withholding
+            <Tooltip label="20% is the IRS-mandated minimum for most retirement plan distributions.">
+              <IconButton variant="tertiary" size="sm" shape="circle" aria-label="What is federal tax withholding?">
+                <Icon name="fa-solid fa-circle-info" size="sm" />
+              </IconButton>
+            </Tooltip>
+          </span>
+        </Preview>
+      </div>
+      <p className="site-section-sub">
+        The trigger is a real <code>IconButton</code> with its own <code>aria-label</code> naming the question being
+        answered (not just "info") — so it's independently meaningful to a screen reader even before the tooltip
+        text is announced, and keyboard-focusable/-triggerable like every other Tooltip trigger.
+      </p>
 
       <h2 className="site-section-title" id="popover">Popover</h2>
       <p className="site-section-sub">Anatomy — richer than a Tooltip: can hold links, buttons, or a small form; dismisses on outside click or Escape.</p>

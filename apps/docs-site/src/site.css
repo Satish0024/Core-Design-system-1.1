@@ -96,7 +96,15 @@ a { color: inherit; }
   border: 1px solid var(--site-border);
   border-radius: 14px;
   padding: 28px;
+  /* Every page on this site was relying on an intervening heading/paragraph
+     to space consecutive panels apart — any page (or new section) that put
+     two .site-panel blocks back to back with nothing between them got them
+     touching/overlapping at the border, with zero gap. Real, reproduced bug
+     across multiple pages. A default bottom margin here makes every panel
+     self-spacing regardless of what does or doesn't come after it. */
+  margin-bottom: 20px;
 }
+.site-panel:last-child { margin-bottom: 0; }
 /* No overflow:hidden here on purpose — it was clipping every dropdown/combobox/popover
    that lives inside a flush panel. Corner-rounding for flush content (tables, code blocks)
    is each child's own responsibility (e.g. .cds-table-wrap has its own border-radius). */

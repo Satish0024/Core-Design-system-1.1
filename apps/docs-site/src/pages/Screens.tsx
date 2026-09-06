@@ -112,22 +112,73 @@ export default function Screens() {
               sidebar={<AppSidebar items={NAV_ITEMS} variant="rail" />}
               footer={<ScreenFooter />}
             >
-              <div style={{ fontSize: "var(--core-font-size-lg)", fontWeight: 700, marginBottom: "var(--core-space-4)" }}>Hi Taylor 👋</div>
+              <div style={{ fontSize: "var(--core-font-size-lg)", fontWeight: 700, marginBottom: "var(--core-space-6)" }}>Hi Taylor 👋</div>
               <Grid columns={12} gap="6">
                 <GridCol span={12} spanMd={8}>
                   <Card style={{ marginBottom: "var(--core-space-6)" }}>
-                    <div style={{ fontSize: "var(--core-font-size-sm)", color: "var(--core-color-text-secondary)" }}>Overall balance</div>
-                    <div style={{ fontSize: "var(--core-font-size-xl)", fontWeight: 700 }}>$84,210.55</div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "var(--core-space-6)" }}>
+                      <div>
+                        <div style={{ fontSize: "var(--core-font-size-xs)", color: "var(--core-color-text-secondary)", marginBottom: "var(--core-space-2)", textTransform: "uppercase", letterSpacing: "0.04em" }}>Account balance</div>
+                        <div style={{ fontSize: "var(--core-font-size-xl)", fontWeight: 700 }}>$100,416.00</div>
+                      </div>
+                      <div>
+                        <div style={{ fontSize: "var(--core-font-size-xs)", color: "var(--core-color-text-secondary)", marginBottom: "var(--core-space-2)", textTransform: "uppercase", letterSpacing: "0.04em" }}>Vested balance</div>
+                        <div style={{ fontSize: "var(--core-font-size-xl)", fontWeight: 700 }}>$92,400.00</div>
+                      </div>
+                      <Button variant="secondary" size="sm">View summary</Button>
+                    </div>
+                    <div style={{ marginTop: "var(--core-space-4)", fontSize: "var(--core-font-size-sm)", color: "var(--core-color-text-secondary)" }}>
+                      Outstanding loan balance <strong style={{ color: "var(--core-color-text-primary)" }}>$0,500.00</strong>
+                    </div>
                   </Card>
-                  <Grid columns={2} gap="4">
-                    <GridCol span={1}><Card><div style={{ fontWeight: 600 }}>401(k) Plan</div><div style={{ fontSize: "var(--core-font-size-sm)", color: "var(--core-color-text-secondary)" }}>$61,204.10</div></Card></GridCol>
-                    <GridCol span={1}><Card><div style={{ fontWeight: 600 }}>Roth IRA</div><div style={{ fontSize: "var(--core-font-size-sm)", color: "var(--core-color-text-secondary)" }}>$23,006.45</div></Card></GridCol>
+                  <div style={{ fontWeight: 700, fontSize: "var(--core-font-size-md)", marginBottom: "var(--core-space-4)" }}>My plans</div>
+                  <Card style={{ marginBottom: "var(--core-space-6)" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "var(--core-space-4)" }}>
+                      <div>
+                        <div style={{ fontWeight: 600 }}>LendGuard 401(k) Plan <Badge tone="info" size="sm">Participating</Badge></div>
+                        <div style={{ fontSize: "var(--core-font-size-xs)", color: "var(--core-color-text-secondary)", marginTop: "var(--core-space-1)" }}>401(K) · ID 134342</div>
+                      </div>
+                      <Badge tone="info" size="sm">Participating</Badge>
+                    </div>
+                    <div style={{ background: "var(--core-color-bg-success-subtle, #e8f5e9)", borderRadius: "var(--core-radius-sm)", padding: "var(--core-space-3) var(--core-space-4)", marginBottom: "var(--core-space-4)", fontSize: "var(--core-font-size-sm)" }}>
+                      Congratulations! You are enrolled in this plan. <a href="#" style={{ fontWeight: 600 }}>View details</a>
+                    </div>
+                    <Grid columns={2} gap="4">
+                      <GridCol span={1}>
+                        <Card variant="outlined">
+                          <div style={{ fontSize: "var(--core-font-size-xs)", color: "var(--core-color-text-secondary)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "var(--core-space-1)" }}>Account Balance</div>
+                          <div style={{ fontWeight: 600, marginBottom: "var(--core-space-2)" }}>Account balance</div>
+                          <div style={{ fontSize: "var(--core-font-size-lg)", fontWeight: 700, color: "var(--core-color-brand-600, #3b47d6)" }}>$92,480.00</div>
+                        </Card>
+                      </GridCol>
+                      <GridCol span={1}>
+                        <Card variant="outlined">
+                          <div style={{ fontSize: "var(--core-font-size-xs)", color: "var(--core-color-text-secondary)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "var(--core-space-1)" }}>Vested Balance</div>
+                          <div style={{ fontSize: "var(--core-font-size-lg)", fontWeight: 700 }}>$29,300.00</div>
+                        </Card>
+                      </GridCol>
+                    </Grid>
+                  </Card>
+                  <div style={{ fontWeight: 700, fontSize: "var(--core-font-size-md)", marginBottom: "var(--core-space-4)" }}>Quick links</div>
+                  <Grid columns={3} gap="4" style={{ marginBottom: "var(--core-space-6)" }}>
+                    <GridCol span={1}><Card variant="outlined"><div style={{ display: "flex", alignItems: "center", gap: "var(--core-space-3)" }}><Icon name="fa-solid fa-user-plus" size="sm" /><span style={{ fontSize: "var(--core-font-size-sm)" }}>Add beneficiary</span></div></Card></GridCol>
+                    <GridCol span={1}><Card variant="outlined"><div style={{ display: "flex", alignItems: "center", gap: "var(--core-space-3)" }}><Icon name="fa-solid fa-file-lines" size="sm" /><span style={{ fontSize: "var(--core-font-size-sm)" }}>My documents</span></div></Card></GridCol>
+                    <GridCol span={1}><Card variant="outlined"><div style={{ display: "flex", alignItems: "center", gap: "var(--core-space-3)" }}><Icon name="fa-solid fa-chart-line" size="sm" /><span style={{ fontSize: "var(--core-font-size-sm)" }}>My portfolio</span></div></Card></GridCol>
                   </Grid>
                 </GridCol>
                 <GridCol span={12} spanMd={4}>
-                  <Card>
-                    <div style={{ fontWeight: 600, marginBottom: "var(--core-space-2)" }}>Retirement readiness</div>
+                  <Card style={{ marginBottom: "var(--core-space-4)", background: "var(--core-color-brand-600, #2d3a8c)", color: "white", borderColor: "transparent" }}>
+                    <div style={{ fontSize: "var(--core-font-size-xs)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "var(--core-space-2)", opacity: 0.85 }}>Retirement Readiness</div>
+                    <div style={{ fontWeight: 600, marginBottom: "var(--core-space-3)" }}>See how your inputs affect your savings, income, risk.</div>
+                  </Card>
+                  <Card style={{ marginBottom: "var(--core-space-4)" }}>
+                    <div style={{ fontWeight: 600, marginBottom: "var(--core-space-2)" }}>Retirement Readiness</div>
                     <Progress value={72} label="72% on track" />
+                  </Card>
+                  <Card style={{ marginBottom: "var(--core-space-4)" }}>
+                    <div style={{ fontSize: "var(--core-font-size-xs)", textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--core-color-text-secondary)", marginBottom: "var(--core-space-2)" }}>Learning</div>
+                    <div style={{ fontWeight: 600, marginBottom: "var(--core-space-2)" }}>Financial Wellness</div>
+                    <div style={{ fontSize: "var(--core-font-size-sm)", color: "var(--core-color-text-secondary)" }}>Learn about planning, saving lessons.</div>
                   </Card>
                 </GridCol>
               </Grid>

@@ -29,6 +29,15 @@ export default function Forms() {
   const [dob, setDob] = useState<Date | undefined>(undefined);
   const [files, setFiles] = useState<AttachmentFile[]>([{ id: "1", name: "beneficiary-form.pdf", size: "212 KB" }]);
   const [freq, setFreq] = useState("monthly");
+  const [cardNumber, setCardNumber] = useState("");
+  const [routing, setRouting] = useState("");
+  const [account, setAccount] = useState("");
+
+  // Groups digits as "1234 5678 9012 3456" — formatting logic lives with the
+  // usage, not baked into Input itself, so any masked-number field (card,
+  // routing, SSN, ...) composes the same way.
+  const formatCardNumber = (raw: string) => raw.replace(/\D/g, "").slice(0, 16).replace(/(.{4})/g, "$1 ").trim();
+
   return (
     <div>
       <h1 className="site-h1">Form Controls</h1>
@@ -398,6 +407,65 @@ export default function Forms() {
           </div>
           <div style={{ width: 160 }}>
             <Field label="Amount">{(p) => <InputWithIcon {...p} leadingIcon={<Icon name="fa-solid fa-dollar-sign" size="sm" />} defaultValue="250" />}</Field>
+          </div>
+        </Preview>
+      </div>
+
+      <h2 className="site-section-title" id="payment-bank-fields">Payment &amp; bank detail fields</h2>
+      <p className="site-section-sub">
+        The recurring sensitive-number pattern (card number, bank routing/account number, SSN) — a masked/
+        formatted <code>Input</code> composed with <code>Field</code>, never a new component. Formatting logic
+        (grouping digits, masking all but the last 4) lives in the usage, not in <code>Input</code> itself.
+      </p>
+      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
+        <AutoAnatomy points={[
+          { n: 1, label: "Trailing icon — card brand, decorative", anchor: "right" },
+          { n: 2, label: "Digit grouping — formatted as you type", anchor: "top" },
+          { n: 3, label: "Hint — states exactly what's masked and why", anchor: "bottom" },
+        ]}>
+          <div style={{ width: 260 }}>
+            <Field label="Card number" hint="Stored securely — only the last 4 digits are ever shown again.">
+              {(p) => (
+                <InputWithIcon
+                  {...p}
+                  trailingIcon={<Icon name="fa-solid fa-credit-card" size="sm" />}
+                  inputMode="numeric"
+                  placeholder="1234 5678 9012 3456"
+                  value={cardNumber}
+                  onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
+                />
+              )}
+            </Field>
+          </div>
+        </AutoAnatomy>
+        <AutoAnatomyLegend points={[
+          { n: 1, label: "Trailing icon: card-brand glyph, aria-hidden — decorative only, never the only cue", anchor: "right" },
+          { n: 2, label: "Grouping: 4-digit blocks inserted on input, not a browser autofill artifact", anchor: "top" },
+          { n: 3, label: "Hint: explicit about what's masked/stored — a sensitive field always says why", anchor: "bottom" },
+        ]} />
+      </div>
+      <div className="site-panel site-panel--flush">
+        <Preview>
+          <div style={{ width: 220 }}>
+            <Field label="Expiration date">{(p) => <Input {...p} placeholder="MM / YY" inputMode="numeric" />}</Field>
+          </div>
+          <div style={{ width: 120 }}>
+            <Field label="CVC" hint="3 digits, back of card">{(p) => <Input {...p} placeholder="123" inputMode="numeric" maxLength={4} />}</Field>
+          </div>
+        </Preview>
+      </div>
+      <p className="site-section-sub" style={{ marginTop: 24 }}>Bank details — routing and account number, each with its own format hint since a mis-keyed digit here fails silently until settlement.</p>
+      <div className="site-panel site-panel--flush">
+        <Preview>
+          <div style={{ width: 200 }}>
+            <Field label="Routing number" hint="9 digits, bottom-left of a check">
+              {(p) => <Input {...p} inputMode="numeric" maxLength={9} placeholder="021000021" value={routing} onChange={(e) => setRouting(e.target.value.replace(/\D/g, "").slice(0, 9))} />}
+            </Field>
+          </div>
+          <div style={{ width: 220 }}>
+            <Field label="Account number" hint="Re-enter to confirm on submit">
+              {(p) => <Input {...p} inputMode="numeric" placeholder="000123456789" value={account} onChange={(e) => setAccount(e.target.value.replace(/\D/g, ""))} />}
+            </Field>
           </div>
         </Preview>
       </div>

@@ -157,7 +157,7 @@
   border: 1px solid var(--core-card-border);
   border-radius: var(--core-card-radius);
   box-shadow: var(--core-card-shadow);
-  padding: 20px;
+  padding: var(--core-space-6);
   font-family: inherit;
   color: inherit;
   cursor: default;
@@ -876,7 +876,7 @@
   justify-content: space-between;
   gap: var(--core-space-4);
   min-height: var(--core-layout-header-height);
-  padding: 0 var(--core-space-6);
+  padding: 0 var(--core-space-8);
   background: var(--core-card-bg);
   border-bottom: 1px solid var(--core-color-border-subtle);
   box-sizing: border-box;
@@ -889,7 +889,7 @@
    carries its own full chrome — background, border, padding — so adding any
    here would double up with it (that was a real bug, fixed once already). */
 .cds-app-shell-sidebar { flex-shrink: 0; }
-.cds-app-main { flex: 1; min-width: 0; padding: var(--core-space-6); }
+.cds-app-main { flex: 1; min-width: 0; padding: var(--core-space-8); }
 /* Room for the fixed bottom tab bar the shell sidebar becomes on phones,
    so the last bit of page content isn't hidden underneath it. */
 @media (max-width: 575px) {
@@ -900,7 +900,7 @@
 .cds-app-footer {
   display: flex; align-items: center;
   min-height: var(--core-layout-footer-minHeight);
-  padding: var(--core-space-3) var(--core-space-6);
+  padding: var(--core-space-3) var(--core-space-8);
   border-top: 1px solid var(--core-color-border-subtle);
   font-size: var(--core-font-size-xs);
   color: var(--core-color-text-secondary);
@@ -943,3 +943,24 @@
 @media (min-width: 768px) {
   .cds-grid-col { grid-column: span var(--cds-grid-col-span-md, 12) !important; }
 }
+
+/* ---------- Visually hidden (screen-reader only) ---------- */
+.cds-visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- Chart ---------- */
+.cds-chart { margin: 0; }
+.cds-chart-title { font-size: var(--core-font-size-sm); font-weight: 600; color: var(--core-color-text-primary); margin-bottom: var(--core-space-3); }
+.cds-chart-desc { font-size: var(--core-font-size-xs); color: var(--core-color-text-tertiary); margin: var(--core-space-2) 0 0; }
+
+/* ---------- Questionnaire ---------- */
+.cds-questionnaire { display: flex; flex-direction: column; gap: var(--core-space-4); max-width: 480px; }
+.cds-questionnaire-header { display: flex; justify-content: space-between; align-items: baseline; gap: var(--core-space-4); }
+.cds-questionnaire-title { font-weight: 700; font-size: var(--core-font-size-md); color: var(--core-color-text-primary); }
+.cds-questionnaire-count { font-size: var(--core-font-size-xs); color: var(--core-color-text-tertiary); white-space: nowrap; }
+.cds-questionnaire-body { padding: var(--core-space-4) 0; }
+.cds-questionnaire-prompt { font-size: var(--core-font-size-lg); font-weight: 700; margin: 0 0 var(--core-space-2); color: var(--core-color-text-primary); }
+.cds-questionnaire-desc { font-size: var(--core-font-size-sm); color: var(--core-color-text-secondary); margin: 0 0 var(--core-space-4); }
+.cds-questionnaire-actions { display: flex; justify-content: space-between; gap: var(--core-space-2); }

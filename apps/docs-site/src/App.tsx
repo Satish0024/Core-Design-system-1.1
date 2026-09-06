@@ -8,6 +8,8 @@ import Spacing from "./pages/Spacing";
 import RadiusElevation from "./pages/RadiusElevation";
 import Responsive from "./pages/Responsive";
 import LayoutGrid from "./pages/LayoutGrid";
+import Charts from "./pages/Charts";
+import Questionnaire from "./pages/Questionnaire";
 import Motion from "./pages/Motion";
 import Icons from "./pages/Icons";
 import LogoPage from "./pages/Logo";
@@ -45,6 +47,8 @@ export default function App() {
         <Route path="/components/navigation" element={<NavigationPage />} />
         <Route path="/components/feedback" element={<Feedback />} />
         <Route path="/components/overlays" element={<OverlaysPage />} />
+        <Route path="/components/charts" element={<Charts />} />
+        <Route path="/components/questionnaire" element={<Questionnaire />} />
         <Route path="/patterns" element={<Patterns />} />
         <Route path="/screens" element={<Screens />} />
         <Route path="/tokens" element={<Tokens />} />

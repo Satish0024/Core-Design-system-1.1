@@ -52,6 +52,7 @@ const nav = [
       { to: "/components/forms#calendar", label: "Calendar" },
       { to: "/components/forms#attachment", label: "Attachment" },
       { to: "/components/forms#input-icon", label: "Input (with icon)" },
+      { to: "/components/forms#payment-bank-fields", label: "Payment & Bank Fields" },
     ],
   },
   {
@@ -65,6 +66,13 @@ const nav = [
       { to: "/components/data-display#avatar", label: "Avatar" },
       { to: "/components/data-display#progress", label: "Progress" },
       { to: "/components/data-display#aspect-ratio", label: "Aspect Ratio" },
+    ],
+  },
+  {
+    group: "Charts",
+    links: [
+      { to: "/components/charts#line-chart", label: "Line Chart" },
+      { to: "/components/charts#bar-chart", label: "Bar Chart" },
     ],
   },
   {
@@ -115,6 +123,7 @@ const nav = [
     group: "System",
     links: [
       { to: "/patterns", label: "Patterns" },
+      { to: "/components/questionnaire", label: "Questionnaire" },
       { to: "/screens", label: "Screens" },
       { to: "/tokens", label: "Tokens (SCSS)" },
       { to: "/accessibility", label: "Accessibility" },
