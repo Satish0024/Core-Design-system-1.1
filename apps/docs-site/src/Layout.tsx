@@ -178,6 +178,55 @@ function isNavLinkActive(to: string, pathname: string, hash: string) {
   return toHash ? hash === toHash : true;
 }
 
+/** Flat, ordered list of unique pages derived from the sidebar `nav` array.
+ *  Hash-anchored links (e.g. /components/forms#input) collapse into a single
+ *  entry per pathname, labelled by the group name when a page hosts multiple
+ *  sections, or by the link label when it's a standalone page. */
+const pages: { path: string; label: string }[] = (() => {
+  const seen = new Set<string>();
+  const list: { path: string; label: string }[] = [];
+  for (const group of nav) {
+    for (const link of group.links) {
+      const hashIdx = link.to.indexOf("#");
+      const pathname = hashIdx === -1 ? link.to : link.to.slice(0, hashIdx);
+      if (seen.has(pathname)) continue;
+      seen.add(pathname);
+      const linksForPath = group.links.filter((l) => {
+        const hi = l.to.indexOf("#");
+        return (hi === -1 ? l.to : l.to.slice(0, hi)) === pathname;
+      });
+      list.push({ path: pathname, label: linksForPath.length > 1 ? group.group : link.label });
+    }
+  }
+  return list;
+})();
+
+function PageNavigation() {
+  const location = useLocation();
+  const currentIdx = pages.findIndex((p) => p.path === location.pathname);
+  const prev = currentIdx > 0 ? pages[currentIdx - 1] : null;
+  const next = currentIdx >= 0 && currentIdx < pages.length - 1 ? pages[currentIdx + 1] : null;
+
+  if (!prev && !next) return null;
+
+  return (
+    <nav className="page-nav" aria-label="Page navigation">
+      {prev ? (
+        <Link to={prev.path} className="page-nav-link page-nav-prev">
+          <span className="page-nav-dir">← Previous</span>
+          <span className="page-nav-label">{prev.label}</span>
+        </Link>
+      ) : <span />}
+      {next ? (
+        <Link to={next.path} className="page-nav-link page-nav-next">
+          <span className="page-nav-dir">Next →</span>
+          <span className="page-nav-label">{next.label}</span>
+        </Link>
+      ) : <span />}
+    </nav>
+  );
+}
+
 export default function Layout() {
   useAnchorScroll();
   const { mode, toggle } = useSiteMode();
@@ -234,6 +283,7 @@ export default function Layout() {
         </div>
         <div className="site-content">
           <Outlet />
+          <PageNavigation />
         </div>
       </div>
     </div>
