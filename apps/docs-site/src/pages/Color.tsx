@@ -155,6 +155,200 @@ const MODE_SECTIONS: Array<{ title: string; tokens: Array<{ label: string; key: 
   },
 ];
 
+/* ── Baseline Color Tokens ──────────────────────────────────────────────── */
+
+const BASELINE_GROUPS: Array<{
+  title: string;
+  tokens: Array<{ label: string; key: string }>;
+}> = [
+  {
+    title: "Primary",
+    tokens: [
+      { label: "Primary", key: "color.action.primary.bg" },
+      { label: "Primary Hover", key: "color.action.primary.bgHover" },
+      { label: "On Primary", key: "color.action.primary.text" },
+      { label: "Primary Tint", key: "color.action.primary.tintBg" },
+      { label: "Primary Tint Text", key: "color.action.primary.tintText" },
+    ],
+  },
+  {
+    title: "Secondary",
+    tokens: [
+      { label: "Secondary", key: "color.palette.secondary.solidBg" },
+      { label: "On Secondary", key: "color.palette.secondary.solidText" },
+      { label: "Secondary Tint", key: "color.palette.secondary.tintBg" },
+      { label: "Secondary Text", key: "color.palette.secondary.text" },
+    ],
+  },
+  {
+    title: "Tertiary",
+    tokens: [
+      { label: "Tertiary", key: "color.palette.tertiary.solidBg" },
+      { label: "On Tertiary", key: "color.palette.tertiary.solidText" },
+      { label: "Tertiary Tint", key: "color.palette.tertiary.tintBg" },
+      { label: "Tertiary Text", key: "color.palette.tertiary.text" },
+    ],
+  },
+  {
+    title: "Destructive",
+    tokens: [
+      { label: "Destructive", key: "color.action.destructive.bg" },
+      { label: "On Destructive", key: "color.action.destructive.text" },
+    ],
+  },
+  {
+    title: "Surfaces",
+    tokens: [
+      { label: "Page", key: "color.bg.page" },
+      { label: "Canvas", key: "color.bg.canvas" },
+      { label: "Surface", key: "color.surface.default" },
+      { label: "Raised", key: "color.surface.raised" },
+      { label: "Sunken", key: "color.surface.sunken" },
+      { label: "Overlay", key: "color.surface.overlay" },
+    ],
+  },
+  {
+    title: "Text",
+    tokens: [
+      { label: "Primary", key: "color.text.primary" },
+      { label: "Secondary", key: "color.text.secondary" },
+      { label: "Tertiary", key: "color.text.tertiary" },
+      { label: "Disabled", key: "color.text.disabled" },
+      { label: "Inverse", key: "color.text.inverse" },
+      { label: "On Brand", key: "color.text.onBrand" },
+    ],
+  },
+  {
+    title: "Borders",
+    tokens: [
+      { label: "Subtle", key: "color.border.subtle" },
+      { label: "Default", key: "color.border.default" },
+      { label: "Strong", key: "color.border.strong" },
+      { label: "Focus", key: "color.border.focus" },
+    ],
+  },
+  {
+    title: "Status",
+    tokens: [
+      { label: "Success Bg", key: "color.status.success.bg" },
+      { label: "Success Text", key: "color.status.success.text" },
+      { label: "Success Border", key: "color.status.success.border" },
+      { label: "Warning Bg", key: "color.status.warning.bg" },
+      { label: "Warning Text", key: "color.status.warning.text" },
+      { label: "Warning Border", key: "color.status.warning.border" },
+      { label: "Danger Bg", key: "color.status.danger.bg" },
+      { label: "Danger Text", key: "color.status.danger.text" },
+      { label: "Danger Border", key: "color.status.danger.border" },
+      { label: "Info Bg", key: "color.status.info.bg" },
+      { label: "Info Text", key: "color.status.info.text" },
+      { label: "Info Border", key: "color.status.info.border" },
+    ],
+  },
+];
+
+function luminance(r: number, g: number, b: number): number {
+  const [rs, gs, bs] = [r, g, b].map((c) => {
+    const s = c / 255;
+    return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+}
+
+function parseRgb(raw: string): [number, number, number] | null {
+  const m = raw.match(/rgba?\(\s*(\d+)[,\s]+(\d+)[,\s]+(\d+)/);
+  return m ? [+m[1], +m[2], +m[3]] : null;
+}
+
+function BaselineSwatch({ tokenKey, label }: { tokenKey: string; label: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [textColor, setTextColor] = useState("#fff");
+  const varName = `--core-${tokenKey.replace(/\./g, "-")}`;
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const bg = getComputedStyle(ref.current).backgroundColor;
+    const rgb = parseRgb(bg);
+    if (rgb) {
+      const lum = luminance(...rgb);
+      setTextColor(lum > 0.4 ? "#000" : "#fff");
+    }
+  }, [tokenKey]);
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        background: `var(${varName})`,
+        color: textColor,
+        padding: "14px 12px 10px",
+        borderRadius: 8,
+        minHeight: 68,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        border: "1px solid rgba(128,128,128,0.15)",
+        transition: "background-color 0.2s",
+      }}
+    >
+      <span style={{ fontSize: 13, fontWeight: 600 }}>{label}</span>
+      <span style={{ fontSize: 10, fontFamily: "var(--site-mono)", opacity: 0.82, marginTop: 4 }}>{tokenKey}</span>
+    </div>
+  );
+}
+
+function BaselineModeColumn({ mode }: { mode: "light" | "dark" }) {
+  return (
+    <div
+      data-theme="core"
+      data-mode={mode}
+      style={{
+        flex: "1 1 0",
+        minWidth: 280,
+        background: "var(--core-color-bg-page)",
+        borderRadius: 14,
+        padding: "24px 20px",
+        border: "1px solid var(--site-border)",
+      }}
+    >
+      <div
+        style={{
+          fontSize: 11,
+          fontWeight: 700,
+          textTransform: "uppercase" as const,
+          letterSpacing: "0.06em",
+          marginBottom: 20,
+          color: mode === "light" ? "#1D1C24" : "#F4F4F6",
+        }}
+      >
+        {mode === "light" ? "☀ Light mode" : "☾ Dark mode"}
+      </div>
+      {BASELINE_GROUPS.map((group) => (
+        <div key={group.title} style={{ marginBottom: 20 }}>
+          <div
+            style={{
+              fontSize: 11,
+              fontWeight: 700,
+              textTransform: "uppercase" as const,
+              letterSpacing: "0.04em",
+              color: mode === "light" ? "#5C5C6B" : "#9A9AAC",
+              marginBottom: 8,
+            }}
+          >
+            {group.title}
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: 6 }}>
+            {group.tokens.map((t) => (
+              <BaselineSwatch key={t.key} tokenKey={t.key} label={t.label} />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ── end Baseline Color Tokens ─────────────────────────────────────────── */
+
 /** One color chip, measured live under whichever [data-theme][data-mode]
  *  ancestor it renders in — this is what makes a single component correct
  *  for both the Light and Dark table columns without duplicating token math. */
@@ -268,6 +462,27 @@ export default function Color() {
         sparingly, only in the specific cases below. The sections that follow build up the reasoning; the quick
         reference table after the full color scales covers 95% of cases in one lookup.
       </p>
+
+      {/* ── Baseline Color Tokens ── */}
+      <h2 className="site-section-title">Baseline Color Tokens</h2>
+      <p className="site-section-sub">
+        Every semantic color role in the system, resolved side-by-side for light and dark mode.
+        These colors update automatically when a client theme is applied — change the brand ramp
+        in <code style={{ color: "var(--site-accent)" }}>primitives.json</code> and every role
+        below re-derives.
+      </p>
+      <div
+        style={{
+          display: "flex",
+          gap: 16,
+          flexWrap: "wrap",
+          marginBottom: 20,
+        }}
+      >
+        <BaselineModeColumn mode="light" />
+        <BaselineModeColumn mode="dark" />
+      </div>
+      {/* ── end Baseline Color Tokens ── */}
 
       <SectionTitle title="Primary — used throughout" />
       <p className="site-section-sub">
