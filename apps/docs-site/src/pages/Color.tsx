@@ -315,7 +315,7 @@ export default function Color() {
         also on screen for an unrelated reason (e.g. a teal "new" badge next to a plain gray Secondary button).
       </p>
       <div className="site-panel site-grid cols-3">
-        <Swatch name="Secondary button" hex="#FFFFFF" border note="White fill + gray border + dark text — one step down from Primary" />
+        <Swatch name="Secondary button" hex="#FFFFFF" border note="Not the Secondary color (teal) above — a visual-weight level. White fill + gray border + dark text, one step down from Primary." />
         <Swatch name="Secondary button border" hex={color.neutral["300"]} note="The border that gives Secondary its outline" />
         <Swatch name="Tertiary button / link" hex={color.brand["700"]} note="No fill, no border — text only, in Primary's own color" />
       </div>

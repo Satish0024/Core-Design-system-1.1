@@ -1,8 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Preview } from "../Preview";
-import { Button } from "../../../../packages/core/src/components/Button";
-import { Card, Badge } from "../../../../packages/core/src/components/Misc";
 
 export default function Home() {
   return (
@@ -36,21 +33,21 @@ export default function Home() {
 
       <h2 className="site-section-title">Live preview</h2>
       <p className="site-lede" style={{ marginBottom: 20 }}>
-        Every example on this site renders real CORE components, not screenshots.
+        A sample white-labeled client portal, built entirely from CORE components and tokens — not a mockup.
       </p>
-      <div className="site-panel site-panel--flush">
-        <Preview>
-          <Button>Primary action</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="tertiary">Tertiary</Button>
-          <Button variant="destructive">Destructive</Button>
-          <Badge tone="success">Active</Badge>
-          <Badge tone="warning">Pending</Badge>
-          <Card style={{ minWidth: 220 } as React.CSSProperties}>
-            <strong>Contribution rate</strong>
-            <p style={{ margin: "6px 0 0", fontSize: 13, color: "var(--core-color-text-secondary)" }}>6% of salary</p>
-          </Card>
-        </Preview>
+      <div className="site-panel" style={{ padding: 20 }}>
+        <video
+          className="home-preview-video"
+          src={`${import.meta.env.BASE_URL}video/dashboard-preview.mp4`}
+          autoPlay
+          loop
+          muted
+          playsInline
+          controls
+          style={{ display: "block", width: "100%", height: "auto", borderRadius: "var(--core-card-radius, 8px)" }}
+        >
+          Your browser doesn't support embedded video. <a href={`${import.meta.env.BASE_URL}video/dashboard-preview.mp4`}>Download the preview</a> instead.
+        </video>
       </div>
 
       <h2 className="site-section-title">How the layers fit together</h2>

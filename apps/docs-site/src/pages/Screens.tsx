@@ -21,7 +21,7 @@ const NAV_ITEMS = [
 function ScreenHeader({ userName }: { userName: string }) {
   return (
     <AppHeader
-      brand="Meridian"
+      brand={<img src="/brand/lendguard/logo-lockup-light.svg" alt="Meridian" style={{ height: 24, display: "block" }} />}
       actions={
         <>
           <IconButton variant="tertiary" size="sm" shape="circle" aria-label="Help"><Icon name="fa-solid fa-circle-question" size="sm" /></IconButton>
