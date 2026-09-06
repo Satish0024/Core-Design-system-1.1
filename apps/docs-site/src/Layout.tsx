@@ -282,6 +282,19 @@ export default function Layout() {
           <Outlet />
           <PageNavigation />
         </div>
+        <footer className="site-footer">
+          <div className="site-footer-inner">
+            <div className="site-footer-left">
+              <CoreLogo size={16} />
+              <span>© {new Date().getFullYear()} CORE Design System</span>
+            </div>
+            <div className="site-footer-right">
+              <span>v0.1.0</span>
+              <span className="site-footer-sep">·</span>
+              <span>White-label foundation</span>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );
