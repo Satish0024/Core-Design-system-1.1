@@ -28,6 +28,8 @@ uses AutoAnatomy.
 - **Disclosure:** Collapsible, Accordion, Separator, Skeleton
 - **Navigation:** Navigation Menu, Sidebar, Tabs, Breadcrumb, Stepper, Pagination
 - **Feedback:** Alert, Toast, Empty, Spinner
+- **Layout:** App Header, App Footer, Grid/Container (App Shell is the composition of these plus a Sidebar —
+  see [`/foundations/layout-grid`](apps/docs-site/src/pages/LayoutGrid.tsx))
 - **Overlays:** Modal, ConfirmDialog, Drawer/Slideover, Dropdown Menu, Tooltip, Popover, Hover Card
 
 Note: overlay components that only render while open (Modal, ConfirmDialog, Drawer, Dropdown Menu, Tooltip,
@@ -153,6 +155,17 @@ LendGuard cross-checks above:
 | Icon Button | ✅ | `Button.tsx` | CORE scope doc §10 ("Button, Icon Button, Link"); LendGuard app |
 | Link | ✅ | `Button.tsx` | CORE scope doc §10; LendGuard app |
 | Stepper | ✅ | `Navigation.tsx` | Metronic catalog ("Stepper — Exclusive"); LendGuard app ("step navigator") |
+| App Header | ✅ | `Layout.tsx` | Missing entirely — flagged directly against the real LendGuard participant portal's own header (brand + help/theme/avatar) |
+| App Footer | ✅ | `Layout.tsx` | Missing entirely — flagged directly against the real LendGuard participant portal's own footer (copyright + legal links) |
+| App Shell | ✅ | `Layout.tsx` | The header/sidebar/main/footer composition the participant portal actually uses on every screen — was implicit/hand-assembled per page until this pass |
+| Grid / Container | ✅ | `Layout.tsx` | See note below — CORE now owns a token-driven grid instead of deferring to raw Bootstrap classes |
+
+Note on Grid/Container: the "Bootstrap components CORE deliberately does not adopt as-is" section below
+originally deferred Grid/Containers/Breakpoints straight to Bootstrap's own classes with no CORE component. That
+no longer matches reality — `Grid`/`GridCol`/`Container` in `Layout.tsx` are real CORE components now, because a
+raw Bootstrap `.row`/`.col` doesn't carry CORE's own `space.*` gap tokens or the white-label theme's breakpoint
+overrides. Bootstrap's breakpoint *values* (`packages/tokens/src/primitives.json`'s `breakpoint.*`/`container.*`)
+are still the reference scale — just resolved through CORE's own token pipeline rather than Bootstrap's SCSS.
 
 ## Bootstrap components CORE deliberately does not adopt as-is
 
@@ -160,8 +173,9 @@ Per scope §5/§18 ("do not simply restyle Bootstrap components," "no duplicate 
 value"), these Bootstrap 5 components are **not** planned as separate CORE components because they're either
 superseded by a shadcn-pattern equivalent above, or are pure layout/utility with no visual-system decision to own:
 
-- **Grid, Containers, Breakpoints, Flex/Spacing utilities** — used directly from Bootstrap as the layout
-  foundation (this is Bootstrap's actual job in the architecture, per §5/§6).
+- **Flex/Spacing utilities** — used directly from Bootstrap-equivalent CSS, no CORE component needed.
+  (Grid/Container are *no longer* in this list — see the note above the "Additional components" table: they're
+  now real, token-driven CORE components in `Layout.tsx`.)
 - **Navbar** — superseded by CORE's `NavigationMenu` + `AppSidebar`.
 - **Offcanvas** — superseded by CORE's `Drawer`.
 - **List group** — superseded by CORE's `Item`.
@@ -176,11 +190,14 @@ Every ✅/⚠️ component in the table above now has a live, working demo on th
 `packages/core`) — verified by cross-referencing every export in `packages/core/src/components/*.tsx` against
 every import in `apps/docs-site/src/pages/*.tsx`. `Collapsible` and inline `Calendar` were the last two gaps
 (previously only reachable indirectly via Accordion/DatePicker) — both now have their own explicit sections on
-the Disclosure and Forms pages respectively.
+the Disclosure and Forms pages respectively. App Header/App Footer/App Shell/Grid have their own dedicated demo
+page, [`/foundations/layout-grid`](apps/docs-site/src/pages/LayoutGrid.tsx) — they'd previously only existed
+as one-off inline markup inside `Screens.tsx`'s full-page mockups, with no standalone Anatomy section of their
+own the way every other component gets.
 
 ## Summary
 
-- **✅ Fully built:** 47 from the shadcn baseline + 3 additional (Icon Button, Link, Stepper) = 50
+- **✅ Fully built:** 47 from the shadcn baseline + 7 additional (Icon Button, Link, Stepper, App Header, App Footer, App Shell, Grid/Container) = 54
 - **⚠️ Built but thin:** 3 (Dropdown Menu, Input, Toast)
 - **❌ Not started, in scope:** 2 (Aspect Ratio, Kbd)
 - **⛔ Out of scope:** 12 (chat components, Carousel, Chart, Command, Context Menu, Menubar, Resizable, Scroll Area, Direction, Marker, Questionnaire)

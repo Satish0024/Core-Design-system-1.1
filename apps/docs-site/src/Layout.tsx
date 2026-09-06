@@ -13,9 +13,17 @@ const nav = [
       { to: "/foundations/spacing", label: "Spacing & Sizing" },
       { to: "/foundations/radius-elevation", label: "Radius & Elevation" },
       { to: "/foundations/responsive", label: "Responsive & Mobile" },
-      { to: "/foundations/layout-grid", label: "Layout & Grid" },
       { to: "/foundations/icons", label: "Icons" },
       { to: "/foundations/motion", label: "Motion" },
+    ],
+  },
+  {
+    group: "Layout",
+    links: [
+      { to: "/foundations/layout-grid#header", label: "App Header" },
+      { to: "/foundations/layout-grid#footer", label: "App Footer" },
+      { to: "/foundations/layout-grid#sidebar-variants", label: "App Shell (Sidebar)" },
+      { to: "/foundations/layout-grid#grid", label: "Grid & Container" },
     ],
   },
   {
