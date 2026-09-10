@@ -8,7 +8,15 @@ function daysInMonth(year: number, month: number) { return new Date(year, month 
 function startWeekday(year: number, month: number) { return new Date(year, month, 1).getDay(); }
 function sameDay(a: Date, b: Date) { return a.toDateString() === b.toDateString(); }
 
-export function Calendar({ selected, onSelect, minDate, maxDate }: { selected?: Date; onSelect: (d: Date) => void; minDate?: Date; maxDate?: Date }) {
+export interface CalendarProps {
+  selected?: Date;
+  onSelect: (d: Date) => void;
+  minDate?: Date;
+  maxDate?: Date;
+  disabled?: boolean;
+}
+
+export function Calendar({ selected, onSelect, minDate, maxDate, disabled }: CalendarProps) {
   const [cursor, setCursor] = useState(selected ?? new Date());
   const year = cursor.getFullYear();
   const month = cursor.getMonth();
@@ -22,16 +30,16 @@ export function Calendar({ selected, onSelect, minDate, maxDate }: { selected?: 
   const monthLabel = cursor.toLocaleDateString(undefined, { month: "long", year: "numeric" });
 
   return (
-    <div className="cds-calendar" role="group" aria-label="Calendar">
+    <div className={`cds-calendar ${disabled ? "cds-calendar--disabled" : ""}`} role="group" aria-label="Calendar" style={disabled ? { opacity: 0.6, pointerEvents: "none" } : undefined}>
       <div className="cds-calendar-header">
-        <button type="button" className="cds-calendar-nav" onClick={() => setCursor(new Date(year, month - 1, 1))} aria-label="Previous month">‹</button>
+        <button type="button" className="cds-calendar-nav" disabled={disabled} onClick={() => setCursor(new Date(year, month - 1, 1))} aria-label="Previous month">‹</button>
         <span className="cds-calendar-title">{monthLabel}</span>
-        <button type="button" className="cds-calendar-nav" onClick={() => setCursor(new Date(year, month + 1, 1))} aria-label="Next month">›</button>
+        <button type="button" className="cds-calendar-nav" disabled={disabled} onClick={() => setCursor(new Date(year, month + 1, 1))} aria-label="Next month">›</button>
       </div>
       <div className="cds-calendar-grid">
         {WEEKDAYS.map((w, i) => <div className="cds-calendar-weekday" key={i}>{w}</div>)}
         {cells.map(({ date, outside }, i) => {
-          const disabled = (minDate && date < minDate) || (maxDate && date > maxDate);
+          const isDateDisabled = disabled || (minDate && date < minDate) || (maxDate && date > maxDate);
           const isSelected = selected && sameDay(date, selected);
           return (
             <button
@@ -39,7 +47,7 @@ export function Calendar({ selected, onSelect, minDate, maxDate }: { selected?: 
               type="button"
               className={`cds-calendar-day ${outside ? "cds-calendar-day--outside" : ""}`}
               aria-selected={isSelected || undefined}
-              disabled={!!disabled}
+              disabled={!!isDateDisabled}
               onClick={() => onSelect(date)}
             >
               {date.getDate()}
@@ -51,10 +59,31 @@ export function Calendar({ selected, onSelect, minDate, maxDate }: { selected?: 
   );
 }
 
-export function DatePicker({ value, onChange, placeholder = "Select date" }: { value?: Date; onChange: (d: Date) => void; placeholder?: string }) {
+export interface DatePickerProps {
+  value?: Date;
+  onChange?: (d: Date) => void;
+  placeholder?: string;
+  disabled?: boolean;
+  id?: string;
+}
+
+export function DatePicker({ value, onChange, placeholder = "Select date", disabled, id }: DatePickerProps) {
+  const trigger = (
+    <Input
+      id={id}
+      readOnly
+      disabled={disabled}
+      value={value ? value.toLocaleDateString() : ""}
+      placeholder={placeholder}
+      style={{ cursor: disabled ? "not-allowed" : "pointer" }}
+    />
+  );
+  if (disabled) {
+    return trigger;
+  }
   return (
-    <Popover trigger={<Input readOnly value={value ? value.toLocaleDateString() : ""} placeholder={placeholder} style={{ cursor: "pointer" }} />}>
-      <Calendar selected={value} onSelect={onChange} />
+    <Popover trigger={trigger}>
+      <Calendar selected={value} onSelect={onChange ?? (() => {})} />
     </Popover>
   );
 }

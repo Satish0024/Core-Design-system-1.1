@@ -36,12 +36,83 @@ export function Item({ title, description, action }: { title: string; descriptio
   );
 }
 
-export function Collapsible({ trigger, children, defaultOpen = false }: { trigger: (open: boolean, toggle: () => void) => React.ReactNode; children: React.ReactNode; defaultOpen?: boolean }) {
-  const [open, setOpen] = useState(defaultOpen);
+export type CollapsibleVariant = "card" | "bordered" | "button" | "ghost";
+
+export interface CollapsibleProps {
+  title?: React.ReactNode;
+  variant?: CollapsibleVariant;
+  open?: boolean;
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  trigger?: (open: boolean, toggle: () => void) => React.ReactNode;
+  children: React.ReactNode;
+  className?: string;
+  id?: string;
+}
+
+export function Collapsible({
+  title,
+  variant = "card",
+  open: controlledOpen,
+  defaultOpen = false,
+  onOpenChange,
+  trigger,
+  children,
+  className = "",
+  id,
+}: CollapsibleProps) {
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
+  const isControlled = controlledOpen !== undefined;
+  const isOpen = isControlled ? controlledOpen : uncontrolledOpen;
+
+  const toggle = () => {
+    const next = !isOpen;
+    if (!isControlled) {
+      setUncontrolledOpen(next);
+    }
+    onOpenChange?.(next);
+  };
+
+  const panelId = id ? `${id}-panel` : undefined;
+  const triggerId = id ? `${id}-trigger` : undefined;
+
   return (
-    <div>
-      {trigger(open, () => setOpen((o) => !o))}
-      {open && <div>{children}</div>}
+    <div className={`cds-collapsible cds-collapsible--${variant} ${isOpen ? "cds-collapsible--open" : ""} ${className}`}>
+      {trigger ? (
+        trigger(isOpen, toggle)
+      ) : (
+        <button
+          type="button"
+          className="cds-collapsible-trigger"
+          onClick={toggle}
+          aria-expanded={isOpen}
+          aria-controls={panelId}
+          id={triggerId}
+        >
+          <span className="cds-collapsible-title">{title}</span>
+          <svg
+            className="cds-collapsible-chevron"
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M3 5L7 9L11 5"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+      )}
+      {isOpen && (
+        <div className="cds-collapsible-content" id={panelId} role="region" aria-labelledby={triggerId}>
+          {children}
+        </div>
+      )}
     </div>
   );
 }

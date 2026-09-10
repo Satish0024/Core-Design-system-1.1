@@ -1,6 +1,15 @@
 import React from "react";
 
-export type ButtonVariant = "primary" | "secondary" | "tertiary" | "destructive";
+export type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "tertiary"
+  | "destructive"
+  | "outline-primary"
+  | "neutral"
+  | "success"
+  | "warning"
+  | "info";
 export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -46,9 +55,19 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
 );
 IconButton.displayName = "IconButton";
 
-export function Link({ href, children, ...rest }: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  disabled?: boolean;
+}
+
+export function Link({ href, children, disabled, className = "", ...rest }: LinkProps) {
   return (
-    <a href={href} className="cds-link" {...rest}>
+    <a
+      href={disabled ? undefined : href}
+      className={`cds-link ${disabled ? "cds-link--disabled" : ""} ${className}`}
+      aria-disabled={disabled || undefined}
+      tabIndex={disabled ? -1 : rest.tabIndex}
+      {...rest}
+    >
       {children}
     </a>
   );

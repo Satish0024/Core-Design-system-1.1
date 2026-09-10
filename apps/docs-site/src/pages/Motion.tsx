@@ -34,7 +34,7 @@ export default function Motion() {
                 }}
               />
             </div>
-            <div style={{ fontSize: 13, color: "var(--site-text-dim)" }}>{d.use}</div>
+            <div style={{ fontSize: "var(--core-font-size-xs, 12px)", color: "var(--site-text-dim)" }}>{d.use}</div>
           </div>
         ))}
       </div>

@@ -55,9 +55,9 @@ export default function Icons() {
       <p className="site-section-sub">Three fixed sizes, matching CORE's icon-size tokens — never an arbitrary <code>font-size</code>.</p>
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
-          <div style={{ textAlign: "center" }}><Icon name="fa-solid fa-piggy-bank" size="sm" /><div style={{ fontSize: 11, marginTop: 6, color: "var(--core-color-text-tertiary)" }}>sm · 16px</div></div>
-          <div style={{ textAlign: "center" }}><Icon name="fa-solid fa-piggy-bank" size="md" /><div style={{ fontSize: 11, marginTop: 6, color: "var(--core-color-text-tertiary)" }}>md · 20px</div></div>
-          <div style={{ textAlign: "center" }}><Icon name="fa-solid fa-piggy-bank" size="lg" /><div style={{ fontSize: 11, marginTop: 6, color: "var(--core-color-text-tertiary)" }}>lg · 24px</div></div>
+          <div style={{ textAlign: "center" }}><Icon name="fa-solid fa-piggy-bank" size="sm" /><div style={{ fontSize: "var(--core-font-size-xs, 12px)", marginTop: 6, color: "var(--core-color-text-tertiary)" }}>sm · 16px</div></div>
+          <div style={{ textAlign: "center" }}><Icon name="fa-solid fa-piggy-bank" size="md" /><div style={{ fontSize: "var(--core-font-size-xs, 12px)", marginTop: 6, color: "var(--core-color-text-tertiary)" }}>md · 20px</div></div>
+          <div style={{ textAlign: "center" }}><Icon name="fa-solid fa-piggy-bank" size="lg" /><div style={{ fontSize: "var(--core-font-size-xs, 12px)", marginTop: 6, color: "var(--core-color-text-tertiary)" }}>lg · 24px</div></div>
         </div>
       </div>
 
@@ -103,12 +103,7 @@ export default function Icons() {
         </div>
       </div>
 
-      <h2 className="site-section-title">Accessibility</h2>
-      <ul style={{ color: "var(--site-text-dim)", lineHeight: 1.8, fontSize: 14 }}>
-        <li>A purely decorative icon is <code>aria-hidden="true"</code> by default in the <code>Icon</code> wrapper.</li>
-        <li>An icon that conveys meaning on its own (e.g. a status check) must pass a <code>label</code> prop, which switches it to <code>role="img"</code> with an accessible name.</li>
-        <li>An icon that's the only content of a clickable control must use <code>IconButton</code>, never a bare styled icon with an onClick.</li>
-      </ul>
     </div>
   );
 }
+

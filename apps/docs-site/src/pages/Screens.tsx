@@ -8,7 +8,6 @@ import { Field, Input } from "../../../../packages/core/src/components/Field";
 import { Select } from "../../../../packages/core/src/components/FormControls";
 import { Icon, DescriptionList } from "../../../../packages/core/src/components/Primitives";
 import { Drawer } from "../../../../packages/core/src/components/Overlays";
-import { AutoAnatomy, AutoAnatomyLegend } from "../AutoAnatomy";
 
 const NAV_ITEMS = [
   { label: "Dashboard", icon: <Icon name="fa-solid fa-grip" size="lg" />, current: true },
@@ -57,21 +56,11 @@ export default function Screens() {
   return (
     <div>
       <h1 className="site-h1">Screens</h1>
-      <p className="site-lede">
-        Full product screens assembled entirely from CORE components and tokens — the header, sidebar, footer and
-        12-column grid are the same <code>AppShell</code>/<code>Grid</code> primitives on every screen, not
-        hand-drawn per page. Anatomy pointers call out the structural regions.
-      </p>
 
       {/* ============================= LOGIN ============================= */}
       <h2 className="site-section-title" id="login">Login</h2>
-      <p className="site-section-sub">Anatomy — split layout: brand panel + a centered Card form, no app chrome (nothing to navigate yet).</p>
+      <p className="site-section-sub">Split layout: brand panel + a centered Card form, no app chrome (nothing to navigate yet).</p>
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", overflowX: "auto" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Brand panel — tagline, 50% width on desktop", anchor: "left" },
-          { n: 2, label: "Form card — centered, max-width column", anchor: "right" },
-          { n: 3, label: "Primary action — full-width submit button", anchor: "bottom" },
-        ]}>
           <Grid columns={2} gap="4" style={{ width: 720, minHeight: 380, borderRadius: "var(--core-card-radius)", overflow: "hidden", border: "1px solid var(--core-color-border-subtle)" }}>
             <div style={{ background: "var(--core-color-brand-600, var(--core-card-bg))", color: "white", display: "flex", flexDirection: "column", justifyContent: "center", padding: "var(--core-space-8)", gridColumn: "span 1" }}>
               <div style={{ fontWeight: 700, fontSize: "var(--core-font-size-xl)", marginBottom: "var(--core-space-3)" }}>Meridian</div>
@@ -88,25 +77,13 @@ export default function Screens() {
               </div>
             </div>
           </Grid>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Brand panel: fills one Grid column, brand-600 background, tagline copy", anchor: "left" },
-          { n: 2, label: "Form card: the other Grid column, vertically centered fields", anchor: "right" },
-          { n: 3, label: "Primary action: full-width Button, the only Primary on the page", anchor: "bottom" },
-        ]} />
       </div>
 
       {/* ============================= DASHBOARD ============================= */}
       <h2 className="site-section-title" id="dashboard">Dashboard</h2>
-      <p className="site-section-sub">Anatomy — the standard AppShell: header, left AppSidebar, 12-column content Grid, footer.</p>
+      <p className="site-section-sub">The standard AppShell: header, left AppSidebar, 12-column content Grid, footer.</p>
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", overflowX: "auto" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Header — brand + user, fixed height", anchor: "top" },
-          { n: 2, label: "Sidebar — fixed width, primary navigation", anchor: "left" },
-          { n: 3, label: "Content grid — 12 columns, gap.6 (24px)", anchor: "center", offset: 70 },
-          { n: 4, label: "Footer — legal links, full width", anchor: "bottom" },
-        ]}>
-          <div style={{ width: 860 }}>
+        <div style={{ width: 860 }}>
             <AppShell
               header={<ScreenHeader userName="Taylor Hale" />}
               sidebar={<AppSidebar items={NAV_ITEMS} variant="rail" />}
@@ -184,25 +161,13 @@ export default function Screens() {
               </Grid>
             </AppShell>
           </div>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Header: cds-app-header — brand left, account controls right", anchor: "top" },
-          { n: 2, label: "Sidebar: cds-app-sidebar — fixed width, AppSidebar nav component", anchor: "left" },
-          { n: 3, label: "Content: 12-column Grid, gap token space.6 (24px) between columns", anchor: "center" },
-          { n: 4, label: "Footer: cds-app-footer — legal links, spans full width under the sidebar", anchor: "bottom" },
-        ]} />
       </div>
 
       {/* ============================= TABLE SCREEN ============================= */}
       <h2 className="site-section-title" id="table-screen">Transactions (table screen)</h2>
-      <p className="site-section-sub">Anatomy — same AppShell, main content is a searchable/filterable DataTable inside a Card.</p>
+      <p className="site-section-sub">Same AppShell, main content is a searchable/filterable DataTable inside a Card.</p>
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", overflowX: "auto" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Breadcrumb — page location within the app", anchor: "top" },
-          { n: 2, label: "Toolbar — search + filters, above the table", anchor: "left" },
-          { n: 3, label: "Zebra rows — alternating background for scanability", anchor: "bottom" },
-        ]}>
-          <div style={{ width: 860 }}>
+        <div style={{ width: 860 }}>
             <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={[{ ...NAV_ITEMS[0], current: false }, NAV_ITEMS[1], { ...NAV_ITEMS[2], current: true }, NAV_ITEMS[3], NAV_ITEMS[4]]} variant="rail" />} footer={<ScreenFooter />}>
               <Breadcrumb items={[{ label: "Home", href: "#" }, { label: "Transactions" }]} />
               <div style={{ height: "var(--core-space-4)" }} />
@@ -222,24 +187,13 @@ export default function Screens() {
               </Card>
             </AppShell>
           </div>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Breadcrumb: nav aria-label=\"Breadcrumb\", marks current location", anchor: "top" },
-          { n: 2, label: "Toolbar: search input + filter badges, sits above the table body", anchor: "left" },
-          { n: 3, label: "Zebra: alternating row background — DataTable's `zebra` prop, on by default", anchor: "bottom" },
-        ]} />
       </div>
 
       {/* ============================= STEPPER SCREEN ============================= */}
       <h2 className="site-section-title" id="stepper-screen">Withdrawal request (stepper screen)</h2>
-      <p className="site-section-sub">Anatomy — multi-step flow: Stepper drives progress, form Fields fill the step body, actions sit bottom-right.</p>
+      <p className="site-section-sub">Multi-step flow: Stepper drives progress, form Fields fill the step body, actions sit bottom-right.</p>
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", overflowX: "auto" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Stepper — complete / current / upcoming states", anchor: "top" },
-          { n: 2, label: "Step body — one Field group per step", anchor: "left" },
-          { n: 3, label: "Step actions — Back / Continue, bottom-right", anchor: "bottom-right" },
-        ]}>
-          <div style={{ width: 860 }}>
+        <div style={{ width: 860 }}>
             <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} variant="rail" />} footer={<ScreenFooter />}>
               <Card>
                 <Stepper
@@ -273,23 +227,13 @@ export default function Screens() {
               </Card>
             </AppShell>
           </div>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Stepper: complete (check) / current (bold, aria-current) / upcoming (dim) states", anchor: "top" },
-          { n: 2, label: "Step body: swaps per step, laid out with the same Grid/Field primitives", anchor: "left" },
-          { n: 3, label: "Actions: Back (Secondary) / Continue (Primary), bottom-right of the card", anchor: "bottom-right" },
-        ]} />
       </div>
 
       {/* ============================= SLIDEOVER SCREEN ============================= */}
       <h2 className="site-section-title" id="slideover-screen">Add allocation (slideover open)</h2>
-      <p className="site-section-sub">Anatomy — the Drawer overlays the dimmed page, docked to the right edge, full viewport height.</p>
+      <p className="site-section-sub">The Drawer overlays the dimmed page, docked to the right edge, full viewport height.</p>
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", overflowX: "auto" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Dimmed page — background remains visible but inert", anchor: "left" },
-          { n: 2, label: "Slideover — docked right, form + aside summary", anchor: "right" },
-        ]}>
-          <div style={{ width: 860, position: "relative" }}>
+        <div style={{ width: 860, position: "relative" }}>
             <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} variant="rail" />} footer={<ScreenFooter />}>
               <div style={{ fontSize: "var(--core-font-size-lg)", fontWeight: 700, marginBottom: "var(--core-space-4)" }}>Hi Taylor 👋</div>
               <Button onClick={() => setDrawerOpen(true)}>Open "Add Allocation"</Button>
@@ -310,11 +254,6 @@ export default function Screens() {
               </div>
             </div>
           </div>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Overlay: dims but doesn't remove the page — dismissible via Escape/outside click", anchor: "left" },
-          { n: 2, label: "Slideover: docked right, elevation.4, form fields + a summary DescriptionList", anchor: "right" },
-        ]} />
       </div>
       <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} title="Add Allocation" width={360}
         actions={<><Button variant="secondary" size="sm" onClick={() => setDrawerOpen(false)}>Cancel</Button><Button size="sm" onClick={() => setDrawerOpen(false)}>Save</Button></>}
@@ -325,14 +264,9 @@ export default function Screens() {
 
       {/* ============================= BUTTON SCREEN ============================= */}
       <h2 className="site-section-title" id="buttons-screen">Account actions (buttons screen)</h2>
-      <p className="site-section-sub">Anatomy — one Primary action per view, Secondary/Tertiary/Destructive used for everything else.</p>
+      <p className="site-section-sub">One Primary action per view, Secondary/Tertiary/Destructive used for everything else.</p>
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", overflowX: "auto" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Primary — exactly one per screen, top action", anchor: "top" },
-          { n: 2, label: "Secondary / Tertiary — supporting actions", anchor: "left" },
-          { n: 3, label: "Destructive — isolated, confirms before acting", anchor: "bottom-right" },
-        ]}>
-          <div style={{ width: 860 }}>
+        <div style={{ width: 860 }}>
             <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} variant="rail" />} footer={<ScreenFooter />}>
               <Card>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "var(--core-space-6)" }}>
@@ -348,12 +282,6 @@ export default function Screens() {
               </Card>
             </AppShell>
           </div>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Primary: exactly one per screen — the single most important action", anchor: "top" },
-          { n: 2, label: "Secondary/Tertiary: supporting actions, never compete visually with Primary", anchor: "left" },
-          { n: 3, label: "Destructive: visually isolated (often right-aligned), always confirms first", anchor: "bottom-right" },
-        ]} />
       </div>
 
       <h2 className="site-section-title">Grid &amp; spacing reference</h2>

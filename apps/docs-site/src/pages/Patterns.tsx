@@ -31,7 +31,7 @@ export default function Patterns() {
         <Preview>
           <Card style={{ minWidth: 420, textAlign: "center" }}>
             <div style={{ fontWeight: 700, marginBottom: 6 }}>No transactions yet</div>
-            <div style={{ fontSize: 13, color: "var(--core-color-text-secondary)", marginBottom: 16 }}>
+            <div style={{ fontSize: "var(--core-font-size-sm, 14px)", color: "var(--core-color-text-secondary)", marginBottom: 16 }}>
               Once you make your first contribution, it will show up here.
             </div>
             <Button variant="secondary" size="sm">Learn how contributions work</Button>
@@ -46,7 +46,7 @@ export default function Patterns() {
             <Input placeholder="Search transactions" style={{ maxWidth: 220 }} />
             <Badge tone="neutral">Date: Last 90 days</Badge>
             <Badge tone="neutral">Type: All</Badge>
-            <span style={{ marginLeft: "auto", fontSize: 13, color: "var(--core-color-text-secondary)" }}>24 results</span>
+            <span style={{ marginLeft: "auto", fontSize: "var(--core-font-size-xs, 12px)", color: "var(--core-color-text-secondary)" }}>24 results</span>
           </div>
         </Preview>
       </div>

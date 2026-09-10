@@ -4,7 +4,7 @@
     <script>
       // Set the site chrome's light/dark mode before first paint, to avoid a flash.
       try {
-        var m = localStorage.getItem("core-site-mode") || "dark";
+        var m = localStorage.getItem("core-site-mode") || "light";
         document.documentElement.setAttribute("data-site-mode", m);
       } catch (e) {}
     </script>

@@ -1,185 +1,621 @@
-import React from "react";
-import { Preview, CodeBlock } from "../Preview";
-import { Accordion, Separator, Skeleton } from "../../../../packages/core/src/components/Disclosure";
-import { Collapsible } from "../../../../packages/core/src/components/Primitives";
-import { Button } from "../../../../packages/core/src/components/Button";
+import React, { useState } from "react";
+import { Preview } from "../Preview";
+import {
+  Accordion,
+  Separator,
+  Skeleton,
+  Collapsible,
+  type CollapsibleVariant,
+} from "../../../../packages/core/src/components/Disclosure";
 import { Badge } from "../../../../packages/core/src/components/Misc";
-import { AutoAnatomy, AutoAnatomyLegend } from "../AutoAnatomy";
 
-export default function DisclosurePage() {
+function CollapsibleVariantsDemo() {
+  const [activeVariant, setActiveVariant] = useState<CollapsibleVariant>("card");
+
   return (
-    <div>
-      <h1 className="site-h1">Accordion, Collapsible, Separator &amp; Skeleton</h1>
-      <p className="site-lede">Progressive disclosure and loading placeholders — used for FAQ-style content and long lists of optional details.</p>
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      {/* Variant Switcher Toolbar */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+          background: "var(--site-bg-elevated, #FFFFFF)",
+          border: "1px solid var(--site-border, rgba(128,128,128,0.18))",
+          borderRadius: 12,
+          padding: "12px 18px",
+          boxShadow: "0 1px 4px rgba(0,0,0,0.03)",
+        }}
+      >
+        <span
+          style={{
+            fontSize: "var(--core-font-size-xs, 12px)",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.08em",
+            color: "var(--site-text-dim, #787887)",
+          }}
+        >
+          Variant:
+        </span>
+        <div
+          style={{
+            display: "inline-flex",
+            background: "var(--site-bg, rgba(128,128,128,0.08))",
+            borderRadius: 8,
+            padding: 3,
+            border: "1px solid var(--site-border, rgba(128,128,128,0.15))",
+          }}
+        >
+          {(["card", "button", "ghost"] as const).map((v) => {
+            const labels = { card: "Card (Default)", button: "Button / Action", ghost: "Ghost / Inline" };
+            return (
+              <button
+                key={v}
+                type="button"
+                onClick={() => setActiveVariant(v)}
+                style={{
+                  border: "none",
+                  background: activeVariant === v ? "var(--theme-brand-background-primary-default, #1F4F8D)" : "transparent",
+                  color: activeVariant === v ? "#FFFFFF" : "var(--site-text, inherit)",
+                  borderRadius: 6,
+                  padding: "5px 14px",
+                  fontSize: "var(--core-font-size-xs, 12px)",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  transition: "all 120ms ease",
+                }}
+              >
+                {labels[v]}
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
-      <h2 className="site-section-title" id="collapsible">Collapsible</h2>
-      <p className="site-section-sub">Anatomy — the generic single-panel primitive Accordion is built on — use it directly for a one-off show/hide section.</p>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Trigger — any element, toggles open state", anchor: "top" },
-          { n: 2, label: "Panel — animates height, hidden when closed", anchor: "bottom" },
-        ]}>
-          <div style={{ width: 260 }}>
-            <Collapsible trigger={(open, toggle) => <Button variant="tertiary" size="sm" onClick={toggle}>{open ? "Hide" : "Show"} advanced options {open ? "▲" : "▼"}</Button>}>
-              <div style={{ padding: "12px 0", fontSize: 14, color: "var(--core-color-text-secondary)" }}>
-                Advanced contribution options: catch-up, after-tax, Roth conversions.
+      {/* Preview Surface */}
+      <div className="site-panel site-panel--flush">
+        <div
+          className="preview-surface"
+          data-theme="core"
+          data-mode="light"
+          style={{
+            background: "var(--core-color-bg-page)",
+            flexDirection: "column",
+            alignItems: "stretch",
+            padding: "24px 28px",
+            gap: 20,
+          }}
+        >
+          {activeVariant === "card" && (
+            <Collapsible
+              variant="card"
+              title="Catch-Up & Auxiliary Contribution Options"
+              defaultOpen
+            >
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                <p style={{ margin: 0, fontSize: "var(--core-font-size-sm, 14px)", lineHeight: 1.6, color: "var(--core-color-text-secondary)" }}>
+                  Participants age 50 or older at calendar year end may make catch-up contributions up to $7,500 beyond normal elective deferral limits.
+                </p>
+                <div style={{ display: "flex", gap: 8, marginTop: 4 }}>
+                  <Badge tone="primary" size="sm">Catch-Up Permitted</Badge>
+                  <Badge tone="neutral" size="sm">Pre-tax &amp; Roth</Badge>
+                </div>
               </div>
             </Collapsible>
-          </div>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Trigger: any focusable element; owns aria-expanded/aria-controls", anchor: "top" },
-          { n: 2, label: "Panel: role=\"region\", height-animated open/close", anchor: "bottom" },
-        ]} />
-      </div>
-      <div className="site-panel site-panel--flush">
-        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
-          <Collapsible trigger={(open, toggle) => <Button variant="tertiary" size="sm" onClick={toggle}>{open ? "Hide" : "Show"} advanced options {open ? "▲" : "▼"}</Button>}>
-            <div style={{ padding: "12px 0", fontSize: 14, color: "var(--core-color-text-secondary)" }}>
-              Advanced contribution options: catch-up contributions, after-tax contributions, in-plan Roth conversions.
+          )}
+
+          {activeVariant === "button" && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 540 }}>
+              <Collapsible
+                variant="button"
+                title="View Catch-Up Details"
+              >
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  <div style={{ fontWeight: 600, color: "var(--core-color-text-primary)", fontSize: "var(--core-font-size-sm, 14px)" }}>
+                    Section 414(v) Provisions
+                  </div>
+                  <p style={{ margin: 0, fontSize: "var(--core-font-size-sm, 14px)", color: "var(--core-color-text-secondary)", lineHeight: 1.6 }}>
+                    Elective catch-up deferrals are processed on each bi-weekly payroll cycle once base statutory limits ($23,000) are attained.
+                  </p>
+                </div>
+              </Collapsible>
             </div>
-          </Collapsible>
+          )}
+
+          {activeVariant === "ghost" && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, maxWidth: 540 }}>
+              <Collapsible
+                variant="ghost"
+                title="Plan sponsor disclaimer and tax disclosure"
+              >
+                <p style={{ margin: 0, fontSize: "var(--core-font-size-sm, 14px)", color: "var(--core-color-text-secondary)", lineHeight: 1.6 }}>
+                  Investment values fluctuate daily with financial markets. Past performance does not guarantee future results. Consult a qualified tax advisor before requesting changes.
+                </p>
+              </Collapsible>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AccordionVariantsDemo() {
+  const [variant, setVariant] = useState<"bordered" | "separated" | "flush">("bordered");
+
+  const faqItems = [
+    {
+      id: "vesting",
+      title: "What is vesting?",
+      content: "Vesting is the schedule by which you gain full ownership of employer contributions to your account over a 3-year cliff or graded period.",
+    },
+    {
+      id: "loans",
+      title: "Can I take a loan against my balance?",
+      content: "Yes, subject to your plan rules — typically up to 50% of your vested balance, up to a statutory maximum of $50,000.",
+    },
+    {
+      id: "rollover",
+      title: "How do I roll over a previous 401(k)?",
+      content: "Initiate a direct rollover under Accounts → Add Account → Rollover to maintain tax-deferred compounding without withholding.",
+    },
+    {
+      id: "locked",
+      title: "Plan-specific executive deferrals (not eligible)",
+      content: "",
+      disabled: true,
+    },
+  ];
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      {/* Variant Switcher Toolbar */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+          background: "var(--site-bg-elevated, #FFFFFF)",
+          border: "1px solid var(--site-border, rgba(128,128,128,0.18))",
+          borderRadius: 12,
+          padding: "12px 18px",
+          boxShadow: "0 1px 4px rgba(0,0,0,0.03)",
+        }}
+      >
+        <span
+          style={{
+            fontSize: "var(--core-font-size-xs, 12px)",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.08em",
+            color: "var(--site-text-dim, #787887)",
+          }}
+        >
+          Style:
+        </span>
+        <div
+          style={{
+            display: "inline-flex",
+            background: "var(--site-bg, rgba(128,128,128,0.08))",
+            borderRadius: 8,
+            padding: 3,
+            border: "1px solid var(--site-border, rgba(128,128,128,0.15))",
+          }}
+        >
+          {(["bordered", "separated", "flush"] as const).map((v) => {
+            const labels = { bordered: "Bordered (Default)", separated: "Separated (Card)", flush: "Flush (Minimal)" };
+            return (
+              <button
+                key={v}
+                type="button"
+                onClick={() => setVariant(v)}
+                style={{
+                  border: "none",
+                  background: variant === v ? "var(--theme-brand-background-primary-default, #1F4F8D)" : "transparent",
+                  color: variant === v ? "#FFFFFF" : "var(--site-text, inherit)",
+                  borderRadius: 6,
+                  padding: "5px 14px",
+                  fontSize: "var(--core-font-size-xs, 12px)",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  transition: "all 120ms ease",
+                }}
+              >
+                {labels[v]}
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      <h2 className="site-section-title" id="accordion">Accordion</h2>
-      <p className="site-section-sub">Anatomy — default (bordered) variant, with a disabled item — its trigger can't be opened and reads as such to a screen reader.</p>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Trigger — full-width, 44px min height", anchor: "top" },
-          { n: 2, label: "Chevron — rotates 180° open/closed", anchor: "right" },
-          { n: 3, label: "Border — 1px, radius on outer corners only", anchor: "left" },
-        ]}>
-          <div style={{ width: 320 }}>
+      {/* Preview Surface */}
+      <div className="site-panel site-panel--flush">
+        <div
+          className="preview-surface"
+          data-theme="core"
+          data-mode="light"
+          style={{
+            background: "var(--core-color-bg-page)",
+            flexDirection: "column",
+            alignItems: "stretch",
+            padding: "24px 28px",
+          }}
+        >
+          <div style={{ maxWidth: 640, margin: "0 auto", width: "100%" }}>
             <Accordion
+              variant={variant}
               defaultOpenIds={["vesting"]}
-              items={[
-                { id: "vesting", title: "What is vesting?", content: "Vesting is the schedule by which you gain full ownership of employer contributions." },
-                { id: "loans", title: "Can I take a loan?", content: "Yes, up to 50% of your vested balance." },
-              ]}
+              items={faqItems}
             />
           </div>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Trigger: full-width button, 44px min height for touch target", anchor: "top" },
-          { n: 2, label: "Chevron: rotates 180° between closed/open, aria-hidden", anchor: "right" },
-          { n: 3, label: "Border: 1px, radius on the group's outer corners only", anchor: "left" },
-        ]} />
+        </div>
       </div>
-      <div className="site-panel site-panel--flush">
-        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
-          <div style={{ maxWidth: 480 }}>
-            <Accordion
-              defaultOpenIds={["vesting"]}
-              items={[
-                { id: "vesting", title: "What is vesting?", content: "Vesting is the schedule by which you gain full ownership of employer contributions to your account." },
-                { id: "loans", title: "Can I take a loan against my balance?", content: "Yes, subject to your plan's rules — typically up to 50% of your vested balance." },
-                { id: "rollover", title: "How do I roll over a previous 401(k)?", content: "Start a rollover from Accounts → Add Account → Rollover an existing plan." },
-                { id: "locked", title: "Plan-specific rules (not available for your plan type)", content: "", disabled: true },
-              ]}
+    </div>
+  );
+}
+
+export default function DisclosurePage() {
+  const sections = [
+    {
+      id: "01",
+      anchorId: "collapsible",
+      title: "Collapsible",
+      description:
+        "Single-panel disclosure component for expanding and collapsing auxiliary content with card, button, and ghost variants.",
+      content: (
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          <table className="spec-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Card Variant</th>
+                <th>Button Variant</th>
+                <th>Ghost Variant</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Container</td>
+                <td>Bordered card surface</td>
+                <td>Collapsible action button</td>
+                <td>Inline text trigger</td>
+              </tr>
+              <tr>
+                <td>Border radius</td>
+                <td>8px (<code>core.radius.md</code>)</td>
+                <td>8px (<code>core.radius.md</code>)</td>
+                <td>None</td>
+              </tr>
+              <tr>
+                <td>Chevron icon</td>
+                <td>14×14px, 180° rotation</td>
+                <td>14×14px, 180° rotation</td>
+                <td>14×14px, 180° rotation</td>
+              </tr>
+              <tr>
+                <td>Typography</td>
+                <td>14px semibold title</td>
+                <td>14px medium button</td>
+                <td>14px brand interactive</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <CollapsibleVariantsDemo />
+        </div>
+      ),
+    },
+    {
+      id: "02",
+      anchorId: "accordion",
+      title: "Accordion",
+      description:
+        "Stacked multi-item disclosure lists with single or multi-panel expansion, bordered, card, and flush presentations.",
+      content: (
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          <table className="spec-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Bordered (Default)</th>
+                <th>Separated (Card)</th>
+                <th>Flush</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Container border</td>
+                <td>1px solid border-default</td>
+                <td>None (individual card borders)</td>
+                <td>None (borderless)</td>
+              </tr>
+              <tr>
+                <td>Border radius</td>
+                <td>8px (outer container)</td>
+                <td>8px (per card item)</td>
+                <td>None (0px)</td>
+              </tr>
+              <tr>
+                <td>Item spacing</td>
+                <td>Hairline divider (1px)</td>
+                <td>12px gap between cards</td>
+                <td>Hairline divider (1px)</td>
+              </tr>
+              <tr>
+                <td>Trigger padding</td>
+                <td>16px 20px</td>
+                <td>16px 20px</td>
+                <td>12px 0</td>
+              </tr>
+              <tr>
+                <td>Panel padding</td>
+                <td>0 20px 24px</td>
+                <td>0 20px 24px</td>
+                <td>0 0 24px</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <AccordionVariantsDemo />
+        </div>
+      ),
+    },
+    {
+      id: "03",
+      anchorId: "separator",
+      title: "Separator",
+      description:
+        "Semantic 1px hairline divider carrying structural meaning to assistive technologies in horizontal and vertical layouts.",
+      content: (
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          <table className="spec-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Horizontal</th>
+                <th>Vertical</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Thickness</td>
+                <td>1px hairline</td>
+                <td>1px hairline</td>
+              </tr>
+              <tr>
+                <td>Token</td>
+                <td><code>var(--core-color-border-default)</code></td>
+                <td><code>var(--core-color-border-default)</code></td>
+              </tr>
+              <tr>
+                <td>Accessibility</td>
+                <td><code>role="separator"</code> (horizontal)</td>
+                <td><code>role="separator"</code> (vertical)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div className="site-panel site-panel--flush">
+            <div
+              className="preview-surface"
+              data-theme="core"
+              data-mode="light"
+              style={{
+                background: "var(--core-color-bg-page)",
+                flexDirection: "column",
+                alignItems: "stretch",
+                gap: 16,
+                padding: "24px 28px",
+              }}
+            >
+              <div
+                style={{
+                  background: "var(--core-color-surface-raised, #FFFFFF)",
+                  border: "1px solid var(--core-color-border-default)",
+                  borderRadius: 8,
+                  padding: "18px 20px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 12,
+                }}
+              >
+                <div>
+                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-primary)" }}>
+                    Plan Overview
+                  </div>
+                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", color: "var(--core-color-text-secondary)", marginTop: 4 }}>
+                    Primary account balance and portfolio asset allocations across equities and fixed income.
+                  </div>
+                </div>
+                <Separator />
+                <div>
+                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-primary)" }}>
+                    Contribution History
+                  </div>
+                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", color: "var(--core-color-text-secondary)", marginTop: 4 }}>
+                    Recent bi-weekly payroll deferrals and employer matching contributions.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "04",
+      anchorId: "skeleton",
+      title: "Skeleton",
+      description:
+        "Shimmering loading placeholders matching the geometry of pending cards, avatars, and typography.",
+      content: (
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          <table className="spec-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Animation</td>
+                <td>Shimmer pulse / sweep (1.5s infinite linear)</td>
+              </tr>
+              <tr>
+                <td>Surface color</td>
+                <td><code>var(--core-color-surface-sunken)</code></td>
+              </tr>
+              <tr>
+                <td>Border radius</td>
+                <td><code>var(--core-radius-md, 8px)</code> / <code>50%</code> for circular avatars</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div className="site-panel site-panel--flush">
+            <Preview>
+              <div
+                style={{
+                  background: "var(--core-color-surface-raised, #FFFFFF)",
+                  border: "1px solid var(--core-color-border-default)",
+                  borderRadius: 8,
+                  padding: 24,
+                  width: 340,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 16,
+                  boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                  <Skeleton width={44} height={44} radius="50%" />
+                  <div style={{ display: "flex", flexDirection: "column", gap: 6, flex: 1 }}>
+                    <Skeleton height={14} width="70%" />
+                    <Skeleton height={12} width="45%" />
+                  </div>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  <Skeleton height={14} width="95%" />
+                  <Skeleton height={14} width="85%" />
+                  <Skeleton height={14} width="60%" />
+                </div>
+                <Skeleton height={36} width="100%" radius="6px" />
+              </div>
+            </Preview>
+          </div>
+        </div>
+      ),
+    },
+  ];
+
+  return (
+    <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
+      {/* Centered Hero Header — matching Logo, Typography, Feedback, and DataDisplay pages */}
+      <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
+        <div
+          style={{
+            fontSize: 14,
+            fontWeight: 700,
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            color: "var(--core-color-brand-600)",
+            marginBottom: 12,
+          }}
+        >
+          Components
+        </div>
+        <h1
+          style={{
+            fontSize: 72,
+            fontWeight: 800,
+            letterSpacing: "-0.06em",
+            margin: "0 0 16px 0",
+            color: "var(--core-color-text-primary)",
+            lineHeight: 1.1,
+          }}
+        >
+          Disclosure
+        </h1>
+        <p
+          style={{
+            maxWidth: 580,
+            margin: "0 auto",
+            color: "var(--core-color-text-tertiary)",
+            fontSize: "var(--core-font-size-lg, 20px)",
+            lineHeight: 1.6,
+            fontWeight: 400,
+          }}
+        >
+          Progressive disclosure, collapsible views, accordions, separators, and loading skeleton placeholders.
+        </p>
+      </div>
+
+      {/* Numbered Sections List — matching standard design system layout */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 80 }}>
+        {sections.map((s) => (
+          <div key={s.id} id={s.anchorId} style={{ display: "flex", flexDirection: "column", gap: 32, position: "relative" }}>
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: "-12.5%",
+                width: "125%",
+                height: 1,
+                backgroundColor: "var(--site-border)",
+              }}
             />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                paddingTop: 32,
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 600,
+                    color: "var(--core-color-text-tertiary)",
+                    marginBottom: 12,
+                  }}
+                >
+                  {s.id}
+                </div>
+                <h2 style={{ fontSize: 40, fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
+                  {s.title}
+                </h2>
+              </div>
+              <div
+                style={{
+                  maxWidth: 420,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 16,
+                  alignItems: "flex-end",
+                }}
+              >
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: 16,
+                    lineHeight: 1.6,
+                    color: "var(--core-color-text-secondary)",
+                    textAlign: "right",
+                    fontWeight: 400,
+                  }}
+                >
+                  {s.description}
+                </p>
+              </div>
+            </div>
+            <div>{s.content}</div>
           </div>
-        </div>
+        ))}
       </div>
-
-      <p className="site-section-sub"><code>variant="flush"</code> — no outer border/radius, for nesting inside a table row or Card that already has its own border.</p>
-      <div className="site-panel site-panel--flush">
-        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
-          <div className="cds-table-wrap" style={{ maxWidth: 520 }}>
-            <table className="cds-table" data-zebra="true">
-              <thead><tr><th>Transaction</th><th>Amount</th><th></th></tr></thead>
-              <tbody>
-                <tr><td>Employer Contribution</td><td>$208.00</td><td><Badge tone="success" size="sm">Posted</Badge></td></tr>
-                <tr className="cds-table-accordion-row">
-                  <td colSpan={3}>
-                    <Accordion
-                      variant="flush"
-                      items={[{
-                        id: "detail",
-                        title: "My Deferral — view detail",
-                        content: (
-                          <div style={{ display: "flex", gap: 24, fontSize: 13 }}>
-                            <span>Plan: Meridian 401(k)</span>
-                            <span>Pay period: Feb 14–28, 2026</span>
-                            <span>Post date: Feb 28, 2026</span>
-                          </div>
-                        ),
-                      }]}
-                    />
-                  </td>
-                </tr>
-                <tr><td>Employer Contribution</td><td>$208.00</td><td><Badge tone="success" size="sm">Posted</Badge></td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <h2 className="site-section-title" id="separator">Separator</h2>
-      <p className="site-section-sub">Anatomy — 1px hairline, carries structural meaning to assistive tech.</p>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Thickness — 1px, border-color token", anchor: "center", offset: 50 },
-          { n: 2, label: "Full-bleed width of its container", anchor: "left" },
-        ]}>
-          <div style={{ width: 240 }}>
-            <span style={{ fontSize: 14, color: "var(--core-color-text-primary)" }}>Section above</span>
-            <Separator />
-            <span style={{ fontSize: 14, color: "var(--core-color-text-primary)" }}>Section below</span>
-          </div>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Thickness: 1px, color.border.subtle", anchor: "center" },
-          { n: 2, label: "Stretches full-bleed to its container's width", anchor: "left" },
-        ]} />
-      </div>
-      <div className="site-panel site-panel--flush">
-        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
-          <span style={{ fontSize: 14, color: "var(--core-color-text-primary)" }}>Section above</span>
-          <Separator />
-          <span style={{ fontSize: 14, color: "var(--core-color-text-primary)" }}>Section below</span>
-        </div>
-      </div>
-
-      <h2 className="site-section-title" id="skeleton">Skeleton (loading placeholder)</h2>
-      <p className="site-section-sub">Anatomy — shimmering block matching the shape of the content it stands in for.</p>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Radius — matches the real content's shape", anchor: "top" },
-          { n: 2, label: "Shimmer — animated gradient sweep", anchor: "bottom" },
-        ]}>
-          <div style={{ display: "flex", flexDirection: "column", gap: 8, width: 200 }}>
-            <Skeleton height={14} width="60%" />
-            <Skeleton height={28} width="90%" />
-            <Skeleton height={14} width="40%" />
-          </div>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Radius: matches the real content it replaces (text vs. block)", anchor: "top" },
-          { n: 2, label: "Shimmer: looping gradient animation, aria-hidden", anchor: "bottom" },
-        ]} />
-      </div>
-      <div className="site-panel site-panel--flush">
-        <Preview>
-          <div style={{ display: "flex", flexDirection: "column", gap: 8, width: 240 }}>
-            <Skeleton height={14} width="60%" />
-            <Skeleton height={28} width="90%" />
-            <Skeleton height={14} width="40%" />
-          </div>
-        </Preview>
-      </div>
-
-      <h2 className="site-section-title">Accessibility</h2>
-      <ul style={{ color: "var(--site-text-dim)", lineHeight: 1.8, fontSize: 14 }}>
-        <li>Accordion triggers are real <code>&lt;button&gt;</code>s with <code>aria-expanded</code> and <code>aria-controls</code>; panels are <code>role="region"</code> labeled by their trigger.</li>
-        <li>Separator carries <code>role="separator"</code> so it's announced as structure, not skipped as decoration.</li>
-        <li>Skeleton is <code>aria-hidden</code> — pair it with a visually-hidden "Loading…" live region if the wait is long.</li>
-      </ul>
-
-      <h2 className="site-section-title">Code</h2>
-      <CodeBlock>{`<Accordion items={faqItems} defaultOpenIds={["vesting"]} allowMultiple />
-<Separator />
-<Skeleton height={28} width="90%" />`}</CodeBlock>
     </div>
   );
 }

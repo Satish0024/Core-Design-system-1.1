@@ -1,7 +1,25 @@
 import React, { useState } from "react";
+export { Collapsible, type CollapsibleProps, type CollapsibleVariant } from "./Primitives";
 
-export interface AccordionItem { id: string; title: string; content: React.ReactNode; disabled?: boolean; }
-export function Accordion({ items, allowMultiple = false, defaultOpenIds = [], variant = "bordered" }: { items: AccordionItem[]; allowMultiple?: boolean; defaultOpenIds?: string[]; variant?: "bordered" | "flush" }) {
+export type AccordionVariant = "bordered" | "separated" | "flush";
+export interface AccordionItem {
+  id: string;
+  title: string;
+  content: React.ReactNode;
+  disabled?: boolean;
+}
+
+export function Accordion({
+  items,
+  allowMultiple = false,
+  defaultOpenIds = [],
+  variant = "bordered",
+}: {
+  items: AccordionItem[];
+  allowMultiple?: boolean;
+  defaultOpenIds?: string[];
+  variant?: AccordionVariant;
+}) {
   const [open, setOpen] = useState<Set<string>>(new Set(defaultOpenIds));
   const toggle = (id: string, disabled?: boolean) => {
     if (disabled) return;
@@ -16,7 +34,7 @@ export function Accordion({ items, allowMultiple = false, defaultOpenIds = [], v
       {items.map((item) => {
         const isOpen = open.has(item.id) && !item.disabled;
         return (
-          <div className="cds-accordion-item" key={item.id}>
+          <div className={`cds-accordion-item ${isOpen ? "cds-accordion-item--open" : ""}`} key={item.id}>
             <h3 style={{ margin: 0 }}>
               <button
                 className="cds-accordion-trigger"

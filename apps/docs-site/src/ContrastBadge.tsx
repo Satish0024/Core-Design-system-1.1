@@ -21,7 +21,7 @@ export function ContrastBadge({ hex }: { hex: string }) {
   return (
     <span
       style={{
-        fontSize: 10,
+        fontSize: "var(--core-font-size-xs, 12px)",
         fontWeight: 700,
         padding: "2px 6px",
         borderRadius: 4,

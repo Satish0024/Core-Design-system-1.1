@@ -35,7 +35,7 @@ export default function Themes() {
               <Badge tone="success">Active</Badge>
               <Badge tone="info">Pending</Badge>
               <Card style={{ minWidth: 200 }}>
-                <div style={{ fontSize: 13, color: "var(--core-color-text-secondary)" }}>Balance</div>
+                <div style={{ fontSize: "var(--core-font-size-xs, 12px)", color: "var(--core-color-text-secondary)" }}>Balance</div>
                 <div style={{ fontSize: 22, fontWeight: 700, color: "var(--core-color-text-primary)" }}>$84,213</div>
               </Card>
               <Field label="Search">{(p) => <Input {...p} placeholder="Type to search" style={{ width: 180 }} />}</Field>

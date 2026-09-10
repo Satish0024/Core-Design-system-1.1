@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { AppHeader, AppFooter, Grid, GridCol } from "../../../../packages/core/src/components/Layout";
 import type { GridGap } from "../../../../packages/core/src/components/Layout";
 import { IconButton } from "../../../../packages/core/src/components/Button";
-import { Card } from "../../../../packages/core/src/components/Misc";
 import { Avatar } from "../../../../packages/core/src/components/DataDisplay";
 import { Icon } from "../../../../packages/core/src/components/Primitives";
-import { AutoAnatomy, AutoAnatomyLegend } from "../AutoAnatomy";
 import primitives from "../../../../packages/tokens/src/primitives.json";
 
 const container = (primitives as any).container;
@@ -112,14 +110,10 @@ export default function LayoutGrid() {
       </p>
 
       <h2 className="site-section-title" id="header">App header</h2>
-      <p className="site-section-sub">Anatomy — brand on the left, account/utility actions on the right; fixed height so it never reflows content below it.</p>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Brand — left-aligned, min-width 0 (truncates before actions do)", anchor: "left" },
-          { n: 2, label: "Actions — right-aligned, never shrinks", anchor: "right" },
-          { n: 3, label: "Height — fixed, layout.header.height", anchor: "bottom" },
-        ]}>
-          <div style={{ width: 420, border: "1px solid var(--core-color-border-subtle)", borderRadius: "var(--core-card-radius)", overflow: "hidden" }}>
+      <p className="site-section-sub">Brand on the left, account/utility actions on the right; fixed height so it never reflows content below it.</p>
+      <div className="site-panel site-panel--flush">
+        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", padding: 24 }}>
+          <div style={{ width: "100%", maxWidth: 640, border: "1px solid var(--core-color-border-subtle)", borderRadius: "var(--core-card-radius)", overflow: "hidden" }}>
             <div className="cds-app-header">
               <AppHeader
                 brand="Meridian"
@@ -130,31 +124,19 @@ export default function LayoutGrid() {
               />
             </div>
           </div>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Brand: left-aligned, min-width: 0 so it truncates before pushing actions off", anchor: "left" },
-          { n: 2, label: "Actions: right-aligned, flex-shrink: 0 — help/theme/avatar never get squeezed", anchor: "right" },
-          { n: 3, label: `Height: fixed at ${layout["header.height"]} (layout.header.height) so page content below never reflows when it re-renders`, anchor: "bottom" },
-        ]} />
+        </div>
       </div>
 
       <h2 className="site-section-title" id="footer">App footer</h2>
-      <p className="site-section-sub">Anatomy — copyright/legal text on the left, links on the right; wraps to stack rather than truncating either side on narrow screens.</p>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Copyright — left, wraps first", anchor: "left" },
-          { n: 2, label: "Links — right, wraps together as a group", anchor: "right" },
-        ]}>
-          <div style={{ width: 420, border: "1px solid var(--core-color-border-subtle)", borderRadius: "var(--core-card-radius)", overflow: "hidden" }}>
+      <p className="site-section-sub">Copyright/legal text on the left, links on the right; wraps to stack rather than truncating either side on narrow screens.</p>
+      <div className="site-panel site-panel--flush">
+        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", padding: 24 }}>
+          <div style={{ width: "100%", maxWidth: 640, border: "1px solid var(--core-color-border-subtle)", borderRadius: "var(--core-card-radius)", overflow: "hidden" }}>
             <div className="cds-app-footer">
               <AppFooter copyright="© 2026 Meridian." links={<><a href="#">Privacy</a><a href="#">Terms</a></>} />
             </div>
           </div>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Copyright: left-aligned, the first thing to wrap onto its own line if space runs out", anchor: "left" },
-          { n: 2, label: "Links: right-aligned as one flex-wrap group, never interleaved with the copyright text", anchor: "right" },
-        ]} />
+        </div>
       </div>
 
       <h2 className="site-section-title" id="grid">Grid &amp; Container</h2>
@@ -528,7 +510,7 @@ export default function LayoutGrid() {
                     background: i === 0 ? "var(--core-color-action-primary-bg)" : "var(--core-color-surface-sunken)",
                     color: i === 0 ? "#fff" : "var(--core-color-text-secondary)",
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: 11, fontWeight: 700,
+                    fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700,
                   }}>{i + 1}</div>
                   <span style={{ fontSize: "var(--core-font-size-sm)", fontWeight: i === 0 ? 600 : 400, color: i === 0 ? "var(--core-color-action-primary-bg)" : "var(--core-color-text-secondary)" }}>{step}</span>
                 </div>
@@ -620,7 +602,7 @@ export default function LayoutGrid() {
 
       <h2 className="site-section-title">Code</h2>
       <div className="site-panel site-panel--flush">
-        <pre style={{ margin: 0, padding: 20, fontSize: 13, overflowX: "auto" }}>{`<AppShell
+        <pre style={{ margin: 0, padding: 20, fontSize: "var(--core-font-size-xs, 12px)", overflowX: "auto" }}>{`<AppShell
   header={<AppHeader brand="Meridian" actions={<Avatar name="Taylor Hale" size="sm" />} />}
   sidebar={<AppSidebar items={navItems} />}
   footer={<AppFooter copyright="© 2026 Meridian." links={<a href="/privacy">Privacy</a>} />}

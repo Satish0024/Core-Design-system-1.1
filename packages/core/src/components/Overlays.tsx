@@ -92,7 +92,7 @@ export function Tooltip({ label, children }: { label: string; children: React.Re
     <span style={{ position: "relative", display: "inline-block" }} onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)} onFocus={() => setShow(true)} onBlur={() => setShow(false)}>
       {children}
       {show && (
-        <span className="cds-tooltip" role="tooltip" style={{ bottom: "calc(100% + 6px)", left: "50%", transform: "translateX(-50%)" }}>
+        <span className="cds-tooltip" role="tooltip" style={{ bottom: "calc(100% + 10px)", left: "50%", transform: "translateX(-50%)" }}>
           {label}
         </span>
       )}

@@ -38,7 +38,7 @@ export default function Spacing() {
                 <td><code>space.{step}</code></td>
                 <td style={{ fontFamily: "var(--site-mono)", fontSize: 12 }}>{space[step]}</td>
                 <td style={{ width: 120 }}><div style={{ height: 10, width: space[step], background: "var(--site-accent)", borderRadius: 3 }} /></td>
-                <td style={{ color: "var(--site-text-dim)", fontSize: 13 }}>{use}</td>
+                <td style={{ color: "var(--site-text-dim)", fontSize: "var(--core-font-size-sm, 14px)" }}>{use}</td>
               </tr>
             ))}
           </tbody>
@@ -50,7 +50,7 @@ export default function Spacing() {
       <div className="site-panel" style={{ display: "flex", gap: 24 }}>
         {controls.map((c) => (
           <div key={c.label} style={{ textAlign: "center" }}>
-            <div style={{ height: c.h, width: 120, background: "var(--core-color-action-primary-bg, #6952E2)", borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: 13, fontWeight: 600 }}>
+            <div style={{ height: c.h, width: 120, background: "var(--core-color-action-primary-bg, #6952E2)", borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600 }}>
               {c.label}
             </div>
             <div style={{ marginTop: 8, fontSize: 12, color: "var(--site-text-faint)", fontFamily: "var(--site-mono)" }}>height {c.h} · padding {c.pad} · text {c.font}</div>

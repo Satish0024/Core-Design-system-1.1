@@ -1,176 +1,417 @@
 import React from "react";
 import { Preview, CodeBlock } from "../Preview";
+import { Anatomy, AnatomyLegend } from "../Anatomy";
 import { Button, IconButton, Link } from "../../../../packages/core/src/components/Button";
 import { ButtonGroup } from "../../../../packages/core/src/components/Primitives";
-import { Anatomy, AnatomyLegend } from "../Anatomy";
-import { AutoAnatomy, AutoAnatomyLegend } from "../AutoAnatomy";
+import { ButtonMatrix } from "../ButtonMatrix";
 
 export default function Actions() {
-  return (
-    <div>
-      <h1 className="site-h1" id="button">Button</h1>
-      <p className="site-lede">Primary / Secondary / Tertiary / Destructive hierarchy. Every variant shares focus, disabled, and loading behavior.</p>
+  const sections = [
+    {
+      id: "01",
+      anchorId: "button",
+      title: "Matrix & States",
+      description:
+        "Complete component matrix showcasing each variant across all interactive states (Default, Hover, Active, Focused, Disabled) directly wired to the Color Palette SCSS.",
+      content: <ButtonMatrix />,
+    },
+    {
+      id: "02",
+      anchorId: "icon-button",
+      title: "Sizes & Geometry",
+      description:
+        "Standard 8-pt control heights (32px, 40px, 48px) with 6px corner radius and minimum touch targets.",
+      content: (
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          <table className="spec-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Small</th>
+                <th>Medium (default)</th>
+                <th>Large</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Height</td>
+                <td>32px</td>
+                <td>40px</td>
+                <td>48px</td>
+              </tr>
+              <tr>
+                <td>Horizontal padding</td>
+                <td>12px</td>
+                <td>16px</td>
+                <td>20px</td>
+              </tr>
+              <tr>
+                <td>Font size</td>
+                <td>14px</td>
+                <td>16px</td>
+                <td>18px</td>
+              </tr>
+              <tr>
+                <td>Minimum touch target</td>
+                <td>32×32px</td>
+                <td>40×40px</td>
+                <td>48×48px</td>
+              </tr>
+            </tbody>
+          </table>
 
-      <h2 className="site-section-title">Anatomy</h2>
-      <p className="site-section-sub">The reference dimensions every Button instance is built from — the template used for every component's Anatomy section going forward.</p>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
-        <div style={{ width: 420 }}>
-          <Anatomy
-            points={[
-              { n: 1, label: "Label — 14px / 600 weight, centered", x: 40, y: 60, leaderTo: { x: 210, y: 80 } },
-              { n: 2, label: "Height — 40px (md)", x: 40, y: 140, leaderTo: { x: 130, y: 100 } },
-              { n: 3, label: "Horizontal padding — 16px each side", x: 380, y: 140, leaderTo: { x: 275, y: 90 } },
-            ]}
-          >
-            <Button style={{ width: 160 }}>Save changes</Button>
-          </Anatomy>
         </div>
-        <AnatomyLegend
-          points={[
-            { n: 1, label: "Label: 14px / weight 600, centered both axes", x: 0, y: 0, leaderTo: { x: 0, y: 0 } },
-            { n: 2, label: "Height: 32px (sm) / 40px (md) / 48px (lg)", x: 0, y: 0, leaderTo: { x: 0, y: 0 } },
-            { n: 3, label: "Padding: 12px (sm) / 16px (md) / 20px (lg) horizontal", x: 0, y: 0, leaderTo: { x: 0, y: 0 } },
-          ]}
-        />
-      </div>
-      <table className="spec-table">
-        <thead><tr><th>Property</th><th>Small</th><th>Medium (default)</th><th>Large</th></tr></thead>
-        <tbody>
-          <tr><td>Height</td><td>32px</td><td>40px</td><td>48px</td></tr>
-          <tr><td>Horizontal padding</td><td>12px</td><td>16px</td><td>20px</td></tr>
-          <tr><td>Font size</td><td>14px</td><td>16px</td><td>18px</td></tr>
-          <tr><td>Font weight</td><td colSpan={3}>600 (semibold) — all sizes</td></tr>
-          <tr><td>Corner radius</td><td colSpan={3}><code>button.radius</code> — 6px on CORE, themeable per client</td></tr>
-          <tr><td>Icon-to-label gap (if icon present)</td><td colSpan={3}>8px</td></tr>
-          <tr><td>Minimum touch target</td><td>32×32px</td><td>40×40px</td><td>48×48px</td></tr>
-        </tbody>
-      </table>
+      ),
+    },
+    {
+      id: "03",
+      anchorId: "icon-button",
+      title: "Icon Button",
+      description:
+        "Square and circular icon actions with required accessible names. Edit action shown across interactive states.",
+      content: (
+        <div className="site-panel site-panel--flush">
+          <Preview>
+            <div style={{ display: "flex", gap: 32, alignItems: "flex-end", flexWrap: "wrap" }}>
+              {/* DEFAULT */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
+                <span style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, letterSpacing: "0.06em", color: "var(--site-text-dim)" }}>DEFAULT</span>
+                <button
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 6,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    backgroundColor: "transparent",
+                    color: "var(--theme-brand-text-primary-default, #1F4F8D)",
+                    border: "1px solid var(--theme-brand-border-primary-default, #3275CD)",
+                  }}
+                  aria-label="Edit"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" /></svg>
+                </button>
+              </div>
 
-      <h2 className="site-section-title">Variants</h2>
-      <div className="site-panel site-panel--flush">
-        <Preview>
-          <Button variant="primary">Primary</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="tertiary">Tertiary</Button>
-          <Button variant="destructive">Destructive</Button>
-        </Preview>
+              {/* HOVER */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
+                <span style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, letterSpacing: "0.06em", color: "var(--site-text-dim)" }}>HOVER</span>
+                <button
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 6,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    backgroundColor: "var(--theme-brand-background-hover, #1B4479)",
+                    color: "var(--theme-brand-text-primary-oncolor, #FFFFFF)",
+                    border: "1px solid var(--theme-brand-border-hover, #1B4479)",
+                  }}
+                  aria-label="Edit Hover"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" /></svg>
+                </button>
+              </div>
+
+              {/* ACTIVE */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
+                <span style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, letterSpacing: "0.06em", color: "var(--site-text-dim)" }}>ACTIVE</span>
+                <button
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 6,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    backgroundColor: "var(--theme-brand-background-active, #17365E)",
+                    color: "var(--theme-brand-text-primary-oncolor, #FFFFFF)",
+                    border: "1px solid var(--theme-brand-border-active, #17365E)",
+                    transform: "translateY(1px)",
+                  }}
+                  aria-label="Edit Active"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" /></svg>
+                </button>
+              </div>
+
+              {/* DISABLED */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
+                <span style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, letterSpacing: "0.06em", color: "var(--site-text-dim)" }}>DISABLED</span>
+                <button
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 6,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "not-allowed",
+                    backgroundColor: "transparent",
+                    color: "var(--theme-brand-text-primary-disabled, #86ADDF)",
+                    border: "1px solid var(--theme-brand-border-primary-disabled, #BACEE9)",
+                    opacity: 0.6,
+                  }}
+                  disabled
+                  aria-label="Edit Disabled"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" /></svg>
+                </button>
+              </div>
+            </div>
+          </Preview>
+        </div>
+      ),
+    },
+
+    {
+      id: "05",
+      anchorId: "button-group",
+      title: "Button Group & Link",
+      description:
+        "Segmented controls that merge borders into one cohesive control, and inline text links distinct from standalone buttons.",
+      content: (
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          <div className="site-panel site-panel--flush">
+            <Preview>
+              <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
+                <div style={{ display: "flex", width: 400 }}>
+                  <span style={{ flex: 1, textAlign: "center", fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, letterSpacing: "0.04em", color: "var(--site-text-dim)" }}>DEFAULT</span>
+                  <span style={{ flex: 1, textAlign: "center", fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, letterSpacing: "0.04em", color: "var(--site-text-dim)" }}>HOVER</span>
+                  <span style={{ flex: 1, textAlign: "center", fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, letterSpacing: "0.04em", color: "var(--site-text-dim)" }}>ACTIVE</span>
+                  <span style={{ flex: 1, textAlign: "center", fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, letterSpacing: "0.04em", color: "var(--site-text-dim)" }}>FOCUSED</span>
+                  <span style={{ flex: 1, textAlign: "center", fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, letterSpacing: "0.04em", color: "var(--site-text-dim)" }}>DISABLED</span>
+                </div>
+                <ButtonGroup>
+                  {/* DEFAULT */}
+                  <button className="cds-btn cds-btn--sm" style={{ width: 80, backgroundColor: "transparent", color: "var(--theme-brand-text-primary-default, #1F4F8D)", border: "1px solid var(--theme-brand-border-primary-default, #3275CD)", cursor: "pointer" }}>Day</button>
+                  {/* HOVER (tinted hover background with blue text) */}
+                  <button className="cds-btn cds-btn--sm" style={{ width: 80, backgroundColor: "rgba(31, 79, 141, 0.08)", color: "var(--theme-brand-text-primary-default, #1F4F8D)", border: "1px solid var(--theme-brand-border-hover, #1B4479)", cursor: "pointer" }}>Week</button>
+                  {/* ACTIVE (solid filled brand state with white text) */}
+                  <button className="cds-btn cds-btn--sm" style={{ width: 80, backgroundColor: "var(--theme-brand-background-primary-default, #1F4F8D)", color: "var(--theme-brand-text-primary-oncolor, #FFFFFF)", border: "1px solid var(--theme-brand-background-primary-default, #1F4F8D)", fontWeight: 600, cursor: "pointer", boxShadow: "inset 0 1px 2px rgba(0,0,0,0.18)" }}>Month</button>
+                  {/* FOCUSED */}
+                  <button className="cds-btn cds-btn--sm" style={{ width: 80, backgroundColor: "transparent", color: "var(--theme-brand-text-primary-default, #1F4F8D)", border: "1px solid var(--theme-brand-border-primary-default, #3275CD)", outline: "2px solid var(--theme-brand-border-primary-default, #3275CD)", outlineOffset: "1px", zIndex: 1, cursor: "pointer" }}>Year</button>
+                  {/* DISABLED */}
+                  <button className="cds-btn cds-btn--sm" disabled style={{ width: 80, backgroundColor: "transparent", color: "var(--theme-brand-text-primary-disabled, #86ADDF)", border: "1px solid var(--theme-brand-border-primary-disabled, #BACEE9)", opacity: 0.5, cursor: "not-allowed" }}>All</button>
+                </ButtonGroup>
+              </div>
+            </Preview>
+          </div>
+
+          <div className="site-panel site-panel--flush">
+            <Preview>
+              <div style={{ display: "flex", flexDirection: "column", gap: 24, width: "100%" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 24 }}>
+                  {/* DEFAULT */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                    <span style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, letterSpacing: "0.06em", color: "var(--site-text-dim)" }}>DEFAULT</span>
+                    <span style={{ fontSize: 14, color: "var(--core-color-text-primary)", lineHeight: 1.6 }}>
+                      Read our{" "}
+                      <Link
+                        href="#"
+                        onClick={(e) => e.preventDefault()}
+                        style={{
+                          color: "var(--theme-brand-text-primary-default, #1F4F8D)",
+                          textDecoration: "underline",
+                          textUnderlineOffset: "3px",
+                          textDecorationThickness: "1px"
+                        }}
+                      >
+                        plan disclosure documents
+                      </Link>{" "}
+                      before enrolling.
+                    </span>
+                  </div>
+
+                  {/* HOVER */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                    <span style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, letterSpacing: "0.06em", color: "var(--site-text-dim)" }}>HOVER</span>
+                    <span style={{ fontSize: 14, color: "var(--core-color-text-primary)", lineHeight: 1.6 }}>
+                      Read our{" "}
+                      <a
+                        href="#"
+                        onClick={(e) => e.preventDefault()}
+                        className="cds-link"
+                        style={{
+                          color: "var(--theme-brand-background-hover, #0D3B73)",
+                          textDecoration: "underline",
+                          textDecorationThickness: "2px",
+                          textUnderlineOffset: "4px",
+                          fontWeight: 600,
+                        }}
+                      >
+                        plan disclosure documents
+                      </a>{" "}
+                      before enrolling.
+                    </span>
+                  </div>
+
+                  {/* ACTIVE */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                    <span style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, letterSpacing: "0.06em", color: "var(--site-text-dim)" }}>ACTIVE</span>
+                    <span style={{ fontSize: 14, color: "var(--core-color-text-primary)", lineHeight: 1.6 }}>
+                      Read our{" "}
+                      <a
+                        href="#"
+                        onClick={(e) => e.preventDefault()}
+                        className="cds-link"
+                        style={{
+                          color: "var(--theme-brand-background-active, #0A2548)",
+                          textDecoration: "underline",
+                          textDecorationThickness: "2.5px",
+                          textUnderlineOffset: "2px",
+                          fontWeight: 700,
+                        }}
+                      >
+                        plan disclosure documents
+                      </a>{" "}
+                      before enrolling.
+                    </span>
+                  </div>
+
+                  {/* DISABLED */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                    <span style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, letterSpacing: "0.06em", color: "var(--site-text-dim)" }}>DISABLED</span>
+                    <span style={{ fontSize: 14, color: "var(--core-color-text-primary)", lineHeight: 1.6 }}>
+                      Read our{" "}
+                      <Link
+                        href="#"
+                        disabled
+                        onClick={(e) => e.preventDefault()}
+                        style={{
+                          color: "var(--theme-brand-text-primary-disabled, #86ADDF)",
+                          textDecoration: "underline",
+                          textDecorationColor: "var(--theme-brand-border-primary-disabled, #BACEE9)",
+                          opacity: 0.5,
+                          cursor: "not-allowed",
+                        }}
+                      >
+                        plan disclosure documents
+                      </Link>{" "}
+                      before enrolling.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </Preview>
+          </div>
+        </div>
+      ),
+    },
+
+  ];
+
+  return (
+    <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
+      {/* Centered Hero Header — matching Logo and Typography sections */}
+      <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
+        <div
+          style={{
+            fontSize: 14,
+            fontWeight: 700,
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            color: "var(--core-color-brand-600)",
+            marginBottom: 12,
+          }}
+        >
+          Components
+        </div>
+        <h1
+          style={{
+            fontSize: 72,
+            fontWeight: 800,
+            letterSpacing: "-0.06em",
+            margin: "0 0 16px 0",
+            color: "var(--core-color-text-primary)",
+            lineHeight: 1.1,
+          }}
+        >
+          Button
+        </h1>
+        <p
+          style={{
+            maxWidth: 580,
+            margin: "0 auto",
+            color: "var(--core-color-text-tertiary)",
+            fontSize: 18,
+            lineHeight: 1.6,
+            fontWeight: 400,
+          }}
+        >
+          Primary, Secondary, Tertiary, Outlines, and Semantic hierarchy. Direct Color Palette SCSS tokens across all interactive states.
+        </p>
       </div>
 
-      <h2 className="site-section-title">Sizes</h2>
-      <div className="site-panel site-panel--flush">
-        <Preview>
-          <Button size="sm">Small</Button>
-          <Button size="md">Medium</Button>
-          <Button size="lg">Large</Button>
-        </Preview>
+      {/* Numbered Sections List — matching Logo and Typography sections */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 80 }}>
+        {sections.map((s) => (
+          <div key={s.id} id={s.anchorId} style={{ display: "flex", flexDirection: "column", gap: 32, position: "relative" }}>
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: "-12.5%",
+                width: "125%",
+                height: 1,
+                backgroundColor: "var(--site-border)",
+              }}
+            />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                paddingTop: 32,
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 600,
+                    color: "var(--core-color-text-tertiary)",
+                    marginBottom: 12,
+                  }}
+                >
+                  {s.id}
+                </div>
+                <h2 style={{ fontSize: 40, fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
+                  {s.title}
+                </h2>
+              </div>
+              <div
+                style={{
+                  maxWidth: 420,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 16,
+                  alignItems: "flex-end",
+                }}
+              >
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: 16,
+                    lineHeight: 1.6,
+                    color: "var(--core-color-text-secondary)",
+                    textAlign: "right",
+                    fontWeight: 400,
+                  }}
+                >
+                  {s.description}
+                </p>
+              </div>
+            </div>
+            <div>{s.content}</div>
+          </div>
+        ))}
       </div>
-
-      <h2 className="site-section-title">States</h2>
-      <div className="site-panel site-panel--flush">
-        <Preview>
-          <Button>Default</Button>
-          <Button disabled>Disabled</Button>
-          <Button loading>Loading</Button>
-        </Preview>
-      </div>
-
-      <h2 className="site-section-title" id="icon-button">Icon Button</h2>
-      <p className="site-section-sub">Anatomy — square, icon-only — every instance requires an <code>aria-label</code> (enforced by the TypeScript prop, not just a convention).</p>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Icon — centered both axes", anchor: "center", offset: 60 },
-          { n: 2, label: "Square size — 40×40px (md)", anchor: "left" },
-          { n: 3, label: "Corner radius — button.radius", anchor: "bottom" },
-        ]}>
-          <IconButton variant="secondary" size="md" aria-label="Settings"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" strokeWidth="1.4"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg></IconButton>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Icon: centered, sized to match the icon-size token (16/20/24px)", anchor: "center" },
-          { n: 2, label: "Square: 32×32 (sm) / 40×40 (md) / 48×48 (lg) — same as control-height tokens", anchor: "left" },
-          { n: 3, label: "Radius: button.radius, themeable per client", anchor: "bottom" },
-        ]} />
-      </div>
-      <div className="site-panel site-panel--flush">
-        <Preview>
-          <IconButton variant="secondary" size="sm" aria-label="Close"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1L11 11M11 1L1 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg></IconButton>
-          <IconButton variant="secondary" size="md" aria-label="Settings"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="2.5" stroke="currentColor" strokeWidth="1.4"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg></IconButton>
-          <IconButton variant="primary" size="lg" aria-label="Add"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3v12M3 9h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg></IconButton>
-          <IconButton variant="destructive" size="md" aria-label="Delete"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 4.5h10M6.5 4.5V3a1 1 0 011-1h1a1 1 0 011 1v1.5M4.5 4.5v8a1 1 0 001 1h5a1 1 0 001-1v-8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg></IconButton>
-        </Preview>
-      </div>
-
-      <h2 className="site-section-title" id="link">Link</h2>
-      <p className="site-section-sub">Anatomy — inline text link, distinct from Tertiary button (which is a standalone action, not inline text).</p>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Underline — always visible, not hover-only", anchor: "bottom" },
-          { n: 2, label: "Color — Primary's own text color", anchor: "top" },
-        ]}>
-          <Link href="#">plan disclosure documents</Link>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Underline: always on (2px offset), never hover-only — a link must be identifiable without a pointer", anchor: "bottom" },
-          { n: 2, label: "Color: color.action.tertiary.text — same hue as Primary", anchor: "top" },
-        ]} />
-      </div>
-      <div className="site-panel site-panel--flush">
-        <Preview>
-          <span style={{ fontSize: 14, color: "var(--core-color-text-primary)" }}>
-            Read our <Link href="#">plan disclosure documents</Link> before enrolling.
-          </span>
-        </Preview>
-      </div>
-
-      <h2 className="site-section-title" id="button-group">Button Group</h2>
-      <p className="site-section-sub">Anatomy — segmented actions that belong together, buttons merge borders into one control.</p>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Shared border — 1px between segments, no double border", anchor: "bottom" },
-          { n: 2, label: "Outer radius only on first/last segment", anchor: "right" },
-        ]}>
-          <ButtonGroup>
-            <Button variant="secondary" size="sm">Day</Button>
-            <Button variant="secondary" size="sm">Week</Button>
-            <Button variant="secondary" size="sm">Month</Button>
-          </ButtonGroup>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Segments share a 1px border (-1px margin overlap) so it never doubles up", anchor: "bottom" },
-          { n: 2, label: "Only the first and last segment keep button.radius on their outer corner", anchor: "right" },
-        ]} />
-      </div>
-      <div className="site-panel site-panel--flush">
-        <Preview>
-          <ButtonGroup>
-            <Button variant="secondary" size="sm">Day</Button>
-            <Button variant="secondary" size="sm">Week</Button>
-            <Button variant="secondary" size="sm">Month</Button>
-          </ButtonGroup>
-        </Preview>
-      </div>
-
-      <h2 className="site-section-title">Accessibility</h2>
-      <ul style={{ color: "var(--site-text-dim)", lineHeight: 1.8, fontSize: 14 }}>
-        <li>Renders a native <code>&lt;button&gt;</code> — full keyboard operability (Enter / Space) for free.</li>
-        <li>2px visible focus ring via <code>:focus-visible</code>, never suppressed.</li>
-        <li>Loading state sets <code>aria-busy</code>; disabled state uses the native <code>disabled</code> attribute so it's removed from the tab order and announced correctly.</li>
-        <li>Minimum 32px touch target at the <code>sm</code> size, 40–48px at <code>md</code>/<code>lg</code>.</li>
-      </ul>
-
-      <h2 className="site-section-title">Code</h2>
-      <CodeBlock>{`<Button variant="primary" size="md">Save changes</Button>
-<Button variant="destructive" onClick={onDelete}>Delete account</Button>`}</CodeBlock>
-
-      <h2 className="site-section-title">Tokens</h2>
-      <table className="spec-table">
-        <thead><tr><th>Token</th><th>Purpose</th></tr></thead>
-        <tbody>
-          <tr><td><code>button.primary.bg</code></td><td>Primary background</td></tr>
-          <tr><td><code>button.primary.bgHover</code></td><td>Hover state</td></tr>
-          <tr><td><code>button.radius</code></td><td>Corner radius, themeable per client</td></tr>
-          <tr><td><code>focusRing.color</code></td><td>Focus outline, shared across all interactive components</td></tr>
-        </tbody>
-      </table>
     </div>
   );
 }

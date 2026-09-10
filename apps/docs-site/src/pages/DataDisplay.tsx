@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Preview, CodeBlock } from "../Preview";
-import { Card, Badge } from "../../../../packages/core/src/components/Misc";
+import { Anatomy, AnatomyLegend } from "../Anatomy";
+import { Card, Badge, BadgeTone, BadgeSize } from "../../../../packages/core/src/components/Misc";
 import { Table, DataTable, Avatar, AvatarGroup, Progress } from "../../../../packages/core/src/components/DataDisplay";
-import { Item, AspectRatio, DescriptionList } from "../../../../packages/core/src/components/Primitives";
-import { AutoAnatomy, AutoAnatomyLegend } from "../AutoAnatomy";
+import { Item, DescriptionList } from "../../../../packages/core/src/components/Primitives";
 import { Button } from "../../../../packages/core/src/components/Button";
 
 const manyRows = [
@@ -23,326 +23,856 @@ const rows = [
   { id: 4, date: "Jul 15, 2026", type: "Fee", amount: "-$4.00", status: "danger" as const },
 ];
 
-export default function DataDisplay() {
+function BadgeMatrixDemo() {
+  const [size, setSize] = useState<BadgeSize>("md");
+  const tones: BadgeTone[] = ["primary", "neutral", "success", "warning", "danger", "info"];
+
   return (
-    <div>
-      <h1 className="site-h1">Card, Badge, Table, Avatar &amp; Progress</h1>
-      <p className="site-lede">The core containers and readouts for metrics, lists, and summaries across both portals.</p>
-
-      <h2 className="site-section-title" id="card">Card</h2>
-      <table className="spec-table" style={{ marginBottom: 20 }}>
-        <thead><tr><th>Property</th><th>Value</th></tr></thead>
-        <tbody>
-          <tr><td>Padding</td><td>20px</td></tr>
-          <tr><td>Border radius</td><td><code>card.radius</code> — 8px on CORE</td></tr>
-          <tr><td>Shadow</td><td><code>elevation.1</code> (default/outlined) — none on interactive until hover (<code>elevation.2</code>)</td></tr>
-        </tbody>
-      </table>
-      <p className="site-section-sub">Three variants: default (elevated), outlined (flat border, for dense layouts), and interactive (clickable, hover/focus states).</p>
-      <div className="site-panel site-panel--flush">
-        <Preview>
-          <Card style={{ minWidth: 220 }}>
-            <div style={{ fontSize: 13, color: "var(--core-color-text-secondary)" }}>Default</div>
-            <div style={{ fontSize: 20, fontWeight: 700, marginTop: 4, color: "var(--core-color-text-primary)" }}>$84,213.05</div>
-          </Card>
-          <Card variant="outlined" style={{ minWidth: 220 }}>
-            <div style={{ fontSize: 13, color: "var(--core-color-text-secondary)" }}>Outlined</div>
-            <div style={{ fontSize: 20, fontWeight: 700, marginTop: 4, color: "var(--core-color-text-primary)" }}>Oct 15</div>
-          </Card>
-          <Card variant="interactive" style={{ minWidth: 220 }} onClick={() => {}}>
-            <div style={{ fontSize: 13, color: "var(--core-color-text-secondary)" }}>Interactive — click me</div>
-            <div style={{ fontSize: 20, fontWeight: 700, marginTop: 4, color: "var(--core-color-text-primary)" }}>Roth 401(k)</div>
-          </Card>
-        </Preview>
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      {/* Interactive Control Toolbar - Size Tabswitch */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+          background: "var(--site-bg-elevated, #FFFFFF)",
+          border: "1px solid var(--site-border, rgba(128,128,128,0.18))",
+          borderRadius: 12,
+          padding: "12px 18px",
+          boxShadow: "0 1px 4px rgba(0,0,0,0.03)",
+        }}
+      >
+        <span
+          style={{
+            fontSize: "var(--core-font-size-xs, 12px)",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.08em",
+            color: "var(--site-text-dim, #787887)",
+          }}
+        >
+          Size:
+        </span>
+        <div
+          style={{
+            display: "inline-flex",
+            background: "var(--site-bg, rgba(128,128,128,0.08))",
+            borderRadius: 8,
+            padding: 3,
+            border: "1px solid var(--site-border, rgba(128,128,128,0.15))",
+          }}
+        >
+          {(["md", "sm"] as const).map((s) => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => setSize(s)}
+              style={{
+                border: "none",
+                background: size === s ? "var(--theme-brand-background-primary-default, #1F4F8D)" : "transparent",
+                color: size === s ? "#FFFFFF" : "var(--site-text, inherit)",
+                borderRadius: 6,
+                padding: "5px 14px",
+                fontSize: "var(--core-font-size-xs, 12px)",
+                fontWeight: 600,
+                cursor: "pointer",
+                transition: "all 120ms ease",
+              }}
+            >
+              {s === "md" ? "Medium (md)" : "Small (sm)"}
+            </button>
+          ))}
+        </div>
       </div>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Padding — 20px all sides", anchor: "top" },
-          { n: 2, label: "Shadow — elevation.1", anchor: "bottom" }
-        ]}>
-          <Card style={{ width: 200 }}><div style={{ fontSize: 13, color: "var(--core-color-text-secondary)" }}>Balance</div><div style={{ fontSize: 20, fontWeight: 700, color: "var(--core-color-text-primary)" }}>$84,213</div></Card>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Padding: 20px on every side", anchor: "top" },
-          { n: 2, label: "Shadow: elevation.1 (default), none until hover on interactive", anchor: "bottom" }
-        ]} />
-      </div>
 
-      <h2 className="site-section-title" id="badge">Badge</h2>
-      <table className="spec-table" style={{ marginBottom: 20 }}>
-        <thead><tr><th>Property</th><th>Small</th><th>Medium (default)</th></tr></thead>
-        <tbody>
-          <tr><td>Padding</td><td>1px 7px</td><td>2px 10px</td></tr>
-          <tr><td>Font size</td><td>10px</td><td>12px</td></tr>
-          <tr><td>Radius</td><td colSpan={2}>Fully rounded (<code>badge.radius</code>)</td></tr>
-        </tbody>
-      </table>
-      <p className="site-section-sub">5 tones × 3 styles (soft/outline/solid) × 2 sizes.</p>
+      {/* Complete All Tones Matrix Surface */}
       <div className="site-panel site-panel--flush">
-        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch", gap: 12 }}>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            {(["neutral", "success", "warning", "danger", "info"] as const).map((t) => <Badge key={t} tone={t} variant="soft">{t}</Badge>)}
+        <div
+          className="preview-surface"
+          data-theme="core"
+          data-mode="light"
+          style={{
+            background: "var(--core-color-bg-page)",
+            flexDirection: "column",
+            alignItems: "stretch",
+            gap: 16,
+            padding: "24px 28px",
+          }}
+        >
+          <div
+            style={{
+              fontSize: "var(--core-font-size-xs, 12px)",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.06em",
+              color: "var(--site-text-dim)",
+              marginBottom: 4,
+            }}
+          >
+            Complete Tone &amp; State Matrix (Soft Tinted Style)
           </div>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            {(["neutral", "success", "warning", "danger", "info"] as const).map((t) => <Badge key={t} tone={t} variant="outline">{t}</Badge>)}
-          </div>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            {(["neutral", "success", "warning", "danger", "info"] as const).map((t) => <Badge key={t} tone={t} variant="solid">{t}</Badge>)}
-          </div>
-          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            <Badge tone="info" size="md">Medium</Badge>
-            <Badge tone="info" size="sm">Small</Badge>
+          <div style={{ overflowX: "auto" }}>
+            <table className="cds-table" data-density="comfortable">
+              <thead>
+                <tr>
+                  <th scope="col" style={{ width: 110, fontSize: "var(--core-font-size-xs, 12px)", textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--core-color-text-secondary)" }}>Tone</th>
+                  <th scope="col" style={{ fontSize: "var(--core-font-size-xs, 12px)", textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--core-color-text-secondary)" }}>Default</th>
+                  <th scope="col" style={{ fontSize: "var(--core-font-size-xs, 12px)", textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--core-color-text-secondary)" }}>Hover</th>
+                  <th scope="col" style={{ fontSize: "var(--core-font-size-xs, 12px)", textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--core-color-text-secondary)" }}>With Dot</th>
+                  <th scope="col" style={{ fontSize: "var(--core-font-size-xs, 12px)", textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--core-color-text-secondary)" }}>Removable</th>
+                  <th scope="col" style={{ fontSize: "var(--core-font-size-xs, 12px)", textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--core-color-text-secondary)" }}>Disable</th>
+                </tr>
+              </thead>
+              <tbody>
+                {tones.map((t) => (
+                  <tr key={t}>
+                    <td style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, textTransform: "capitalize", color: "var(--core-color-text-primary)" }}>{t}</td>
+                    <td>
+                      <Badge tone={t} size={size} variant="soft">
+                        {t}
+                      </Badge>
+                    </td>
+                    <td>
+                      <div className="force-hover" style={{ display: "inline-block" }}>
+                        <Badge tone={t} size={size} variant="soft" interactive className={`cds-badge-state--hover cds-badge--${t}`}>
+                          {t}
+                        </Badge>
+                      </div>
+                    </td>
+                    <td>
+                      <Badge tone={t} size={size} variant="soft" dot>
+                        with dot
+                      </Badge>
+                    </td>
+                    <td>
+                      <Badge tone={t} size={size} variant="soft" onRemove={() => {}}>
+                        removable
+                      </Badge>
+                    </td>
+                    <td>
+                      <div className="force-disabled" style={{ display: "inline-block" }}>
+                        <Badge tone={t} size={size} variant="soft" disabled>
+                          {t}
+                        </Badge>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Padding — 2px 10px (md)", anchor: "bottom" },
-          { n: 2, label: "Radius — fully rounded", anchor: "top" }
-        ]}>
-          <Badge tone="success">Active</Badge>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Padding: 1px/7px (sm) or 2px/10px (md)", anchor: "bottom" },
-          { n: 2, label: "Radius: fully rounded pill shape always", anchor: "top" }
-        ]} />
-      </div>
+    </div>
+  );
+}
 
-      <h2 className="site-section-title" id="table">Table</h2>
-      <div className="site-panel site-panel--flush">
-        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
-          <Table
-            columns={[
-              { key: "date", header: "Date" },
-              { key: "type", header: "Type" },
-              { key: "amount", header: "Amount" },
-              { key: "status", header: "Status", render: (r) => <Badge tone={r.status}>{r.status === "success" ? "Posted" : r.status === "warning" ? "Pending" : "Failed"}</Badge> },
-            ]}
-            rows={rows}
-          />
+const sampleAvatars = [
+  { name: "Jordan Lee" },
+  { name: "Sam Park" },
+  { name: "Ada Osei" },
+  { name: "Lee Kim" },
+  { name: "Nia Brooks" },
+];
+
+function AvatarSizeDemo() {
+  return (
+    <div className="site-panel site-panel--flush">
+      <div
+        className="preview-surface"
+        data-theme="core"
+        data-mode="light"
+        style={{
+          background: "var(--core-color-bg-page)",
+          flexDirection: "column",
+          alignItems: "stretch",
+          padding: "24px 28px",
+        }}
+      >
+        <div style={{ overflowX: "auto" }}>
+          <table className="cds-table" data-density="comfortable">
+            <thead>
+              <tr>
+                <th scope="col" style={{ width: 140, fontSize: "var(--core-font-size-xs, 12px)", textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--core-color-text-secondary)" }}>Component</th>
+                <th scope="col" style={{ fontSize: "var(--core-font-size-xs, 12px)", textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--core-color-text-secondary)" }}>Small (sm) — 24px</th>
+                <th scope="col" style={{ fontSize: "var(--core-font-size-xs, 12px)", textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--core-color-text-secondary)" }}>Medium (md) — 36px</th>
+                <th scope="col" style={{ fontSize: "var(--core-font-size-xs, 12px)", textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--core-color-text-secondary)" }}>Large (lg) — 48px</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-primary)" }}>Single Avatar</td>
+                <td>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                    <Avatar name="Jordan Lee" size="sm" />
+                    <Avatar name="Sam Park" size="sm" />
+                  </div>
+                </td>
+                <td>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                    <Avatar name="Jordan Lee" size="md" />
+                    <Avatar name="Sam Park" size="md" />
+                  </div>
+                </td>
+                <td>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                    <Avatar name="Jordan Lee" size="lg" />
+                    <Avatar name="Sam Park" size="lg" />
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-primary)" }}>Avatar Group</td>
+                <td>
+                  <AvatarGroup avatars={sampleAvatars} size="sm" max={3} />
+                </td>
+                <td>
+                  <AvatarGroup avatars={sampleAvatars} size="md" max={3} />
+                </td>
+                <td>
+                  <AvatarGroup avatars={sampleAvatars} size="lg" max={3} />
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Header row — surface-sunken background", anchor: "top" },
-          { n: 2, label: "Cell padding — 12px/16px", anchor: "bottom" }
-        ]}>
-          <div style={{ width: 320 }}><Table columns={[{ key: "a", header: "Fund" }, { key: "b", header: "Return" }]} rows={[{ id: 1, a: "S&P 500", b: "+8.2%" }]} /></div>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Header: surface-sunken background, 600 weight, 10px/16px padding", anchor: "top" },
-          { n: 2, label: "Cell padding: 12px vertical, 16px horizontal", anchor: "bottom" }
-        ]} />
-      </div>
+    </div>
+  );
+}
 
-      <h2 className="site-section-title" id="data-table">Data Table (sortable, filterable, paginated)</h2>
-      <p className="site-section-sub">Click a column header to sort, type to search, or pick a status filter — all client-side, combined together.</p>
-      <div className="site-panel site-panel--flush">
-        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
-          <DataTable
-            pageSize={4}
-            searchable
-            searchPlaceholder="Search transactions…"
-            filters={[
-              { key: "status", label: "Status", options: [
-                { value: "success", label: "Posted" },
-                { value: "warning", label: "Pending" },
-                { value: "danger", label: "Failed" },
-              ] },
-              { key: "type", label: "Type", options: [
-                { value: "Contribution", label: "Contribution" },
-                { value: "Dividend", label: "Dividend" },
-                { value: "Fee", label: "Fee" },
-              ] },
-            ]}
-            columns={[
-              { key: "date", header: "Date", sortable: true },
-              { key: "type", header: "Type", sortable: true },
-              { key: "amount", header: "Amount", sortable: true, render: (r) => `$${r.amount.toFixed(2)}` },
-              { key: "status", header: "Status", render: (r) => <Badge tone={r.status}>{r.status === "success" ? "Posted" : r.status === "warning" ? "Pending" : "Failed"}</Badge> },
-            ]}
-            rows={manyRows}
-          />
+export default function DataDisplay() {
+  const sections = [
+    {
+      id: "01",
+      anchorId: "card",
+      title: "Card",
+      description: "Default elevated, flat outlined, and interactive clickable card surfaces with elevation tokens.",
+      content: (
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          <table className="spec-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Padding</td>
+                <td>20px</td>
+              </tr>
+              <tr>
+                <td>Border radius</td>
+                <td>
+                  <code>card.radius</code> — 8px on CORE
+                </td>
+              </tr>
+              <tr>
+                <td>Shadow</td>
+                <td>
+                  <code>elevation.1</code> (default/outlined) — none on interactive until hover (<code>elevation.2</code>)
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div className="site-panel site-panel--flush">
+            <Preview>
+              <Card style={{ minWidth: 220 }}>
+                <div style={{ fontSize: "var(--core-font-size-sm, 14px)", color: "var(--core-color-text-secondary)" }}>Default</div>
+                <div style={{ fontSize: 20, fontWeight: 700, marginTop: 4, color: "var(--core-color-text-primary)" }}>
+                  $84,213.05
+                </div>
+              </Card>
+              <Card variant="outlined" style={{ minWidth: 220 }}>
+                <div style={{ fontSize: "var(--core-font-size-sm, 14px)", color: "var(--core-color-text-secondary)" }}>Outlined</div>
+                <div style={{ fontSize: 20, fontWeight: 700, marginTop: 4, color: "var(--core-color-text-primary)" }}>
+                  Oct 15
+                </div>
+              </Card>
+              <Card variant="interactive" style={{ minWidth: 220 }} onClick={() => {}}>
+                <div style={{ fontSize: "var(--core-font-size-sm, 14px)", color: "var(--core-color-text-secondary)" }}>Interactive — click me</div>
+                <div style={{ fontSize: 20, fontWeight: 700, marginTop: 4, color: "var(--core-color-text-primary)" }}>
+                  Roth 401(k)
+                </div>
+              </Card>
+            </Preview>
+          </div>
+
+
         </div>
-      </div>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Toolbar — search + filter selects, 10px gap", anchor: "top" }
-        ]}>
-          <div style={{ width: 260 }}><input className="cds-input cds-table-search" placeholder="Search…" readOnly /></div>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Toolbar: search input (max 240px) + filter dropdowns, 10px gap, sits above the table", anchor: "top" }
-        ]} />
-      </div>
+      ),
+    },
+    {
+      id: "02",
+      anchorId: "badge",
+      title: "Badge",
+      description:
+        "Soft tinted badge component matrix showcasing interactive states (Default, Hover, Variant, Disable) and size switches.",
+      content: (
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          <table className="spec-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Small (sm)</th>
+                <th>Medium (md - default)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Padding</td>
+                <td>2px 8px</td>
+                <td>4px 12px</td>
+              </tr>
+              <tr>
+                <td>Font size</td>
+                <td>12px (<code>font.size.xs</code>)</td>
+                <td>14px (<code>font.size.sm</code>)</td>
+              </tr>
+              <tr>
+                <td>Radius</td>
+                <td colSpan={2}>
+                  Fully rounded (<code>badge.radius</code>)
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-      <h2 className="site-section-title" id="item">Item (generic list row)</h2>
-      <div className="site-panel site-panel--flush">
-        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
-          <Item title="Roth 401(k)" description="62% of portfolio" action={<Button variant="secondary" size="sm">Manage</Button>} />
-          <Item title="Traditional 401(k)" description="38% of portfolio" action={<Button variant="secondary" size="sm">Manage</Button>} />
+          <BadgeMatrixDemo />
+
+
         </div>
-      </div>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Row padding — 12px vertical", anchor: "top" },
-          { n: 2, label: "Action — right-aligned, flex-shrink 0", anchor: "right" }
-        ]}>
-          <div style={{ width: 300 }}><Item title="Roth 401(k)" description="62% of portfolio" action={<Button variant="secondary" size="sm">Manage</Button>} /></div>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Row padding: 12px vertical, 4px horizontal", anchor: "top" },
-          { n: 2, label: "Action slot: right-aligned, never shrinks when title/description wrap", anchor: "right" }
-        ]} />
+      ),
+    },
+    {
+      id: "03",
+      anchorId: "data-table",
+      title: "Table & Data Table",
+      description: "Static and interactive data grids with sorting, filtering, and client-side pagination.",
+      content: (
+        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+          {/* 1. Basic Data Table */}
+          <div id="table">
+            <div
+              style={{
+                fontSize: 12,
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
+                color: "var(--site-text-dim)",
+                marginBottom: 8,
+              }}
+            >
+              Basic Data Table
+            </div>
+            <div className="site-panel site-panel--flush">
+              <div
+                className="preview-surface"
+                data-theme="core"
+                data-mode="light"
+                style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}
+              >
+                <Table
+                  columns={[
+                    { key: "date", header: "Date" },
+                    { key: "type", header: "Type" },
+                    { key: "amount", header: "Amount" },
+                    {
+                      key: "status",
+                      header: "Status",
+                      render: (r) => (
+                        <Badge tone={r.status}>
+                          {r.status === "success" ? "Posted" : r.status === "warning" ? "Pending" : "Failed"}
+                        </Badge>
+                      ),
+                    },
+                  ]}
+                  rows={rows}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 2. Interactive Paginated & Searchable Table */}
+          <div>
+            <div
+              style={{
+                fontSize: 12,
+                fontWeight: 700,
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
+                color: "var(--site-text-dim)",
+                marginBottom: 8,
+              }}
+            >
+              Interactive Paginated &amp; Searchable Table
+            </div>
+            <div className="site-panel site-panel--flush">
+              <div
+                className="preview-surface"
+                data-theme="core"
+                data-mode="light"
+                style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}
+              >
+                <DataTable
+                  pageSize={4}
+                  searchable
+                  searchPlaceholder="Search transactions…"
+                  filters={[
+                    {
+                      key: "status",
+                      label: "Status",
+                      options: [
+                        { value: "success", label: "Posted" },
+                        { value: "warning", label: "Pending" },
+                        { value: "danger", label: "Failed" },
+                      ],
+                    },
+                    {
+                      key: "type",
+                      label: "Type",
+                      options: [
+                        { value: "Contribution", label: "Contribution" },
+                        { value: "Dividend", label: "Dividend" },
+                        { value: "Fee", label: "Fee" },
+                      ],
+                    },
+                  ]}
+                  columns={[
+                    { key: "date", header: "Date", sortable: true },
+                    { key: "type", header: "Type", sortable: true },
+                    {
+                      key: "amount",
+                      header: "Amount",
+                      sortable: true,
+                      render: (r) => `$${r.amount.toFixed(2)}`,
+                    },
+                    {
+                      key: "status",
+                      header: "Status",
+                      render: (r) => (
+                        <Badge tone={r.status}>
+                          {r.status === "success" ? "Posted" : r.status === "warning" ? "Pending" : "Failed"}
+                        </Badge>
+                      ),
+                    },
+                  ]}
+                  rows={manyRows}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 3. View Mode (Read-Only Table) */}
+          <div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginBottom: 8,
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 12,
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                  color: "var(--site-text-dim)",
+                }}
+              >
+                View Mode (Read-Only Table)
+              </div>
+              <span className="cds-table-view-badge">
+                <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--core-color-brand-500, #3275CD)" }} />
+                Read-Only View
+              </span>
+            </div>
+            <div className="site-panel site-panel--flush">
+              <div
+                className="preview-surface"
+                data-theme="core"
+                data-mode="light"
+                style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}
+              >
+                <DataTable
+                  viewMode
+                  pageSize={4}
+                  searchable
+                  searchPlaceholder="Filter records in view mode…"
+                  columns={[
+                    { key: "date", header: "Date", sortable: true },
+                    { key: "type", header: "Type", sortable: true },
+                    {
+                      key: "amount",
+                      header: "Amount",
+                      sortable: true,
+                      render: (r) => `$${r.amount.toFixed(2)}`,
+                    },
+                    {
+                      key: "status",
+                      header: "Status",
+                      render: (r) => (
+                        <Badge tone={r.status} variant="soft">
+                          {r.status === "success" ? "Posted" : r.status === "warning" ? "Pending" : "Failed"}
+                        </Badge>
+                      ),
+                    },
+                  ]}
+                  rows={manyRows}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 4. Disabled State (Locked Table) */}
+          <div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginBottom: 8,
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 12,
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                  color: "var(--core-color-neutral-500, #787887)",
+                }}
+              >
+                Disabled State (Locked Table)
+              </div>
+              <span
+                style={{
+                  fontSize: "var(--core-font-size-xs, 12px)",
+                  fontWeight: 600,
+                  color: "var(--core-color-neutral-500, #787887)",
+                  background: "var(--core-color-neutral-50, #F7F7F9)",
+                  border: "1px solid var(--core-color-neutral-200, #DFDFE6)",
+                  padding: "2px 8px",
+                  borderRadius: 999,
+                }}
+              >
+                Disabled / Locked
+              </span>
+            </div>
+            <div className="site-panel site-panel--flush">
+              <div
+                className="preview-surface"
+                data-theme="core"
+                data-mode="light"
+                style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}
+              >
+                <DataTable
+                  disabled
+                  pageSize={4}
+                  searchable
+                  searchPlaceholder="Search locked…"
+                  filters={[
+                    {
+                      key: "status",
+                      label: "Status",
+                      options: [
+                        { value: "success", label: "Posted" },
+                        { value: "warning", label: "Pending" },
+                        { value: "danger", label: "Failed" },
+                      ],
+                    },
+                    {
+                      key: "type",
+                      label: "Type",
+                      options: [
+                        { value: "Contribution", label: "Contribution" },
+                        { value: "Dividend", label: "Dividend" },
+                        { value: "Fee", label: "Fee" },
+                      ],
+                    },
+                  ]}
+                  columns={[
+                    { key: "date", header: "Date", sortable: true },
+                    { key: "type", header: "Type", sortable: true },
+                    {
+                      key: "amount",
+                      header: "Amount",
+                      sortable: true,
+                      render: (r) => typeof r.amount === "number" ? `$${r.amount.toFixed(2)}` : r.amount,
+                    },
+                    {
+                      key: "status",
+                      header: "Status",
+                      render: (r) => (
+                        <Badge tone={r.status} variant="soft" disabled>
+                          {r.status === "success" ? "Posted" : r.status === "warning" ? "Pending" : "Failed"}
+                        </Badge>
+                      ),
+                    },
+                  ]}
+                  rows={manyRows}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "04",
+      anchorId: "item",
+      title: "Item & Description List",
+      description: "Standard row containers and semantic term/definition lists for account profiles and review flows.",
+      content: (
+        <div id="description-list" style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          <div className="site-panel site-panel--flush">
+            <div
+              className="preview-surface"
+              data-theme="core"
+              data-mode="light"
+              style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}
+            >
+              <Item
+                title="Roth 401(k)"
+                description="62% of portfolio"
+                action={
+                  <Button variant="secondary" size="sm">
+                    Manage
+                  </Button>
+                }
+              />
+              <Item
+                title="Traditional 401(k)"
+                description="38% of portfolio"
+                action={
+                  <Button variant="secondary" size="sm">
+                    Manage
+                  </Button>
+                }
+              />
+            </div>
+          </div>
+
+          <div className="site-panel site-panel--flush">
+            <div
+              className="preview-surface"
+              data-theme="core"
+              data-mode="light"
+              style={{ background: "var(--core-color-bg-page)" }}
+            >
+              <div style={{ width: "100%" }}>
+                <div className="site-nav-title" style={{ padding: "0 0 8px" }}>
+                  Stacked, 2 columns
+                </div>
+                <DescriptionList
+                  columns={2}
+                  items={[
+                    { term: "Name", value: "Jordan Lee" },
+                    { term: "Marital status", value: "Married" },
+                    { term: "Date of birth", value: "Apr 8, 1994" },
+                    { term: "SSN", value: "XXX-XX-4182" },
+                  ]}
+                />
+              </div>
+            </div>
+            <div
+              className="preview-surface"
+              data-theme="core"
+              data-mode="light"
+              style={{ background: "var(--core-color-bg-page)", borderTop: "1px solid var(--core-color-border-subtle)" }}
+            >
+              <div style={{ width: "100%", maxWidth: 320 }}>
+                <div className="site-nav-title" style={{ padding: "0 0 8px" }}>
+                  Inline (row-separated)
+                </div>
+                <DescriptionList
+                  orientation="inline"
+                  items={[
+                    { term: "Plan balance", value: "$12,840.00" },
+                    { term: "Vested balance", value: "$9,620.00" },
+                  ]}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "05",
+      anchorId: "avatar",
+      title: "Avatar & Groups",
+      description: "User profile initials and stacked avatar group counters across small, medium, and large sizes.",
+      content: (
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          <table className="spec-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Small (sm)</th>
+                <th>Medium (md)</th>
+                <th>Large (lg)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Size</td>
+                <td>24×24px</td>
+                <td>36×36px</td>
+                <td>48×48px</td>
+              </tr>
+              <tr>
+                <td>Font size</td>
+                <td>12px</td>
+                <td>14px</td>
+                <td>16px</td>
+              </tr>
+              <tr>
+                <td>Border radius</td>
+                <td>Full (50%)</td>
+                <td>Full (50%)</td>
+                <td>Full (50%)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <AvatarSizeDemo />
+
+
+        </div>
+      ),
+    },
+    {
+      id: "06",
+      anchorId: "progress",
+      title: "Progress",
+      description: "Visual indicators for task completion percentages and indeterminate network loading.",
+      content: (
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          <div className="site-panel site-panel--flush">
+            <Preview>
+              <div style={{ width: 320, display: "flex", flexDirection: "column", gap: 20 }}>
+                <Progress value={68} label="Retirement readiness — 68%" />
+                <Progress indeterminate label="Submitting your request…" />
+              </div>
+            </Preview>
+
+          </div>
+        </div>
+      ),
+    },
+  ];
+
+  return (
+    <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
+      {/* Centered Hero Header — matching Logo and Typography sections */}
+      <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
+        <div
+          style={{
+            fontSize: 14,
+            fontWeight: 700,
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            color: "var(--core-color-brand-600)",
+            marginBottom: 12,
+          }}
+        >
+          Components
+        </div>
+        <h1
+          style={{
+            fontSize: 72,
+            fontWeight: 800,
+            letterSpacing: "-0.06em",
+            margin: "0 0 16px 0",
+            color: "var(--core-color-text-primary)",
+            lineHeight: 1.1,
+          }}
+        >
+          Data Display
+        </h1>
+        <p
+          style={{
+            maxWidth: 580,
+            margin: "0 auto",
+            color: "var(--core-color-text-tertiary)",
+            fontSize: "var(--core-font-size-lg, 20px)",
+            lineHeight: 1.6,
+            fontWeight: 400,
+          }}
+        >
+          Cards, Badges, Tables, Avatars, Progress meters, and description lists designed for metrics and data summaries.
+        </p>
       </div>
 
-      <h2 className="site-section-title" id="description-list">Description List</h2>
-      <p className="site-section-sub">Label/value pairs — profile details, plan summaries, review screens. Semantic <code>&lt;dl&gt;/&lt;dt&gt;/&lt;dd&gt;</code>, announced as a unit by screen readers.</p>
-      <div className="site-panel site-panel--flush">
-        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
-          <div style={{ width: "100%" }}>
-            <div className="site-nav-title" style={{ padding: "0 0 8px" }}>Stacked, 2 columns</div>
-            <DescriptionList
-              columns={2}
-              items={[
-                { term: "Name", value: "Jordan Lee" },
-                { term: "Marital status", value: "Married" },
-                { term: "Date of birth", value: "Apr 8, 1994" },
-                { term: "SSN", value: "XXX-XX-4182" },
-              ]}
+      {/* Numbered Sections List — matching Logo and Typography sections */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 80 }}>
+        {sections.map((s) => (
+          <div key={s.id} id={s.anchorId} style={{ display: "flex", flexDirection: "column", gap: 32, position: "relative" }}>
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: "-12.5%",
+                width: "125%",
+                height: 1,
+                backgroundColor: "var(--site-border)",
+              }}
             />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                paddingTop: 32,
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 600,
+                    color: "var(--core-color-text-tertiary)",
+                    marginBottom: 12,
+                  }}
+                >
+                  {s.id}
+                </div>
+                <h2 style={{ fontSize: 40, fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
+                  {s.title}
+                </h2>
+              </div>
+              <div
+                style={{
+                  maxWidth: 420,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 16,
+                  alignItems: "flex-end",
+                }}
+              >
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: "var(--core-font-size-sm, 14px)",
+                    lineHeight: 1.6,
+                    color: "var(--core-color-text-secondary)",
+                    textAlign: "right",
+                    fontWeight: 400,
+                  }}
+                >
+                  {s.description}
+                </p>
+              </div>
+            </div>
+            <div>{s.content}</div>
           </div>
-        </div>
-        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", borderTop: "1px solid var(--core-color-border-subtle)" }}>
-          <div style={{ width: "100%", maxWidth: 320 }}>
-            <div className="site-nav-title" style={{ padding: "0 0 8px" }}>Inline (row-separated)</div>
-            <DescriptionList
-              orientation="inline"
-              items={[
-                { term: "Plan balance", value: "$12,840.00" },
-                { term: "Vested balance", value: "$9,620.00" },
-              ]}
-            />
-          </div>
-        </div>
+        ))}
       </div>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Row gap — 16px vertical, 32px horizontal (stacked)", anchor: "top" },
-          { n: 2, label: "Term — uppercase, 12px, tertiary color", anchor: "bottom" }
-        ]}>
-          <div style={{ width: 220 }}><DescriptionList orientation="inline" items={[{ term: "Plan balance", value: "$12,840.00" }]} /></div>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Grid gap: 16px vertical, 32px horizontal between pairs", anchor: "top" },
-          { n: 2, label: "Term (stacked): 12px uppercase, tertiary text color", anchor: "bottom" }
-        ]} />
-      </div>
-
-      <h2 className="site-section-title" id="avatar">Avatar</h2>
-      <table className="spec-table" style={{ marginBottom: 20 }}>
-        <thead><tr><th>Property</th><th>Small</th><th>Medium (default)</th><th>Large</th></tr></thead>
-        <tbody>
-          <tr><td>Size</td><td>24×24px</td><td>36×36px</td><td>48×48px</td></tr>
-          <tr><td>Font size</td><td>10px</td><td>13px</td><td>16px</td></tr>
-          <tr><td>Status dot</td><td colSpan={3}>9×9px, 2px border matching surface color, bottom-right</td></tr>
-        </tbody>
-      </table>
-      <p className="site-section-sub">Sizes, status indicator, and grouped/stacked avatars.</p>
-      <div className="site-panel site-panel--flush">
-        <Preview>
-          <Avatar name="Jordan Lee" size="sm" />
-          <Avatar name="Jordan Lee" size="md" />
-          <Avatar name="Jordan Lee" size="lg" />
-          <Avatar name="Jordan Lee" size="lg" status="online" />
-          <Avatar name="Jordan Lee" size="lg" status="away" />
-          <Avatar name="Jordan Lee" size="lg" status="offline" />
-          <AvatarGroup avatars={[{ name: "Jordan Lee" }, { name: "Sam Park" }, { name: "Ada Osei" }, { name: "Lee Kim" }, { name: "Nia Brooks" }]} max={3} />
-        </Preview>
-      </div>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Circle — 48px (lg)", anchor: "left" },
-          { n: 2, label: "Status dot — bottom-right, 9px", anchor: "bottom-right" }
-        ]}>
-          <Avatar name="Jordan Lee" size="lg" status="online" />
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Circle: 24/36/48px per size, initials fallback if no image", anchor: "left" },
-          { n: 2, label: "Status dot: 9px, 2px border matching surface, bottom-right", anchor: "bottom-right" }
-        ]} />
-      </div>
-
-      <h2 className="site-section-title" id="progress">Progress</h2>
-      <table className="spec-table" style={{ marginBottom: 20 }}>
-        <thead><tr><th>Property</th><th>Value</th></tr></thead>
-        <tbody>
-          <tr><td>Track height</td><td>8px, fully rounded</td></tr>
-          <tr><td>Indeterminate segment</td><td>40% width, animates left to right over 1.2s</td></tr>
-        </tbody>
-      </table>
-      <p className="site-section-sub">Determinate for a known percentage; indeterminate while duration is unknown (e.g. a submission in flight).</p>
-      <div className="site-panel site-panel--flush">
-        <Preview>
-          <div style={{ width: 280, display: "flex", flexDirection: "column", gap: 20 }}>
-            <Progress value={68} label="Retirement readiness — 68%" />
-            <Progress indeterminate label="Submitting your request…" />
-          </div>
-        </Preview>
-      </div>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Track height — 8px", anchor: "top" },
-          { n: 2, label: "Fill — Primary, animated width", anchor: "bottom" }
-        ]}>
-          <div style={{ width: 220 }}><Progress value={68} /></div>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Track: 8px height, fully rounded, surface-sunken", anchor: "top" },
-          { n: 2, label: "Fill: Primary color, animates on value change (280ms)", anchor: "bottom" }
-        ]} />
-      </div>
-
-      <h2 className="site-section-title" id="aspect-ratio">Aspect Ratio</h2>
-      <p className="site-section-sub">Locks a media container to a ratio regardless of content size — for illustrations, video embeds, or document previews.</p>
-      <div className="site-panel site-panel--flush">
-        <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
-          <div style={{ width: 240 }}>
-            <AspectRatio ratio={16 / 9}>
-              <div style={{ background: "var(--core-color-surface-sunken)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: "var(--core-color-text-tertiary)", borderRadius: "var(--core-radius-md)" }}>16:9</div>
-            </AspectRatio>
-          </div>
-          <div style={{ width: 160 }}>
-            <AspectRatio ratio={1}>
-              <div style={{ background: "var(--core-color-surface-sunken)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: "var(--core-color-text-tertiary)", borderRadius: "var(--core-radius-md)" }}>1:1</div>
-            </AspectRatio>
-          </div>
-        </div>
-      </div>
-      <div className="site-panel" data-theme="core" data-mode="light" style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", background: "var(--core-color-bg-page)" }}>
-        <AutoAnatomy points={[
-          { n: 1, label: "Padding-bottom trick — ratio-locked height", anchor: "bottom" },
-          { n: 2, label: "Content — absolutely positioned, fills box", anchor: "center" }
-        ]}>
-          <div style={{ width: 180 }}><AspectRatio ratio={16/9}><div style={{ background: "var(--core-color-surface-sunken)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12 }}>16:9</div></AspectRatio></div>
-        </AutoAnatomy>
-        <AutoAnatomyLegend points={[
-          { n: 1, label: "Height is set via padding-bottom percentage, not a fixed px — stays ratio-locked at any width", anchor: "bottom" },
-          { n: 2, label: "Content: absolutely positioned, object-fit: cover for images", anchor: "center" }
-        ]} />
-      </div>
-
-      <h2 className="site-section-title">Accessibility</h2>
-      <ul style={{ color: "var(--site-text-dim)", lineHeight: 1.8, fontSize: 14 }}>
-        <li>Table uses semantic <code>&lt;table&gt;</code>/<code>&lt;th scope="col"&gt;</code> markup — screen readers announce row/column context correctly.</li>
-        <li>Progress exposes <code>role="progressbar"</code> with <code>aria-valuenow/min/max</code>.</li>
-        <li>Avatar falls back to initials with an <code>aria-label</code> of the full name when no image is available.</li>
-      </ul>
-
-      <h2 className="site-section-title">Code</h2>
-      <CodeBlock>{`<Table columns={columns} rows={transactions} />
-<Avatar name="Jordan Lee" size="md" />
-<Progress value={68} label="Retirement readiness — 68%" />`}</CodeBlock>
     </div>
   );
 }

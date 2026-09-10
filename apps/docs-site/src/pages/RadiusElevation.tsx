@@ -42,28 +42,28 @@ export default function RadiusElevation() {
               <td><code>elevation.1</code></td>
               <td>1px / 2px / 0 <br />+ 1px / 1px / 0</td>
               <td>6% / 4%</td>
-              <td style={{ fontFamily: "var(--site-mono)", fontSize: 11 }}>{elevation["1"]}</td>
+              <td style={{ fontFamily: "var(--site-mono)", fontSize: "var(--core-font-size-xs, 12px)" }}>{elevation["1"]}</td>
               <td>Resting cards, table rows — the default Card shadow.</td>
             </tr>
             <tr>
               <td><code>elevation.2</code></td>
               <td>2px / 6px / 0 <br />+ 1px / 2px / 0</td>
               <td>8% / 5%</td>
-              <td style={{ fontFamily: "var(--site-mono)", fontSize: 11 }}>{elevation["2"]}</td>
+              <td style={{ fontFamily: "var(--site-mono)", fontSize: "var(--core-font-size-xs, 12px)" }}>{elevation["2"]}</td>
               <td>Hovered interactive cards, raised buttons on press-release.</td>
             </tr>
             <tr>
               <td><code>elevation.3</code></td>
               <td>8px / 16px / 0 <br />+ 2px / 4px / 0</td>
               <td>10% / 6%</td>
-              <td style={{ fontFamily: "var(--site-mono)", fontSize: 11 }}>{elevation["3"]}</td>
+              <td style={{ fontFamily: "var(--site-mono)", fontSize: "var(--core-font-size-xs, 12px)" }}>{elevation["3"]}</td>
               <td>Popovers, dropdown menus, select listboxes, tooltips — anything floating above content.</td>
             </tr>
             <tr>
               <td><code>elevation.4</code></td>
               <td>16px / 32px / 0 <br />+ 4px / 8px / 0</td>
               <td>14% / 8%</td>
-              <td style={{ fontFamily: "var(--site-mono)", fontSize: 11 }}>{elevation["4"]}</td>
+              <td style={{ fontFamily: "var(--site-mono)", fontSize: "var(--core-font-size-xs, 12px)" }}>{elevation["4"]}</td>
               <td>Modal, Drawer/Slideover — the highest layer, above a scrim.</td>
             </tr>
           </tbody>

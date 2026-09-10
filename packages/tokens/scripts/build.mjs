@@ -189,54 +189,99 @@ function section(title) {
 // (brand / neutral / semantics / elevation), each pointing at a real resolved
 // semantic or primitive token rather than a hand-picked value.
 const brandAliases = {
+  // Brand / Text
+  "brand-text-primary-default": "color.brand.500",
+  "brand-text-primary-disabled": "color.brand.300",
+  "brand-text-primary-active": "color.brand.700",
+  "brand-text-primary-hover": "color.brand.600",
+  "brand-text-primaryhover": "color.brand.600",
+  "brand-text-primary-oncolor": "color.neutral.0",
+
+  // Brand / background
+  "brand-background-primary-default": "color.action.primary.bg",
+  "brand-background-strong": "color.action.primary.bg",
+  "brand-background-primary-light": "color.brand.50",
+  "brand-background-primary-subtle": "color.brand.100",
+  "brand-background-disabled-light": "color.neutral.100",
+  "brand-background-disabled-strong": "color.brand.200",
+  "brand-background-active": "color.action.primary.bgActive",
+  "brand-background-hover": "color.action.primary.bgHover",
+
+  // Brand / Borders
+  "brand-borders-primary-default": "color.brand.500",
+  "brand-borders-primary-disabled": "color.brand.300",
+  "brand-borders-hover": "color.brand.600",
+
+  // Backward-compat aliases
   "brand-border-primary-default": "color.brand.500",
   "brand-border-primary-hover": "color.brand.600",
   "brand-border-primary-disabled": "color.brand.300",
-  "brand-text-primary-default": "color.brand.500",
-  "brand-text-primary-hover": "color.brand.600",
-  "brand-text-primary-active": "color.brand.700",
-  "brand-text-primary-disabled": "color.brand.300",
-  "brand-text-primary-oncolor": "color.neutral.0",
   "brand-background-primary-strong": "color.action.primary.bg",
-  "brand-background-primary-hover": "color.action.primary.bgHover",
-  "brand-background-primary-active": "color.action.primary.bgActive",
-  "brand-background-primary-disabled": "color.brand.200",
-  "brand-background-primary-light": "color.brand.50",
 };
 
 const neutralAliases = {
+  // Neutral / Text (Figma variable hierarchy)
+  "neutral-text": "color.text.primary",
+  "neutral-text-text": "color.text.primary",
+  "neutral-text-subtle": "color.text.secondary",
+  "neutral-text-subtleleast": "color.text.tertiary",
+  "neutral-text-subtle-least": "color.text.tertiary",
+  "neutral-text-text-on-color": "color.text.inverse",
+  "neutral-text-on-color": "color.text.inverse",
+  "neutral-text-oncolor": "color.text.inverse",
+  "neutral-text-default": "color.text.primary",
+
+  // Neutral / border (Figma variable hierarchy)
+  "neutral-border-subtle": "color.border.subtle",
+  "neutral-border-border-subtle": "color.border.subtle",
+  "neutral-border-light": "color.border.default",
+  "neutral-border-border-light": "color.border.default",
+  "neutral-border-strong": "color.border.strong",
+  "neutral-border-border-strong": "color.border.strong",
+  "neutral-border-inverse": "color.neutral.0",
+
+  // Surface layers
   "neutral-surface-layer-01": "color.neutral.0",
   "neutral-surface-layer-02": "color.neutral.50",
   "neutral-surface-layer-03": "color.neutral.100",
   "neutral-surface-layer-04": "color.neutral.200",
   "neutral-surface-high-contrast": "color.neutral.800",
-  "neutral-text-default": "color.text.primary",
-  "neutral-text-subtle": "color.text.secondary",
-  "neutral-text-subtle-least": "color.text.tertiary",
-  "neutral-text-oncolor": "color.text.inverse",
-  "neutral-border-subtle": "color.border.subtle",
-  "neutral-border-light": "color.border.default",
-  "neutral-border-strong": "color.border.strong",
-  "neutral-border-inverse": "color.neutral.0",
 };
 
 const semanticsAliases = {
+  // Semantics / Critical (Figma variable hierarchy)
   "semantics-critical-border": "color.status.danger.border",
   "semantics-critical-text": "color.status.danger.text",
+  "semantics-critical-light-background": "color.status.danger.bg",
+  "semantics-critical-strong-background": "color.danger.500",
   "semantics-critical-background-light": "color.status.danger.bg",
   "semantics-critical-background-strong": "color.danger.500",
-  "semantics-success-border": "color.status.success.border",
-  "semantics-success-text": "color.status.success.text",
-  "semantics-success-background-light": "color.status.success.bg",
-  "semantics-success-background-strong": "color.success.500",
+
+  // Semantics / Warning
   "semantics-warning-border": "color.status.warning.border",
   "semantics-warning-text": "color.status.warning.text",
+  "semantics-warning-light-background": "color.status.warning.bg",
+  "semantics-warning-strong-background": "color.warning.500",
   "semantics-warning-background-light": "color.status.warning.bg",
   "semantics-warning-background-strong": "color.warning.500",
+
+  // Semantics / Success
+  "semantics-success-border": "color.status.success.border",
+  "semantics-success-text": "color.status.success.text",
+  "semantics-success-light-background": "color.status.success.bg",
+  "semantics-success-strong-background": "color.success.500",
+  "semantics-success-background-light": "color.status.success.bg",
+  "semantics-success-background-strong": "color.success.500",
+
+  // Semantics / Highlight
   "semantics-highlight-border": "color.status.info.border",
   "semantics-highlight-text": "color.status.info.text",
+  "semantics-highlight-light-background": "color.status.info.bg",
+  "semantics-highlight-strong-background": "color.info.500",
   "semantics-highlight-background-light": "color.status.info.bg",
   "semantics-highlight-background-strong": "color.info.500",
+
+  // Disabled
   "semantics-disabled-background": "color.neutral.50",
   "semantics-disabled-border": "color.neutral.200",
   "semantics-disabled-text": "color.neutral.400",

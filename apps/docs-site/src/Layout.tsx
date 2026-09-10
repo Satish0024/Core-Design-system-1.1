@@ -5,39 +5,20 @@ import { CoreLogo } from "./CoreLogo";
 const nav = [
   { group: "Get Started", links: [{ to: "/", label: "Overview" }] },
   {
-    group: "Foundations",
+    group: "Foundation",
     links: [
       { to: "/foundations/logo", label: "Logo" },
       { to: "/foundations/color", label: "Color" },
       { to: "/foundations/typography", label: "Typography" },
-      { to: "/foundations/spacing", label: "Spacing & Sizing" },
-      { to: "/foundations/radius-elevation", label: "Radius & Elevation" },
-      { to: "/foundations/responsive", label: "Responsive & Mobile" },
-      { to: "/foundations/icons", label: "Icons" },
-      { to: "/foundations/motion", label: "Motion" },
     ],
   },
   {
-    group: "Layout",
-    links: [
-      { to: "/foundations/layout-grid#header", label: "App Header" },
-      { to: "/foundations/layout-grid#footer", label: "App Footer" },
-      { to: "/foundations/layout-grid#grid", label: "Grid & Container" },
-      { to: "/foundations/layout-grid#page-layouts", label: "Page Layouts" },
-    ],
-  },
-  {
-    group: "Actions",
+    group: "Component",
     links: [
       { to: "/components/actions#button", label: "Button" },
       { to: "/components/actions#icon-button", label: "Icon Button" },
       { to: "/components/actions#link", label: "Link" },
       { to: "/components/actions#button-group", label: "Button Group" },
-    ],
-  },
-  {
-    group: "Forms",
-    links: [
       { to: "/components/forms#input", label: "Input" },
       { to: "/components/forms#textarea", label: "Textarea" },
       { to: "/components/forms#select", label: "Select" },
@@ -53,62 +34,31 @@ const nav = [
       { to: "/components/forms#attachment", label: "Attachment" },
       { to: "/components/forms#input-icon", label: "Input (with icon)" },
       { to: "/components/forms#payment-bank-fields", label: "Payment & Bank Fields" },
-    ],
-  },
-  {
-    group: "Data Display",
-    links: [
       { to: "/components/data-display#card", label: "Card" },
       { to: "/components/data-display#badge", label: "Badge" },
       { to: "/components/data-display#data-table", label: "Data Table" },
       { to: "/components/data-display#table", label: "Table" },
       { to: "/components/data-display#item", label: "Item" },
+      { to: "/components/data-display#description-list", label: "Description List" },
       { to: "/components/data-display#avatar", label: "Avatar" },
       { to: "/components/data-display#progress", label: "Progress" },
-      { to: "/components/data-display#aspect-ratio", label: "Aspect Ratio" },
-    ],
-  },
-  {
-    group: "Charts",
-    links: [
       { to: "/components/charts#line-chart", label: "Line Chart" },
       { to: "/components/charts#bar-chart", label: "Bar Chart" },
-    ],
-  },
-  {
-    group: "Disclosure",
-    links: [
       { to: "/components/disclosure#collapsible", label: "Collapsible" },
       { to: "/components/disclosure#accordion", label: "Accordion" },
       { to: "/components/disclosure#separator", label: "Separator" },
       { to: "/components/disclosure#skeleton", label: "Skeleton" },
-    ],
-  },
-  {
-    group: "Navigation",
-    links: [
       { to: "/components/navigation#navigation-menu", label: "Navigation Menu" },
       { to: "/components/navigation#sidebar", label: "Sidebar" },
       { to: "/components/navigation#tabs", label: "Tabs" },
-      { to: "/components/data-display#description-list", label: "Description List" },
       { to: "/components/navigation#breadcrumb", label: "Breadcrumb" },
       { to: "/components/navigation#stepper", label: "Stepper" },
       { to: "/components/navigation#pagination", label: "Pagination" },
-    ],
-  },
-  {
-    group: "Feedback",
-    links: [
       { to: "/components/feedback#alert", label: "Alert" },
       { to: "/components/feedback#toast", label: "Toast" },
       { to: "/components/feedback#toast-manager", label: "Toast Manager" },
       { to: "/components/feedback#empty", label: "Empty" },
       { to: "/components/feedback#spinner", label: "Spinner" },
-    ],
-  },
-  {
-    group: "Overlays",
-    links: [
       { to: "/components/overlays#modal", label: "Modal" },
       { to: "/components/overlays#confirm-dialog", label: "Confirmation Dialog" },
       { to: "/components/overlays#drawer", label: "Drawer" },
@@ -120,48 +70,56 @@ const nav = [
     ],
   },
   {
-    group: "System",
+    group: "Anatomy",
     links: [
-      { to: "/patterns", label: "Patterns" },
-      { to: "/components/questionnaire", label: "Questionnaire" },
-      { to: "/screens", label: "Screens" },
-      { to: "/tokens", label: "Tokens (SCSS)" },
-      { to: "/accessibility", label: "Accessibility" },
+      { to: "/anatomy#button", label: "Button" },
+      { to: "/anatomy#icon-button", label: "Icon Button" },
+      { to: "/anatomy#button-group", label: "Button Group" },
+      { to: "/anatomy#input", label: "Input" },
+      { to: "/anatomy#checkbox", label: "Checkbox & Radio" },
+      { to: "/anatomy#switch", label: "Switch" },
+      { to: "/anatomy#slider", label: "Slider" },
+      { to: "/anatomy#card", label: "Card" },
+      { to: "/anatomy#badge", label: "Badge" },
+      { to: "/anatomy#avatar", label: "Avatar" },
+      { to: "/anatomy#progress", label: "Progress" },
+      { to: "/anatomy#modal", label: "Modal" },
+      { to: "/anatomy#drawer", label: "Drawer" },
+      { to: "/anatomy#tooltip", label: "Tooltip" },
+      { to: "/anatomy#popover", label: "Popover" },
     ],
   },
 ];
 
-// Scrolls to the element matching the URL's fragment-after-fragment (HashRouter already
-// owns the first #, so component anchors are the SECOND #, e.g. #/components/forms#input).
+// Scrolls to the element matching the hash in the URL.
+// In a HashRouter the location.hash gives us the anchor (e.g. "#accordion").
+// We wait a tick so the page has time to render before scrolling.
 function useAnchorScroll() {
   const location = useLocation();
   React.useEffect(() => {
-    const raw = window.location.href;
-    const parts = raw.split("#");
-    const anchor = parts.length > 2 ? parts[2] : undefined;
+    // location.hash is the anchor part e.g. "#accordion"
+    const anchor = location.hash ? location.hash.slice(1) : undefined;
     const t = setTimeout(() => {
-      if (anchor) document.getElementById(anchor)?.scrollIntoView({ behavior: "smooth", block: "start" });
-      else window.scrollTo(0, 0);
-    }, 60);
+      if (anchor) {
+        const el = document.getElementById(anchor);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }, 80);
     return () => clearTimeout(t);
   }, [location.pathname, location.hash]);
 }
 
 function useSiteMode() {
-  const [mode, setMode] = useState<"light" | "dark">(() => {
-    if (typeof document !== "undefined") {
-      const attr = document.documentElement.getAttribute("data-site-mode");
-      if (attr === "light" || attr === "dark") return attr;
-    }
-    return "dark";
-  });
-
   useEffect(() => {
-    document.documentElement.setAttribute("data-site-mode", mode);
-    try { localStorage.setItem("core-site-mode", mode); } catch {}
-  }, [mode]);
+    document.documentElement.setAttribute("data-site-mode", "light");
+    try { localStorage.setItem("core-site-mode", "light"); } catch { }
+  }, []);
 
-  return { mode, toggle: () => setMode((m) => (m === "dark" ? "light" : "dark")) };
+  return { mode: "light", toggle: () => { } };
 }
 
 // A link is only "active" when both its pathname AND its hash (when it has
@@ -246,7 +204,12 @@ export default function Layout() {
     // separate --site-* variable system for the docs UI itself.
     <div className="site-shell" data-theme="core" data-mode="light">
       <aside className="site-sidebar">
-        <div className="site-logo"><CoreLogo size={22} /></div>
+        <div className="site-logo" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 6, padding: "8px 12px 20px" }}>
+          <CoreLogo size={22} />
+          <span style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, color: "var(--site-text-dim)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+            Participant Portal
+          </span>
+        </div>
         {nav.map((g) => (
           <div className="site-nav-group" key={g.group}>
             <div className="site-nav-title">{g.group}</div>
@@ -262,27 +225,11 @@ export default function Layout() {
           </div>
         ))}
       </aside>
-      <div className="site-main">
-        <div className="site-topbar">
-          <span style={{ fontSize: 14, fontWeight: 600, color: "var(--site-text)" }}>Participant Portal</span>
-          <span style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <span style={{ fontSize: 12, color: "var(--site-text-faint)" }}>v0.1.0 · White-label foundation</span>
-            <button
-              type="button"
-              className="icon-toggle"
-              onClick={toggle}
-              aria-label={mode === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-              title={mode === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-            >
-              {mode === "dark" ? "☀" : "☾"}
-            </button>
-          </span>
-        </div>
-        <div className="site-content">
+      <div className="site-main" style={location.pathname === "/" ? { backgroundColor: "#FFFFFF" } : undefined}>
+        <div className="site-content" style={location.pathname === "/" ? { maxWidth: "100%", padding: 0, backgroundColor: "#FFFFFF" } : undefined}>
           <Outlet />
-          <PageNavigation />
         </div>
-        <footer className="site-footer">
+        <footer className="site-footer" style={location.pathname === "/" ? { backgroundColor: "#FFFFFF", borderColor: "#E5E7EB" } : undefined}>
           <div className="site-footer-inner">
             <div className="site-footer-left">
               <CoreLogo size={16} />

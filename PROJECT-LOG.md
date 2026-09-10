@@ -180,3 +180,79 @@ Per explicit instruction, three references were used strictly for **analysis/com
 - Everything above has been verified live in a running dev server after each change, not assumed from code review
   alone — functional checks included actual state transitions (modal open/close, dropdown menu open, combobox
   filter-and-select, table sort/paginate, indeterminate checkbox, toast stacking/dismiss, theme-mode switching).
+
+## 9. Base Colors & Figma Variable 1:1 Naming Convention Alignment
+
+- Adopted the exact Figma Variable collection hierarchy `[Category] / [Property] / [State]` from designer specs:
+  - `Brand / Text` (`primary-default`, `primary-disabled`, `primary-active`, `primaryhover`, `primary-oncolor`)
+  - `Brand / background` (`strong`, `primary-light`, `primary-subtle`, `disabled-light`, `disabled-strong`, `active`, `hover`)
+  - `Brand / Borders` (`primary-default`, `primary-disabled`, `hover`)
+  - Extended symmetrically to `Neutral / Text`, `Neutral / background`, `Neutral / Borders`, `Secondary`, `Tertiary`, and `Semantics`.
+- Implemented CSS Custom Property generation adhering 1:1 to the naming convention (`--theme-brand-text-primary-default`, `--theme-brand-background-strong`, `--theme-brand-borders-primary-default`, etc.) in `packages/tokens`, `apps/docs-site/src/site.css`, and the SCSS palette download.
+- Redesigned Section 02 ("Base colors") on the Colors docs page into an interactive suite with:
+  - Figma Variable Inspector view with authentic Figma palette icons and group headings.
+  - Side-by-side Light & Dark mode preview swatches with hex codes.
+  - Spec matrix table view and interactive live component showcase.
+  - Real-time search filter and category pills.
+  - One-click copy for both CSS variables and Figma token paths with instant feedback.
+
+### 10. Semantics & Neutral Figma Hierarchy Variable Parity
+- **Figma Variable Hierarchy Alignment**:
+  - `Neutral / Text`: `text`, `subtle`, `subtleleast`, `text-on-color`
+  - `Neutral / border`: `border-subtle`, `border-light`, `border-strong`, `inverse`
+  - `Semantics / Critical`: `border`, `text`, `light-background`, `strong-background`
+  - `Semantics / Warning`: `border`, `text`, `light-background`, `strong-background`
+  - `Semantics / Success`: `border`, `text`, `light-background`, `strong-background`
+  - `Semantics / Highlight`: `border`, `text`, `light-background`, `strong-background`
+- **Files Synchronized**:
+  - `packages/tokens/src/semantic.json`: Added `neutral.text.*`, `neutral.border.*`, `semantics.critical.*`, `semantics.warning.*`, `semantics.success.*`, `semantics.highlight.*` across `light` and `dark` modes.
+  - `packages/tokens/scripts/build.mjs`: Updated `neutralAliases` and `semanticsAliases` with 1:1 Figma keys and aliases for Sass build exports.
+  - `apps/docs-site/src/site.css`: Declared CSS custom properties `--theme-neutral-*` and `--theme-semantics-*` for both light and dark modes.
+  - `apps/docs-site/public/Color pallete.scss` & `apps/docs-site/public/Core-Color-Palette.scss`: Synchronized downloadable SCSS root files with the exact Figma-aligned variables.
+  - `apps/docs-site/src/pages/Color.tsx`: Configured all `FIGMA_BASE_TOKENS` with matching Figma paths, icons, swatches, and CSS variables.
+
+### 12. Base Colors Segmented Vertical Pillar Redesign (Color Palette Names)
+- **Visual Design Alignment**:
+  - Implemented the editorial layout from the reference inspiration:
+    - **Left Column**: Section eyebrow (`Colors`), prominent title (`Secondary Colors`, `Brand Colors`, `Neutral Colors`), editorial narrative description, and action pill button (`❖ Library - Website`).
+    - **Right Column**: Vertical rounded pillar cards (`border-radius: 20px`, `overflow: hidden`) placed side-by-side.
+    - **Pillar Organization**:
+      - `Secondary / Semantics`: 4 side-by-side vertical pillars (`Critical`, `Warning`, `Success`, `Highlight`), each containing a 4-step vertical progression (`Light Background`, `Border`, `Strong Background`, `Text`).
+      - `Brand`: 3 side-by-side vertical pillars (`Text`, `Background`, `Borders`).
+      - `Neutral`: 2 side-by-side vertical pillars (`Text`, `Border`).
+- **Color Palette Names Inside Cards**:
+  - Strictly followed user instruction: *"inside the card show the color palette names instead of color codes"*.
+  - Removed all color codes (`#HEX`, `RGB`, `CMYK`) from inside the card segments.
+  - Inside each segment:
+    - **Line 1**: Token Name (e.g. `Light Background`, `Border`, `Strong Background`, `Text`, `Primary Default`, `Primary On Color`).
+    - **Line 2**: Color Palette Name (e.g. `Danger 50`, `Danger 300`, `Danger 500`, `Danger 700`, `Brand 500`, `Neutral 900`, `Neutral 0`).
+  - Swatches dynamically adapt their text contrast using WCAG relative luminance (`#1A1A22` on light tints, `#FFFFFF` on dark shades).
+  - Mode toggle dynamically updates the active primitive scale references (`Brand 500` vs `Brand 300` in Dark mode, `Danger 50` vs `Danger 900` in Dark mode).
+  - 1-click copy copies `var(--theme-...)` with an in-card toast and fixed bottom-right confirmation alert.
+
+### 13. Base Colors Sequential Ordering & 3-Pillar Parity (Primary, Secondary, Tertiary, Neutral, Statuses)
+- **Exact Sequence Implemented**:
+  1. **Primary Colors**: First section in the Base Colors view. 3 vertical pillars (`Text`, `Background`, `Borders`).
+  2. **Secondary Colors**: Built identically to Primary with 3 vertical pillars (`Text`, `Background`, `Borders`) utilizing `--theme-secondary-*` tokens and `Secondary 50-900` palette names.
+  3. **Tertiary Colors**: Built identically to Primary and Secondary with 3 vertical pillars (`Text`, `Background`, `Borders`) utilizing `--theme-tertiary-*` tokens and `Tertiary 50-900` palette names.
+  4. **Neutral Colors**: 2 vertical pillars (`Text`, `Border`) utilizing `--theme-neutral-*` tokens and `Neutral 0-900` palette names.
+  5. **Critical Colors**: Dedicated card with 4-step vertical pillar (`Light Background`, `Border`, `Strong Background`, `Text`) referencing `Danger 50`, `Danger 300`, `Danger 500`, `Danger 700`.
+  6. **Warning Colors**: Dedicated card with 4-step vertical pillar referencing `Warning 50`, `Warning 300`, `Warning 500`, `Warning 700`.
+  7. **Success Colors**: Dedicated card with 4-step vertical pillar referencing `Success 50`, `Success 300`, `Success 500`, `Success 700`.
+  8. **Info Colors**: Dedicated card with 4-step vertical pillar referencing `Info 50`, `Info 300`, `Info 500`, `Info 700`.
+- **Filters & Searching**:
+  - Filter bar equipped with 9 pills: `All Groups`, `Primary`, `Secondary`, `Tertiary`, `Neutral`, `Critical`, `Warning`, `Success`, `Info`.
+  - Real-time instant search matches token names, color palette names (`Brand 500`, `Secondary 500`, `Tertiary 500`), and CSS variable names.
+  - Retained strict rule: only token names on line 1 and color palette names on line 2 inside card swatches; no color codes.
+
+### 14. Downloadable SCSS Palette Clean Deduplication
+- **Deduplicated Variable Naming**:
+  - Cleaned all redundant aliases from the SCSS palettes (`Core-Color-Palette.scss`, `Color pallete.scss`, and the site generator):
+    - Replaced duplicate background tokens (`--theme-brand-background-strong`) with the canonical `--theme-brand-background-primary-default`.
+    - Removed duplicate plural border forms (`--theme-*-borders-*`) in favor of canonical singular `--theme-*-border-*`.
+    - Removed redundant text aliases (`--theme-brand-text-primaryhover`, duplicate `--theme-neutral-text`, `--theme-neutral-border-default`, `--theme-neutral-border-light`).
+    - Removed duplicate semantic background forms (`--theme-semantics-*-background-light` and duplicate `*-background-strong`).
+  - Result: Every semantic role now maps to a single clean, canonical token.
+
+
+
