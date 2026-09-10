@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { DocsSection, DocsSectionList } from "../DocsSection";
 import { AppHeader, AppFooter, Grid, GridCol } from "../../../../packages/core/src/components/Layout";
 import type { GridGap } from "../../../../packages/core/src/components/Layout";
 import { IconButton } from "../../../../packages/core/src/components/Button";
 import { Avatar } from "../../../../packages/core/src/components/DataDisplay";
-import { Icon } from "../../../../packages/core/src/components/Primitives";
+import { ChevronIcon, Icon } from "../../../../packages/core/src/components/Primitives";
 import primitives from "../../../../packages/tokens/src/primitives.json";
 
 const container = (primitives as any).container;
@@ -109,8 +110,8 @@ export default function LayoutGrid() {
         <a href="#/foundations/responsive" style={{ color: "var(--site-accent)" }}>Responsive &amp; Mobile</a>.
       </p>
 
-      <h2 className="site-section-title" id="header">App header</h2>
-      <p className="site-section-sub">Brand on the left, account/utility actions on the right; fixed height so it never reflows content below it.</p>
+      <DocsSectionList>
+      <DocsSection anchorId="header" title="App header">
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", padding: 24 }}>
           <div style={{ width: "100%", maxWidth: 640, border: "1px solid var(--core-color-border-subtle)", borderRadius: "var(--core-card-radius)", overflow: "hidden" }}>
@@ -127,8 +128,8 @@ export default function LayoutGrid() {
         </div>
       </div>
 
-      <h2 className="site-section-title" id="footer">App footer</h2>
-      <p className="site-section-sub">Copyright/legal text on the left, links on the right; wraps to stack rather than truncating either side on narrow screens.</p>
+      </DocsSection>
+      <DocsSection anchorId="footer" title="App footer">
       <div className="site-panel site-panel--flush">
         <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", padding: 24 }}>
           <div style={{ width: "100%", maxWidth: 640, border: "1px solid var(--core-color-border-subtle)", borderRadius: "var(--core-card-radius)", overflow: "hidden" }}>
@@ -139,11 +140,8 @@ export default function LayoutGrid() {
         </div>
       </div>
 
-      <h2 className="site-section-title" id="grid">Grid &amp; Container</h2>
-      <p className="site-section-sub">
-        A 12-column grid inside a width-clamped Container, mobile-first
-        (full width until a column's <code>spanMd</code> takes over).
-      </p>
+      </DocsSection>
+      <DocsSection anchorId="grid" title="Grid &amp; Container">
       <div className="site-panel site-panel--flush">
         <table className="spec-table">
           <thead><tr><th>Breakpoint</th><th>Container max-width</th></tr></thead>
@@ -159,10 +157,8 @@ export default function LayoutGrid() {
       </div>
 
       {/* ── Basic grid ──────────────────────────────────────────── */}
-      <h2 className="site-section-title" id="basic-grid">Basic grid</h2>
-      <p className="site-section-sub">
-        Common span combinations on a 12-column grid. Each label reads the column count that block spans.
-      </p>
+      </DocsSection>
+      <DocsSection anchorId="basic-grid" title="Basic grid">
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
         {/* Row 1 — full width */}
         <Grid columns={12} gap="4">
@@ -205,11 +201,8 @@ export default function LayoutGrid() {
       </div>
 
       {/* ── 2. Grid gutter ────────────────────────────────────────── */}
-      <h2 className="site-section-title" id="grid-gutter">Grid gutter</h2>
-      <p className="site-section-sub">
-        The same 3-column layout rendered at every available gap token —
-        notice how the gutter between blocks grows while columns share space equally.
-      </p>
+      </DocsSection>
+      <DocsSection anchorId="grid-gutter" title="Grid gutter">
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", display: "flex", flexDirection: "column", gap: "var(--core-space-6)" }}>
         {(["2", "4", "6", "8"] as GridGap[]).map((g) => (
           <div key={g}>
@@ -226,12 +219,8 @@ export default function LayoutGrid() {
       </div>
 
       {/* ── 3. Column offset ──────────────────────────────────────── */}
-      <h2 className="site-section-title" id="column-offset">Column offset</h2>
-      <p className="site-section-sub">
-        Offset is achieved by inserting an empty <code>GridCol</code> that occupies
-        space without rendering visible content — functionally identical to
-        Bootstrap's <code>offset-*</code> classes.
-      </p>
+      </DocsSection>
+      <DocsSection anchorId="column-offset" title="Column offset">
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", display: "flex", flexDirection: "column", gap: "var(--core-space-4)" }}>
         {/* span 6, offset 6 */}
         <div>
@@ -269,11 +258,8 @@ export default function LayoutGrid() {
       </div>
 
       {/* ── 4. Responsive behavior ────────────────────────────────── */}
-      <h2 className="site-section-title" id="responsive-behavior">Responsive behavior</h2>
-      <p className="site-section-sub">
-        Columns stack full-width on mobile and reorganize at the <code>md</code> breakpoint
-        (768 px). Resize your browser below 768 px to see the columns stack.
-      </p>
+      </DocsSection>
+      <DocsSection anchorId="responsive-behavior" title="Responsive behavior">
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", display: "flex", flexDirection: "column", gap: "var(--core-space-4)" }}>
         <div>
           <p style={{ margin: 0, marginBottom: "var(--core-space-2)", fontSize: "var(--core-font-size-sm)", fontWeight: 600 }}>
@@ -306,28 +292,15 @@ export default function LayoutGrid() {
       </div>
 
       {/* ── 5. Interactive playground ─────────────────────────────── */}
-      <h2 className="site-section-title" id="interactive-playground">Interactive playground</h2>
-      <p className="site-section-sub">
-        Adjust the column count and gap token to see the grid reconfigure in real time.
-      </p>
+      </DocsSection>
+      <DocsSection anchorId="interactive-playground" title="Interactive playground">
       <GridPlayground />
 
       {/* ═══════════════════════════════════════════════════════════════
            COMMON PAGE LAYOUTS — real-world patterns from the product
            ═══════════════════════════════════════════════════════════════ */}
-      <h2 className="site-section-title" id="page-layouts">Common page layouts</h2>
-      <p className="site-section-sub">
-        Real-world layout patterns extracted from the product screens. Each pattern shows the
-        grid split, what goes where, and when to use it. All layouts stack to full-width on mobile
-        (&lt; 768 px).
-      </p>
-
-      {/* ── Pattern 1: Login / Onboarding — 50/50 ─── */}
-      <h3 className="site-section-title" style={{ fontSize: 16 }} id="layout-login">Login / Onboarding — 50 · 50</h3>
-      <p className="site-section-sub">
-        Full-bleed split: brand hero panel on the left, authentication form on the right.
-        No sidebar, no header — standalone page. On mobile, the brand panel sits above the form.
-      </p>
+      </DocsSection>
+      <DocsSection anchorId="layout-login" title="Login / Onboarding — 50 · 50">
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", padding: 0, overflow: "hidden", borderRadius: "var(--core-radius-md)" }}>
         <Grid columns={12} gap="2" style={{ gap: 0 }}>
           <GridCol span={12} spanMd={6}>
@@ -376,11 +349,8 @@ export default function LayoutGrid() {
       </div>
 
       {/* ── Pattern 2: Dashboard — 8/4 main + sidebar ─── */}
-      <h3 className="site-section-title" style={{ fontSize: 16 }} id="layout-dashboard-summary">Dashboard summary — 8 · 4</h3>
-      <p className="site-section-sub">
-        Primary content area (balance summary, key metrics) in 8 columns, with a promotional
-        or contextual card in the remaining 4 columns. The dominant pattern for dashboard top sections.
-      </p>
+      </DocsSection>
+      <DocsSection anchorId="layout-dashboard-summary" title="Dashboard summary — 8 · 4">
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
         <Grid columns={12} gap="4">
           <GridCol span={12} spanMd={8}>
@@ -430,11 +400,8 @@ export default function LayoutGrid() {
       </div>
 
       {/* ── Pattern 3: Dashboard plans — 4/4/4 ─── */}
-      <h3 className="site-section-title" style={{ fontSize: 16 }} id="layout-dashboard-plans">Dashboard plans — 4 · 4 · 4</h3>
-      <p className="site-section-sub">
-        Equal thirds for plan cards, learning modules, or feature tiles. Each card is self-contained
-        with its own status badge, balance info, and actions.
-      </p>
+      </DocsSection>
+      <DocsSection anchorId="layout-dashboard-plans" title="Dashboard plans — 4 · 4 · 4">
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
         <Grid columns={12} gap="4">
           {["401(k) Plan", "Roth 401(k) Plan", "Financial Wellness"].map((name, i) => (
@@ -457,11 +424,8 @@ export default function LayoutGrid() {
       </div>
 
       {/* ── Pattern 4: Dashboard — 6/6 halves ─── */}
-      <h3 className="site-section-title" style={{ fontSize: 16 }} id="layout-dashboard-halves">Dashboard cards — 6 · 6</h3>
-      <p className="site-section-sub">
-        Equal halves for content that's equally weighted — plan cards, comparison panels,
-        or side-by-side info blocks.
-      </p>
+      </DocsSection>
+      <DocsSection anchorId="layout-dashboard-halves" title="Dashboard cards — 6 · 6">
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
         <Grid columns={12} gap="4">
           {["Deferred Comp Plan", "Cash Balance Plan"].map((name) => (
@@ -483,12 +447,8 @@ export default function LayoutGrid() {
       </div>
 
       {/* ── Pattern 5: Multi-step form — 3/9 ─── */}
-      <h3 className="site-section-title" style={{ fontSize: 16 }} id="layout-form-stepper">Multi-step form — 3 · 9</h3>
-      <p className="site-section-sub">
-        A narrow stepper/navigation column on the left (3 cols), paired with the main form
-        area (9 cols). Used for loan requests, enrollment flows, and any multi-step wizard.
-        On mobile, the stepper moves above the form as a horizontal progress bar.
-      </p>
+      </DocsSection>
+      <DocsSection anchorId="layout-form-stepper" title="Multi-step form — 3 · 9">
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
         <Grid columns={12} gap="4">
           <GridCol span={12} spanMd={3}>
@@ -510,7 +470,7 @@ export default function LayoutGrid() {
                     background: i === 0 ? "var(--core-color-action-primary-bg)" : "var(--core-color-surface-sunken)",
                     color: i === 0 ? "#fff" : "var(--core-color-text-secondary)",
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700,
+                    fontSize: "var(--typography-font-size-xs)", fontWeight: 700,
                   }}>{i + 1}</div>
                   <span style={{ fontSize: "var(--core-font-size-sm)", fontWeight: i === 0 ? 600 : 400, color: i === 0 ? "var(--core-color-action-primary-bg)" : "var(--core-color-text-secondary)" }}>{step}</span>
                 </div>
@@ -552,12 +512,8 @@ export default function LayoutGrid() {
       </div>
 
       {/* ── Pattern 6: Form fields — nested 6/6 ─── */}
-      <h3 className="site-section-title" style={{ fontSize: 16 }} id="layout-form-fields">Form fields — 6 · 6 (nested)</h3>
-      <p className="site-section-sub">
-        Inside a form, fields that belong together are placed side by side in a 6/6 split.
-        Labels like "Loan repayment method" and "Loan repayment frequency" pair naturally.
-        On mobile, they stack to full-width.
-      </p>
+      </DocsSection>
+      <DocsSection anchorId="layout-form-fields" title="Form fields — 6 · 6 (nested)">
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
         <div style={{ background: "var(--core-color-surface-raised)", borderRadius: "var(--core-radius-md)", padding: "var(--core-space-6)", border: "1px solid var(--core-color-border-subtle)" }}>
           <Grid columns={12} gap="4">
@@ -577,7 +533,7 @@ export default function LayoutGrid() {
               <div style={{ fontSize: "var(--core-font-size-sm)", fontWeight: 600, color: "var(--core-color-text-primary)", marginBottom: "var(--core-space-1)" }}>Loan repayment frequency *</div>
               <div style={{ fontSize: "var(--core-font-size-xs)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--core-color-text-tertiary)", marginBottom: "var(--core-space-2)" }}>span 6</div>
               <div style={{ height: 36, borderRadius: "var(--core-radius-sm)", border: "1px solid var(--core-color-border-default)", background: "var(--core-color-surface-default)", padding: "0 var(--core-space-3)", display: "flex", alignItems: "center", justifyContent: "space-between", color: "var(--core-color-text-primary)", fontSize: "var(--core-font-size-sm)" }}>
-                Monthly <span style={{ color: "var(--core-color-text-tertiary)" }}>▾</span>
+                Monthly <ChevronIcon size={12} style={{ color: "var(--core-color-text-tertiary)" }} />
               </div>
             </GridCol>
           </Grid>
@@ -585,7 +541,8 @@ export default function LayoutGrid() {
       </div>
 
       {/* ── Summary table ─── */}
-      <h3 className="site-section-title" style={{ fontSize: 16 }} id="layout-summary">Layout cheat sheet</h3>
+      </DocsSection>
+      <DocsSection anchorId="layout-summary" title="Layout cheat sheet">
       <div className="site-panel site-panel--flush">
         <table className="spec-table">
           <thead><tr><th>Pattern</th><th>Grid split</th><th>When to use</th></tr></thead>
@@ -600,9 +557,10 @@ export default function LayoutGrid() {
         </table>
       </div>
 
-      <h2 className="site-section-title">Code</h2>
+      </DocsSection>
+      <DocsSection anchorId="code" title="Code">
       <div className="site-panel site-panel--flush">
-        <pre style={{ margin: 0, padding: 20, fontSize: "var(--core-font-size-xs, 12px)", overflowX: "auto" }}>{`<AppShell
+        <pre style={{ margin: 0, padding: 20, fontSize: "var(--typography-font-size-xs)", overflowX: "auto" }}>{`<AppShell
   header={<AppHeader brand="Meridian" actions={<Avatar name="Taylor Hale" size="sm" />} />}
   sidebar={<AppSidebar items={navItems} />}
   footer={<AppFooter copyright="© 2026 Meridian." links={<a href="/privacy">Privacy</a>} />}
@@ -613,6 +571,8 @@ export default function LayoutGrid() {
   </Grid>
 </AppShell>`}</pre>
       </div>
+      </DocsSection>
+      </DocsSectionList>
     </div>
   );
 }

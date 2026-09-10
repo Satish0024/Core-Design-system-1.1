@@ -1,5 +1,6 @@
 import React from "react";
 import primitives from "../../../../packages/tokens/src/primitives.json";
+import { DocsSection, DocsSectionList } from "../DocsSection";
 
 const bp = (primitives as any).breakpoint;
 const container = (primitives as any).container;
@@ -97,62 +98,54 @@ export default function Responsive() {
         rather than left silently unaddressed.
       </p>
 
-      <h2 className="site-section-title">Breakpoints</h2>
-      <div className="site-panel site-panel--flush">
-        <table className="spec-table">
-          <thead><tr><th>Name</th><th>Min width</th><th>Container max-width</th><th>Typical device</th></tr></thead>
-          <tbody>
-            <tr><td><code>xs</code></td><td>0</td><td>fluid (100%)</td><td>Phones, portrait</td></tr>
-            <tr><td><code>sm</code></td><td>{bp.sm}</td><td>{container["maxWidth.sm"]}</td><td>Phones, landscape</td></tr>
-            <tr><td><code>md</code></td><td>{bp.md}</td><td>{container["maxWidth.md"]}</td><td>Tablets</td></tr>
-            <tr><td><code>lg</code></td><td>{bp.lg}</td><td>{container["maxWidth.lg"]}</td><td>Small laptops</td></tr>
-            <tr><td><code>xl</code></td><td>{bp.xl}</td><td>{container["maxWidth.xl"]}</td><td>Desktops</td></tr>
-            <tr><td><code>xxl</code></td><td>{bp.xxl}</td><td>{container["maxWidth.xxl"]}</td><td>Large desktops</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p className="site-section-sub">
-        <code>breakpoint.*</code> in <code>packages/tokens/src/primitives.json</code> — plain CSS <code>@media</code>{" "}
-        conditions can't read a custom property, so every media query in the component library uses these exact
-        pixel values as a literal, with a comment pointing back here. The <code>container.maxWidth.*</code> scale
-        above is what <code>Grid</code>'s <code>Container</code> primitive clamps to at each step.
-      </p>
-
-      <h2 className="site-section-title">Resize this window</h2>
-      <p className="site-section-sub">
-        The fixes below are easiest to see by actually resizing — try the Modal/Drawer on the{" "}
-        <a href="#/components/overlays" style={{ color: "var(--site-accent)" }}>Overlays</a> page, or the Stepper on{" "}
-        <a href="#/components/navigation#stepper" style={{ color: "var(--site-accent)" }}>Navigation</a>, under ~576px wide.
-      </p>
-
-      <h2 className="site-section-title">Component checklist</h2>
-      {GROUPS.map((g) => (
-        <div key={g.title} style={{ marginBottom: 28 }}>
-          <div className="site-nav-title" style={{ padding: "0 0 8px" }}>{g.title}</div>
+      <DocsSectionList>
+        <DocsSection anchorId="breakpoints" title="Breakpoints">
           <div className="site-panel site-panel--flush">
             <table className="spec-table">
-              <thead><tr><th style={{ width: 40 }}></th><th>Component</th><th>Notes</th></tr></thead>
+              <thead><tr><th>Name</th><th>Min width</th><th>Container max-width</th><th>Typical device</th></tr></thead>
               <tbody>
-                {g.rows.map((r) => (
-                  <tr key={r.name}>
-                    <td style={{ textAlign: "center" }}>{r.status === "done" ? "✅" : "🟡"}</td>
-                    <td><strong>{r.name}</strong></td>
-                    <td style={{ color: "var(--site-text-dim)" }}>{r.note}</td>
-                  </tr>
-                ))}
+                <tr><td><code>xs</code></td><td>0</td><td>fluid (100%)</td><td>Phones, portrait</td></tr>
+                <tr><td><code>sm</code></td><td>{bp.sm}</td><td>{container["maxWidth.sm"]}</td><td>Phones, landscape</td></tr>
+                <tr><td><code>md</code></td><td>{bp.md}</td><td>{container["maxWidth.md"]}</td><td>Tablets</td></tr>
+                <tr><td><code>lg</code></td><td>{bp.lg}</td><td>{container["maxWidth.lg"]}</td><td>Small laptops</td></tr>
+                <tr><td><code>xl</code></td><td>{bp.xl}</td><td>{container["maxWidth.xl"]}</td><td>Desktops</td></tr>
+                <tr><td><code>xxl</code></td><td>{bp.xxl}</td><td>{container["maxWidth.xxl"]}</td><td>Large desktops</td></tr>
               </tbody>
             </table>
           </div>
-        </div>
-      ))}
+        </DocsSection>
 
-      <h2 className="site-section-title">Do / Don't</h2>
-      <ul style={{ color: "var(--site-text-dim)", lineHeight: 1.8, fontSize: 14 }}>
-        <li><strong style={{ color: "var(--site-text)" }}>Do</strong> write mobile-first: a component's base style is its narrowest state, and a <code>min-width</code> media query adds complexity at wider sizes — never the other way around.</li>
-        <li><strong style={{ color: "var(--site-text)" }}>Do</strong> reuse the exact breakpoint values above in any new media query, with a comment naming which token it corresponds to.</li>
-        <li><strong style={{ color: "var(--site-text)" }}>Don't</strong> hide content on mobile just because it doesn't fit — stack, scroll, or collapse to icon-only (as AppSidebar and Stepper do) rather than removing it.</li>
-        <li><strong style={{ color: "var(--site-text)" }}>Don't</strong> assume a fixed-width overlay (Modal, Drawer) is safe without checking it at ~360-400px — that's the actual failure mode found and fixed this pass.</li>
-      </ul>
+        <DocsSection anchorId="component-checklist" title="Component checklist">
+          {GROUPS.map((g) => (
+            <div key={g.title} style={{ marginBottom: 28 }}>
+              <div className="site-nav-title" style={{ padding: "0 0 8px" }}>{g.title}</div>
+              <div className="site-panel site-panel--flush">
+                <table className="spec-table">
+                  <thead><tr><th style={{ width: 40 }}></th><th>Component</th><th>Notes</th></tr></thead>
+                  <tbody>
+                    {g.rows.map((r) => (
+                      <tr key={r.name}>
+                        <td style={{ textAlign: "center" }}>{r.status === "done" ? "✅" : "🟡"}</td>
+                        <td><strong>{r.name}</strong></td>
+                        <td style={{ color: "var(--site-text-dim)" }}>{r.note}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ))}
+        </DocsSection>
+
+        <DocsSection anchorId="do-dont" title="Do / Don't">
+          <ul style={{ color: "var(--site-text-dim)", lineHeight: 1.8, fontSize: 14, margin: 0 }}>
+            <li><strong style={{ color: "var(--site-text)" }}>Do</strong> write mobile-first: a component's base style is its narrowest state, and a <code>min-width</code> media query adds complexity at wider sizes — never the other way around.</li>
+            <li><strong style={{ color: "var(--site-text)" }}>Do</strong> reuse the exact breakpoint values above in any new media query, with a comment naming which token it corresponds to.</li>
+            <li><strong style={{ color: "var(--site-text)" }}>Don't</strong> hide content on mobile just because it doesn't fit — stack, scroll, or collapse to icon-only (as AppSidebar and Stepper do) rather than removing it.</li>
+            <li><strong style={{ color: "var(--site-text)" }}>Don't</strong> assume a fixed-width overlay (Modal, Drawer) is safe without checking it at ~360-400px — that's the actual failure mode found and fixed this pass.</li>
+          </ul>
+        </DocsSection>
+      </DocsSectionList>
     </div>
   );
 }

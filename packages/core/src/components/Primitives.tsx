@@ -1,9 +1,35 @@
 import React, { useState } from "react";
 
-export function Slider({ value, min = 0, max = 100, step = 1, onChange, formatValue }: { value: number; min?: number; max?: number; step?: number; onChange: (v: number) => void; formatValue?: (v: number) => string }) {
+export function Slider({
+  value,
+  min = 0,
+  max = 100,
+  step = 1,
+  disabled,
+  onChange,
+  formatValue,
+}: {
+  value: number;
+  min?: number;
+  max?: number;
+  step?: number;
+  disabled?: boolean;
+  onChange: (v: number) => void;
+  formatValue?: (v: number) => string;
+}) {
   return (
-    <div className="cds-slider">
-      <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => onChange(Number(e.target.value))} style={{ flex: 1 }} aria-valuetext={formatValue ? formatValue(value) : String(value)} />
+    <div className={`cds-slider ${disabled ? "cds-slider--disabled" : ""}`.trim()}>
+      <input
+        type="range"
+        min={min}
+        max={max}
+        step={step}
+        value={value}
+        disabled={disabled}
+        onChange={(e) => !disabled && onChange(Number(e.target.value))}
+        style={{ flex: 1 }}
+        aria-valuetext={formatValue ? formatValue(value) : String(value)}
+      />
       <span className="cds-slider-value">{formatValue ? formatValue(value) : value}</span>
     </div>
   );
@@ -90,22 +116,7 @@ export function Collapsible({
           id={triggerId}
         >
           <span className="cds-collapsible-title">{title}</span>
-          <svg
-            className="cds-collapsible-chevron"
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path
-              d="M3 5L7 9L11 5"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <ChevronIcon className="cds-collapsible-chevron" />
         </button>
       )}
       {isOpen && (
@@ -114,6 +125,78 @@ export function Collapsible({
         </div>
       )}
     </div>
+  );
+}
+
+export type ChevronDirection = "down" | "up" | "left" | "right";
+
+const CHEVRON_ROTATIONS: Record<ChevronDirection, string | undefined> = {
+  down: undefined,
+  up: "rotate(180deg)",
+  left: "rotate(90deg)",
+  right: "rotate(-90deg)",
+};
+
+/** Standard stroke chevron used on selects, accordions, sort controls, and menus. */
+export function ChevronIcon({
+  direction = "down",
+  size = 14,
+  className = "",
+  style,
+  ...rest
+}: {
+  direction?: ChevronDirection;
+  size?: number;
+  className?: string;
+  style?: React.CSSProperties;
+} & React.SVGAttributes<SVGSVGElement>) {
+  const rotation = CHEVRON_ROTATIONS[direction];
+  return (
+    <svg
+      className={className}
+      width={size}
+      height={size}
+      viewBox="0 0 14 14"
+      fill="none"
+      aria-hidden="true"
+      style={{ ...(rotation ? { transform: rotation } : {}), ...style }}
+      {...rest}
+    >
+      <path
+        d="M3 5L7 9L11 5"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+/** Standard stroke calendar icon used on date picker inputs. */
+export function CalendarIcon({
+  size = 16,
+  className = "",
+  ...rest
+}: {
+  size?: number;
+  className?: string;
+} & React.SVGAttributes<SVGSVGElement>) {
+  return (
+    <svg
+      className={className}
+      width={size}
+      height={size}
+      viewBox="0 0 16 16"
+      fill="none"
+      aria-hidden="true"
+      {...rest}
+    >
+      <rect x="2" y="3.5" width="12" height="10.5" rx="1.5" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M2 7h12" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M5.5 2v3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      <path d="M10.5 2v3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+    </svg>
   );
 }
 

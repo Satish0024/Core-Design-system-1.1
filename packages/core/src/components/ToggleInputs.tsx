@@ -1,27 +1,52 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
+import type { InputSize } from "./Field";
+
+export type ToggleSize = "sm" | "md" | "lg";
+
+export interface ToggleProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> {
+  pressed: boolean;
+  onPressedChange: (v: boolean) => void;
+  children: React.ReactNode;
+  size?: ToggleSize;
+}
 
 export function Toggle({
   pressed,
   onPressedChange,
   children,
   disabled,
-}: {
-  pressed: boolean;
-  onPressedChange: (v: boolean) => void;
-  children: React.ReactNode;
-  disabled?: boolean;
-}) {
+  size = "md",
+  className = "",
+  ...rest
+}: ToggleProps) {
   return (
     <button
       type="button"
-      className="cds-toggle"
+      className={`cds-toggle cds-toggle--${size} ${className}`.trim()}
       aria-pressed={pressed}
       disabled={disabled}
       onClick={() => !disabled && onPressedChange(!pressed)}
+      {...rest}
     >
       {children}
     </button>
   );
+}
+
+export interface ToggleGroupOption<T extends string> {
+  value: T;
+  label: string;
+  icon?: React.ReactNode;
+  disabled?: boolean;
+}
+
+export interface ToggleGroupProps<T extends string> {
+  value: T;
+  onChange: (v: T) => void;
+  options: Array<ToggleGroupOption<T>>;
+  disabled?: boolean;
+  size?: ToggleSize;
+  className?: string;
 }
 
 export function ToggleGroup<T extends string>({
@@ -29,26 +54,123 @@ export function ToggleGroup<T extends string>({
   onChange,
   options,
   disabled,
-}: {
-  value: T;
-  onChange: (v: T) => void;
-  options: Array<{ value: T; label: string; disabled?: boolean }>;
-  disabled?: boolean;
-}) {
+  size = "md",
+  className = "",
+}: ToggleGroupProps<T>) {
   return (
-    <div className={`cds-toggle-group ${disabled ? "cds-toggle-group--disabled" : ""}`} role="group">
-      {options.map((o) => (
-        <button
-          key={o.value}
-          type="button"
-          className="cds-toggle"
-          aria-pressed={value === o.value}
-          disabled={disabled || o.disabled}
-          onClick={() => !(disabled || o.disabled) && onChange(o.value)}
-        >
-          {o.label}
-        </button>
-      ))}
+    <div
+      className={`cds-toggle-group cds-toggle-group--${size} ${disabled ? "cds-toggle-group--disabled" : ""} ${className}`.trim()}
+      role="group"
+    >
+      {options.map((o) => {
+        const selected = value === o.value;
+        return (
+          <button
+            key={o.value}
+            type="button"
+            className={`cds-toggle-group__item cds-toggle-group__item--${size}`}
+            aria-pressed={selected}
+            disabled={disabled || o.disabled}
+            onClick={() => !(disabled || o.disabled) && onChange(o.value)}
+          >
+            {o.icon ? (
+              <span className={`cds-toggle-group__icon ${selected ? "cds-toggle-group__icon--selected" : ""}`} aria-hidden="true">
+                {o.icon}
+              </span>
+            ) : null}
+            <span className="cds-toggle-group__label">{o.label}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+export interface IncrementalSelectorProps {
+  value?: number;
+  defaultValue?: number;
+  onChange?: (value: number) => void;
+  min?: number;
+  max?: number;
+  step?: number;
+  disabled?: boolean;
+  id?: string;
+  className?: string;
+  size?: InputSize;
+  "aria-label"?: string;
+}
+
+function clampValue(value: number, min?: number, max?: number) {
+  let next = value;
+  if (min !== undefined) next = Math.max(min, next);
+  if (max !== undefined) next = Math.min(max, next);
+  return next;
+}
+
+/** Stepper-style numeric control with minus / value / plus segments. */
+export function IncrementalSelector({
+  value: controlledValue,
+  defaultValue = 0,
+  onChange,
+  min,
+  max,
+  step = 1,
+  disabled = false,
+  id,
+  className = "",
+  size = "md",
+  "aria-label": ariaLabel = "Quantity",
+}: IncrementalSelectorProps) {
+  const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
+  const isControlled = controlledValue !== undefined;
+  const value = isControlled ? controlledValue : uncontrolledValue;
+
+  const setValue = (next: number) => {
+    const clamped = clampValue(next, min, max);
+    if (!isControlled) setUncontrolledValue(clamped);
+    onChange?.(clamped);
+  };
+
+  const decreaseDisabled = disabled || (min !== undefined && value <= min);
+  const increaseDisabled = disabled || (max !== undefined && value >= max);
+
+  return (
+    <div
+      className={`cds-incremental-selector cds-incremental-selector--${size} ${disabled ? "cds-incremental-selector--disabled" : ""} ${className}`.trim()}
+      role="group"
+      aria-label={ariaLabel}
+      aria-disabled={disabled || undefined}
+    >
+      <button
+        type="button"
+        className="cds-incremental-selector__btn cds-incremental-selector__btn--decrease"
+        aria-label={`Decrease ${ariaLabel.toLowerCase()}`}
+        disabled={decreaseDisabled}
+        onClick={() => setValue(value - step)}
+      >
+        <span aria-hidden="true">−</span>
+      </button>
+      <div
+        id={id}
+        className="cds-incremental-selector__value"
+        aria-live="polite"
+        aria-atomic="true"
+        aria-valuenow={value}
+        aria-valuemin={min}
+        aria-valuemax={max}
+        role="spinbutton"
+      >
+        {value}
+      </div>
+      <button
+        type="button"
+        className="cds-incremental-selector__btn cds-incremental-selector__btn--increase"
+        aria-label={`Increase ${ariaLabel.toLowerCase()}`}
+        disabled={increaseDisabled}
+        onClick={() => setValue(value + step)}
+      >
+        <span aria-hidden="true">+</span>
+      </button>
     </div>
   );
 }

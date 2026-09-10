@@ -192,7 +192,7 @@ const brandAliases = {
   // Brand / Text
   "brand-text-primary-default": "color.brand.500",
   "brand-text-primary-disabled": "color.brand.300",
-  "brand-text-primary-active": "color.brand.700",
+  "brand-text-primary-active": "color.brand.600",
   "brand-text-primary-hover": "color.brand.600",
   "brand-text-primaryhover": "color.brand.600",
   "brand-text-primary-oncolor": "color.neutral.0",
@@ -200,22 +200,22 @@ const brandAliases = {
   // Brand / background
   "brand-background-primary-default": "color.action.primary.bg",
   "brand-background-strong": "color.action.primary.bg",
-  "brand-background-primary-light": "color.brand.50",
-  "brand-background-primary-subtle": "color.brand.100",
-  "brand-background-disabled-light": "color.neutral.100",
+  "brand-background-primary-light": "color.brand.100",
+  "brand-background-primary-subtle": "color.neutral.0",
+  "brand-background-disabled-light": "color.brand.100",
   "brand-background-disabled-strong": "color.brand.200",
-  "brand-background-active": "color.action.primary.bgActive",
-  "brand-background-hover": "color.action.primary.bgHover",
+  "brand-background-active": "color.brand.700",
+  "brand-background-hover": "color.brand.600",
 
-  // Brand / Borders
-  "brand-borders-primary-default": "color.brand.500",
-  "brand-borders-primary-disabled": "color.brand.300",
-  "brand-borders-hover": "color.brand.600",
-
-  // Backward-compat aliases
+  // Brand / Borders (canonical)
   "brand-border-primary-default": "color.brand.500",
-  "brand-border-primary-hover": "color.brand.600",
   "brand-border-primary-disabled": "color.brand.300",
+  "brand-border-hover": "color.brand.600",
+
+  // Legacy plural aliases → canonical border tokens
+  "brand-borders-primary-default": "brand.border.primary-default",
+  "brand-borders-primary-disabled": "brand.border.primary-disabled",
+  "brand-borders-hover": "brand.border.hover",
   "brand-background-primary-strong": "color.action.primary.bg",
 };
 
@@ -281,10 +281,46 @@ const semanticsAliases = {
   "semantics-highlight-background-light": "color.status.info.bg",
   "semantics-highlight-background-strong": "color.info.500",
 
-  // Disabled
-  "semantics-disabled-background": "color.neutral.50",
-  "semantics-disabled-border": "color.neutral.200",
-  "semantics-disabled-text": "color.neutral.400",
+  // Neutral control disabled (inputs, tables, pagination)
+  "semantics-disabled-background": "color.control.disabled.bg",
+  "semantics-disabled-border": "color.control.disabled.border",
+  "semantics-disabled-text": "color.control.disabled.text",
+
+  // Per-family disabled (preserve semantic identity)
+  "semantics-success-disabled-background": "semantics.success.disabled-background",
+  "semantics-success-disabled-text": "semantics.success.disabled-text",
+  "semantics-success-disabled-border": "semantics.success.disabled-border",
+  "semantics-success-disabled-strong-background": "semantics.success.disabled-strong-background",
+  "semantics-success-disabled-strong-text": "semantics.success.disabled-strong-text",
+  "semantics-warning-disabled-background": "semantics.warning.disabled-background",
+  "semantics-warning-disabled-text": "semantics.warning.disabled-text",
+  "semantics-warning-disabled-border": "semantics.warning.disabled-border",
+  "semantics-warning-disabled-strong-background": "semantics.warning.disabled-strong-background",
+  "semantics-warning-disabled-strong-text": "semantics.warning.disabled-strong-text",
+  "semantics-critical-disabled-background": "semantics.critical.disabled-background",
+  "semantics-critical-disabled-text": "semantics.critical.disabled-text",
+  "semantics-critical-disabled-border": "semantics.critical.disabled-border",
+  "semantics-critical-disabled-strong-background": "semantics.critical.disabled-strong-background",
+  "semantics-critical-disabled-strong-text": "semantics.critical.disabled-strong-text",
+  "semantics-highlight-disabled-background": "semantics.highlight.disabled-background",
+  "semantics-highlight-disabled-text": "semantics.highlight.disabled-text",
+  "semantics-highlight-disabled-border": "semantics.highlight.disabled-border",
+  "semantics-highlight-disabled-strong-background": "semantics.highlight.disabled-strong-background",
+  "semantics-highlight-disabled-strong-text": "semantics.highlight.disabled-strong-text",
+};
+
+const secondaryAliases = {
+  "secondary-text-primary-disabled": "secondary.text.primary-disabled",
+  "secondary-background-disabled-light": "secondary.background.disabled-light",
+  "secondary-background-disabled-strong": "secondary.background.disabled-strong",
+  "secondary-borders-primary-disabled": "secondary.borders.primary-disabled",
+};
+
+const tertiaryAliases = {
+  "tertiary-text-primary-disabled": "tertiary.text.primary-disabled",
+  "tertiary-background-disabled-light": "tertiary.background.disabled-light",
+  "tertiary-background-disabled-strong": "tertiary.background.disabled-strong",
+  "tertiary-borders-primary-disabled": "tertiary.borders.primary-disabled",
 };
 
 const elevationAliases = {
@@ -332,6 +368,10 @@ const scssParts = [
   `// bottom of this file).`,
   section("Brand"),
   buildAliasBlock(brandAliases),
+  section("Secondary palette"),
+  buildAliasBlock(secondaryAliases),
+  section("Tertiary palette"),
+  buildAliasBlock(tertiaryAliases),
   section("Neutral"),
   buildAliasBlock(neutralAliases),
   section("Semantics"),

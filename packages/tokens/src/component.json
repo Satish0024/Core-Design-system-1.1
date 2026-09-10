@@ -21,23 +21,27 @@
   "input.borderError": "{color.status.danger.border}",
   "input.text": "{color.text.primary}",
   "input.placeholder": "{color.text.tertiary}",
+  "input.disabled.bg": "{color.control.disabled.bg}",
+  "input.disabled.text": "{color.control.disabled.text}",
+  "input.disabled.border": "{color.control.disabled.border}",
+  "input.disabled.placeholder": "{color.control.disabled.placeholder}",
   "input.radius": "{radius.sm}",
   "card.bg": "{color.surface.raised}",
   "card.border": "{color.border.subtle}",
-  "card.radius": "{radius.md}",
+  "card.radius": "{radius.sm}",
   "card.shadow": "{elevation.1}",
-  "badge.radius": "{radius.full}",
+  "badge.radius": "{radius.sm}",
   "focusRing.color": "{color.focus.ring}",
   "focusRing.width": "{border.width.focus}",
   "focusRing.offset": "2px",
 
-  "sidebar.radius": "{radius.lg}",
-  "sidebar.item.radius": "{radius.md}",
+  "sidebar.radius": "{radius.sm}",
+  "sidebar.item.radius": "{radius.sm}",
   "sidebar.item.text": "{color.text.secondary}",
   "sidebar.item.hoverBg": "{color.surface.sunken}",
   "sidebar.item.activeBg": "{color.action.primary.tintBg}",
   "sidebar.item.activeText": "{color.action.primary.tintText}",
-  "sidebar.icon.radius": "{radius.md}",
+  "sidebar.icon.radius": "{radius.sm}",
   "sidebar.icon.bg": "{color.surface.sunken}",
   "sidebar.icon.text": "{color.text.secondary}",
   "sidebar.icon.activeBg": "{color.action.primary.bg}",
@@ -46,11 +50,11 @@
   "sidebar.rail.bg": "{color.surface.sunken}",
   "sidebar.rail.accentBar": "{color.action.primary.bg}",
 
-  "iconButton.ghost.radius": "{radius.full}",
+  "iconButton.ghost.radius": "{radius.sm}",
   "iconButton.ghost.hoverBg": "{color.surface.sunken}",
 
   "stepper.marker.size": "28px",
-  "stepper.marker.radius": "{radius.full}",
+  "stepper.marker.radius": "{radius.sm}",
   "stepper.marker.upcomingBg": "{color.surface.sunken}",
   "stepper.marker.upcomingText": "{color.text.tertiary}",
   "stepper.marker.currentBg": "{color.action.primary.bg}",
@@ -65,5 +69,5 @@
 
   "promoCard.bg": "{gradient.brand.subtle}",
   "promoCard.text": "{color.neutral.0}",
-  "promoCard.radius": "{radius.lg}"
+  "promoCard.radius": "{radius.sm}"
 }

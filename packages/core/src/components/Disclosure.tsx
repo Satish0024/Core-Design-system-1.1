@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ChevronIcon } from "./Primitives";
 export { Collapsible, type CollapsibleProps, type CollapsibleVariant } from "./Primitives";
 
 export type AccordionVariant = "bordered" | "separated" | "flush";
@@ -46,9 +47,7 @@ export function Accordion({
                 onClick={() => toggle(item.id, item.disabled)}
               >
                 {item.title}
-                <svg className="cds-accordion-chevron" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                  <path d="M3 5L7 9L11 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                <ChevronIcon className="cds-accordion-chevron" />
               </button>
             </h3>
             {isOpen && (

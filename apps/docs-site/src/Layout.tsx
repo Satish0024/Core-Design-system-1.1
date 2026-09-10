@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { CoreLogo } from "./CoreLogo";
+import { componentLinks, totalComponentCount, type NavLink } from "./navConfig";
+import { pageSections } from "./pageSections";
+import { useScrollSpy } from "./useScrollSpy";
 
 const nav = [
   { group: "Get Started", links: [{ to: "/", label: "Overview" }] },
@@ -15,81 +18,15 @@ const nav = [
   {
     group: "Component",
     links: [
-      { to: "/components/actions#button", label: "Button" },
-      { to: "/components/actions#icon-button", label: "Icon Button" },
-      { to: "/components/actions#link", label: "Link" },
-      { to: "/components/actions#button-group", label: "Button Group" },
-      { to: "/components/forms#input", label: "Input" },
-      { to: "/components/forms#textarea", label: "Textarea" },
-      { to: "/components/forms#select", label: "Select" },
-      { to: "/components/forms#checkbox-radio", label: "Checkbox / Radio" },
-      { to: "/components/forms#switch", label: "Switch" },
-      { to: "/components/forms#toggle", label: "Toggle / Toggle Group" },
-      { to: "/components/forms#input-group", label: "Input Group" },
-      { to: "/components/forms#input-otp", label: "Input OTP" },
-      { to: "/components/forms#slider", label: "Slider" },
-      { to: "/components/forms#combobox", label: "Combobox" },
-      { to: "/components/forms#date-picker", label: "Date Picker" },
-      { to: "/components/forms#calendar", label: "Calendar" },
-      { to: "/components/forms#attachment", label: "Attachment" },
-      { to: "/components/forms#input-icon", label: "Input (with icon)" },
-      { to: "/components/forms#payment-bank-fields", label: "Payment & Bank Fields" },
-      { to: "/components/data-display#card", label: "Card" },
-      { to: "/components/data-display#badge", label: "Badge" },
-      { to: "/components/data-display#data-table", label: "Data Table" },
-      { to: "/components/data-display#table", label: "Table" },
-      { to: "/components/data-display#item", label: "Item" },
-      { to: "/components/data-display#description-list", label: "Description List" },
-      { to: "/components/data-display#avatar", label: "Avatar" },
-      { to: "/components/data-display#progress", label: "Progress" },
-      { to: "/components/charts#line-chart", label: "Line Chart" },
-      { to: "/components/charts#bar-chart", label: "Bar Chart" },
-      { to: "/components/disclosure#collapsible", label: "Collapsible" },
-      { to: "/components/disclosure#accordion", label: "Accordion" },
-      { to: "/components/disclosure#separator", label: "Separator" },
-      { to: "/components/disclosure#skeleton", label: "Skeleton" },
-      { to: "/components/navigation#navigation-menu", label: "Navigation Menu" },
-      { to: "/components/navigation#sidebar", label: "Sidebar" },
-      { to: "/components/navigation#tabs", label: "Tabs" },
-      { to: "/components/navigation#breadcrumb", label: "Breadcrumb" },
-      { to: "/components/navigation#stepper", label: "Stepper" },
-      { to: "/components/navigation#pagination", label: "Pagination" },
-      { to: "/components/feedback#alert", label: "Alert" },
-      { to: "/components/feedback#toast", label: "Toast" },
-      { to: "/components/feedback#toast-manager", label: "Toast Manager" },
-      { to: "/components/feedback#empty", label: "Empty" },
-      { to: "/components/feedback#spinner", label: "Spinner" },
-      { to: "/components/overlays#modal", label: "Modal" },
-      { to: "/components/overlays#confirm-dialog", label: "Confirmation Dialog" },
-      { to: "/components/overlays#drawer", label: "Drawer" },
-      { to: "/components/overlays#slideover", label: "Slideover" },
-      { to: "/components/overlays#dropdown-menu", label: "Dropdown Menu" },
-      { to: "/components/overlays#tooltip", label: "Tooltip" },
-      { to: "/components/overlays#popover", label: "Popover" },
-      { to: "/components/overlays#hover-card", label: "Hover Card" },
-    ],
-  },
-  {
-    group: "Anatomy",
-    links: [
-      { to: "/anatomy#button", label: "Button" },
-      { to: "/anatomy#icon-button", label: "Icon Button" },
-      { to: "/anatomy#button-group", label: "Button Group" },
-      { to: "/anatomy#input", label: "Input" },
-      { to: "/anatomy#checkbox", label: "Checkbox & Radio" },
-      { to: "/anatomy#switch", label: "Switch" },
-      { to: "/anatomy#slider", label: "Slider" },
-      { to: "/anatomy#card", label: "Card" },
-      { to: "/anatomy#badge", label: "Badge" },
-      { to: "/anatomy#avatar", label: "Avatar" },
-      { to: "/anatomy#progress", label: "Progress" },
-      { to: "/anatomy#modal", label: "Modal" },
-      { to: "/anatomy#drawer", label: "Drawer" },
-      { to: "/anatomy#tooltip", label: "Tooltip" },
-      { to: "/anatomy#popover", label: "Popover" },
+      { to: "/components", label: `All Components (${totalComponentCount})` },
+      ...componentLinks,
     ],
   },
 ];
+
+function getGroupLinks(group: { links: NavLink[] }) {
+  return group.links;
+}
 
 // Scrolls to the element matching the hash in the URL.
 // In a HashRouter the location.hash gives us the anchor (e.g. "#accordion").
@@ -122,18 +59,51 @@ function useSiteMode() {
   return { mode: "light", toggle: () => { } };
 }
 
+function splitNavTo(to: string) {
+  const hashIndex = to.indexOf("#");
+  return hashIndex === -1
+    ? { path: to, hash: "" }
+    : { path: to.slice(0, hashIndex), hash: to.slice(hashIndex) };
+}
+
+/** Hash-anchored sidebar links for the current page (component pages). */
+function getNavHashesForPath(pathname: string) {
+  const seen = new Set<string>();
+  const result: { hash: string; label: string }[] = [];
+  for (const group of nav) {
+    for (const link of getGroupLinks(group)) {
+      const { path, hash } = splitNavTo(link.to);
+      if (path === pathname && hash && !seen.has(hash)) {
+        seen.add(hash);
+        result.push({ hash, label: link.label });
+      }
+    }
+  }
+  return result;
+}
+
 // A link is only "active" when both its pathname AND its hash (when it has
 // one) match the current location. Plain react-router `NavLink` only ever
 // compares pathname — every `#anchor` link sharing a page (e.g. all of
 // Overlays' Modal/Drawer/Popover/… links, which all point at
 // /components/overlays with a different hash each) would light up together,
 // since none of them differ by pathname. That was a real, reproduced bug.
-function isNavLinkActive(to: string, pathname: string, hash: string) {
-  const hashIndex = to.indexOf("#");
-  const toPath = hashIndex === -1 ? to : to.slice(0, hashIndex);
-  const toHash = hashIndex === -1 ? "" : to.slice(hashIndex);
+// scrollHash comes from useScrollSpy so hash links update while scrolling.
+function isNavLinkActive(to: string, pathname: string, hash: string, scrollHash: string) {
+  const { path: toPath, hash: toHash } = splitNavTo(to);
   if (pathname !== toPath) return false;
-  return toHash ? hash === toHash : true;
+
+  if (toHash) {
+    const effectiveHash = scrollHash || hash;
+    return effectiveHash === toHash;
+  }
+
+  // Page link without hash (e.g. Typography, All Components).
+  const hasInNavSubLinks = getNavHashesForPath(pathname).length > 0;
+  if (hasInNavSubLinks) {
+    return !scrollHash && !hash;
+  }
+  return true;
 }
 
 /** Flat, ordered list of unique pages derived from the sidebar `nav` array.
@@ -144,16 +114,20 @@ const pages: { path: string; label: string }[] = (() => {
   const seen = new Set<string>();
   const list: { path: string; label: string }[] = [];
   for (const group of nav) {
-    for (const link of group.links) {
+    const links = getGroupLinks(group);
+    for (const link of links) {
       const hashIdx = link.to.indexOf("#");
       const pathname = hashIdx === -1 ? link.to : link.to.slice(0, hashIdx);
       if (seen.has(pathname)) continue;
       seen.add(pathname);
-      const linksForPath = group.links.filter((l) => {
+      const linksForPath = links.filter((l) => {
         const hi = l.to.indexOf("#");
         return (hi === -1 ? l.to : l.to.slice(0, hi)) === pathname;
       });
-      list.push({ path: pathname, label: linksForPath.length > 1 ? group.group : link.label });
+      list.push({
+        path: pathname,
+        label: linksForPath.length > 1 ? group.group : link.label,
+      });
     }
   }
   return list;
@@ -189,6 +163,36 @@ export default function Layout() {
   useAnchorScroll();
   const { mode, toggle } = useSiteMode();
   const location = useLocation();
+  const sidebarRef = useRef<HTMLElement>(null);
+
+  const spyHashes = useMemo(() => {
+    const fromPage = pageSections[location.pathname] ?? [];
+    const fromNav = getNavHashesForPath(location.pathname);
+    const seen = new Set<string>();
+    return [...fromPage, ...fromNav]
+      .map((s) => s.hash)
+      .filter((hash) => {
+        if (seen.has(hash)) return false;
+        seen.add(hash);
+        return true;
+      });
+  }, [location.pathname]);
+
+  const scrollHash = useScrollSpy(location.pathname, spyHashes, location.hash);
+  const onPageNav = pageSections[location.pathname] ?? [];
+
+  // Scroll sidebar only when the user clicks a link — not on every scroll-spy tick.
+  useEffect(() => {
+    if (!location.hash) return;
+    const sidebar = sidebarRef.current;
+    if (!sidebar) return;
+    const timer = window.setTimeout(() => {
+      const active = sidebar.querySelector(".site-nav-link.active");
+      active?.scrollIntoView({ block: "nearest", behavior: "auto" });
+    }, 120);
+    return () => window.clearTimeout(timer);
+  }, [location.pathname, location.hash]);
+
   return (
     // data-theme/data-mode here is what makes every CORE component actually
     // themed by default — --core-* custom properties only exist inside a
@@ -203,33 +207,54 @@ export default function Layout() {
     // ([data-site-mode] on <html>, driven by useSiteMode() below) — that's a
     // separate --site-* variable system for the docs UI itself.
     <div className="site-shell" data-theme="core" data-mode="light">
-      <aside className="site-sidebar">
+      <aside className="site-sidebar" ref={sidebarRef}>
         <div className="site-logo" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 6, padding: "8px 12px 20px" }}>
           <CoreLogo size={22} />
-          <span style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, color: "var(--site-text-dim)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+          <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, color: "var(--site-text-dim)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
             Participant Portal
           </span>
         </div>
         {nav.map((g) => (
           <div className="site-nav-group" key={g.group}>
             <div className="site-nav-title">{g.group}</div>
-            {g.links.map((l) => (
+            {g.links.map((l, i) => (
               <Link
                 key={l.to}
                 to={l.to}
-                className={"site-nav-link" + (isNavLinkActive(l.to, location.pathname, location.hash) ? " active" : "")}
+                className={
+                  "site-nav-link" +
+                  (i > 0 && g.group === "Component" ? " site-nav-link--sub" : "") +
+                  (isNavLinkActive(l.to, location.pathname, location.hash, scrollHash) ? " active" : "")
+                }
               >
                 {l.label}
               </Link>
             ))}
           </div>
         ))}
+        {onPageNav.length > 0 && (
+          <div className="site-nav-group">
+            <div className="site-nav-title">On this page</div>
+            {onPageNav.map((s) => (
+              <Link
+                key={s.hash}
+                to={{ pathname: location.pathname, hash: s.hash.replace(/^#/, "") }}
+                className={
+                  "site-nav-link site-nav-link--sub" +
+                  ((scrollHash || location.hash) === s.hash ? " active" : "")
+                }
+              >
+                {s.label}
+              </Link>
+            ))}
+          </div>
+        )}
       </aside>
-      <div className="site-main" style={location.pathname === "/" ? { backgroundColor: "#FFFFFF" } : undefined}>
-        <div className="site-content" style={location.pathname === "/" ? { maxWidth: "100%", padding: 0, backgroundColor: "#FFFFFF" } : undefined}>
+      <div className="site-main" style={location.pathname === "/" || location.pathname === "/components" ? { backgroundColor: "#FFFFFF" } : undefined}>
+        <div className="site-content" style={location.pathname === "/" || location.pathname === "/components" ? { maxWidth: "100%", padding: 0, backgroundColor: "#FFFFFF" } : undefined}>
           <Outlet />
         </div>
-        <footer className="site-footer" style={location.pathname === "/" ? { backgroundColor: "#FFFFFF", borderColor: "#E5E7EB" } : undefined}>
+        <footer className="site-footer" style={location.pathname === "/" || location.pathname === "/components" ? { backgroundColor: "#FFFFFF", borderColor: "#E5E7EB" } : undefined}>
           <div className="site-footer-inner">
             <div className="site-footer-left">
               <CoreLogo size={16} />

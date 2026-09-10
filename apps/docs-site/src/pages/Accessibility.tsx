@@ -126,7 +126,7 @@ export default function Accessibility() {
                         {STATUS_LABEL[c.status]}
                       </span>
                     </td>
-                    <td style={{ color: "var(--site-text-dim)", fontSize: "var(--core-font-size-sm, 14px)" }}>{c.note}</td>
+                    <td style={{ color: "var(--site-text-dim)", fontSize: "var(--typography-body-md-size)" }}>{c.note}</td>
                   </tr>
                 ))}
               </tbody>

@@ -5,17 +5,20 @@ export interface CardProps {
   className?: string;
   style?: React.CSSProperties;
   variant?: CardVariant;
+  disabled?: boolean;
   onClick?: () => void;
   children: React.ReactNode;
 }
-export function Card({ className = "", style, variant = "default", onClick, children }: CardProps) {
+export function Card({ className = "", style, variant = "default", disabled, onClick, children }: CardProps) {
   const interactive = variant === "interactive" || !!onClick;
   const Tag = interactive ? "button" : "div";
   return (
     <Tag
-      className={`cds-card cds-card--${variant} ${className}`}
+      className={`cds-card cds-card--${variant} ${disabled ? "cds-card--disabled" : ""} ${className}`.trim()}
       style={style}
-      onClick={onClick}
+      onClick={disabled ? undefined : onClick}
+      disabled={interactive ? disabled : undefined}
+      aria-disabled={!interactive && disabled ? true : undefined}
       type={interactive ? "button" : undefined}
     >
       {children}
@@ -118,7 +121,7 @@ export function Alert({ tone = "info", title, children, onDismiss }: { tone?: Al
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            borderRadius: 4,
+            borderRadius: "var(--core-radius-sm)",
           }}
           onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.opacity = "1"; }}
           onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.opacity = "0.6"; }}

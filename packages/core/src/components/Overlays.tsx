@@ -210,14 +210,14 @@ export type ToastTone = "success" | "danger" | "warning" | "info";
 export function Toast({ tone = "info", title, timestamp, onClose, children }: { tone?: ToastTone; title: string; timestamp?: string; onClose?: () => void; children?: React.ReactNode }) {
   return (
     <div className={`cds-toast cds-toast--${tone}`} role={tone === "danger" ? "alert" : "status"}>
+      <button type="button" className="cds-toast-close" aria-label="Dismiss notification" onClick={onClose}>
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+          <path d="M2 2L10 10M10 2L2 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      </button>
       <div className="cds-toast-header">
         <strong className="cds-toast-title">{title}</strong>
         {timestamp && <span className="cds-toast-timestamp">{timestamp}</span>}
-        {onClose && (
-          <button type="button" className="cds-toast-close" aria-label="Dismiss notification" onClick={onClose}>
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 1L9 9M9 1L1 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
-          </button>
-        )}
       </div>
       {children && <div className="cds-toast-body">{children}</div>}
     </div>

@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { Select } from "./FormControls";
+import { ChevronIcon } from "./Primitives";
 
 export interface Column<T> { key: string; header: string; render?: (row: T) => React.ReactNode; }
 export interface TableProps<T extends { id: string | number }> {
@@ -33,10 +34,11 @@ export function Table<T extends { id: string | number }>({
   return (
     <div className={wrapClasses} style={style}>
       <table
-        className={`cds-table ${disabled ? "cds-table--disabled" : ""}`}
+        className={`cds-table ${disabled ? "cds-table--disabled" : ""} ${viewMode ? "cds-table--view-mode" : ""}`.trim()}
         data-density={density}
-        data-zebra={zebra}
+        data-zebra={viewMode ? false : zebra}
         aria-disabled={disabled ? "true" : undefined}
+        aria-readonly={viewMode ? "true" : undefined}
       >
         <thead>
           <tr>{columns.map((c) => <th key={c.key} scope="col">{c.header}</th>)}</tr>
@@ -106,7 +108,7 @@ export function DataTable<T extends { id: string | number }>({
   }, [rows, query, filterValues, columns, disabled]);
 
   const sorted = useMemo(() => {
-    if (!sort || disabled) return filtered;
+    if (!sort || disabled || viewMode) return filtered;
     const col = columns.find((c) => c.key === sort.key);
     if (!col) return filtered;
     const getVal = col.sortValue ?? ((r: T) => (r as any)[col.key]);
@@ -121,7 +123,7 @@ export function DataTable<T extends { id: string | number }>({
   const pageRows = sorted.slice((page_ - 1) * pageSize, page_ * pageSize);
 
   const toggleSort = (key: string) => {
-    if (disabled) return;
+    if (disabled || viewMode) return;
     setSort((prev) => (prev?.key === key ? { key, dir: prev.dir === 1 ? -1 : 1 } : { key, dir: 1 }));
   };
 
@@ -162,7 +164,7 @@ export function DataTable<T extends { id: string | number }>({
           {viewMode && (
             <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 8 }}>
               <span className="cds-table-view-badge">
-                <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--core-color-brand-500, #3275CD)" }} />
+                <span className="cds-table-view-badge__dot" aria-hidden="true" />
                 View Mode (Read-Only)
               </span>
             </div>
@@ -170,15 +172,26 @@ export function DataTable<T extends { id: string | number }>({
         </div>
       )}
       <div className={wrapClasses}>
-        <table className={`cds-table ${disabled ? "cds-table--disabled" : ""}`} data-density={density} data-zebra={zebra} aria-disabled={disabled ? "true" : undefined}>
+        <table
+          className={`cds-table ${disabled ? "cds-table--disabled" : ""} ${viewMode ? "cds-table--view-mode" : ""}`.trim()}
+          data-density={density}
+          data-zebra={viewMode ? false : zebra}
+          aria-disabled={disabled ? "true" : undefined}
+          aria-readonly={viewMode ? "true" : undefined}
+        >
           <thead>
             <tr>
               {columns.map((c) => (
-                <th key={c.key} scope="col" aria-sort={!disabled && sort?.key === c.key ? (sort.dir === 1 ? "ascending" : "descending") : "none"}>
-                  {c.sortable && !disabled ? (
+                <th key={c.key} scope="col" aria-sort={!disabled && !viewMode && sort?.key === c.key ? (sort.dir === 1 ? "ascending" : "descending") : "none"}>
+                  {c.sortable && !disabled && !viewMode ? (
                     <button className="cds-th-sortable" onClick={() => toggleSort(c.key)}>
                       {c.header}
-                      <span className="cds-sort-icon" data-active={sort?.key === c.key}>{sort?.key === c.key && sort.dir === -1 ? "▼" : "▲"}</span>
+                      <ChevronIcon
+                        className="cds-sort-icon"
+                        data-active={sort?.key === c.key}
+                        direction={sort?.key === c.key && sort.dir === -1 ? "down" : "up"}
+                        size={12}
+                      />
                     </button>
                   ) : (
                     <span className={c.sortable ? "cds-th-sortable cds-th-sortable--disabled" : ""}>
@@ -204,7 +217,7 @@ export function DataTable<T extends { id: string | number }>({
           </tbody>
         </table>
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 12, fontSize: "var(--core-font-size-xs, 12px)", color: disabled ? "var(--core-color-neutral-400, #9E9EAD)" : "var(--core-color-text-secondary)" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 12, fontFamily: "var(--typography-font-family-sans)", fontSize: "var(--typography-body-xs-size)", lineHeight: "var(--typography-body-xs-line-height)", color: disabled ? "var(--theme-neutral-text-subtleleast)" : "var(--theme-neutral-text-subtle)" }}>
         <span>Page {page_} of {pageCount} — {sorted.length} rows</span>
         <div className="cds-pagination">
           <button className="cds-page-btn" onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={disabled || page_ <= 1}>‹ Prev</button>

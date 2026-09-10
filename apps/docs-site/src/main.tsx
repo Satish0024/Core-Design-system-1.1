@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { HashRouter } from "react-router-dom";
 import App from "./App";
+import "./theme-palette.css";
+import "./typography-tokens.css";
 import "./site.css";
 import "@tokens/core.css";
 import "@tokens/meridian.css";

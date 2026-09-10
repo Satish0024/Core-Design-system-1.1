@@ -1,5 +1,6 @@
 import React, { useId, useEffect, useRef, useState } from "react";
 import type { FieldVisualStyle } from "./Field";
+import { ChevronIcon } from "./Primitives";
 
 export const Textarea = React.forwardRef<HTMLTextAreaElement, React.TextareaHTMLAttributes<HTMLTextAreaElement> & { variant?: FieldVisualStyle }>(
   ({ className = "", variant = "default", ...rest }, ref) => <textarea ref={ref} className={`cds-textarea cds-field-style--${variant} ${className}`} {...rest} />
@@ -106,7 +107,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
         >
           <span className={selectedOption ? "" : "cds-select-placeholder"}>{selectedOption ? selectedOption.label : placeholder}</span>
         </button>
-        <span className="cds-select-caret" aria-hidden="true">▾</span>
+        <ChevronIcon className="cds-select-caret" size={14} />
         {open && (
           <ul className="cds-select-listbox" role="listbox" id={listboxId} ref={listRef} aria-activedescendant={`${listboxId}-${activeIndex}`}>
             {options.map((o, i) => (

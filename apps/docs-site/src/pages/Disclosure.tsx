@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Preview } from "../Preview";
+import { DocsSection, DocsSectionList } from "../DocsSection";
 import {
   Accordion,
   Separator,
@@ -29,7 +30,7 @@ function CollapsibleVariantsDemo() {
       >
         <span
           style={{
-            fontSize: "var(--core-font-size-xs, 12px)",
+            fontSize: "var(--typography-font-size-xs)",
             fontWeight: 700,
             textTransform: "uppercase",
             letterSpacing: "0.08em",
@@ -56,11 +57,11 @@ function CollapsibleVariantsDemo() {
                 onClick={() => setActiveVariant(v)}
                 style={{
                   border: "none",
-                  background: activeVariant === v ? "var(--theme-brand-background-primary-default, #1F4F8D)" : "transparent",
+                  background: activeVariant === v ? "var(--theme-brand-background-primary-default)" : "transparent",
                   color: activeVariant === v ? "#FFFFFF" : "var(--site-text, inherit)",
                   borderRadius: 6,
                   padding: "5px 14px",
-                  fontSize: "var(--core-font-size-xs, 12px)",
+                  fontSize: "var(--typography-font-size-xs)",
                   fontWeight: 600,
                   cursor: "pointer",
                   transition: "all 120ms ease",
@@ -94,7 +95,7 @@ function CollapsibleVariantsDemo() {
               defaultOpen
             >
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                <p style={{ margin: 0, fontSize: "var(--core-font-size-sm, 14px)", lineHeight: 1.6, color: "var(--core-color-text-secondary)" }}>
+                <p style={{ margin: 0, fontSize: "var(--typography-body-md-size)", lineHeight: 1.6, color: "var(--core-color-text-secondary)" }}>
                   Participants age 50 or older at calendar year end may make catch-up contributions up to $7,500 beyond normal elective deferral limits.
                 </p>
                 <div style={{ display: "flex", gap: 8, marginTop: 4 }}>
@@ -112,10 +113,10 @@ function CollapsibleVariantsDemo() {
                 title="View Catch-Up Details"
               >
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  <div style={{ fontWeight: 600, color: "var(--core-color-text-primary)", fontSize: "var(--core-font-size-sm, 14px)" }}>
+                  <div style={{ fontWeight: 600, color: "var(--core-color-text-primary)", fontSize: "var(--typography-body-md-size)" }}>
                     Section 414(v) Provisions
                   </div>
-                  <p style={{ margin: 0, fontSize: "var(--core-font-size-sm, 14px)", color: "var(--core-color-text-secondary)", lineHeight: 1.6 }}>
+                  <p style={{ margin: 0, fontSize: "var(--typography-body-md-size)", color: "var(--core-color-text-secondary)", lineHeight: 1.6 }}>
                     Elective catch-up deferrals are processed on each bi-weekly payroll cycle once base statutory limits ($23,000) are attained.
                   </p>
                 </div>
@@ -129,7 +130,7 @@ function CollapsibleVariantsDemo() {
                 variant="ghost"
                 title="Plan sponsor disclaimer and tax disclosure"
               >
-                <p style={{ margin: 0, fontSize: "var(--core-font-size-sm, 14px)", color: "var(--core-color-text-secondary)", lineHeight: 1.6 }}>
+                <p style={{ margin: 0, fontSize: "var(--typography-body-md-size)", color: "var(--core-color-text-secondary)", lineHeight: 1.6 }}>
                   Investment values fluctuate daily with financial markets. Past performance does not guarantee future results. Consult a qualified tax advisor before requesting changes.
                 </p>
               </Collapsible>
@@ -185,7 +186,7 @@ function AccordionVariantsDemo() {
       >
         <span
           style={{
-            fontSize: "var(--core-font-size-xs, 12px)",
+            fontSize: "var(--typography-font-size-xs)",
             fontWeight: 700,
             textTransform: "uppercase",
             letterSpacing: "0.08em",
@@ -212,11 +213,11 @@ function AccordionVariantsDemo() {
                 onClick={() => setVariant(v)}
                 style={{
                   border: "none",
-                  background: variant === v ? "var(--theme-brand-background-primary-default, #1F4F8D)" : "transparent",
+                  background: variant === v ? "var(--theme-brand-background-primary-default)" : "transparent",
                   color: variant === v ? "#FFFFFF" : "var(--site-text, inherit)",
                   borderRadius: 6,
                   padding: "5px 14px",
-                  fontSize: "var(--core-font-size-xs, 12px)",
+                  fontSize: "var(--typography-font-size-xs)",
                   fontWeight: 600,
                   cursor: "pointer",
                   transition: "all 120ms ease",
@@ -255,147 +256,30 @@ function AccordionVariantsDemo() {
   );
 }
 
-export default function DisclosurePage() {
+export default function DisclosurePage({ embedded = false }: { embedded?: boolean }) {
   const sections = [
     {
       id: "01",
       anchorId: "collapsible",
       title: "Collapsible",
-      description:
-        "Single-panel disclosure component for expanding and collapsing auxiliary content with card, button, and ghost variants.",
       content: (
-        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-          <table className="spec-table">
-            <thead>
-              <tr>
-                <th>Property</th>
-                <th>Card Variant</th>
-                <th>Button Variant</th>
-                <th>Ghost Variant</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Container</td>
-                <td>Bordered card surface</td>
-                <td>Collapsible action button</td>
-                <td>Inline text trigger</td>
-              </tr>
-              <tr>
-                <td>Border radius</td>
-                <td>8px (<code>core.radius.md</code>)</td>
-                <td>8px (<code>core.radius.md</code>)</td>
-                <td>None</td>
-              </tr>
-              <tr>
-                <td>Chevron icon</td>
-                <td>14×14px, 180° rotation</td>
-                <td>14×14px, 180° rotation</td>
-                <td>14×14px, 180° rotation</td>
-              </tr>
-              <tr>
-                <td>Typography</td>
-                <td>14px semibold title</td>
-                <td>14px medium button</td>
-                <td>14px brand interactive</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <CollapsibleVariantsDemo />
-        </div>
+        <CollapsibleVariantsDemo />
       ),
     },
     {
       id: "02",
       anchorId: "accordion",
       title: "Accordion",
-      description:
-        "Stacked multi-item disclosure lists with single or multi-panel expansion, bordered, card, and flush presentations.",
       content: (
-        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-          <table className="spec-table">
-            <thead>
-              <tr>
-                <th>Property</th>
-                <th>Bordered (Default)</th>
-                <th>Separated (Card)</th>
-                <th>Flush</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Container border</td>
-                <td>1px solid border-default</td>
-                <td>None (individual card borders)</td>
-                <td>None (borderless)</td>
-              </tr>
-              <tr>
-                <td>Border radius</td>
-                <td>8px (outer container)</td>
-                <td>8px (per card item)</td>
-                <td>None (0px)</td>
-              </tr>
-              <tr>
-                <td>Item spacing</td>
-                <td>Hairline divider (1px)</td>
-                <td>12px gap between cards</td>
-                <td>Hairline divider (1px)</td>
-              </tr>
-              <tr>
-                <td>Trigger padding</td>
-                <td>16px 20px</td>
-                <td>16px 20px</td>
-                <td>12px 0</td>
-              </tr>
-              <tr>
-                <td>Panel padding</td>
-                <td>0 20px 24px</td>
-                <td>0 20px 24px</td>
-                <td>0 0 24px</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <AccordionVariantsDemo />
-        </div>
+        <AccordionVariantsDemo />
       ),
     },
     {
       id: "03",
       anchorId: "separator",
       title: "Separator",
-      description:
-        "Semantic 1px hairline divider carrying structural meaning to assistive technologies in horizontal and vertical layouts.",
       content: (
         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-          <table className="spec-table">
-            <thead>
-              <tr>
-                <th>Property</th>
-                <th>Horizontal</th>
-                <th>Vertical</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Thickness</td>
-                <td>1px hairline</td>
-                <td>1px hairline</td>
-              </tr>
-              <tr>
-                <td>Token</td>
-                <td><code>var(--core-color-border-default)</code></td>
-                <td><code>var(--core-color-border-default)</code></td>
-              </tr>
-              <tr>
-                <td>Accessibility</td>
-                <td><code>role="separator"</code> (horizontal)</td>
-                <td><code>role="separator"</code> (vertical)</td>
-              </tr>
-            </tbody>
-          </table>
-
           <div className="site-panel site-panel--flush">
             <div
               className="preview-surface"
@@ -421,19 +305,19 @@ export default function DisclosurePage() {
                 }}
               >
                 <div>
-                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-primary)" }}>
+                  <div style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 600, color: "var(--core-color-text-primary)" }}>
                     Plan Overview
                   </div>
-                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", color: "var(--core-color-text-secondary)", marginTop: 4 }}>
+                  <div style={{ fontSize: "var(--typography-body-md-size)", color: "var(--core-color-text-secondary)", marginTop: 4 }}>
                     Primary account balance and portfolio asset allocations across equities and fixed income.
                   </div>
                 </div>
                 <Separator />
                 <div>
-                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-primary)" }}>
+                  <div style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 600, color: "var(--core-color-text-primary)" }}>
                     Contribution History
                   </div>
-                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", color: "var(--core-color-text-secondary)", marginTop: 4 }}>
+                  <div style={{ fontSize: "var(--typography-body-md-size)", color: "var(--core-color-text-secondary)", marginTop: 4 }}>
                     Recent bi-weekly payroll deferrals and employer matching contributions.
                   </div>
                 </div>
@@ -447,33 +331,8 @@ export default function DisclosurePage() {
       id: "04",
       anchorId: "skeleton",
       title: "Skeleton",
-      description:
-        "Shimmering loading placeholders matching the geometry of pending cards, avatars, and typography.",
       content: (
         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-          <table className="spec-table">
-            <thead>
-              <tr>
-                <th>Property</th>
-                <th>Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Animation</td>
-                <td>Shimmer pulse / sweep (1.5s infinite linear)</td>
-              </tr>
-              <tr>
-                <td>Surface color</td>
-                <td><code>var(--core-color-surface-sunken)</code></td>
-              </tr>
-              <tr>
-                <td>Border radius</td>
-                <td><code>var(--core-radius-md, 8px)</code> / <code>50%</code> for circular avatars</td>
-              </tr>
-            </tbody>
-          </table>
-
           <div className="site-panel site-panel--flush">
             <Preview>
               <div
@@ -510,112 +369,27 @@ export default function DisclosurePage() {
     },
   ];
 
+  const sectionList = (
+    <DocsSectionList>
+      {sections.map((s) => (
+        <DocsSection key={s.anchorId} anchorId={s.anchorId} title={s.title}>
+          {s.content}
+        </DocsSection>
+      ))}
+    </DocsSectionList>
+  );
+
+  if (embedded) return sectionList;
+
   return (
     <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
-      {/* Centered Hero Header — matching Logo, Typography, Feedback, and DataDisplay pages */}
       <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
-        <div
-          style={{
-            fontSize: 14,
-            fontWeight: 700,
-            letterSpacing: "0.15em",
-            textTransform: "uppercase",
-            color: "var(--core-color-brand-600)",
-            marginBottom: 12,
-          }}
-        >
-          Components
-        </div>
-        <h1
-          style={{
-            fontSize: 72,
-            fontWeight: 800,
-            letterSpacing: "-0.06em",
-            margin: "0 0 16px 0",
-            color: "var(--core-color-text-primary)",
-            lineHeight: 1.1,
-          }}
-        >
-          Disclosure
-        </h1>
-        <p
-          style={{
-            maxWidth: 580,
-            margin: "0 auto",
-            color: "var(--core-color-text-tertiary)",
-            fontSize: "var(--core-font-size-lg, 20px)",
-            lineHeight: 1.6,
-            fontWeight: 400,
-          }}
-        >
+        <h1 style={{ fontSize: 72, fontWeight: 800, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>Disclosure</h1>
+        <p style={{ maxWidth: 580, margin: "0 auto", color: "var(--core-color-text-tertiary)", fontSize: "var(--core-font-size-lg, 20px)", lineHeight: 1.6, fontWeight: 400 }}>
           Progressive disclosure, collapsible views, accordions, separators, and loading skeleton placeholders.
         </p>
       </div>
-
-      {/* Numbered Sections List — matching standard design system layout */}
-      <div style={{ display: "flex", flexDirection: "column", gap: 80 }}>
-        {sections.map((s) => (
-          <div key={s.id} id={s.anchorId} style={{ display: "flex", flexDirection: "column", gap: 32, position: "relative" }}>
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: "-12.5%",
-                width: "125%",
-                height: 1,
-                backgroundColor: "var(--site-border)",
-              }}
-            />
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                paddingTop: 32,
-              }}
-            >
-              <div>
-                <div
-                  style={{
-                    fontSize: 12,
-                    fontWeight: 600,
-                    color: "var(--core-color-text-tertiary)",
-                    marginBottom: 12,
-                  }}
-                >
-                  {s.id}
-                </div>
-                <h2 style={{ fontSize: 40, fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>
-                  {s.title}
-                </h2>
-              </div>
-              <div
-                style={{
-                  maxWidth: 420,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 16,
-                  alignItems: "flex-end",
-                }}
-              >
-                <p
-                  style={{
-                    margin: 0,
-                    fontSize: 16,
-                    lineHeight: 1.6,
-                    color: "var(--core-color-text-secondary)",
-                    textAlign: "right",
-                    fontWeight: 400,
-                  }}
-                >
-                  {s.description}
-                </p>
-              </div>
-            </div>
-            <div>{s.content}</div>
-          </div>
-        ))}
-      </div>
+      {sectionList}
     </div>
   );
 }

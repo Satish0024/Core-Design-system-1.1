@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "tokens:build": "npm run build --workspace=@core-ds/tokens",
+    "typography:tokens": "npm run typography:tokens --workspace=@core-ds/docs-site",
     "dev": "npm run dev --workspace=@core-ds/docs-site",
     "build": "npm run tokens:build && npm run build --workspace=@core-ds/core && npm run build --workspace=@core-ds/docs-site",
     "lint": "eslint . --ext .ts,.tsx",

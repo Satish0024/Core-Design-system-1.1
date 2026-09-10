@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { DocsSection, DocsSectionList, StateLabel } from "../DocsSection";
 import { Preview } from "../Preview";
 import { Anatomy, AnatomyLegend } from "../Anatomy";
 import { Field, Input, InputWithIcon } from "../../../../packages/core/src/components/Field";
 import { Icon } from "../../../../packages/core/src/components/Primitives";
 import { Switch } from "../../../../packages/core/src/components/Misc";
-import { Textarea, Select, Checkbox, RadioGroup } from "../../../../packages/core/src/components/FormControls";
-import { Toggle, ToggleGroup, InputGroup, InputOTP } from "../../../../packages/core/src/components/ToggleInputs";
+import { Textarea, Select, Checkbox, Radio, RadioGroup } from "../../../../packages/core/src/components/FormControls";
+import { Toggle, ToggleGroup, InputGroup, InputOTP, IncrementalSelector } from "../../../../packages/core/src/components/ToggleInputs";
 import { Slider } from "../../../../packages/core/src/components/Primitives";
 import { Combobox } from "../../../../packages/core/src/components/Combobox";
 import { Calendar, DatePicker } from "../../../../packages/core/src/components/Calendar";
@@ -18,11 +19,10 @@ const employers = [
   { value: "umbrella", label: "Umbrella Health" },
 ];
 
-export default function Forms() {
+export default function Forms({ embedded = false }: { embedded?: boolean }) {
   const [on, setOn] = useState(true);
   const [plan, setPlan] = useState("roth");
-  const [view, setView] = useState<"list" | "grid">("list");
-  const [starred, setStarred] = useState(false);
+  const [segment, setSegment] = useState<"sources" | "investments">("sources");
   const [otp, setOtp] = useState("");
   const [filledOtp, setFilledOtp] = useState("482916");
   const [errorOtp, setErrorOtp] = useState("830174");
@@ -30,29 +30,53 @@ export default function Forms() {
   const [employer, setEmployer] = useState("");
   const [dob, setDob] = useState<Date | undefined>(undefined);
   const [files, setFiles] = useState<AttachmentFile[]>([{ id: "1", name: "beneficiary-form.pdf", size: "212 KB" }]);
-  const [freq, setFreq] = useState("monthly");
   const [cardNumber, setCardNumber] = useState("");
   const [routing, setRouting] = useState("");
   const [account, setAccount] = useState("");
 
   const formatCardNumber = (raw: string) => raw.replace(/\D/g, "").slice(0, 16).replace(/(.{4})/g, "$1 ").trim();
 
+  const toggleGroupOptions = [
+    {
+      value: "sources" as const,
+      label: "Sources",
+      icon: <Icon name="fa-solid fa-database" size="sm" />,
+    },
+    {
+      value: "investments" as const,
+      label: "Invest",
+      icon: <Icon name="fa-solid fa-chart-pie" size="sm" />,
+    },
+  ];
+
   const sections = [
     {
       id: "01",
       anchorId: "input",
       title: "Input",
-      description: "Standard text fields showing interactive and validation states.",
       content: (
         <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
           <div className="site-panel site-panel--flush">
             <Preview>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 16 }}>
-                <Field label="Default" required>{(p) => <Input {...p} placeholder="Jordan Lee" />}</Field>
-                <Field label="Hover">{(p) => <Input {...p} placeholder="Jordan Lee" style={{ borderColor: "var(--core-input-borderHover)" }} />}</Field>
-                <Field label="Filled">{(p) => <Input {...p} defaultValue="Jordan Lee" />}</Field>
-                <Field label="With error" error="Must be between 1% and 100%">{(p) => <Input {...p} defaultValue="150" />}</Field>
-                <Field label="Disabled">{(p) => <Input {...p} disabled placeholder="Locked" />}</Field>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 16 }}>
+                <div className="force-default">
+                  <Field label="Default" required>{(p) => <Input {...p} placeholder="Jordan Lee" />}</Field>
+                </div>
+                <div className="force-hover">
+                  <Field label="Hover">{(p) => <Input {...p} placeholder="Jordan Lee" />}</Field>
+                </div>
+                <div className="force-focus">
+                  <Field label="Focus">{(p) => <Input {...p} placeholder="Jordan Lee" />}</Field>
+                </div>
+                <div className="force-filled">
+                  <Field label="Filled">{(p) => <Input {...p} defaultValue="Jordan Lee" />}</Field>
+                </div>
+                <div className="force-error">
+                  <Field label="With error" error="Must be between 1% and 100%">{(p) => <Input {...p} defaultValue="150" />}</Field>
+                </div>
+                <div className="force-disabled">
+                  <Field label="Disabled">{(p) => <Input {...p} disabled placeholder="Locked" />}</Field>
+                </div>
               </div>
             </Preview>
           </div>
@@ -63,7 +87,6 @@ export default function Forms() {
       id: "02",
       anchorId: "textarea",
       title: "Textarea",
-      description: "Multi-line text input that grows vertically with content. Minimum height 88px.",
       content: (
         <div className="site-panel site-panel--flush">
           <Preview>
@@ -92,7 +115,6 @@ export default function Forms() {
       id: "03",
       anchorId: "select",
       title: "Select",
-      description: "Native select dropdown for choosing from a list of options.",
       content: (
         <div className="site-panel site-panel--flush">
           <Preview>
@@ -121,27 +143,61 @@ export default function Forms() {
       id: "04",
       anchorId: "checkbox-radio",
       title: "Checkbox & Radio",
-      description: "Controls for boolean states and mutually exclusive choices.",
       content: (
         <div className="site-panel site-panel--flush">
           <Preview>
-            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              <Checkbox label="I agree to the plan terms" defaultChecked />
-              <Checkbox label="Send me email confirmations" />
-              <Checkbox label="Select all (some selected)" indeterminate />
-              <Checkbox label="Disabled option" disabled />
-            </div>
-            <div style={{ marginLeft: 32 }}>
-              <RadioGroup
-                name="freq"
-                value={freq}
-                onChange={setFreq}
-                options={[
-                  { value: "monthly", label: "Monthly" },
-                  { value: "quarterly", label: "Quarterly" },
-                  { value: "annually", label: "Annually" },
-                ]}
-              />
+            <div style={{ display: "flex", flexDirection: "column", gap: 32, width: "100%" }}>
+              <div>
+                <div style={{ fontSize: "var(--typography-label-size)", lineHeight: "var(--typography-label-line-height)", fontWeight: "var(--typography-label-weight)", letterSpacing: "var(--typography-label-letter-spacing)", color: "var(--theme-neutral-text-subtle)", marginBottom: 16 }}>Checkbox</div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, minmax(120px, 1fr))", gap: 32, padding: "8px 0" }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", padding: "8px 12px" }}>
+                    <StateLabel>DEFAULT</StateLabel>
+                    <Checkbox label="Option" readOnly />
+                  </div>
+                  <div className="force-hover" style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", padding: "8px 12px" }}>
+                    <StateLabel>HOVER</StateLabel>
+                    <Checkbox label="Option" readOnly />
+                  </div>
+                  <div className="force-focus" style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", padding: "8px 12px" }}>
+                    <StateLabel>FOCUS</StateLabel>
+                    <Checkbox label="Option" readOnly />
+                  </div>
+                  <div className="force-active" style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", padding: "8px 12px" }}>
+                    <StateLabel>CLICKED</StateLabel>
+                    <Checkbox label="Option" defaultChecked readOnly />
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", padding: "8px 12px" }}>
+                    <StateLabel>DISABLED</StateLabel>
+                    <Checkbox label="Option" disabled />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div style={{ fontSize: "var(--typography-label-size)", lineHeight: "var(--typography-label-line-height)", fontWeight: "var(--typography-label-weight)", letterSpacing: "var(--typography-label-letter-spacing)", color: "var(--theme-neutral-text-subtle)", marginBottom: 16 }}>Radio</div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, minmax(120px, 1fr))", gap: 32, padding: "8px 0" }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", padding: "8px 12px" }}>
+                    <StateLabel>DEFAULT</StateLabel>
+                    <Radio name="radio-default" label="Option" value="opt" checked={false} readOnly onChange={() => {}} />
+                  </div>
+                  <div className="force-hover" style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", padding: "8px 12px" }}>
+                    <StateLabel>HOVER</StateLabel>
+                    <Radio name="radio-hover" label="Option" value="opt" checked={false} readOnly onChange={() => {}} />
+                  </div>
+                  <div className="force-focus" style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", padding: "8px 12px" }}>
+                    <StateLabel>FOCUS</StateLabel>
+                    <Radio name="radio-focus" label="Option" value="opt" checked={false} readOnly onChange={() => {}} />
+                  </div>
+                  <div className="force-active" style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", padding: "8px 12px" }}>
+                    <StateLabel>CLICKED</StateLabel>
+                    <Radio name="radio-active" label="Option" value="opt" checked readOnly onChange={() => {}} />
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", padding: "8px 12px" }}>
+                    <StateLabel>DISABLED</StateLabel>
+                    <Radio name="radio-disabled" label="Option" value="opt" checked={false} disabled readOnly onChange={() => {}} />
+                  </div>
+                </div>
+              </div>
             </div>
           </Preview>
         </div>
@@ -151,25 +207,29 @@ export default function Forms() {
       id: "05",
       anchorId: "switch",
       title: "Switch",
-      description: "Toggle control for immediate on/off actions.",
       content: (
         <div className="site-panel site-panel--flush">
           <Preview>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 20 }}>
-              <div className="force-default">
-                <Switch label="Default" checked={false} onChange={() => { }} />
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(5, minmax(140px, 1fr))", gap: 32, width: "100%", padding: "16px 8px" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", padding: "8px 12px" }}>
+                <StateLabel>DEFAULT</StateLabel>
+                <Switch label="Option" checked={false} onChange={() => { }} />
               </div>
-              <div className="force-hover">
-                <Switch label="Hover" checked={false} onChange={() => { }} />
+              <div className="force-hover" style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", padding: "8px 12px" }}>
+                <StateLabel>HOVER</StateLabel>
+                <Switch label="Option" checked={false} onChange={() => { }} />
               </div>
-              <div className="force-focus">
-                <Switch label="Focus" checked={false} onChange={() => { }} />
+              <div className="force-focus" style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", padding: "8px 12px" }}>
+                <StateLabel>FOCUS</StateLabel>
+                <Switch label="Option" checked={false} onChange={() => { }} />
               </div>
-              <div className="force-active">
-                <Switch label="Active (On)" checked={true} onChange={() => { }} />
+              <div style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", padding: "8px 12px" }}>
+                <StateLabel>ACTIVE (ON)</StateLabel>
+                <Switch label="Option" checked={true} onChange={() => { }} />
               </div>
-              <div className="force-disabled">
-                <Switch label="Disabled" disabled checked={false} onChange={() => { }} />
+              <div style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", padding: "8px 12px" }}>
+                <StateLabel>DISABLED</StateLabel>
+                <Switch label="Option" disabled checked={false} onChange={() => { }} />
               </div>
             </div>
           </Preview>
@@ -180,50 +240,47 @@ export default function Forms() {
       id: "06",
       anchorId: "toggle",
       title: "Toggle",
-      description: "Stateful buttons that hold a pressed state, individually or in groups.",
       content: (
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div className="site-panel site-panel--flush">
             <Preview>
-              <div style={{ display: "flex", flexDirection: "column", gap: 24, width: "100%" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 32, width: "100%" }}>
                 <div>
-                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-secondary)", marginBottom: 12 }}>Single Toggle</div>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 16 }}>
-                    <div>
-                      <div style={{ fontSize: 12, color: "var(--core-color-text-tertiary)", marginBottom: 8 }}>Default</div>
+                  <div style={{ fontSize: "var(--typography-label-size)", lineHeight: "var(--typography-label-line-height)", fontWeight: "var(--typography-label-weight)", letterSpacing: "var(--typography-label-letter-spacing)", color: "var(--theme-neutral-text-subtle)", marginBottom: 16 }}>Single Toggle</div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, minmax(140px, 1fr))", gap: 32, padding: "8px 0" }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", padding: "8px 12px" }}>
+                      <StateLabel>DEFAULT</StateLabel>
                       <Toggle pressed={false} onPressedChange={() => { }}>★ Favorite</Toggle>
                     </div>
-                    <div>
-                      <div style={{ fontSize: 12, color: "var(--core-color-text-tertiary)", marginBottom: 8 }}>Hover</div>
-                      <div className="force-hover">
-                        <Toggle pressed={false} onPressedChange={() => { }}>★ Favorite</Toggle>
-                      </div>
+                    <div className="force-hover" style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", padding: "8px 12px" }}>
+                      <StateLabel>HOVER</StateLabel>
+                      <Toggle pressed={false} onPressedChange={() => { }}>★ Favorite</Toggle>
                     </div>
-                    <div>
-                      <div style={{ fontSize: 12, color: "var(--core-color-text-tertiary)", marginBottom: 8 }}>Pressed</div>
-                      <Toggle pressed={true} onPressedChange={() => { }}>★ Favorite</Toggle>
+                    <div className="force-focus" style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", padding: "8px 12px" }}>
+                      <StateLabel>FOCUS</StateLabel>
+                      <Toggle pressed={false} onPressedChange={() => { }}>★ Favorite</Toggle>
                     </div>
-                    <div>
-                      <div style={{ fontSize: 12, color: "var(--core-color-text-tertiary)", marginBottom: 8 }}>Disabled</div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "flex-start", padding: "8px 12px" }}>
+                      <StateLabel>DISABLED</StateLabel>
                       <Toggle disabled pressed={false} onPressedChange={() => { }}>★ Favorite</Toggle>
-                    </div>
-                    <div>
-                      <div style={{ fontSize: 12, color: "var(--core-color-text-tertiary)", marginBottom: 8 }}>Disabled (Pressed)</div>
-                      <Toggle disabled pressed={true} onPressedChange={() => { }}>★ Favorite</Toggle>
                     </div>
                   </div>
                 </div>
 
-                <div style={{ borderTop: "1px solid var(--site-border)", paddingTop: 20 }}>
-                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-secondary)", marginBottom: 12 }}>Toggle Group</div>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 24 }}>
-                    <div>
-                      <div style={{ fontSize: 12, color: "var(--core-color-text-tertiary)", marginBottom: 8 }}>Default</div>
-                      <ToggleGroup value={view} onChange={setView} options={[{ value: "list", label: "List" }, { value: "grid", label: "Grid" }]} />
+                <div style={{ borderTop: "1px solid var(--theme-neutral-border-primary-default)", paddingTop: 24 }}>
+                  <div style={{ fontSize: "var(--typography-label-size)", lineHeight: "var(--typography-label-line-height)", fontWeight: "var(--typography-label-weight)", letterSpacing: "var(--typography-label-letter-spacing)", color: "var(--theme-neutral-text-subtle)", marginBottom: 16 }}>Toggle Group</div>
+                  <div className="toggle-group-states">
+                    <div className="toggle-group-state-cell">
+                      <StateLabel>DEFAULT</StateLabel>
+                      <ToggleGroup value={segment} onChange={setSegment} options={toggleGroupOptions} />
                     </div>
-                    <div>
-                      <div style={{ fontSize: 12, color: "var(--core-color-text-tertiary)", marginBottom: 8 }}>Disabled</div>
-                      <ToggleGroup disabled value="list" onChange={() => { }} options={[{ value: "list", label: "List" }, { value: "grid", label: "Grid" }]} />
+                    <div className="toggle-group-state-cell toggle-group-state-focus">
+                      <StateLabel>FOCUS</StateLabel>
+                      <ToggleGroup value="sources" onChange={() => { }} options={toggleGroupOptions} />
+                    </div>
+                    <div className="toggle-group-state-cell">
+                      <StateLabel>DISABLED</StateLabel>
+                      <ToggleGroup disabled value="investments" onChange={() => { }} options={toggleGroupOptions} />
                     </div>
                   </div>
                 </div>
@@ -237,7 +294,6 @@ export default function Forms() {
       id: "07",
       anchorId: "input-group",
       title: "Input group",
-      description: "Text inputs composed with fixed prefix or suffix labels.",
       content: (
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div className="site-panel site-panel--flush">
@@ -245,8 +301,8 @@ export default function Forms() {
               <div style={{ display: "flex", flexDirection: "column", gap: 24, width: "100%" }}>
                 {/* Prefix variant row */}
                 <div>
-                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-secondary)", marginBottom: 12 }}>Prefix Addon ($)</div>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 }}>
+                  <div style={{ fontSize: "var(--typography-label-size)", lineHeight: "var(--typography-label-line-height)", fontWeight: "var(--typography-label-weight)", letterSpacing: "var(--typography-label-letter-spacing)", color: "var(--theme-neutral-text-subtle)", marginBottom: 12 }}>Prefix Addon ($)</div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 16 }}>
                     <div className="force-default">
                       <Field label="Default">
                         {(p) => <InputGroup prefix="$"><Input {...p} placeholder="0.00" /></InputGroup>}
@@ -254,6 +310,11 @@ export default function Forms() {
                     </div>
                     <div className="force-hover">
                       <Field label="Hover">
+                        {(p) => <InputGroup prefix="$"><Input {...p} placeholder="0.00" /></InputGroup>}
+                      </Field>
+                    </div>
+                    <div className="force-focus">
+                      <Field label="Focus">
                         {(p) => <InputGroup prefix="$"><Input {...p} placeholder="0.00" /></InputGroup>}
                       </Field>
                     </div>
@@ -271,9 +332,9 @@ export default function Forms() {
                 </div>
 
                 {/* Suffix variant row */}
-                <div style={{ borderTop: "1px solid var(--site-border)", paddingTop: 20 }}>
-                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-secondary)", marginBottom: 12 }}>Suffix Addon (%)</div>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 }}>
+                <div style={{ borderTop: "1px solid var(--theme-neutral-border-primary-default)", paddingTop: 20 }}>
+                  <div style={{ fontSize: "var(--typography-label-size)", lineHeight: "var(--typography-label-line-height)", fontWeight: "var(--typography-label-weight)", letterSpacing: "var(--typography-label-letter-spacing)", color: "var(--theme-neutral-text-subtle)", marginBottom: 12 }}>Suffix Addon (%)</div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 16 }}>
                     <div className="force-default">
                       <Field label="Default">
                         {(p) => <InputGroup suffix="%"><Input {...p} placeholder="0" /></InputGroup>}
@@ -281,6 +342,11 @@ export default function Forms() {
                     </div>
                     <div className="force-hover">
                       <Field label="Hover">
+                        {(p) => <InputGroup suffix="%"><Input {...p} placeholder="0" /></InputGroup>}
+                      </Field>
+                    </div>
+                    <div className="force-focus">
+                      <Field label="Focus">
                         {(p) => <InputGroup suffix="%"><Input {...p} placeholder="0" /></InputGroup>}
                       </Field>
                     </div>
@@ -306,7 +372,6 @@ export default function Forms() {
       id: "08",
       anchorId: "input-otp",
       title: "Input OTP",
-      description: "Segmented input for 2FA and verification codes.",
       content: (
         <div className="site-panel site-panel--flush">
           <Preview>
@@ -335,14 +400,28 @@ export default function Forms() {
       id: "09",
       anchorId: "slider",
       title: "Slider",
-      description: "Range control for numeric values.",
       content: (
         <div className="site-panel site-panel--flush">
           <Preview>
-            <div style={{ width: 260 }}>
-              <Field label="Contribution rate">{() => (
-                <Slider value={contribPct} min={0} max={25} onChange={setContribPct} formatValue={(v) => `${v}%`} />
-              )}</Field>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(220px, 1fr))", gap: 32, width: "100%", padding: "8px 0" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "stretch", padding: "8px 12px" }}>
+                <StateLabel>DEFAULT</StateLabel>
+                <Field label="Contribution rate">{() => (
+                  <Slider value={contribPct} min={0} max={25} onChange={setContribPct} formatValue={(v) => `${v}%`} />
+                )}</Field>
+              </div>
+              <div className="force-focus" style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "stretch", padding: "8px 12px" }}>
+                <StateLabel>FOCUS</StateLabel>
+                <Field label="Contribution rate">{() => (
+                  <Slider value={6} min={0} max={25} onChange={() => {}} formatValue={(v) => `${v}%`} />
+                )}</Field>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "stretch", padding: "8px 12px" }}>
+                <StateLabel>DISABLED</StateLabel>
+                <Field label="Contribution rate">{() => (
+                  <Slider disabled value={6} min={0} max={25} onChange={() => {}} formatValue={(v) => `${v}%`} />
+                )}</Field>
+              </div>
             </div>
           </Preview>
         </div>
@@ -352,11 +431,10 @@ export default function Forms() {
       id: "10",
       anchorId: "combobox",
       title: "Combobox",
-      description: "Searchable select component for long lists of options.",
       content: (
         <div className="site-panel site-panel--flush">
           <Preview>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16, width: "100%" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 16, width: "100%" }}>
               <div className="force-default">
                 <Field label="Default">
                   {(p) => <Combobox {...p} options={employers} value="" onChange={() => { }} placeholder="Search employer…" />}
@@ -364,6 +442,11 @@ export default function Forms() {
               </div>
               <div className="force-hover">
                 <Field label="Hover">
+                  {(p) => <Combobox {...p} options={employers} value="" onChange={() => { }} placeholder="Search employer…" />}
+                </Field>
+              </div>
+              <div className="force-focus">
+                <Field label="Focus">
                   {(p) => <Combobox {...p} options={employers} value="" onChange={() => { }} placeholder="Search employer…" />}
                 </Field>
               </div>
@@ -386,15 +469,14 @@ export default function Forms() {
       id: "11",
       anchorId: "date-picker",
       title: "Date Selection",
-      description: "Inline calendar and popover date picker components.",
       content: (
         <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
           <div className="site-panel site-panel--flush">
             <Preview>
               <div style={{ display: "flex", flexDirection: "column", gap: 24, width: "100%" }}>
                 <div>
-                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-secondary)", marginBottom: 12 }}>DatePicker Popover</div>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 }}>
+                  <div style={{ fontSize: "var(--typography-label-size)", lineHeight: "var(--typography-label-line-height)", fontWeight: "var(--typography-label-weight)", letterSpacing: "var(--typography-label-letter-spacing)", color: "var(--theme-neutral-text-subtle)", marginBottom: 12 }}>DatePicker Popover</div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 16 }}>
                     <div className="force-default">
                       <Field label="Default">
                         {() => <DatePicker placeholder="Select date" />}
@@ -402,6 +484,11 @@ export default function Forms() {
                     </div>
                     <div className="force-hover">
                       <Field label="Hover">
+                        {() => <DatePicker placeholder="Select date" />}
+                      </Field>
+                    </div>
+                    <div className="force-focus">
+                      <Field label="Focus">
                         {() => <DatePicker placeholder="Select date" />}
                       </Field>
                     </div>
@@ -425,11 +512,11 @@ export default function Forms() {
             <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", padding: 24 }}>
               <div style={{ display: "flex", gap: 40, flexWrap: "wrap" }}>
                 <div>
-                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-secondary)", marginBottom: 12 }}>Calendar (Active)</div>
+                  <div style={{ fontSize: "var(--typography-label-size)", lineHeight: "var(--typography-label-line-height)", fontWeight: "var(--typography-label-weight)", letterSpacing: "var(--typography-label-letter-spacing)", color: "var(--theme-neutral-text-subtle)", marginBottom: 12 }}>Calendar (Active)</div>
                   <Calendar selected={dob} onSelect={setDob} maxDate={new Date()} />
                 </div>
                 <div>
-                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-secondary)", marginBottom: 12 }}>Calendar (Disabled)</div>
+                  <div style={{ fontSize: "var(--typography-label-size)", lineHeight: "var(--typography-label-line-height)", fontWeight: "var(--typography-label-weight)", letterSpacing: "var(--typography-label-letter-spacing)", color: "var(--theme-neutral-text-subtle)", marginBottom: 12 }}>Calendar (Disabled)</div>
                   <Calendar disabled selected={dob} onSelect={() => { }} />
                 </div>
               </div>
@@ -442,7 +529,6 @@ export default function Forms() {
       id: "12",
       anchorId: "input-icon",
       title: "Input with icon",
-      description: "First-class leading or trailing icon slot.",
       content: (
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div className="site-panel site-panel--flush">
@@ -450,8 +536,8 @@ export default function Forms() {
               <div style={{ display: "flex", flexDirection: "column", gap: 24, width: "100%" }}>
                 {/* Leading icon */}
                 <div>
-                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-secondary)", marginBottom: 12 }}>Leading Icon (Search)</div>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 }}>
+                  <div style={{ fontSize: "var(--typography-label-size)", lineHeight: "var(--typography-label-line-height)", fontWeight: "var(--typography-label-weight)", letterSpacing: "var(--typography-label-letter-spacing)", color: "var(--theme-neutral-text-subtle)", marginBottom: 12 }}>Leading Icon (Search)</div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 16 }}>
                     <div className="force-default">
                       <Field label="Default">
                         {(p) => <InputWithIcon {...p} leadingIcon={<Icon name="fa-solid fa-magnifying-glass" size="sm" />} placeholder="Search transactions…" />}
@@ -459,6 +545,11 @@ export default function Forms() {
                     </div>
                     <div className="force-hover">
                       <Field label="Hover">
+                        {(p) => <InputWithIcon {...p} leadingIcon={<Icon name="fa-solid fa-magnifying-glass" size="sm" />} placeholder="Search transactions…" />}
+                      </Field>
+                    </div>
+                    <div className="force-focus">
+                      <Field label="Focus">
                         {(p) => <InputWithIcon {...p} leadingIcon={<Icon name="fa-solid fa-magnifying-glass" size="sm" />} placeholder="Search transactions…" />}
                       </Field>
                     </div>
@@ -476,9 +567,9 @@ export default function Forms() {
                 </div>
 
                 {/* Trailing icon */}
-                <div style={{ borderTop: "1px solid var(--site-border)", paddingTop: 20 }}>
-                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-secondary)", marginBottom: 12 }}>Trailing Icon (Currency)</div>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 }}>
+                <div style={{ borderTop: "1px solid var(--theme-neutral-border-primary-default)", paddingTop: 20 }}>
+                  <div style={{ fontSize: "var(--typography-label-size)", lineHeight: "var(--typography-label-line-height)", fontWeight: "var(--typography-label-weight)", letterSpacing: "var(--typography-label-letter-spacing)", color: "var(--theme-neutral-text-subtle)", marginBottom: 12 }}>Trailing Icon (Currency)</div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 16 }}>
                     <div className="force-default">
                       <Field label="Default">
                         {(p) => <InputWithIcon {...p} trailingIcon={<Icon name="fa-solid fa-dollar-sign" size="sm" />} placeholder="0.00" />}
@@ -486,6 +577,11 @@ export default function Forms() {
                     </div>
                     <div className="force-hover">
                       <Field label="Hover">
+                        {(p) => <InputWithIcon {...p} trailingIcon={<Icon name="fa-solid fa-dollar-sign" size="sm" />} placeholder="0.00" />}
+                      </Field>
+                    </div>
+                    <div className="force-focus">
+                      <Field label="Focus">
                         {(p) => <InputWithIcon {...p} trailingIcon={<Icon name="fa-solid fa-dollar-sign" size="sm" />} placeholder="0.00" />}
                       </Field>
                     </div>
@@ -501,6 +597,33 @@ export default function Forms() {
                     </div>
                   </div>
                 </div>
+
+                {/* Incremental selector */}
+                <div style={{ borderTop: "1px solid var(--theme-neutral-border-primary-default)", paddingTop: 20 }}>
+                  <div style={{ fontSize: "var(--typography-label-size)", lineHeight: "var(--typography-label-line-height)", fontWeight: "var(--typography-label-weight)", letterSpacing: "var(--typography-label-letter-spacing)", color: "var(--theme-neutral-text-subtle)", marginBottom: 12 }}>Incremental Selector</div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 }}>
+                    <div className="force-default">
+                      <Field label="Default">
+                        {() => <IncrementalSelector defaultValue={1} min={0} max={10} aria-label="Allocation percent" />}
+                      </Field>
+                    </div>
+                    <div className="force-hover">
+                      <Field label="Hover">
+                        {() => <IncrementalSelector defaultValue={1} min={0} max={10} aria-label="Allocation percent" />}
+                      </Field>
+                    </div>
+                    <div className="force-focus">
+                      <Field label="Focus">
+                        {() => <IncrementalSelector defaultValue={1} min={0} max={10} aria-label="Allocation percent" />}
+                      </Field>
+                    </div>
+                    <div className="force-disabled">
+                      <Field label="Disabled">
+                        {() => <IncrementalSelector disabled defaultValue={3} min={0} max={10} aria-label="Allocation percent" />}
+                      </Field>
+                    </div>
+                  </div>
+                </div>
               </div>
             </Preview>
           </div>
@@ -511,7 +634,6 @@ export default function Forms() {
       id: "13",
       anchorId: "payment-bank-fields",
       title: "Bank fields",
-      description: "Masked and formatted inputs for sensitive data (card, routing, etc.).",
       content: (
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           <div className="site-panel site-panel--flush">
@@ -519,8 +641,8 @@ export default function Forms() {
               <div style={{ display: "flex", flexDirection: "column", gap: 24, width: "100%" }}>
                 {/* Card Number */}
                 <div>
-                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-secondary)", marginBottom: 12 }}>Card Number</div>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 }}>
+                  <div style={{ fontSize: "var(--typography-label-size)", lineHeight: "var(--typography-label-line-height)", fontWeight: "var(--typography-label-weight)", letterSpacing: "var(--typography-label-letter-spacing)", color: "var(--theme-neutral-text-subtle)", marginBottom: 12 }}>Card Number</div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 16 }}>
                     <div className="force-default">
                       <Field label="Default">
                         {(p) => (
@@ -535,6 +657,18 @@ export default function Forms() {
                     </div>
                     <div className="force-hover">
                       <Field label="Hover">
+                        {(p) => (
+                          <InputWithIcon
+                            {...p}
+                            trailingIcon={<Icon name="fa-solid fa-credit-card" size="sm" />}
+                            inputMode="numeric"
+                            placeholder="1234 5678 9012 3456"
+                          />
+                        )}
+                      </Field>
+                    </div>
+                    <div className="force-focus">
+                      <Field label="Focus">
                         {(p) => (
                           <InputWithIcon
                             {...p}
@@ -574,9 +708,9 @@ export default function Forms() {
                 </div>
 
                 {/* Routing & Account Number */}
-                <div style={{ borderTop: "1px solid var(--site-border)", paddingTop: 20 }}>
-                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-secondary)", marginBottom: 12 }}>Routing Number (9 Digits)</div>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16 }}>
+                <div style={{ borderTop: "1px solid var(--theme-neutral-border-primary-default)", paddingTop: 20 }}>
+                  <div style={{ fontSize: "var(--typography-label-size)", lineHeight: "var(--typography-label-line-height)", fontWeight: "var(--typography-label-weight)", letterSpacing: "var(--typography-label-letter-spacing)", color: "var(--theme-neutral-text-subtle)", marginBottom: 12 }}>Routing Number (9 Digits)</div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 16 }}>
                     <div className="force-default">
                       <Field label="Default">
                         {(p) => <Input {...p} inputMode="numeric" maxLength={9} placeholder="021000021" />}
@@ -584,6 +718,11 @@ export default function Forms() {
                     </div>
                     <div className="force-hover">
                       <Field label="Hover">
+                        {(p) => <Input {...p} inputMode="numeric" maxLength={9} placeholder="021000021" />}
+                      </Field>
+                    </div>
+                    <div className="force-focus">
+                      <Field label="Focus">
                         {(p) => <Input {...p} inputMode="numeric" maxLength={9} placeholder="021000021" />}
                       </Field>
                     </div>
@@ -601,8 +740,8 @@ export default function Forms() {
                 </div>
 
                 {/* Expiration & CVC */}
-                <div style={{ borderTop: "1px solid var(--site-border)", paddingTop: 20 }}>
-                  <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-secondary)", marginBottom: 12 }}>Interactive Card Verification Entry</div>
+                <div style={{ borderTop: "1px solid var(--theme-neutral-border-primary-default)", paddingTop: 20 }}>
+                  <div style={{ fontSize: "var(--typography-label-size)", lineHeight: "var(--typography-label-line-height)", fontWeight: "var(--typography-label-weight)", letterSpacing: "var(--typography-label-letter-spacing)", color: "var(--theme-neutral-text-subtle)", marginBottom: 12 }}>Interactive Card Verification Entry</div>
                   <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: 16 }}>
                     <Field label="Card number" hint="Stored securely — last 4 digits only.">
                       {(p) => (
@@ -634,7 +773,6 @@ export default function Forms() {
       id: "14",
       anchorId: "attachment",
       title: "Attachment",
-      description: "File upload dropzone and attachment list.",
       content: (
         <div className="site-panel site-panel--flush">
           <Preview>
@@ -642,10 +780,10 @@ export default function Forms() {
               {/* Default State */}
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <span style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-secondary)" }}>
+                  <span style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 600, color: "var(--core-color-text-secondary)" }}>
                     Default (Interactive)
                   </span>
-                  <span style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 500, color: "var(--core-color-text-tertiary)" }}>Ready to upload</span>
+                  <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 500, color: "var(--core-color-text-tertiary)" }}>Ready to upload</span>
                 </div>
                 <Dropzone
                   onFiles={(fl) =>
@@ -661,10 +799,10 @@ export default function Forms() {
               {/* Success State */}
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <span style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-status-success-text)", display: "flex", alignItems: "center", gap: 6 }}>
+                  <span style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 600, color: "var(--core-color-status-success-text)", display: "flex", alignItems: "center", gap: 6 }}>
                     <Icon name="fa-solid fa-circle-check" size="sm" /> Success State
                   </span>
-                  <span style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 600, color: "var(--core-color-status-success-text)", background: "var(--core-color-status-success-bg)", border: "1px solid var(--core-color-status-success-border)", padding: "1px 8px", borderRadius: 999 }}>
+                  <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 600, color: "var(--core-color-status-success-text)", background: "var(--core-color-status-success-bg)", border: "1px solid var(--core-color-status-success-border)", padding: "1px 8px", borderRadius: 999 }}>
                     Complete
                   </span>
                 </div>
@@ -686,10 +824,10 @@ export default function Forms() {
               {/* Error State */}
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <span style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-status-danger-text)", display: "flex", alignItems: "center", gap: 6 }}>
+                  <span style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 600, color: "var(--core-color-status-danger-text)", display: "flex", alignItems: "center", gap: 6 }}>
                     <Icon name="fa-solid fa-circle-exclamation" size="sm" /> Error State
                   </span>
-                  <span style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 600, color: "var(--core-color-status-danger-text)", background: "var(--core-color-status-danger-bg)", border: "1px solid var(--core-color-status-danger-border)", padding: "1px 8px", borderRadius: 999 }}>
+                  <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 600, color: "var(--core-color-status-danger-text)", background: "var(--core-color-status-danger-bg)", border: "1px solid var(--core-color-status-danger-border)", padding: "1px 8px", borderRadius: 999 }}>
                     Failed
                   </span>
                 </div>
@@ -711,10 +849,10 @@ export default function Forms() {
               {/* Warning State */}
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <span style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-status-warning-text)", display: "flex", alignItems: "center", gap: 6 }}>
+                  <span style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 600, color: "var(--core-color-status-warning-text)", display: "flex", alignItems: "center", gap: 6 }}>
                     <Icon name="fa-solid fa-triangle-exclamation" size="sm" /> Warning State
                   </span>
-                  <span style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 600, color: "var(--core-color-status-warning-text)", background: "var(--core-color-status-warning-bg)", border: "1px solid var(--core-color-status-warning-border)", padding: "1px 8px", borderRadius: 999 }}>
+                  <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 600, color: "var(--core-color-status-warning-text)", background: "var(--core-color-status-warning-bg)", border: "1px solid var(--core-color-status-warning-border)", padding: "1px 8px", borderRadius: 999 }}>
                     Warning
                   </span>
                 </div>
@@ -736,16 +874,16 @@ export default function Forms() {
               {/* Disable State */}
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <span style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-tertiary)", display: "flex", alignItems: "center", gap: 6 }}>
+                  <span style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 600, color: "var(--core-color-text-tertiary)", display: "flex", alignItems: "center", gap: 6 }}>
                     <Icon name="fa-solid fa-lock" size="sm" /> Disable State
                   </span>
-                  <span style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 600, color: "#A0AAB8", background: "#F5F7FA", border: "1px solid var(--theme-brand-border-primary-disabled, #BACEE9)", padding: "1px 8px", borderRadius: 999 }}>
+                  <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 600, color: "var(--theme-neutral-text-subtleleast)", background: "var(--theme-brand-background-disabled-light)", border: "1px solid var(--theme-brand-borders-primary-disabled)", padding: "1px 8px", borderRadius: 999 }}>
                     Disabled
                   </span>
                 </div>
                 <Dropzone
                   disabled={true}
-                  icon={<Icon name="fa-solid fa-lock" size="md" color="#A0AAB8" />}
+                  icon={<Icon name="fa-solid fa-lock" size="md" color="var(--theme-neutral-text-subtleleast)" />}
                   label={<span>File uploads are disabled</span>}
                   hint="Attachments are locked and read-only for submitted requests."
                 />
@@ -765,7 +903,6 @@ export default function Forms() {
       id: "15",
       anchorId: "working-example",
       title: "Working Example",
-      description: "A functional form combining multiple control variants, states, and maximum configuration.",
       content: (
         <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
           <div className="site-panel site-panel--flush">
@@ -804,7 +941,7 @@ export default function Forms() {
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 0", borderTop: "1px solid var(--site-border)", borderBottom: "1px solid var(--site-border)" }}>
                       <div>
                         <div style={{ fontWeight: 600, fontSize: 14 }}>Two-factor authentication</div>
-                        <div style={{ fontSize: "var(--core-font-size-xs, 12px)", color: "var(--core-color-text-tertiary)", marginTop: 2 }}>Secure your account.</div>
+                        <div style={{ fontSize: "var(--typography-font-size-xs)", color: "var(--core-color-text-tertiary)", marginTop: 2 }}>Secure your account.</div>
                       </div>
                       <Switch checked={on} onChange={setOn} />
                     </div>
@@ -825,97 +962,275 @@ export default function Forms() {
     }
   ];
 
-  return (
-    <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
-      <style>{`
+  const sectionList = (
+    <DocsSectionList>
+      {sections.map((s) => (
+        <DocsSection key={s.anchorId} anchorId={s.anchorId} title={s.title}>
+          {s.content}
+        </DocsSection>
+      ))}
+    </DocsSectionList>
+  );
+
+  const formStyles = (
+    <style>{`
         .force-hover .cds-input,
         .force-hover .cds-textarea, 
         .force-hover .cds-select,
         .force-hover .cds-combobox .cds-input,
         .force-hover .cds-input-affix-wrap .cds-input,
         .force-hover .cds-input-group .cds-input,
-        .force-hover .cds-input-group-addon { 
-          border-color: var(--core-input-borderHover) !important; 
+        .force-hover .cds-input-group-addon,
+        .force-hover .cds-incremental-selector__btn,
+        .force-hover .cds-incremental-selector__value { 
+          border-color: var(--theme-neutral-border-strong) !important; 
         }
-        .force-hover .cds-toggle:not(:disabled) { 
-          background: var(--core-color-surface-sunken) !important; 
+        .force-hover .cds-incremental-selector__btn {
+          background: var(--theme-colors-neutral-200, #E8E8ED) !important;
+          color: var(--theme-neutral-text-primary-default) !important;
         }
-        .force-hover .cds-switch-track { opacity: 0.8; }
+        .force-hover .cds-incremental-selector__value {
+          background: var(--theme-colors-neutral-0) !important;
+        }
+        .force-hover .cds-toggle:not(:disabled):not([aria-pressed="true"]) { 
+          background: var(--brand-background-hover) !important;
+          color: var(--theme-primitive-color-primary-100) !important;
+          border-color: var(--brand-borders-hover) !important;
+        }
+        .toggle-group-states {
+          display: grid;
+          grid-template-columns: repeat(3, max-content);
+          gap: 40px;
+          padding: 8px 0;
+          align-items: start;
+        }
+        .toggle-group-state-cell {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          align-items: flex-start;
+          padding: 8px 4px;
+          isolation: isolate;
+        }
+        .toggle-group-state-cell .cds-toggle-group {
+          width: max-content;
+          max-width: 100%;
+        }
+        @media (max-width: 900px) {
+          .toggle-group-states {
+            grid-template-columns: repeat(2, max-content);
+          }
+        }
+        .toggle-group-state-focus .cds-toggle-group__item:nth-child(2):not(:disabled) {
+          outline: var(--core-focusRing-width) solid var(--theme-primitive-color-primary-400) !important;
+          outline-offset: 2px !important;
+          position: relative;
+          z-index: 1;
+        }
+        .force-hover .cds-switch input:not(:checked):not(:disabled) + .cds-switch-track {
+          background: var(--theme-colors-neutral-400) !important;
+        }
+        .force-hover .cds-switch input:checked:not(:disabled) + .cds-switch-track {
+          background: var(--brand-background-hover) !important;
+        }
+        .force-hover .cds-checkbox input:not(:checked):not(:disabled) + .cds-checkbox-box,
+        .force-hover .cds-radio input:not(:checked):not(:disabled) + .cds-radio-box {
+          border-color: var(--theme-primitive-color-primary-400) !important;
+          background: var(--theme-brand-background-primary-subtle) !important;
+        }
+        .force-hover .cds-checkbox input:checked:not(:disabled) + .cds-checkbox-box,
+        .force-hover .cds-radio input:checked:not(:disabled) + .cds-radio-box {
+          background: var(--brand-background-hover) !important;
+          border-color: var(--brand-background-hover) !important;
+        }
         
         .force-focus .cds-input,
         .force-focus .cds-textarea, 
         .force-focus .cds-select,
-        .force-focus .cds-combobox .cds-input { 
-          border-color: var(--core-input-borderFocus) !important; 
-          box-shadow: 0 0 0 3px color-mix(in srgb, var(--core-input-borderFocus) 25%, transparent) !important; 
+        .force-focus .cds-combobox .cds-input,
+        .force-focus .cds-date-picker .cds-input,
+        .force-focus .cds-date-picker .cds-input-affix-wrap .cds-input,
+        .force-focus .cds-input-affix-wrap .cds-input { 
+          border-color: var(--theme-primitive-color-primary-400) !important; 
+          box-shadow: 0 0 0 3px color-mix(in srgb, var(--theme-primitive-color-primary-400) 25%, transparent) !important; 
+        }
+        .force-focus .cds-input-affix-wrap .cds-input-icon {
+          color: var(--theme-neutral-text-subtle) !important;
+        }
+        .force-focus .cds-input-group {
+          border-radius: var(--core-input-radius) !important;
+          box-shadow: 0 0 0 3px color-mix(in srgb, var(--theme-primitive-color-primary-400) 25%, transparent) !important;
+        }
+        .force-focus .cds-input-group .cds-input,
+        .force-focus .cds-input-group-addon {
+          border-color: var(--theme-primitive-color-primary-400) !important;
+        }
+        .force-focus .cds-input-group .cds-input {
+          box-shadow: none !important;
+        }
+        .force-focus .cds-incremental-selector {
+          border-radius: var(--core-input-radius) !important;
+          box-shadow: 0 0 0 3px color-mix(in srgb, var(--theme-primitive-color-primary-400) 25%, transparent) !important;
+        }
+        .force-focus .cds-incremental-selector__btn,
+        .force-focus .cds-incremental-selector__value {
+          border-color: var(--theme-primitive-color-primary-400) !important;
+          box-shadow: none !important;
+        }
+        .force-focus .cds-incremental-selector__btn {
+          background: var(--theme-colors-neutral-100) !important;
+          color: var(--theme-neutral-text-primary-default) !important;
+        }
+        .force-focus .cds-incremental-selector__value {
+          background: var(--theme-colors-neutral-0) !important;
+          color: var(--theme-neutral-text-primary-default) !important;
+        }
+        .force-focus .cds-checkbox input:not(:checked):not(:disabled) + .cds-checkbox-box,
+        .force-focus .cds-radio input:not(:checked):not(:disabled) + .cds-radio-box {
+          border-color: var(--theme-primitive-color-primary-400) !important;
+          background: var(--theme-colors-neutral-0) !important;
+          outline: var(--core-focusRing-width) solid var(--theme-primitive-color-primary-400) !important;
+          outline-offset: 2px !important;
         }
         .force-focus .cds-switch-track { 
-          outline: var(--core-focusRing-width) solid var(--core-focusRing-color) !important; 
-          outline-offset: 2px !important; 
+          outline: none !important;
+          box-shadow:
+            0 0 0 2px var(--theme-colors-neutral-0),
+            0 0 0 calc(2px + var(--core-focusRing-width)) var(--theme-primitive-color-primary-400) !important;
+        }
+        .force-focus .cds-toggle:not(:disabled) {
+          outline: var(--core-focusRing-width) solid var(--theme-primitive-color-primary-400) !important;
+          outline-offset: var(--core-focusRing-offset) !important;
+        }
+        .force-focus .cds-slider input[type="range"] {
+          outline: none !important;
+        }
+        .force-focus .cds-slider input[type="range"]::-webkit-slider-thumb {
+          box-shadow:
+            0 0 0 2px var(--theme-colors-neutral-0),
+            0 0 0 calc(2px + var(--core-focusRing-width)) var(--theme-primitive-color-primary-400) !important;
+        }
+        .force-focus .cds-slider input[type="range"]::-moz-range-thumb {
+          box-shadow:
+            0 0 0 2px var(--theme-colors-neutral-0),
+            0 0 0 calc(2px + var(--core-focusRing-width)) var(--theme-primitive-color-primary-400) !important;
         }
 
         .force-active .cds-textarea, .force-active .cds-select { 
-          border-color: var(--core-input-borderFocus) !important; 
-          box-shadow: 0 0 0 3px color-mix(in srgb, var(--core-input-borderFocus) 25%, transparent) !important; 
-          background: var(--core-color-surface-sunken) !important;
+          border-color: var(--theme-primitive-color-primary-400) !important; 
+          box-shadow: 0 0 0 3px color-mix(in srgb, var(--theme-primitive-color-primary-400) 25%, transparent) !important; 
+          background: var(--theme-brand-background-primary-subtle) !important;
+        }
+        .force-active .cds-checkbox input:checked:not(:disabled) + .cds-checkbox-box,
+        .force-active .cds-radio input:checked:not(:disabled) + .cds-radio-box {
+          background: var(--brand-background-active) !important;
+          border-color: var(--brand-background-active) !important;
+        }
+        .force-error .cds-input[aria-invalid="true"] {
+          border-color: var(--theme-semantics-critical-border) !important;
         }
 
         .force-disabled .cds-select, .cds-select:disabled, .cds-select[aria-disabled="true"] { 
-          background: #F5F7FA !important; 
-          color: #A0AAB8 !important; 
-          border-color: #E2E8F0 !important; 
+          background: var(--theme-brand-background-disabled-light) !important; 
+          color: var(--theme-neutral-text-subtleleast) !important; 
+          border-color: var(--theme-neutral-border-primary-default) !important; 
           opacity: 1 !important; 
           cursor: not-allowed !important;
         }
         .force-disabled .cds-textarea, .cds-textarea:disabled { 
-          background: #F5F7FA !important; 
-          color: #A0AAB8 !important; 
-          border-color: #E2E8F0 !important; 
+          background: var(--theme-brand-background-disabled-light) !important; 
+          color: var(--theme-neutral-text-subtleleast) !important; 
+          border-color: var(--theme-neutral-border-primary-default) !important; 
           opacity: 1 !important; 
           cursor: not-allowed !important;
         }
         .force-disabled .cds-input, .cds-input:disabled { 
-          background: #F5F7FA !important; 
-          color: #A0AAB8 !important; 
-          border-color: #E2E8F0 !important; 
+          background: var(--theme-brand-background-disabled-light) !important; 
+          color: var(--theme-neutral-text-subtleleast) !important; 
+          border-color: var(--theme-neutral-border-primary-default) !important; 
           opacity: 1 !important; 
           cursor: not-allowed !important;
         }
         .force-disabled .cds-input-group-addon, .cds-input-group:has(.cds-input:disabled) .cds-input-group-addon {
-          background: #F5F7FA !important; 
-          color: #A0AAB8 !important; 
-          border-color: #E2E8F0 !important; 
+          background: var(--theme-brand-background-disabled-light) !important; 
+          color: var(--theme-neutral-text-subtleleast) !important; 
+          border-color: var(--theme-neutral-border-primary-default) !important; 
           cursor: not-allowed !important;
         }
         .force-disabled .cds-input-icon, .cds-input-affix-wrap:has(.cds-input:disabled) .cds-input-icon {
-          color: #A0AAB8 !important;
+          color: var(--theme-neutral-text-subtleleast) !important;
+        }
+        .force-disabled .cds-incremental-selector__btn,
+        .force-disabled .cds-incremental-selector__value,
+        .cds-incremental-selector--disabled .cds-incremental-selector__btn,
+        .cds-incremental-selector--disabled .cds-incremental-selector__value {
+          background: var(--theme-brand-background-disabled-light) !important;
+          color: var(--theme-neutral-text-subtleleast) !important;
+          border-color: var(--theme-neutral-border-primary-default) !important;
+          cursor: not-allowed !important;
         }
         .force-disabled .cds-toggle, .cds-toggle:disabled {
-          background: #F5F7FA !important; 
-          color: #A0AAB8 !important; 
-          border-color: #E2E8F0 !important; 
+          background: var(--theme-brand-background-disabled-light) !important; 
+          color: var(--theme-neutral-text-subtleleast) !important; 
+          border-color: var(--theme-neutral-border-primary-default) !important; 
           opacity: 1 !important; 
           cursor: not-allowed !important;
         }
         .force-disabled .cds-toggle[aria-pressed="true"], .cds-toggle:disabled[aria-pressed="true"] {
-          background: #E2E8F0 !important;
-          color: #8C9BAE !important;
+          background: var(--theme-neutral-border-subtle) !important;
+          color: var(--theme-neutral-text-subtleleast) !important;
+        }
+        .force-disabled .cds-slider input[type="range"],
+        .cds-slider input[type="range"]:disabled {
+          background: var(--theme-brand-background-disabled-light) !important;
+          cursor: not-allowed !important;
+        }
+        .force-disabled .cds-slider input[type="range"]::-webkit-slider-thumb,
+        .cds-slider input[type="range"]:disabled::-webkit-slider-thumb {
+          background: var(--theme-colors-neutral-300) !important;
+          border-color: var(--theme-colors-neutral-0) !important;
+          box-shadow: none !important;
+          cursor: not-allowed !important;
+        }
+        .force-disabled .cds-slider input[type="range"]::-moz-range-thumb,
+        .cds-slider input[type="range"]:disabled::-moz-range-thumb {
+          background: var(--theme-colors-neutral-300) !important;
+          border-color: var(--theme-colors-neutral-0) !important;
+          box-shadow: none !important;
+          cursor: not-allowed !important;
+        }
+        .force-disabled .cds-slider-value,
+        .cds-slider--disabled .cds-slider-value {
+          color: var(--theme-neutral-text-subtleleast) !important;
         }
         .force-hover .cds-otp-digit:not(:disabled) {
-          border-color: var(--core-input-borderHover) !important;
+          border-color: var(--theme-neutral-border-strong) !important;
         }
         .force-error .cds-otp-digit {
-          border-color: var(--core-input-borderError, #EF8E8E) !important;
+          border-color: var(--theme-semantics-critical-border) !important;
         }
         .force-disabled .cds-otp-digit {
-          background: #F5F7FA !important;
-          color: #A0AAB8 !important;
-          border-color: var(--theme-brand-border-primary-disabled, #BACEE9) !important;
+          background: var(--theme-brand-background-disabled-light) !important;
+          color: var(--theme-neutral-text-subtleleast) !important;
+          border-color: var(--theme-brand-borders-primary-disabled) !important;
           cursor: not-allowed !important;
         }
       `}</style>
+  );
+
+  if (embedded) {
+    return (
+      <>
+        {formStyles}
+        {sectionList}
+      </>
+    );
+  }
+
+  return (
+    <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
+      {formStyles}
       <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
-        <div style={{ fontSize: 14, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--core-color-brand-600)", marginBottom: 12 }}>Components</div>
         <h1 style={{ fontSize: 72, fontWeight: 800, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>
           Form Controls
         </h1>
@@ -923,26 +1238,7 @@ export default function Forms() {
           Essential components for data entry and configuration. Label, hint, and error states are wired together automatically via aria attributes.
         </p>
       </div>
-
-      <div style={{ display: "flex", flexDirection: "column", gap: 100 }}>
-        {sections.map((s) => (
-          <div key={s.id} id={s.anchorId} style={{ display: "flex", flexDirection: "column", gap: 40, position: "relative" }}>
-            <div style={{ position: "absolute", top: 0, left: "-12.5%", width: "125%", height: 1, backgroundColor: "var(--site-border)" }} />
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", paddingTop: 32 }}>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 600, color: "var(--core-color-text-tertiary)", marginBottom: 12 }}>{s.id}</div>
-                <h2 style={{ fontSize: 48, fontWeight: 500, letterSpacing: "-0.04em", margin: 0, textTransform: "lowercase" }}>{s.title}</h2>
-              </div>
-              <div style={{ maxWidth: 420, display: "flex", flexDirection: "column", gap: 16, alignItems: "flex-end" }}>
-                <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--core-color-text-secondary)", textAlign: "right", fontWeight: 400 }}>{s.description}</p>
-              </div>
-            </div>
-            <div>
-              {s.content}
-            </div>
-          </div>
-        ))}
-      </div>
+      {sectionList}
     </div>
   );
 }

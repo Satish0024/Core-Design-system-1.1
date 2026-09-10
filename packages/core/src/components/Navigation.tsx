@@ -61,7 +61,7 @@ export function NavigationMenu({ items }: { items: NavMenuItem[] }) {
   );
 }
 
-export interface SidebarItem { label: string; icon?: React.ReactNode; current?: boolean; onClick?: () => void; }
+export interface SidebarItem { label: string; icon?: React.ReactNode; current?: boolean; disabled?: boolean; onClick?: () => void; }
 export type SidebarVariant = "shell" | "panel" | "rail";
 /**
  * A vertical nav list, in three variants:
@@ -80,7 +80,15 @@ export function AppSidebar({ items, variant = "shell", "aria-label": ariaLabel =
   return (
     <nav className={`cds-app-sidebar cds-app-sidebar--${variant}`} aria-label={ariaLabel}>
       {items.map((item) => (
-        <button key={item.label} className="cds-app-sidebar-link" aria-current={item.current ? "page" : undefined} onClick={item.onClick}>
+        <button
+          key={item.label}
+          type="button"
+          className="cds-app-sidebar-link"
+          aria-current={item.current ? "page" : undefined}
+          aria-disabled={item.disabled}
+          disabled={item.disabled}
+          onClick={item.onClick}
+        >
           {item.icon && (
             stacked
               ? <span className="cds-sidenav-icon-plain" aria-hidden="true">{item.icon}</span>
@@ -93,31 +101,54 @@ export function AppSidebar({ items, variant = "shell", "aria-label": ariaLabel =
   );
 }
 
+export type StepState = "default" | "in-progress" | "completed" | "warning" | "error";
+
 export interface StepDef {
   label: string;
   description?: string;
-  /** Optional small status line under the description (e.g. "In progress") —
-   *  only rendered for the current step, since that's the one whose progress
-   *  is actually ambiguous; complete/upcoming are already unambiguous from
-   *  the marker + title color alone. */
+  /** Override the visual state for this step (docs / edge cases). */
+  state?: StepState;
+  /** Optional status line under the description — shown for in-progress, warning, and error steps. */
   status?: string;
 }
+
+function resolveStepState(step: StepDef, index: number, currentIndex: number): StepState {
+  if (step.state) return step.state;
+  if (index < currentIndex) return "completed";
+  if (index === currentIndex) return "in-progress";
+  return "default";
+}
+
+function stepMarkerContent(state: StepState, index: number) {
+  if (state === "completed") return "✓";
+  if (state === "warning") return "!";
+  if (state === "error") return "!";
+  return index + 1;
+}
+
 export function Stepper({ steps, currentIndex, orientation = "horizontal" }: { steps: StepDef[]; currentIndex: number; orientation?: "horizontal" | "vertical" }) {
   const vertical = orientation === "vertical";
   return (
     <ol className={`cds-stepper ${vertical ? "cds-stepper--vertical" : ""}`} aria-label="Progress" aria-orientation={orientation}>
       {steps.map((step, i) => {
-        const state = i < currentIndex ? "complete" : i === currentIndex ? "current" : "upcoming";
+        const state = resolveStepState(step, i, currentIndex);
         return (
-          <li key={step.label} className={`cds-step cds-step--${state} ${vertical ? "cds-step--vertical" : ""}`} aria-current={state === "current" ? "step" : undefined}>
+          <li
+            key={step.label}
+            className={`cds-step cds-step--${state} ${vertical ? "cds-step--vertical" : ""}`}
+            aria-current={state === "in-progress" ? "step" : undefined}
+          >
             <span className="cds-step-marker" aria-hidden="true">
-              {state === "complete" ? "✓" : i + 1}
+              {stepMarkerContent(state, i)}
             </span>
             <span className="cds-step-label">
               <span className="cds-step-title">{step.label}</span>
               {step.description && <span className="cds-step-desc">{step.description}</span>}
-              {state === "current" && step.status && (
-                <span className="cds-step-status"><span className="cds-step-status-dot" aria-hidden="true" />{step.status}</span>
+              {(state === "in-progress" || state === "warning" || state === "error") && step.status && (
+                <span className="cds-step-status">
+                  <span className="cds-step-status-dot" aria-hidden="true" />
+                  {step.status}
+                </span>
               )}
             </span>
             {i < steps.length - 1 && <span className="cds-step-connector" aria-hidden="true" />}

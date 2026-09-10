@@ -1,7 +1,8 @@
 import React from "react";
 import typography from "../../../../packages/tokens/src/typography.json";
 import primitives from "../../../../packages/tokens/src/primitives.json";
-import { typographyExportJson } from "./typography-export";
+import { buildTypographyExportJson } from "./buildTypographyExport";
+import { fontSizeLabelFromPx, remLabel } from "./typographyScale";
 
 const order = [
   "h1",
@@ -81,56 +82,51 @@ const roleName: Record<string, string> = {
   "numericData": "Numeric Data"
 };
 
-function px(v: string) { return parseFloat(v); }
-function remLabel(v: string) {
-  const n = px(v);
-  if (!Number.isFinite(n)) return v;
-  return `${n / 16}rem (${n}px)`;
-}
-
-function isLargeText(sizePx: number, weight: string) {
-  return sizePx >= 18 || (sizePx >= 14 && parseInt(weight, 10) >= 700);
-}
-
 function TypeScaleRow({ roleKey, roleNameStr, typoObj, isLast }: { roleKey: string, roleNameStr: string, typoObj: any, isLast?: boolean }) {
   const d = typoObj.desktop;
-  
+  const scaleLabel = fontSizeLabelFromPx(d.size);
+
   return (
-    <div style={{ padding: "32px 40px", marginBottom: "16px", background: "var(--theme-brand-background-primary-light, #F5F7FA)", borderRadius: "8px", display: "flex", flexWrap: "wrap", gap: 64 }}>
+    <div style={{ padding: "32px 40px", marginBottom: "16px", background: "var(--theme-brand-background-primary-light)", borderRadius: "8px", display: "flex", flexWrap: "wrap", gap: 64 }}>
       {/* Left Column: Details Grid */}
       <div style={{ flex: "0 0 auto", minWidth: 260 }}>
         <div style={{ fontSize: 12, fontWeight: 500, color: "var(--core-color-text-primary)", marginBottom: 24, letterSpacing: "0.02em" }}>
           {roleNameStr}
+          {scaleLabel && (
+            <span style={{ marginLeft: 8, fontWeight: 700, color: "var(--core-color-brand-600)", letterSpacing: "0.04em" }}>
+              · {scaleLabel}
+            </span>
+          )}
         </div>
         
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", rowGap: "16px", columnGap: "32px" }}>
           <div>
-            <div style={{ fontSize: "var(--core-font-size-xs, 12px)", color: "var(--core-color-text-secondary)", marginBottom: 4 }}>Size</div>
-            <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 500, color: "var(--core-color-text-primary)" }}>{remLabel(d.size)}</div>
+            <div style={{ fontSize: "var(--typography-font-size-xs)", color: "var(--core-color-text-secondary)", marginBottom: 4 }}>Size</div>
+            <div style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 500, color: "var(--core-color-text-primary)" }}>{remLabel(d.size)}</div>
           </div>
           <div>
-            <div style={{ fontSize: "var(--core-font-size-xs, 12px)", color: "var(--core-color-text-secondary)", marginBottom: 4 }}>Letter Spacing</div>
-            <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 500, color: "var(--core-color-text-primary)" }}>0px</div>
+            <div style={{ fontSize: "var(--typography-font-size-xs)", color: "var(--core-color-text-secondary)", marginBottom: 4 }}>Letter Spacing</div>
+            <div style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 500, color: "var(--core-color-text-primary)" }}>0px</div>
           </div>
           
           <div>
-            <div style={{ fontSize: "var(--core-font-size-xs, 12px)", color: "var(--core-color-text-secondary)", marginBottom: 4 }}>Weight</div>
-            <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 500, color: "var(--core-color-text-primary)" }}>
+            <div style={{ fontSize: "var(--typography-font-size-xs)", color: "var(--core-color-text-secondary)", marginBottom: 4 }}>Weight</div>
+            <div style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 500, color: "var(--core-color-text-primary)" }}>
               {d.weight === "400" ? "Regular" : d.weight === "500" ? "Medium" : d.weight === "600" ? "Semi-Bold" : d.weight === "700" ? "Bold" : d.weight}
             </div>
           </div>
           <div>
-            <div style={{ fontSize: "var(--core-font-size-xs, 12px)", color: "var(--core-color-text-secondary)", marginBottom: 4 }}>Paragraph Spacing</div>
-            <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 500, color: "var(--core-color-text-primary)" }}>0px</div>
+            <div style={{ fontSize: "var(--typography-font-size-xs)", color: "var(--core-color-text-secondary)", marginBottom: 4 }}>Paragraph Spacing</div>
+            <div style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 500, color: "var(--core-color-text-primary)" }}>0px</div>
           </div>
 
           <div>
-            <div style={{ fontSize: "var(--core-font-size-xs, 12px)", color: "var(--core-color-text-secondary)", marginBottom: 4 }}>Line Height</div>
-            <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 500, color: "var(--core-color-text-primary)" }}>{d.lineHeight}</div>
+            <div style={{ fontSize: "var(--typography-font-size-xs)", color: "var(--core-color-text-secondary)", marginBottom: 4 }}>Line Height</div>
+            <div style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 500, color: "var(--core-color-text-primary)" }}>{d.lineHeight}</div>
           </div>
           <div>
-            <div style={{ fontSize: "var(--core-font-size-xs, 12px)", color: "var(--core-color-text-secondary)", marginBottom: 4 }}>Case</div>
-            <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 500, color: "var(--core-color-text-primary)" }}>Original</div>
+            <div style={{ fontSize: "var(--typography-font-size-xs)", color: "var(--core-color-text-secondary)", marginBottom: 4 }}>Case</div>
+            <div style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 500, color: "var(--core-color-text-primary)" }}>Original</div>
           </div>
         </div>
       </div>
@@ -154,21 +150,12 @@ function TypeScaleRow({ roleKey, roleNameStr, typoObj, isLast }: { roleKey: stri
   );
 }
 
-const breakpointDescriptions: Record<string, string> = {
-  sm: "Mobile landscape, larger phones (>= 576px)",
-  md: "Tablets portrait (>= 768px)",
-  lg: "Tablets landscape, small desktops (>= 992px)",
-  xl: "Desktops, standard monitors (>= 1200px)",
-  xxl: "Large monitors, high-res displays (>= 1400px)",
+const elevationDescriptions: Record<string, string> = {
+  "1": "Subtle raise — resting cards, table rows, segmented controls",
+  "2": "Medium raise — dropdowns, popovers, modals, sticky headers",
 };
 
-const elevationDescriptions: Record<string, string> = {
-  "0": "Flat surfaces (cards, table rows, muted backgrounds)",
-  "1": "Subtle raise (hovered cards, segmented controls)",
-  "2": "Medium raise (dropdowns, popovers, sticky headers)",
-  "3": "High raise (modals, dialogs, floating action buttons)",
-  "4": "Prominent raise (drawers, notifications, system alerts)",
-};
+const elevationKeys = ["1", "2"] as const;
 
 function ElevationCard({ elevationKey, shadowVal }: { elevationKey: string; shadowVal: string }) {
   const [copied, setCopied] = React.useState(false);
@@ -197,18 +184,18 @@ function ElevationCard({ elevationKey, shadowVal }: { elevationKey: string; shad
       <div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
           <span style={{ fontSize: 16, fontWeight: 700, color: "var(--core-color-text-primary)" }}>Elevation {elevationKey}</span>
-          <code style={{ fontSize: "var(--core-font-size-xs, 12px)", background: "var(--core-color-surface-hover)", padding: "2px 8px", borderRadius: 4, color: "var(--core-color-text-secondary)" }}>
+          <code style={{ fontSize: "var(--typography-font-size-xs)", background: "var(--core-color-surface-hover)", padding: "2px 8px", borderRadius: 4, color: "var(--core-color-text-secondary)" }}>
             --core-elevation-{elevationKey}
           </code>
         </div>
-        <p style={{ margin: 0, fontSize: "var(--core-font-size-sm, 14px)", color: "var(--core-color-text-secondary)", lineHeight: 1.5 }}>
+        <p style={{ margin: 0, fontSize: "var(--typography-body-md-size)", color: "var(--core-color-text-secondary)", lineHeight: 1.5 }}>
           {elevationDescriptions[elevationKey] || "Surface elevation"}
         </p>
       </div>
 
       <div style={{ borderTop: "1px solid var(--site-border)", paddingTop: 12 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
-          <span style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, letterSpacing: "0.06em", color: "var(--core-color-text-tertiary)", textTransform: "uppercase" }}>
+          <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, letterSpacing: "0.06em", color: "var(--core-color-text-tertiary)", textTransform: "uppercase" }}>
             Exact Box-Shadow Value
           </span>
           <button
@@ -221,7 +208,7 @@ function ElevationCard({ elevationKey, shadowVal }: { elevationKey: string; shad
               border: "1px solid rgba(128,128,128,0.2)",
               background: copied ? "rgba(34, 163, 105, 0.15)" : "var(--core-color-surface-hover)",
               color: copied ? "var(--site-success, #22A369)" : "var(--core-color-brand-600)",
-              fontSize: "var(--core-font-size-xs, 12px)",
+              fontSize: "var(--typography-font-size-xs)",
               fontWeight: 600,
               padding: "3px 8px",
               borderRadius: 5,
@@ -249,7 +236,7 @@ function ElevationCard({ elevationKey, shadowVal }: { elevationKey: string; shad
         </div>
         <code
           style={{
-            fontSize: "var(--core-font-size-xs, 12px)",
+            fontSize: "var(--typography-font-size-xs)",
             fontFamily: "var(--site-mono)",
             color: "var(--core-color-brand-600)",
             background: "var(--core-color-surface-hover)",
@@ -281,8 +268,8 @@ export default function Typography() {
   const sections = [
     {
       id: "01",
-      title: "Typeface — Inclusive Sans",
-      description: "CORE's default typeface, optimized for legibility and clear letterform distinction in data-dense environments.",
+      anchorId: "typeface",
+      title: "Typeface",
       content: (
         <div style={{ background: "var(--core-color-surface-default)", borderRadius: 14, padding: "48px 40px", border: "1px solid rgba(128,128,128,0.15)", color: "var(--core-color-text-primary)" }}>
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 40, flexWrap: "wrap", gap: 32 }}>
@@ -292,8 +279,8 @@ export default function Typography() {
               </div>
             </div>
             <div style={{ flex: "1 1 250px", maxWidth: 300 }}>
-              <div style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, letterSpacing: "0.06em", marginBottom: 12, color: "var(--core-color-text-secondary)" }}>ABOUT</div>
-              <div style={{ fontSize: "var(--core-font-size-sm, 14px)", lineHeight: 1.6, color: "var(--core-color-text-primary)" }}>
+              <div style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, letterSpacing: "0.06em", marginBottom: 12, color: "var(--core-color-text-secondary)" }}>ABOUT</div>
+              <div style={{ fontSize: "var(--typography-body-md-size)", lineHeight: 1.6, color: "var(--core-color-text-primary)" }}>
                 A contemporary sans-serif typeface designed for high legibility, featuring clear letterform distinction (I/l/1 and O/0) ensuring clarity across dense data tables and interfaces.
               </div>
             </div>
@@ -304,7 +291,7 @@ export default function Typography() {
               Aa
             </div>
             <div style={{ flex: "1 1 200px" }}>
-              <div style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, letterSpacing: "0.06em", marginBottom: 24, color: "var(--core-color-text-secondary)" }}>WEIGHTS</div>
+              <div style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, letterSpacing: "0.06em", marginBottom: 24, color: "var(--core-color-text-secondary)" }}>WEIGHTS</div>
               <div style={{ display: "flex", flexDirection: "column", gap: 12, fontSize: 18, fontFamily: "'Inclusive Sans', sans-serif", color: "var(--core-color-text-primary)" }}>
                 <div style={{ fontWeight: 300 }}>Light (300)</div>
                 <div style={{ fontWeight: 400 }}>Regular (400)</div>
@@ -314,7 +301,7 @@ export default function Typography() {
               </div>
             </div>
             <div style={{ flex: "1 1 250px" }}>
-              <div style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, letterSpacing: "0.06em", marginBottom: 24, color: "var(--core-color-text-secondary)" }}>OVERVIEW</div>
+              <div style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, letterSpacing: "0.06em", marginBottom: 24, color: "var(--core-color-text-secondary)" }}>OVERVIEW</div>
               <div style={{ fontSize: 18, fontFamily: "'Inclusive Sans', sans-serif", lineHeight: 1.6, wordBreak: "break-all", color: "var(--core-color-text-primary)" }}>
                 Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz
                 <br /><br />
@@ -329,8 +316,8 @@ export default function Typography() {
     },
     {
       id: "02",
+      anchorId: "type-scale",
       title: "Type scale",
-      description: "Unified table combining visual scale previews with exact specifications for desktop and mobile.",
       content: (
         <div data-theme="core" data-mode="light" style={{ background: "var(--core-color-surface-default)", borderRadius: 14, padding: "8px 40px", border: "1px solid rgba(128,128,128,0.15)" }}>
           {order.map((key, index) => (
@@ -347,16 +334,16 @@ export default function Typography() {
     },
     {
       id: "03",
+      anchorId: "spacing-padding",
       title: "Spacing & Padding",
-      description: "Standardized 4px-based spacing scale for margins, padding, and layout gaps.",
       content: (
         <div style={{ display: "flex", flexDirection: "column", background: "var(--core-color-surface-default)", borderRadius: 14, padding: "24px 32px", border: "1px solid rgba(128,128,128,0.15)" }}>
           {Object.entries(primitives.space).sort((a, b) => parseInt(a[1], 10) - parseInt(b[1], 10)).map(([key, val], i, arr) => {
             const numVal = parseInt(val, 10);
             return (
               <div key={key} style={{ display: "flex", alignItems: "center", padding: "14px 0", borderBottom: i === arr.length - 1 ? "none" : "1px solid var(--site-border)", gap: 24 }}>
-                <div style={{ width: 120, fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 700, color: "var(--core-color-text-primary)" }}>space.{key}</div>
-                <div style={{ width: 80, fontSize: "var(--core-font-size-xs, 12px)", fontFamily: "var(--site-mono)", color: "var(--core-color-text-secondary)" }}>{val}</div>
+                <div style={{ width: 120, fontSize: "var(--typography-body-md-size)", fontWeight: 700, color: "var(--core-color-text-primary)" }}>space.{key}</div>
+                <div style={{ width: 80, fontSize: "var(--typography-font-size-xs)", fontFamily: "var(--site-mono)", color: "var(--core-color-text-secondary)" }}>{val}</div>
                 <div style={{ flex: 1, display: "flex", alignItems: "center" }}>
                   <div style={{ width: Math.max(numVal, 2), height: 20, background: "var(--core-color-brand-500)", borderRadius: 4, minWidth: numVal > 0 ? numVal : 2, opacity: numVal === 0 ? 0.3 : 1 }} />
                 </div>
@@ -368,8 +355,8 @@ export default function Typography() {
     },
     {
       id: "04",
+      anchorId: "border-radius",
       title: "Border Radius",
-      description: "Scale for rounding corners of surfaces, components, badges, and interactive elements.",
       content: (
         <div style={{ display: "flex", flexWrap: "wrap", gap: 24, background: "var(--core-color-surface-default)", borderRadius: 14, padding: "32px", border: "1px solid rgba(128,128,128,0.15)" }}>
           {Object.entries(primitives.radius).map(([key, val]) => (
@@ -383,7 +370,7 @@ export default function Typography() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "var(--core-font-size-xs, 12px)",
+                fontSize: "var(--typography-font-size-xs)",
                 fontWeight: 700,
                 color: "var(--core-color-brand-700)"
               }}>
@@ -397,38 +384,20 @@ export default function Typography() {
     },
     {
       id: "05",
-      title: "Breakpoints",
-      description: "Responsive viewport breakpoints aligned with modern web grid and mobile-first standards.",
+      anchorId: "elevation-shadows",
+      title: "Elevation & Shadows",
       content: (
-        <div style={{ display: "flex", flexDirection: "column", background: "var(--core-color-surface-default)", borderRadius: 14, padding: "24px 32px", border: "1px solid rgba(128,128,128,0.15)" }}>
-          {Object.entries(primitives.breakpoint).map(([key, val], i, arr) => (
-            <div key={key} style={{ display: "flex", alignItems: "center", padding: "16px 0", borderBottom: i === arr.length - 1 ? "none" : "1px solid var(--site-border)", gap: 24, flexWrap: "wrap" }}>
-              <div style={{ width: 90, fontSize: 14, fontWeight: 700, color: "var(--core-color-text-primary)" }}>{key.toUpperCase()}</div>
-              <div style={{ width: 100, fontSize: "var(--core-font-size-xs, 12px)", fontFamily: "var(--site-mono)", color: "var(--core-color-brand-600)", fontWeight: 600 }}>{val}</div>
-              <div style={{ flex: 1, minWidth: 220, fontSize: "var(--core-font-size-sm, 14px)", color: "var(--core-color-text-secondary)" }}>
-                {breakpointDescriptions[key] || "Responsive layout boundary"}
-              </div>
-            </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
+          {elevationKeys.map((key) => (
+            <ElevationCard key={key} elevationKey={key} shadowVal={(primitives.elevation as Record<string, string>)[key]} />
           ))}
         </div>
       )
     },
     {
       id: "06",
-      title: "Elevation & Shadows",
-      description: "Layering hierarchy utilizing depth tokens to convey physical elevation in light and dark modes.",
-      content: (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
-          {Object.entries(primitives.elevation).map(([key, shadowVal]) => (
-            <ElevationCard key={key} elevationKey={key} shadowVal={shadowVal} />
-          ))}
-        </div>
-      )
-    },
-    {
-      id: "07",
+      anchorId: "icon-sizing",
       title: "Icon Sizing",
-      description: "Standardized sizing presets for icons across navigation, buttons, and content items.",
       content: (
         <div style={{ display: "flex", gap: 32, flexWrap: "wrap", background: "var(--core-color-surface-default)", borderRadius: 14, padding: "32px", border: "1px solid rgba(128,128,128,0.15)" }}>
           {iconSizes.map((item) => (
@@ -459,9 +428,9 @@ export default function Typography() {
                 </svg>
               </div>
               <div style={{ textAlign: "center" }}>
-                <div style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 700, color: "var(--core-color-text-primary)" }}>{item.label}</div>
+                <div style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 700, color: "var(--core-color-text-primary)" }}>{item.label}</div>
                 <div style={{ fontSize: 12, fontFamily: "var(--site-mono)", color: "var(--core-color-text-secondary)" }}>{item.val}</div>
-                <code style={{ fontSize: "var(--core-font-size-xs, 12px)", color: "var(--core-color-text-tertiary)" }}>{item.key}</code>
+                <code style={{ fontSize: "var(--typography-font-size-xs)", color: "var(--core-color-text-tertiary)" }}>{item.key}</code>
               </div>
             </div>
           ))}
@@ -472,19 +441,18 @@ export default function Typography() {
     {
       id: "08",
       title: "Motion & Timing",
-      description: "Standardized durations and easing curves for fluid UI transitions and micro-interactions.",
       content: (
         <div style={{ display: "flex", flexDirection: "column", gap: 24, background: "var(--core-color-surface-default)", borderRadius: 14, padding: "28px 32px", border: "1px solid rgba(128,128,128,0.15)" }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
             {Object.entries((primitives as any).motion || {}).filter(([k]) => k.startsWith("duration.")).map(([key, val]) => (
               <div key={key} style={{ padding: "16px", borderRadius: 10, background: "var(--core-color-surface-hover)", border: "1px solid var(--site-border)" }}>
-                <div style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, letterSpacing: "0.06em", color: "var(--core-color-text-tertiary)", textTransform: "uppercase", marginBottom: 6 }}>
+                <div style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, letterSpacing: "0.06em", color: "var(--core-color-text-tertiary)", textTransform: "uppercase", marginBottom: 6 }}>
                   {key.replace("duration.", "")}
                 </div>
                 <div style={{ fontSize: 20, fontWeight: 800, color: "var(--core-color-text-primary)", fontFamily: "var(--site-mono)" }}>
                   {val as string}
                 </div>
-                <code style={{ fontSize: "var(--core-font-size-xs, 12px)", color: "var(--core-color-brand-600)", marginTop: 6, display: "block" }}>
+                <code style={{ fontSize: "var(--typography-font-size-xs)", color: "var(--core-color-brand-600)", marginTop: 6, display: "block" }}>
                   motion.{key}
                 </code>
               </div>
@@ -497,7 +465,7 @@ export default function Typography() {
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {Object.entries((primitives as any).motion || {}).filter(([k]) => k.startsWith("easing.")).map(([key, val]) => (
-                <div key={key} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", borderRadius: 8, background: "var(--core-color-surface-hover)", fontSize: "var(--core-font-size-xs, 12px)" }}>
+                <div key={key} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", borderRadius: 8, background: "var(--core-color-surface-hover)", fontSize: "var(--typography-font-size-xs)" }}>
                   <span style={{ fontWeight: 600, color: "var(--core-color-text-primary)" }}>{key.replace("easing.", "")}</span>
                   <code style={{ fontFamily: "var(--site-mono)", fontSize: 12, color: "var(--core-color-text-secondary)" }}>{val as string}</code>
                 </div>
@@ -512,11 +480,11 @@ export default function Typography() {
 
   const handleDownloadTypography = (e: React.MouseEvent) => {
     e.preventDefault();
-    const jsonText = JSON.stringify(typographyExportJson, null, 2);
+    const jsonText = JSON.stringify(buildTypographyExportJson(), null, 2);
     const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(jsonText)}`;
     const link = document.createElement("a");
     link.href = dataUri;
-    link.download = "Core-Typography-Variables.json";
+    link.download = "typography.json";
     document.body.appendChild(link);
     link.click();
     setTimeout(() => {
@@ -527,12 +495,11 @@ export default function Typography() {
   return (
     <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
       <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
-        <div style={{ fontSize: 14, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--core-color-brand-600)", marginBottom: 12 }}>Foundation</div>
         <h1 style={{ fontSize: 72, fontWeight: 800, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>
           Typography
         </h1>
         <p style={{ maxWidth: 560, margin: "0 auto", color: "var(--core-color-text-tertiary)", fontSize: 18, lineHeight: 1.6, fontWeight: 400 }}>
-          Typography scale, spacing, border radius, breakpoints, elevation, and icon tokens powering the CORE design system.
+          Typography scale, spacing, border radius, elevation, and icon tokens powering the CORE design system.
         </p>
         <div style={{ marginTop: 32, display: "flex", justifyContent: "center" }}>
           <button
@@ -549,7 +516,7 @@ export default function Typography() {
               borderRadius: 30, 
               border: "none",
               cursor: "pointer",
-              fontSize: "var(--core-font-size-sm, 14px)",
+              fontSize: "var(--typography-body-md-size)",
               transition: "transform 0.2s, opacity 0.2s",
               boxShadow: "0 4px 12px rgba(0,0,0,0.1)"
             }}
@@ -568,16 +535,11 @@ export default function Typography() {
 
       <div style={{ display: "flex", flexDirection: "column", gap: 80 }}>
         {sections.map((s) => (
-          <div key={s.id} style={{ display: "flex", flexDirection: "column", gap: 32, position: "relative" }}>
+          <div key={s.id} id={s.anchorId} className="docs-section" style={{ display: "flex", flexDirection: "column", gap: 32, position: "relative" }}>
             <div style={{ position: "absolute", top: 0, left: "-12.5%", width: "125%", height: 1, backgroundColor: "var(--site-border)" }} />
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", paddingTop: 32 }}>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 600, color: "var(--core-color-text-tertiary)", marginBottom: 12 }}>{s.id}</div>
-                <h2 style={{ fontSize: 40, fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>{s.title}</h2>
-              </div>
-              <div style={{ maxWidth: 420, display: "flex", flexDirection: "column", gap: 16, alignItems: "flex-end" }}>
-                <p style={{ margin: 0, fontSize: 16, lineHeight: 1.6, color: "var(--core-color-text-secondary)", textAlign: "right", fontWeight: 400 }}>{s.description}</p>
-              </div>
+            <div style={{ paddingTop: 32 }}>
+              <div style={{ fontSize: 12, fontWeight: 600, color: "var(--core-color-text-tertiary)", marginBottom: 12 }}>{s.id}</div>
+              <h2 style={{ fontSize: 40, fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>{s.title}</h2>
             </div>
             <div>
               {s.content}

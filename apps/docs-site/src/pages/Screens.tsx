@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { DocsSection, DocsSectionList } from "../DocsSection";
 import { AppShell, AppHeader, AppFooter, Container, Grid, GridCol } from "../../../../packages/core/src/components/Layout";
 import { AppSidebar, Breadcrumb, Stepper } from "../../../../packages/core/src/components/Navigation";
 import { Button, IconButton } from "../../../../packages/core/src/components/Button";
@@ -11,10 +12,10 @@ import { Drawer } from "../../../../packages/core/src/components/Overlays";
 
 const NAV_ITEMS = [
   { label: "Dashboard", icon: <Icon name="fa-solid fa-grip" size="lg" />, current: true },
-  { label: "Investment Portfolio", icon: <Icon name="fa-solid fa-wallet" size="lg" /> },
+  { label: "Portfolio", icon: <Icon name="fa-solid fa-wallet" size="lg" /> },
   { label: "Transactions", icon: <Icon name="fa-solid fa-right-left" size="lg" /> },
-  { label: "My Profile", icon: <Icon name="fa-solid fa-user" size="lg" /> },
-  { label: "Document Center", icon: <Icon name="fa-solid fa-file-lines" size="lg" /> },
+  { label: "Profile", icon: <Icon name="fa-solid fa-user" size="lg" /> },
+  { label: "Documents", icon: <Icon name="fa-solid fa-file-lines" size="lg" /> },
 ];
 
 function ScreenHeader({ userName }: { userName: string }) {
@@ -57,9 +58,9 @@ export default function Screens() {
     <div>
       <h1 className="site-h1">Screens</h1>
 
+      <DocsSectionList>
       {/* ============================= LOGIN ============================= */}
-      <h2 className="site-section-title" id="login">Login</h2>
-      <p className="site-section-sub">Split layout: brand panel + a centered Card form, no app chrome (nothing to navigate yet).</p>
+      <DocsSection anchorId="login" title="Login">
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", overflowX: "auto" }}>
           <Grid columns={2} gap="4" style={{ width: 720, minHeight: 380, borderRadius: "var(--core-card-radius)", overflow: "hidden", border: "1px solid var(--core-color-border-subtle)" }}>
             <div style={{ background: "var(--core-color-brand-600, var(--core-card-bg))", color: "white", display: "flex", flexDirection: "column", justifyContent: "center", padding: "var(--core-space-8)", gridColumn: "span 1" }}>
@@ -80,8 +81,8 @@ export default function Screens() {
       </div>
 
       {/* ============================= DASHBOARD ============================= */}
-      <h2 className="site-section-title" id="dashboard">Dashboard</h2>
-      <p className="site-section-sub">The standard AppShell: header, left AppSidebar, 12-column content Grid, footer.</p>
+      </DocsSection>
+      <DocsSection anchorId="dashboard" title="Dashboard">
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", overflowX: "auto" }}>
         <div style={{ width: 860 }}>
             <AppShell
@@ -164,8 +165,8 @@ export default function Screens() {
       </div>
 
       {/* ============================= TABLE SCREEN ============================= */}
-      <h2 className="site-section-title" id="table-screen">Transactions (table screen)</h2>
-      <p className="site-section-sub">Same AppShell, main content is a searchable/filterable DataTable inside a Card.</p>
+      </DocsSection>
+      <DocsSection anchorId="table-screen" title="Transactions (table screen)">
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", overflowX: "auto" }}>
         <div style={{ width: 860 }}>
             <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={[{ ...NAV_ITEMS[0], current: false }, NAV_ITEMS[1], { ...NAV_ITEMS[2], current: true }, NAV_ITEMS[3], NAV_ITEMS[4]]} variant="rail" />} footer={<ScreenFooter />}>
@@ -190,8 +191,8 @@ export default function Screens() {
       </div>
 
       {/* ============================= STEPPER SCREEN ============================= */}
-      <h2 className="site-section-title" id="stepper-screen">Withdrawal request (stepper screen)</h2>
-      <p className="site-section-sub">Multi-step flow: Stepper drives progress, form Fields fill the step body, actions sit bottom-right.</p>
+      </DocsSection>
+      <DocsSection anchorId="stepper-screen" title="Withdrawal request (stepper screen)">
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", overflowX: "auto" }}>
         <div style={{ width: 860 }}>
             <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} variant="rail" />} footer={<ScreenFooter />}>
@@ -230,8 +231,8 @@ export default function Screens() {
       </div>
 
       {/* ============================= SLIDEOVER SCREEN ============================= */}
-      <h2 className="site-section-title" id="slideover-screen">Add allocation (slideover open)</h2>
-      <p className="site-section-sub">The Drawer overlays the dimmed page, docked to the right edge, full viewport height.</p>
+      </DocsSection>
+      <DocsSection anchorId="slideover-screen" title="Add allocation (slideover open)">
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", overflowX: "auto" }}>
         <div style={{ width: 860, position: "relative" }}>
             <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} variant="rail" />} footer={<ScreenFooter />}>
@@ -263,8 +264,8 @@ export default function Screens() {
       </Drawer>
 
       {/* ============================= BUTTON SCREEN ============================= */}
-      <h2 className="site-section-title" id="buttons-screen">Account actions (buttons screen)</h2>
-      <p className="site-section-sub">One Primary action per view, Secondary/Tertiary/Destructive used for everything else.</p>
+      </DocsSection>
+      <DocsSection anchorId="buttons-screen" title="Account actions (buttons screen)">
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", overflowX: "auto" }}>
         <div style={{ width: 860 }}>
             <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} variant="rail" />} footer={<ScreenFooter />}>
@@ -284,8 +285,8 @@ export default function Screens() {
           </div>
       </div>
 
-      <h2 className="site-section-title">Grid &amp; spacing reference</h2>
-      <p className="site-section-sub">Every screen above uses the same tokens — nothing here is a one-off pixel value.</p>
+      </DocsSection>
+      <DocsSection anchorId="grid-amp-spacing-reference" title="Grid &amp; spacing reference">
       <table className="spec-table">
         <thead><tr><th>Token</th><th>Value</th><th>Used for</th></tr></thead>
         <tbody>
@@ -297,6 +298,8 @@ export default function Screens() {
           <tr><td>Grid columns</td><td>12</td><td>Base column count every screen's content area divides into</td></tr>
         </tbody>
       </table>
+      </DocsSection>
+      </DocsSectionList>
     </div>
   );
 }

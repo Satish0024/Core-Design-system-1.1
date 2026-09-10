@@ -312,9 +312,6 @@ export default function ColorExtractionPage() {
     <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
       {/* Header */}
       <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
-        <div style={{ fontSize: 14, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--core-color-brand-600)", marginBottom: 12 }}>
-          System
-        </div>
         <h1 style={{ fontSize: 72, fontWeight: 800, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>
           Color extraction
         </h1>
@@ -370,7 +367,7 @@ export default function ColorExtractionPage() {
                 <div style={{ fontWeight: 600, fontSize: 16, color: "var(--core-color-text-primary)", marginBottom: 4 }}>
                   {isProcessing ? "Extracting primary color from logo..." : "Upload logo (PNG or SVG)"}
                 </div>
-                <div style={{ fontSize: "var(--core-font-size-sm, 14px)", color: "var(--core-color-text-tertiary)" }}>
+                <div style={{ fontSize: "var(--typography-body-md-size)", color: "var(--core-color-text-tertiary)" }}>
                   Drag & drop your logo here, or <span style={{ color: "var(--core-color-brand-600)", textDecoration: "underline" }}>browse files</span>
                 </div>
               </div>
@@ -506,7 +503,7 @@ export default function ColorExtractionPage() {
           {/* Dynamic Primary Scale Display (50 - 950) */}
           <div style={{ marginTop: 36, borderTop: "1px solid var(--site-border)", paddingTop: 26 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-              <div style={{ fontSize: "var(--core-font-size-md, 16px)", fontWeight: 700, color: "var(--core-color-text-primary)" }}>
+              <div style={{ fontSize: "var(--typography-body-lg-size)", fontWeight: 700, color: "var(--core-color-text-primary)" }}>
                 Generated Primary Scale (50 – 950)
               </div>
               <span style={{ fontSize: 12, color: "var(--core-color-text-tertiary)" }}>
@@ -530,8 +527,8 @@ export default function ColorExtractionPage() {
             <div style={{ display: "flex", width: "100%", marginTop: 8 }}>
               {Object.entries(brandScale).map(([step, hex]) => (
                 <div key={step} style={{ flex: 1, textAlign: "center" }}>
-                  <div style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 600, color: "var(--core-color-text-secondary)" }}>{step}</div>
-                  <div style={{ fontSize: "var(--core-font-size-xs, 12px)", fontFamily: "var(--site-mono)", color: "var(--core-color-text-tertiary)", marginTop: 2 }}>
+                  <div style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 600, color: "var(--core-color-text-secondary)" }}>{step}</div>
+                  <div style={{ fontSize: "var(--typography-font-size-xs)", fontFamily: "var(--site-mono)", color: "var(--core-color-text-tertiary)", marginTop: 2 }}>
                     {hex}
                   </div>
                 </div>
@@ -544,7 +541,7 @@ export default function ColorExtractionPage() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
           {/* Card 1: Live Interactive Components */}
           <div style={{ background: "var(--core-color-surface-default)", borderRadius: 14, padding: "28px", border: "1px solid rgba(128,128,128,0.15)" }}>
-            <div style={{ fontSize: "var(--core-font-size-md, 16px)", fontWeight: 700, color: "var(--core-color-text-primary)", marginBottom: 18 }}>
+            <div style={{ fontSize: "var(--typography-body-lg-size)", fontWeight: 700, color: "var(--core-color-text-primary)", marginBottom: 18 }}>
               Live Components (Primary Brand Action)
             </div>
 
@@ -558,7 +555,7 @@ export default function ColorExtractionPage() {
                     background: "var(--core-color-action-primary-bg)",
                     color: "var(--core-color-action-primary-text)",
                     fontWeight: 600,
-                    fontSize: "var(--core-font-size-sm, 14px)",
+                    fontSize: "var(--typography-body-md-size)",
                     cursor: "pointer",
                   }}
                 >
@@ -572,7 +569,7 @@ export default function ColorExtractionPage() {
                     background: "var(--core-color-action-primary-tintBg)",
                     color: "var(--core-color-action-primary-tintText)",
                     fontWeight: 600,
-                    fontSize: "var(--core-font-size-sm, 14px)",
+                    fontSize: "var(--typography-body-md-size)",
                     cursor: "pointer",
                   }}
                 >
@@ -590,7 +587,7 @@ export default function ColorExtractionPage() {
                     borderRadius: 6,
                     border: "2px solid var(--core-color-border-focus)",
                     outline: "none",
-                    fontSize: "var(--core-font-size-sm, 14px)",
+                    fontSize: "var(--typography-body-md-size)",
                     background: "var(--core-color-surface-default)",
                     color: "var(--core-color-text-primary)",
                   }}
@@ -598,10 +595,10 @@ export default function ColorExtractionPage() {
               </div>
 
               <div style={{ padding: "12px 16px", borderRadius: 8, background: "var(--core-color-action-primary-tintBg)", border: "1px solid var(--core-color-action-primary-tintBorder)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-action-primary-tintText)" }}>
+                <span style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 600, color: "var(--core-color-action-primary-tintText)" }}>
                   Active Theme Accent
                 </span>
-                <span style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, padding: "2px 8px", borderRadius: 12, background: "var(--core-color-action-primary-bg)", color: "var(--core-color-action-primary-text)" }}>
+                <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, padding: "2px 8px", borderRadius: 12, background: "var(--core-color-action-primary-bg)", color: "var(--core-color-action-primary-text)" }}>
                   Brand
                 </span>
               </div>
@@ -611,10 +608,10 @@ export default function ColorExtractionPage() {
           {/* Card 2: Constant Tokens Proof (Neutral, Success, Warning, Danger, Info) */}
           <div style={{ background: "var(--core-color-surface-default)", borderRadius: 14, padding: "28px", border: "1px solid rgba(128,128,128,0.15)" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
-              <div style={{ fontSize: "var(--core-font-size-md, 16px)", fontWeight: 700, color: "var(--core-color-text-primary)" }}>
+              <div style={{ fontSize: "var(--typography-body-lg-size)", fontWeight: 700, color: "var(--core-color-text-primary)" }}>
                 Constant Tokens (Untouched)
               </div>
-              <span style={{ fontSize: "var(--core-font-size-xs, 12px)", fontWeight: 700, color: "var(--core-color-status-success-text)", background: "var(--core-color-status-success-bg)", padding: "2px 8px", borderRadius: 12 }}>
+              <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, color: "var(--core-color-status-success-text)", background: "var(--core-color-status-success-bg)", padding: "2px 8px", borderRadius: 12 }}>
                 ✓ Constant
               </span>
             </div>
@@ -630,7 +627,7 @@ export default function ColorExtractionPage() {
                 <div key={item.name} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "6px 0", borderBottom: "1px solid var(--site-border)" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                     <div style={{ width: 18, height: 18, borderRadius: 4, background: item.hex }} />
-                    <span style={{ fontSize: "var(--core-font-size-sm, 14px)", fontWeight: 600, color: "var(--core-color-text-primary)" }}>{item.name}</span>
+                    <span style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 600, color: "var(--core-color-text-primary)" }}>{item.name}</span>
                   </div>
                   <span style={{ fontSize: 12, color: "var(--core-color-text-tertiary)" }}>{item.desc}</span>
                 </div>

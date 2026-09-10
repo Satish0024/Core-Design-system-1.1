@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { DocsSection, DocsSectionList } from "../DocsSection";
 
 const durations = [
   { name: "instant", ms: 80, use: "Micro feedback — checkbox tick, ripple" },
@@ -17,34 +18,38 @@ export default function Motion() {
         <code> prefers-reduced-motion</code>.
       </p>
 
-      <h2 className="site-section-title">Durations</h2>
-      <div className="site-panel">
-        <button className="btn-hero ghost" style={{ marginBottom: 20, cursor: "pointer" }} onClick={() => setPlay((p) => p + 1)}>
-          ▶ Replay
-        </button>
-        {durations.map((d) => (
-          <div key={d.name} style={{ display: "flex", alignItems: "center", gap: 16, padding: "10px 0", borderBottom: "1px solid var(--site-border)" }}>
-            <div style={{ width: 90, fontFamily: "var(--site-mono)", fontSize: 12 }}>{d.name} · {d.ms}ms</div>
-            <div style={{ width: 200, height: 8, background: "var(--site-bg-hover)", borderRadius: 4, position: "relative", overflow: "hidden" }}>
-              <div
-                key={play}
-                style={{
-                  position: "absolute", inset: 0, background: "var(--site-accent)",
-                  animation: `motionDemo ${d.ms}ms cubic-bezier(0.2,0,0,1)`,
-                }}
-              />
-            </div>
-            <div style={{ fontSize: "var(--core-font-size-xs, 12px)", color: "var(--site-text-dim)" }}>{d.use}</div>
+      <DocsSectionList>
+        <DocsSection anchorId="durations" title="Durations">
+          <div className="site-panel">
+            <button className="btn-hero ghost" style={{ marginBottom: 20, cursor: "pointer" }} onClick={() => setPlay((p) => p + 1)}>
+              ▶ Replay
+            </button>
+            {durations.map((d) => (
+              <div key={d.name} style={{ display: "flex", alignItems: "center", gap: 16, padding: "10px 0", borderBottom: "1px solid var(--site-border)" }}>
+                <div style={{ width: 90, fontFamily: "var(--site-mono)", fontSize: 12 }}>{d.name} · {d.ms}ms</div>
+                <div style={{ width: 200, height: 8, background: "var(--site-bg-hover)", borderRadius: 4, position: "relative", overflow: "hidden" }}>
+                  <div
+                    key={play}
+                    style={{
+                      position: "absolute", inset: 0, background: "var(--site-accent)",
+                      animation: `motionDemo ${d.ms}ms cubic-bezier(0.2,0,0,1)`,
+                    }}
+                  />
+                </div>
+                <div style={{ fontSize: "var(--typography-font-size-xs)", color: "var(--site-text-dim)" }}>{d.use}</div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <style>{`@keyframes motionDemo { from { transform: translateX(-100%);} to { transform: translateX(0);} }`}</style>
+          <style>{`@keyframes motionDemo { from { transform: translateX(-100%);} to { transform: translateX(0);} }`}</style>
+        </DocsSection>
 
-      <h2 className="site-section-title">Reduced motion</h2>
-      <div className="site-panel">
-        <code>@media (prefers-reduced-motion: reduce)</code> — all transition/animation durations collapse to 0–1ms
-        and transform-based motion is disabled system-wide, per component implementation, not as an opt-in.
-      </div>
+        <DocsSection anchorId="reduced-motion" title="Reduced motion">
+          <div className="site-panel">
+            <code>@media (prefers-reduced-motion: reduce)</code> — all transition/animation durations collapse to 0–1ms
+            and transform-based motion is disabled system-wide, per component implementation, not as an opt-in.
+          </div>
+        </DocsSection>
+      </DocsSectionList>
     </div>
   );
 }

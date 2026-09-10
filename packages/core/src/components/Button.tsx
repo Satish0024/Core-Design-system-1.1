@@ -28,7 +28,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         aria-busy={loading || undefined}
         {...rest}
       >
-        {loading ? "…" : children}
+        {loading ? "…" : variant === "tertiary" ? <span className="cds-btn__text">{children}</span> : children}
       </button>
     );
   }
