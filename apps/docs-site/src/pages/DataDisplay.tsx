@@ -3,20 +3,8 @@ import { Preview, CodeBlock } from "../Preview";
 import { DocsSection, DocsSectionList, StateLabel } from "../DocsSection";
 import { Anatomy, AnatomyLegend } from "../Anatomy";
 import { Card, Badge, BadgeTone, BadgeSize } from "../../../../packages/core/src/components/Misc";
-import { Table, DataTable, Avatar, AvatarGroup, Progress } from "../../../../packages/core/src/components/DataDisplay";
-import { Icon, Item, DescriptionList } from "../../../../packages/core/src/components/Primitives";
-import { Button } from "../../../../packages/core/src/components/Button";
-
-const manyRows = [
-  { id: 1, date: "Sep 01, 2026", type: "Contribution", amount: 412.5, status: "success" as const },
-  { id: 2, date: "Aug 15, 2026", type: "Dividend", amount: 18.2, status: "success" as const },
-  { id: 3, date: "Aug 01, 2026", type: "Contribution", amount: 412.5, status: "warning" as const },
-  { id: 4, date: "Jul 15, 2026", type: "Fee", amount: -4, status: "danger" as const },
-  { id: 5, date: "Jul 01, 2026", type: "Contribution", amount: 400, status: "success" as const },
-  { id: 6, date: "Jun 15, 2026", type: "Dividend", amount: 15.1, status: "success" as const },
-  { id: 7, date: "Jun 01, 2026", type: "Contribution", amount: 400, status: "success" as const },
-];
-
+import { Table, Avatar, AvatarGroup, Progress } from "../../../../packages/core/src/components/DataDisplay";
+import { Icon } from "../../../../packages/core/src/components/Primitives";
 const rows = [
   { id: 1, date: "Sep 01, 2026", type: "Contribution", amount: "$412.50", status: "success" as const },
   { id: 2, date: "Aug 15, 2026", type: "Dividend", amount: "$18.20", status: "success" as const },
@@ -288,246 +276,34 @@ export default function DataDisplay({ embedded = false }: { embedded?: boolean }
       anchorId: "data-table",
       title: "Table & Data Table",
       content: (
-        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-          {/* 1. Basic Data Table */}
-          <div id="table">
-            <div style={{ ...sectionLabelStyle, marginBottom: "var(--core-space-2, 8px)" }}>
-              Basic Data Table
-            </div>
-            <div className="site-panel site-panel--flush">
-              <div
-                className="preview-surface"
-                data-theme="core"
-                data-mode="light"
-                style={{ background: "var(--theme-colors-neutral-0)", flexDirection: "column", alignItems: "stretch" }}
-              >
-                <Table
-                  columns={[
-                    { key: "date", header: "Date" },
-                    { key: "type", header: "Type" },
-                    { key: "amount", header: "Amount" },
-                    {
-                      key: "status",
-                      header: "Status",
-                      render: (r) => (
-                        <Badge tone={r.status}>
-                          {r.status === "success" ? "Posted" : r.status === "warning" ? "Pending" : "Failed"}
-                        </Badge>
-                      ),
-                    },
-                  ]}
-                  rows={rows}
-                />
-              </div>
-            </div>
+        <div id="table">
+          <div style={{ ...sectionLabelStyle, marginBottom: "var(--core-space-2, 8px)" }}>
+            Basic Data Table
           </div>
-
-          {/* 2. Interactive Paginated & Searchable Table */}
-          <div>
-            <div style={{ ...sectionLabelStyle, marginBottom: "var(--core-space-2, 8px)" }}>
-              Interactive Paginated &amp; Searchable Table
-            </div>
-            <div className="site-panel site-panel--flush">
-              <div
-                className="preview-surface"
-                data-theme="core"
-                data-mode="light"
-                style={{ background: "var(--theme-colors-neutral-0)", flexDirection: "column", alignItems: "stretch" }}
-              >
-                <DataTable
-                  pageSize={4}
-                  searchable
-                  searchPlaceholder="Search transactions…"
-                  filters={[
-                    {
-                      key: "status",
-                      label: "Status",
-                      options: [
-                        { value: "success", label: "Posted" },
-                        { value: "warning", label: "Pending" },
-                        { value: "danger", label: "Failed" },
-                      ],
-                    },
-                    {
-                      key: "type",
-                      label: "Type",
-                      options: [
-                        { value: "Contribution", label: "Contribution" },
-                        { value: "Dividend", label: "Dividend" },
-                        { value: "Fee", label: "Fee" },
-                      ],
-                    },
-                  ]}
-                  columns={[
-                    { key: "date", header: "Date", sortable: true },
-                    { key: "type", header: "Type", sortable: true },
-                    {
-                      key: "amount",
-                      header: "Amount",
-                      sortable: true,
-                      render: (r) => `$${r.amount.toFixed(2)}`,
-                    },
-                    {
-                      key: "status",
-                      header: "Status",
-                      render: (r) => (
-                        <Badge tone={r.status}>
-                          {r.status === "success" ? "Posted" : r.status === "warning" ? "Pending" : "Failed"}
-                        </Badge>
-                      ),
-                    },
-                  ]}
-                  rows={manyRows}
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* 3. View Mode (Read-Only Table) */}
-          <div>
+          <div className="site-panel site-panel--flush">
             <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: 8,
-              }}
+              className="preview-surface"
+              data-theme="core"
+              data-mode="light"
+              style={{ background: "var(--theme-colors-neutral-0)", flexDirection: "column", alignItems: "stretch" }}
             >
-              <div style={sectionLabelStyle}>
-                View Mode (Read-Only Table)
-              </div>
-              <span className="cds-table-view-badge">
-                <span className="cds-table-view-badge__dot" aria-hidden="true" />
-                Read-Only View
-              </span>
-            </div>
-            <div className="site-panel site-panel--flush">
-              <div
-                className="preview-surface"
-                data-theme="core"
-                data-mode="light"
-                style={{ background: "var(--theme-colors-neutral-0)", flexDirection: "column", alignItems: "stretch" }}
-              >
-                <DataTable
-                  viewMode
-                  zebra={false}
-                  pageSize={4}
-                  searchable
-                  searchPlaceholder="Filter records in view mode…"
-                  columns={[
-                    { key: "date", header: "Date", sortable: true },
-                    { key: "type", header: "Type", sortable: true },
-                    {
-                      key: "amount",
-                      header: "Amount",
-                      sortable: true,
-                      render: (r) => `$${r.amount.toFixed(2)}`,
-                    },
-                    {
-                      key: "status",
-                      header: "Status",
-                      render: (r) => (
-                        <Badge tone={r.status} variant="soft">
-                          {r.status === "success" ? "Posted" : r.status === "warning" ? "Pending" : "Failed"}
-                        </Badge>
-                      ),
-                    },
-                  ]}
-                  rows={manyRows}
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* 4. Disabled State (Locked Table) */}
-          <div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: 8,
-              }}
-            >
-              <div
-                style={{
-                  fontSize: 12,
-                  fontWeight: 700,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.06em",
-                  color: "var(--core-color-neutral-500, #787887)",
-                }}
-              >
-                Disabled State (Locked Table)
-              </div>
-              <span
-                style={{
-                  fontSize: "var(--typography-font-size-xs)",
-                  fontWeight: 600,
-                  color: "var(--core-color-neutral-500, #787887)",
-                  background: "var(--core-color-neutral-50, #F7F7F9)",
-                  border: "1px solid var(--core-color-neutral-200, #DFDFE6)",
-                  padding: "2px 8px",
-                  borderRadius: 999,
-                }}
-              >
-                Disabled / Locked
-              </span>
-            </div>
-            <div className="site-panel site-panel--flush">
-              <div
-                className="preview-surface"
-                data-theme="core"
-                data-mode="light"
-                style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}
-              >
-                <DataTable
-                  disabled
-                  pageSize={4}
-                  searchable
-                  searchPlaceholder="Search locked…"
-                  filters={[
-                    {
-                      key: "status",
-                      label: "Status",
-                      options: [
-                        { value: "success", label: "Posted" },
-                        { value: "warning", label: "Pending" },
-                        { value: "danger", label: "Failed" },
-                      ],
-                    },
-                    {
-                      key: "type",
-                      label: "Type",
-                      options: [
-                        { value: "Contribution", label: "Contribution" },
-                        { value: "Dividend", label: "Dividend" },
-                        { value: "Fee", label: "Fee" },
-                      ],
-                    },
-                  ]}
-                  columns={[
-                    { key: "date", header: "Date", sortable: true },
-                    { key: "type", header: "Type", sortable: true },
-                    {
-                      key: "amount",
-                      header: "Amount",
-                      sortable: true,
-                      render: (r) => typeof r.amount === "number" ? `$${r.amount.toFixed(2)}` : r.amount,
-                    },
-                    {
-                      key: "status",
-                      header: "Status",
-                      render: (r) => (
-                        <Badge tone={r.status} variant="soft" disabled>
-                          {r.status === "success" ? "Posted" : r.status === "warning" ? "Pending" : "Failed"}
-                        </Badge>
-                      ),
-                    },
-                  ]}
-                  rows={manyRows}
-                />
-              </div>
+              <Table
+                columns={[
+                  { key: "date", header: "Date" },
+                  { key: "type", header: "Type" },
+                  { key: "amount", header: "Amount" },
+                  {
+                    key: "status",
+                    header: "Status",
+                    render: (r) => (
+                      <Badge tone={r.status}>
+                        {r.status === "success" ? "Posted" : r.status === "warning" ? "Pending" : "Failed"}
+                      </Badge>
+                    ),
+                  },
+                ]}
+                rows={rows}
+              />
             </div>
           </div>
         </div>
@@ -535,64 +311,6 @@ export default function DataDisplay({ embedded = false }: { embedded?: boolean }
     },
     {
       id: "04",
-      anchorId: "item",
-      title: "Item & Description List",
-      content: (
-        <div id="description-list" style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-          <div className="site-panel site-panel--flush">
-            <div
-              className="preview-surface"
-              data-theme="core"
-              data-mode="light"
-              style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}
-            >
-              <Item
-                title="Roth 401(k)"
-                description="62% of portfolio"
-                action={
-                  <Button variant="secondary" size="sm">
-                    Manage
-                  </Button>
-                }
-              />
-              <Item
-                title="Traditional 401(k)"
-                description="38% of portfolio"
-                action={
-                  <Button variant="secondary" size="sm">
-                    Manage
-                  </Button>
-                }
-              />
-            </div>
-          </div>
-
-          <div className="site-panel site-panel--flush">
-            <div
-              className="preview-surface"
-              data-theme="core"
-              data-mode="light"
-              style={{ background: "var(--core-color-bg-page)" }}
-            >
-              <div style={{ width: "100%", maxWidth: 320 }}>
-                <div className="site-nav-title" style={{ padding: "0 0 8px" }}>
-                  Inline (row-separated)
-                </div>
-                <DescriptionList
-                  orientation="inline"
-                  items={[
-                    { term: "Plan balance", value: "$12,840.00" },
-                    { term: "Vested balance", value: "$9,620.00" },
-                  ]}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      ),
-    },
-    {
-      id: "05",
       anchorId: "avatar",
       title: "Avatar & Groups",
       content: (
@@ -600,7 +318,7 @@ export default function DataDisplay({ embedded = false }: { embedded?: boolean }
       ),
     },
     {
-      id: "06",
+      id: "05",
       anchorId: "progress",
       title: "Progress",
       content: (
@@ -674,7 +392,7 @@ export default function DataDisplay({ embedded = false }: { embedded?: boolean }
       <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
         <h1 style={{ fontSize: 72, fontWeight: 800, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>Data Display</h1>
         <p style={{ maxWidth: 580, margin: "0 auto", color: "var(--core-color-text-tertiary)", fontSize: "var(--core-font-size-lg, 20px)", lineHeight: 1.6, fontWeight: 400 }}>
-          Quick links, Badges, Tables, Avatars, Progress meters, and description lists designed for metrics and data summaries.
+          Quick links, Badges, Tables, Avatars, and Progress meters designed for metrics and data summaries.
         </p>
       </div>
       {sectionList}

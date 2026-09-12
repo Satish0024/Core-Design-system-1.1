@@ -1,7 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
+// @ts-ignore — Vite `?raw` import for palette download bundle.
+import semanticPaletteScss from "../../public/Format to follow naming.scss?raw";
 import primitives from "../../../../packages/tokens/src/primitives.json";
 import { ContrastBadge } from "../ContrastBadge";
 import { rgbStringToHex } from "../lib/contrast";
+import {
+  ContrastAgainstControl,
+  ContrastBasisNote,
+  WcagContrastIndicator,
+  WcagLegend,
+  type ContrastBackground,
+} from "../WcagContrastIndicator";
 import { ChevronIcon, Collapsible } from "../../../../packages/core/src/components/Primitives";
 const color = (primitives as any).color;
 const gradient = (primitives as any).gradient;
@@ -230,22 +239,6 @@ function BaselineTokensSection() {
 
 /* (ModeSwatchCell removed — replaced by BaselineSwatch in the M3 accordion) */
 
-const quickRef = [
-  { use: "Primary button (Save, Submit, Continue) — the default for almost everything", token: "--core-color-action-primary-bg" },
-  { use: "Button / link on hover", token: "--core-color-action-primary-bgHover" },
-  { use: "Secondary emphasis — a highlighted stat, an alternate metric, a \"new\" indicator", token: "--core-color-palette-secondary-solidBg" },
-  { use: "Tertiary emphasis — rare accents, a supporting badge, a subtle callout", token: "--core-color-palette-tertiary-solidBg" },
-  { use: "Delete / remove button", token: "--core-color-action-destructive-bg" },
-  { use: "Main body text, headings", token: "--core-color-text-primary" },
-  { use: "Helper text, timestamps, secondary labels", token: "--core-color-text-secondary" },
-  { use: "Page background", token: "--core-color-bg-page" },
-  { use: "Card / panel background", token: "--core-color-surface-default" },
-  { use: "Borders, dividers, input outlines", token: "--core-color-border-default" },
-  { use: "\"Saved\" / \"Active\" / success messages", token: "--core-color-status-success-bg" },
-  { use: "Warnings, \"needs attention\"", token: "--core-color-status-warning-bg" },
-  { use: "Informational notices", token: "--core-color-status-info-bg" },
-];
-
 function GradientSwatch({ name, css, token }: { name: string; css: string; token: string }) {
   return (
     <div className="token-swatch" onClick={() => navigator.clipboard.writeText(`var(${token})`)} style={{ cursor: "pointer" }} title="Click to copy token">
@@ -307,7 +300,54 @@ function getContrastColor(hex: string): string {
   return lum > 0.179 ? "#000000" : "#FFFFFF";
 }
 
-function RampRow({ name, prefix, scale, isLast }: { name: string; prefix: string; scale: Record<string, string>; isLast?: boolean }) {
+function FullColorScalesSection() {
+  const [contrastBackground, setContrastBackground] = useState<ContrastBackground>("white");
+
+  return (
+    <div style={{ background: "var(--core-color-surface-default)", borderRadius: 14, padding: "32px", border: "1px solid rgba(128,128,128,0.15)" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 12,
+          marginBottom: 20,
+          paddingBottom: 16,
+          borderBottom: "1px solid var(--site-border)",
+        }}
+      >
+        <ContrastAgainstControl value={contrastBackground} onChange={setContrastBackground} />
+        <ContrastBasisNote contrastBackground={contrastBackground} />
+        <WcagLegend />
+      </div>
+      <div style={{ display: "flex", paddingBottom: 16, borderBottom: "1px solid var(--site-border)", fontSize: "var(--typography-font-size-xs)", fontWeight: 600, color: "var(--core-color-text-secondary)" }}>
+        <div style={{ width: "25%", minWidth: 150 }}>Name</div>
+        <div style={{ width: "75%" }}>Swatches</div>
+      </div>
+      <RampRow name="brand (primary)" prefix="brand" scale={color.brand} contrastBackground={contrastBackground} />
+      <RampRow name="secondary" prefix="secondary" scale={color.secondary} contrastBackground={contrastBackground} />
+      <RampRow name="tertiary" prefix="tertiary" scale={color.tertiary} contrastBackground={contrastBackground} />
+      <RampRow name="neutral" prefix="neutral" scale={color.neutral} contrastBackground={contrastBackground} />
+      <RampRow name="success" prefix="success" scale={color.success} contrastBackground={contrastBackground} />
+      <RampRow name="warning" prefix="warning" scale={color.warning} contrastBackground={contrastBackground} />
+      <RampRow name="danger" prefix="danger" scale={color.danger} contrastBackground={contrastBackground} />
+      <RampRow name="info" prefix="info" scale={color.info} contrastBackground={contrastBackground} isLast />
+    </div>
+  );
+}
+
+function RampRow({
+  name,
+  prefix,
+  scale,
+  contrastBackground,
+  isLast,
+}: {
+  name: string;
+  prefix: string;
+  scale: Record<string, string>;
+  contrastBackground: ContrastBackground;
+  isLast?: boolean;
+}) {
   const entries = Object.entries(scale);
 
   const copyToken = (step: string) => {
@@ -315,67 +355,121 @@ function RampRow({ name, prefix, scale, isLast }: { name: string; prefix: string
   };
 
   return (
-    <div style={{ display: "flex", padding: "32px 0", borderBottom: isLast ? "none" : "1px solid var(--site-border)" }}>
-      <div style={{ width: "25%", minWidth: 150, fontSize: "var(--typography-font-size-xs)", fontWeight: 700, textTransform: "uppercase", color: "var(--core-color-text-primary)", paddingTop: 16 }}>
+    <div style={{ display: "flex", padding: "28px 0", borderBottom: isLast ? "none" : "1px solid var(--site-border)", gap: 20 }}>
+      <div
+        style={{
+          width: "22%",
+          minWidth: 120,
+          fontSize: "var(--typography-font-size-xs)",
+          fontWeight: 700,
+          textTransform: "uppercase",
+          color: "var(--core-color-text-primary)",
+          paddingTop: 8,
+          letterSpacing: "0.04em",
+          lineHeight: 1.4,
+        }}
+      >
         {name}
       </div>
-      <div style={{ width: "75%", display: "flex", flexDirection: "column", gap: 6 }}>
-        <div style={{ display: "flex", width: "100%", height: 80, borderRadius: 6, overflow: "hidden", border: "1px solid rgba(128,128,128,0.15)" }}>
-          {entries.map(([step, hex]) => {
-            const textColor = getContrastColor(hex);
-            return (
+      <div style={{ flex: 1, minWidth: 0, overflowX: "auto" }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${entries.length}, minmax(58px, 1fr))`,
+            gap: 0,
+            minWidth: entries.length * 58,
+          }}
+        >
+          <div
+            style={{
+              gridColumn: `1 / -1`,
+              display: "flex",
+              height: 56,
+              borderRadius: 6,
+              overflow: "hidden",
+              border: "1px solid rgba(128,128,128,0.15)",
+            }}
+          >
+            {entries.map(([step, hex]) => (
               <button
-                key={step}
+                key={`${step}-chip`}
                 type="button"
-                aria-label={`${name} ${hex}`}
+                aria-label={`${name} ${step} ${hex}`}
                 title={`Click to copy ${hex}`}
                 onClick={() => navigator.clipboard.writeText(hex)}
                 style={{
                   flex: 1,
-                  position: "relative",
+                  minWidth: 0,
                   border: "none",
                   padding: 0,
                   background: hex,
                   cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: textColor,
-                  fontSize: "var(--core-font-size-xs, 11px)",
-                  fontFamily: "var(--site-mono)",
-                  lineHeight: 1.3,
                   transition: "opacity 0.2s",
                 }}
-                onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.9"; }}
+                onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.92"; }}
                 onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
-              >
-                {hex}
-              </button>
-            );
-          })}
-        </div>
-        <div style={{ display: "flex", width: "100%" }}>
-          {entries.map(([step]) => (
-            <button
-              key={`${step}-label`}
-              type="button"
-              onClick={() => copyToken(step)}
-              title={`Click to copy var(--core-color-${prefix}-${step})`}
+              />
+            ))}
+          </div>
+          {entries.map(([step, hex]) => (
+            <div
+              key={step}
               style={{
-                flex: 1,
-                border: "none",
-                background: "transparent",
-                padding: "4px 2px 0",
-                fontSize: 12,
-                fontWeight: 700,
-                color: "var(--core-color-text-primary)",
-                cursor: "pointer",
-                textAlign: "center",
-                lineHeight: 1.3,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "stretch",
+                minWidth: 0,
               }}
             >
-              {step}
-            </button>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 4,
+                  padding: "8px 2px 0",
+                  textAlign: "center",
+                }}
+              >
+                <button
+                  type="button"
+                  onClick={() => navigator.clipboard.writeText(hex)}
+                  title={`Click to copy ${hex}`}
+                  style={{
+                    border: "none",
+                    background: "transparent",
+                    padding: 0,
+                    fontSize: 10,
+                    fontFamily: "var(--site-mono)",
+                    fontWeight: 600,
+                    color: "var(--core-color-text-secondary)",
+                    cursor: "pointer",
+                    lineHeight: 1.2,
+                    wordBreak: "break-all",
+                  }}
+                >
+                  {hex.toUpperCase()}
+                </button>
+                <WcagContrastIndicator hex={hex} contrastBackground={contrastBackground} layout="stack" passFailBelow />
+                <button
+                  type="button"
+                  onClick={() => copyToken(step)}
+                  title={`Click to copy var(--core-color-${prefix}-${step})`}
+                  style={{
+                    border: "none",
+                    background: "transparent",
+                    padding: "2px 0 0",
+                    fontSize: 11,
+                    fontWeight: 700,
+                    color: "var(--core-color-text-primary)",
+                    cursor: "pointer",
+                    lineHeight: 1.2,
+                  }}
+                >
+                  {step}
+                </button>
+              </div>
+            </div>
           ))}
         </div>
       </div>
@@ -395,12 +489,22 @@ export interface FigmaTokenItem {
   cssVar: string; // e.g. "--theme-brand-text-primary-default"
   aliasCssVar?: string; // e.g. "--brand-text-primary-default"
   coreRef: string; // e.g. "--core-color-action-primary-bg"
-  category: "primary" | "secondary" | "tertiary" | "neutral" | "critical" | "warning" | "success" | "info" | "brand" | "semantics";
+  category: "primary" | "secondary" | "tertiary" | "neutral" | "disabled" | "critical" | "warning" | "success" | "info" | "brand" | "semantics";
   type: "text" | "background" | "borders";
   lightHex: string;
   darkHex: string;
   paletteNameLight: string; // e.g. "Brand 500"
   paletteNameDark: string;  // e.g. "Brand 300"
+}
+
+/** Canonical token label from Format to follow naming.scss (no `--` prefix). */
+function canonicalTokenName(token: FigmaTokenItem): string {
+  const raw = token.aliasCssVar || token.cssVar;
+  return raw.replace(/^--(?:theme-)?/, "");
+}
+
+function canonicalTokenVar(token: FigmaTokenItem): string {
+  return `--${canonicalTokenName(token)}`;
 }
 
 const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
@@ -465,7 +569,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Text",
     path: "Primary / Text / primaryhover",
     cssVar: "--theme-brand-text-primary-hover",
-    aliasCssVar: "--brand-text-primaryhover",
+    aliasCssVar: "--brand-text-primary-hover",
     coreRef: "--core-color-action-primary-bgHover",
     category: "primary",
     type: "text",
@@ -553,13 +657,13 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     path: "Primary / Background / disabled-strong",
     cssVar: "--theme-brand-background-disabled-strong",
     aliasCssVar: "--brand-background-disabled-strong",
-    coreRef: "--core-color-brand-300",
+    coreRef: "--core-color-brand-200",
     category: "primary",
     type: "background",
-    lightHex: "#86ADDF",
-    darkHex: "#86ADDF",
-    paletteNameLight: "Brand 300",
-    paletteNameDark: "Brand 300",
+    lightHex: "#BACEE9",
+    darkHex: "#BACEE9",
+    paletteNameLight: "Brand 200",
+    paletteNameDark: "Brand 200",
   },
   {
     id: "primary-bg-strong",
@@ -623,13 +727,13 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     path: "Primary / Borders / primary-disabled",
     cssVar: "--theme-brand-borders-primary-disabled",
     aliasCssVar: "--brand-borders-primary-disabled",
-    coreRef: "--core-color-brand-300",
+    coreRef: "--core-color-brand-200",
     category: "primary",
     type: "borders",
-    lightHex: "#86ADDF",
-    darkHex: "#86ADDF",
-    paletteNameLight: "Brand 300",
-    paletteNameDark: "Brand 300",
+    lightHex: "#BACEE9",
+    darkHex: "#BACEE9",
+    paletteNameLight: "Brand 200",
+    paletteNameDark: "Brand 200",
   },
   {
     id: "primary-borders-default",
@@ -1170,7 +1274,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Text",
     path: "Neutral / Text / text-on-color",
     cssVar: "--theme-neutral-text-on-color",
-    aliasCssVar: "--theme-neutral-text-oncolor",
+    aliasCssVar: "--neutral-text-on-color",
     coreRef: "--core-color-text-inverse",
     category: "neutral",
     type: "text",
@@ -1187,7 +1291,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Text",
     path: "Neutral / Text / subtleleast",
     cssVar: "--theme-neutral-text-subtleleast",
-    aliasCssVar: "--theme-neutral-text-subtle-least",
+    aliasCssVar: "--neutral-text-subtle-light",
     coreRef: "--core-color-text-tertiary",
     category: "neutral",
     type: "text",
@@ -1204,6 +1308,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Text",
     path: "Neutral / Text / subtle",
     cssVar: "--theme-neutral-text-subtle",
+    aliasCssVar: "--neutral-text-subtle",
     coreRef: "--core-color-text-secondary",
     category: "neutral",
     type: "text",
@@ -1220,7 +1325,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Text",
     path: "Neutral / Text / text",
     cssVar: "--theme-neutral-text-primary-default",
-    aliasCssVar: "--theme-neutral-text",
+    aliasCssVar: "--neutral-text-default",
     coreRef: "--core-color-text-primary",
     category: "neutral",
     type: "text",
@@ -1239,6 +1344,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Border",
     path: "Neutral / Border / inverse",
     cssVar: "--theme-neutral-border-inverse",
+    aliasCssVar: "--neutral-border-inverse",
     coreRef: "--core-color-neutral-0",
     category: "neutral",
     type: "borders",
@@ -1255,6 +1361,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Border",
     path: "Neutral / Border / border-subtle",
     cssVar: "--theme-neutral-border-subtle",
+    aliasCssVar: "--neutral-border-subtle",
     coreRef: "--core-color-border-subtle",
     category: "neutral",
     type: "borders",
@@ -1271,7 +1378,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Border",
     path: "Neutral / Border / border-light",
     cssVar: "--theme-neutral-border-primary-default",
-    aliasCssVar: "--theme-neutral-border-light",
+    aliasCssVar: "--neutral-border-light",
     coreRef: "--core-color-border-default",
     category: "neutral",
     type: "borders",
@@ -1288,6 +1395,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Border",
     path: "Neutral / Border / border-strong",
     cssVar: "--theme-neutral-border-strong",
+    aliasCssVar: "--neutral-border-strong",
     coreRef: "--core-color-border-strong",
     category: "neutral",
     type: "borders",
@@ -1297,57 +1405,60 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     paletteNameDark: "Neutral 500",
   },
 
-  // Neutral / Disabled (control surfaces — inputs, tables, pagination)
+  // ── 5. DISABLED COLORS ──
   {
-    id: "neutral-disabled-background",
-    name: "disabled-background",
-    displayName: "Disabled Background",
-    group: "Neutral / Disabled",
+    id: "disabled-background",
+    name: "background",
+    displayName: "Background",
+    group: "Disabled",
     subgroup: "Disabled",
-    path: "Neutral / Disabled / background",
+    path: "Disabled / background",
     cssVar: "--theme-semantics-disabled-background",
+    aliasCssVar: "--semantics-disabled-background",
     coreRef: "--core-color-control-disabled-bg",
-    category: "neutral",
+    category: "disabled",
     type: "background",
+    lightHex: "#F7F7F9",
+    darkHex: "#F7F7F9",
+    paletteNameLight: "Light Grey 50",
+    paletteNameDark: "Light Grey 50",
+  },
+  {
+    id: "disabled-border",
+    name: "border",
+    displayName: "Border",
+    group: "Disabled",
+    subgroup: "Disabled",
+    path: "Disabled / border",
+    cssVar: "--theme-semantics-disabled-border",
+    aliasCssVar: "--semantics-disabled-border",
+    coreRef: "--core-color-control-disabled-border",
+    category: "disabled",
+    type: "borders",
+    lightHex: "#454452",
+    darkHex: "#454452",
+    paletteNameLight: "Light Grey 700",
+    paletteNameDark: "Light Grey 700",
+  },
+  {
+    id: "disabled-text",
+    name: "text",
+    displayName: "Text",
+    group: "Disabled",
+    subgroup: "Disabled",
+    path: "Disabled / text",
+    cssVar: "--theme-semantics-disabled-text",
+    aliasCssVar: "--semantics-disabled-text",
+    coreRef: "--core-color-control-disabled-text",
+    category: "disabled",
+    type: "text",
     lightHex: "#EEEEF2",
     darkHex: "#EEEEF2",
     paletteNameLight: "Neutral 100",
     paletteNameDark: "Neutral 100",
   },
-  {
-    id: "neutral-disabled-border",
-    name: "disabled-border",
-    displayName: "Disabled Border",
-    group: "Neutral / Disabled",
-    subgroup: "Disabled",
-    path: "Neutral / Disabled / border",
-    cssVar: "--theme-semantics-disabled-border",
-    coreRef: "--core-color-control-disabled-border",
-    category: "neutral",
-    type: "borders",
-    lightHex: "#DFDFE6",
-    darkHex: "#DFDFE6",
-    paletteNameLight: "Neutral 200",
-    paletteNameDark: "Neutral 200",
-  },
-  {
-    id: "neutral-disabled-text",
-    name: "disabled-text",
-    displayName: "Disabled Text",
-    group: "Neutral / Disabled",
-    subgroup: "Disabled",
-    path: "Neutral / Disabled / text",
-    cssVar: "--theme-semantics-disabled-text",
-    coreRef: "--core-color-control-disabled-text",
-    category: "neutral",
-    type: "text",
-    lightHex: "#787887",
-    darkHex: "#787887",
-    paletteNameLight: "Neutral 500",
-    paletteNameDark: "Neutral 500",
-  },
 
-  // ── 5. CRITICAL COLORS ──
+  // ── 6. CRITICAL COLORS ──
   {
     id: "critical-light-background",
     name: "light-background",
@@ -1356,7 +1467,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Critical",
     path: "Critical / light-background",
     cssVar: "--theme-semantics-critical-light-background",
-    aliasCssVar: "--theme-semantics-critical-background-light",
+    aliasCssVar: "--semantics-critical-background-light",
     coreRef: "--core-color-status-danger-bg",
     category: "critical",
     type: "background",
@@ -1373,6 +1484,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Critical",
     path: "Critical / border",
     cssVar: "--theme-semantics-critical-border",
+    aliasCssVar: "--semantics-critical-border",
     coreRef: "--core-color-status-danger-border",
     category: "critical",
     type: "borders",
@@ -1389,7 +1501,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Critical",
     path: "Critical / strong-background",
     cssVar: "--theme-semantics-critical-strong-background",
-    aliasCssVar: "--theme-semantics-critical-background-strong",
+    aliasCssVar: "--semantics-critical-background-strong",
     coreRef: "--core-color-danger-500",
     category: "critical",
     type: "background",
@@ -1406,6 +1518,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Critical",
     path: "Critical / text",
     cssVar: "--theme-semantics-critical-text",
+    aliasCssVar: "--semantics-critical-text",
     coreRef: "--core-color-status-danger-text",
     category: "critical",
     type: "text",
@@ -1413,86 +1526,6 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     darkHex: "#EF8E8E",
     paletteNameLight: "Danger 700",
     paletteNameDark: "Danger 300",
-  },
-  {
-    id: "critical-disabled-background",
-    name: "disabled-background",
-    displayName: "Disabled Background",
-    group: "Critical / Disabled",
-    subgroup: "Disabled",
-    path: "Critical / Disabled / background",
-    cssVar: "--theme-semantics-critical-disabled-background",
-    coreRef: "--core-semantics-critical-disabled-background",
-    category: "critical",
-    type: "background",
-    lightHex: "#FDEFEF",
-    darkHex: "#FDEFEF",
-    paletteNameLight: "Danger 50",
-    paletteNameDark: "Danger 50",
-  },
-  {
-    id: "critical-disabled-text",
-    name: "disabled-text",
-    displayName: "Disabled Text",
-    group: "Critical / Disabled",
-    subgroup: "Disabled",
-    path: "Critical / Disabled / text",
-    cssVar: "--theme-semantics-critical-disabled-text",
-    coreRef: "--core-semantics-critical-disabled-text",
-    category: "critical",
-    type: "text",
-    lightHex: "#D8434A",
-    darkHex: "#D8434A",
-    paletteNameLight: "Danger 500",
-    paletteNameDark: "Danger 500",
-  },
-  {
-    id: "critical-disabled-border",
-    name: "disabled-border",
-    displayName: "Disabled Border",
-    group: "Critical / Disabled",
-    subgroup: "Disabled",
-    path: "Critical / Disabled / border",
-    cssVar: "--theme-semantics-critical-disabled-border",
-    coreRef: "--core-semantics-critical-disabled-border",
-    category: "critical",
-    type: "borders",
-    lightHex: "#F4B1B1",
-    darkHex: "#F4B1B1",
-    paletteNameLight: "Danger 200",
-    paletteNameDark: "Danger 200",
-  },
-  {
-    id: "critical-disabled-strong-background",
-    name: "disabled-strong-background",
-    displayName: "Disabled Strong Background",
-    group: "Critical / Disabled",
-    subgroup: "Disabled",
-    path: "Critical / Disabled / strong-background",
-    cssVar: "--theme-semantics-critical-disabled-strong-background",
-    coreRef: "--core-semantics-critical-disabled-strong-background",
-    category: "critical",
-    type: "background",
-    lightHex: "#F4B1B1",
-    darkHex: "#F4B1B1",
-    paletteNameLight: "Danger 200",
-    paletteNameDark: "Danger 200",
-  },
-  {
-    id: "critical-disabled-strong-text",
-    name: "disabled-strong-text",
-    displayName: "Disabled Strong Text",
-    group: "Critical / Disabled",
-    subgroup: "Disabled",
-    path: "Critical / Disabled / strong-text",
-    cssVar: "--theme-semantics-critical-disabled-strong-text",
-    coreRef: "--core-semantics-critical-disabled-strong-text",
-    category: "critical",
-    type: "text",
-    lightHex: "#731922",
-    darkHex: "#731922",
-    paletteNameLight: "Danger 800",
-    paletteNameDark: "Danger 800",
   },
 
   // ── 6. WARNING COLORS ──
@@ -1504,7 +1537,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Warning",
     path: "Warning / light-background",
     cssVar: "--theme-semantics-warning-light-background",
-    aliasCssVar: "--theme-semantics-warning-background-light",
+    aliasCssVar: "--semantics-warning-background-light",
     coreRef: "--core-color-status-warning-bg",
     category: "warning",
     type: "background",
@@ -1521,6 +1554,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Warning",
     path: "Warning / border",
     cssVar: "--theme-semantics-warning-border",
+    aliasCssVar: "--semantics-warning-border",
     coreRef: "--core-color-status-warning-border",
     category: "warning",
     type: "borders",
@@ -1537,7 +1571,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Warning",
     path: "Warning / strong-background",
     cssVar: "--theme-semantics-warning-strong-background",
-    aliasCssVar: "--theme-semantics-warning-background-strong",
+    aliasCssVar: "--semantics-warning-background-strong",
     coreRef: "--core-color-warning-500",
     category: "warning",
     type: "background",
@@ -1554,6 +1588,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Warning",
     path: "Warning / text",
     cssVar: "--theme-semantics-warning-text",
+    aliasCssVar: "--semantics-warning-text",
     coreRef: "--core-color-status-warning-text",
     category: "warning",
     type: "text",
@@ -1561,86 +1596,6 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     darkHex: "#FBCB6B",
     paletteNameLight: "Warning 700",
     paletteNameDark: "Warning 300",
-  },
-  {
-    id: "warning-disabled-background",
-    name: "disabled-background",
-    displayName: "Disabled Background",
-    group: "Warning / Disabled",
-    subgroup: "Disabled",
-    path: "Warning / Disabled / background",
-    cssVar: "--theme-semantics-warning-disabled-background",
-    coreRef: "--core-semantics-warning-disabled-background",
-    category: "warning",
-    type: "background",
-    lightHex: "#FFF8EA",
-    darkHex: "#FFF8EA",
-    paletteNameLight: "Warning 50",
-    paletteNameDark: "Warning 50",
-  },
-  {
-    id: "warning-disabled-text",
-    name: "disabled-text",
-    displayName: "Disabled Text",
-    group: "Warning / Disabled",
-    subgroup: "Disabled",
-    path: "Warning / Disabled / text",
-    cssVar: "--theme-semantics-warning-disabled-text",
-    coreRef: "--core-semantics-warning-disabled-text",
-    category: "warning",
-    type: "text",
-    lightHex: "#E89A1C",
-    darkHex: "#E89A1C",
-    paletteNameLight: "Warning 500",
-    paletteNameDark: "Warning 500",
-  },
-  {
-    id: "warning-disabled-border",
-    name: "disabled-border",
-    displayName: "Disabled Border",
-    group: "Warning / Disabled",
-    subgroup: "Disabled",
-    path: "Warning / Disabled / border",
-    cssVar: "--theme-semantics-warning-disabled-border",
-    coreRef: "--core-semantics-warning-disabled-border",
-    category: "warning",
-    type: "borders",
-    lightHex: "#FCDB94",
-    darkHex: "#FCDB94",
-    paletteNameLight: "Warning 200",
-    paletteNameDark: "Warning 200",
-  },
-  {
-    id: "warning-disabled-strong-background",
-    name: "disabled-strong-background",
-    displayName: "Disabled Strong Background",
-    group: "Warning / Disabled",
-    subgroup: "Disabled",
-    path: "Warning / Disabled / strong-background",
-    cssVar: "--theme-semantics-warning-disabled-strong-background",
-    coreRef: "--core-semantics-warning-disabled-strong-background",
-    category: "warning",
-    type: "background",
-    lightHex: "#FCDB94",
-    darkHex: "#FCDB94",
-    paletteNameLight: "Warning 200",
-    paletteNameDark: "Warning 200",
-  },
-  {
-    id: "warning-disabled-strong-text",
-    name: "disabled-strong-text",
-    displayName: "Disabled Strong Text",
-    group: "Warning / Disabled",
-    subgroup: "Disabled",
-    path: "Warning / Disabled / strong-text",
-    cssVar: "--theme-semantics-warning-disabled-strong-text",
-    coreRef: "--core-semantics-warning-disabled-strong-text",
-    category: "warning",
-    type: "text",
-    lightHex: "#784708",
-    darkHex: "#784708",
-    paletteNameLight: "Warning 800",
-    paletteNameDark: "Warning 800",
   },
 
   // ── 7. SUCCESS COLORS ──
@@ -1652,7 +1607,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Success",
     path: "Success / light-background",
     cssVar: "--theme-semantics-success-light-background",
-    aliasCssVar: "--theme-semantics-success-background-light",
+    aliasCssVar: "--semantics-success-background-light",
     coreRef: "--core-color-status-success-bg",
     category: "success",
     type: "background",
@@ -1669,6 +1624,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Success",
     path: "Success / border",
     cssVar: "--theme-semantics-success-border",
+    aliasCssVar: "--semantics-success-border",
     coreRef: "--core-color-status-success-border",
     category: "success",
     type: "borders",
@@ -1685,7 +1641,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Success",
     path: "Success / strong-background",
     cssVar: "--theme-semantics-success-strong-background",
-    aliasCssVar: "--theme-semantics-success-background-strong",
+    aliasCssVar: "--semantics-success-background-strong",
     coreRef: "--core-color-success-500",
     category: "success",
     type: "background",
@@ -1702,6 +1658,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Success",
     path: "Success / text",
     cssVar: "--theme-semantics-success-text",
+    aliasCssVar: "--semantics-success-text",
     coreRef: "--core-color-status-success-text",
     category: "success",
     type: "text",
@@ -1709,86 +1666,6 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     darkHex: "#7EDCAC",
     paletteNameLight: "Success 700",
     paletteNameDark: "Success 300",
-  },
-  {
-    id: "success-disabled-background",
-    name: "disabled-background",
-    displayName: "Disabled Background",
-    group: "Success / Disabled",
-    subgroup: "Disabled",
-    path: "Success / Disabled / background",
-    cssVar: "--theme-semantics-success-disabled-background",
-    coreRef: "--core-semantics-success-disabled-background",
-    category: "success",
-    type: "background",
-    lightHex: "#EDFAF2",
-    darkHex: "#EDFAF2",
-    paletteNameLight: "Success 50",
-    paletteNameDark: "Success 50",
-  },
-  {
-    id: "success-disabled-text",
-    name: "disabled-text",
-    displayName: "Disabled Text",
-    group: "Success / Disabled",
-    subgroup: "Disabled",
-    path: "Success / Disabled / text",
-    cssVar: "--theme-semantics-success-disabled-text",
-    coreRef: "--core-semantics-success-disabled-text",
-    category: "success",
-    type: "text",
-    lightHex: "#22A369",
-    darkHex: "#22A369",
-    paletteNameLight: "Success 500",
-    paletteNameDark: "Success 500",
-  },
-  {
-    id: "success-disabled-border",
-    name: "disabled-border",
-    displayName: "Disabled Border",
-    group: "Success / Disabled",
-    subgroup: "Disabled",
-    path: "Success / Disabled / border",
-    cssVar: "--theme-semantics-success-disabled-border",
-    coreRef: "--core-semantics-success-disabled-border",
-    category: "success",
-    type: "borders",
-    lightHex: "#A8E7C6",
-    darkHex: "#A8E7C6",
-    paletteNameLight: "Success 200",
-    paletteNameDark: "Success 200",
-  },
-  {
-    id: "success-disabled-strong-background",
-    name: "disabled-strong-background",
-    displayName: "Disabled Strong Background",
-    group: "Success / Disabled",
-    subgroup: "Disabled",
-    path: "Success / Disabled / strong-background",
-    cssVar: "--theme-semantics-success-disabled-strong-background",
-    coreRef: "--core-semantics-success-disabled-strong-background",
-    category: "success",
-    type: "background",
-    lightHex: "#A8E7C6",
-    darkHex: "#A8E7C6",
-    paletteNameLight: "Success 200",
-    paletteNameDark: "Success 200",
-  },
-  {
-    id: "success-disabled-strong-text",
-    name: "disabled-strong-text",
-    displayName: "Disabled Strong Text",
-    group: "Success / Disabled",
-    subgroup: "Disabled",
-    path: "Success / Disabled / strong-text",
-    cssVar: "--theme-semantics-success-disabled-strong-text",
-    coreRef: "--core-semantics-success-disabled-strong-text",
-    category: "success",
-    type: "text",
-    lightHex: "#0E5233",
-    darkHex: "#0E5233",
-    paletteNameLight: "Success 800",
-    paletteNameDark: "Success 800",
   },
 
   // ── 8. INFO COLORS ──
@@ -1800,7 +1677,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Info",
     path: "Info / light-background",
     cssVar: "--theme-semantics-highlight-light-background",
-    aliasCssVar: "--theme-semantics-highlight-background-light",
+    aliasCssVar: "--semantics-highlight-background-light",
     coreRef: "--core-color-status-info-bg",
     category: "info",
     type: "background",
@@ -1817,6 +1694,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Info",
     path: "Info / border",
     cssVar: "--theme-semantics-highlight-border",
+    aliasCssVar: "--semantics-highlight-border",
     coreRef: "--core-color-status-info-border",
     category: "info",
     type: "borders",
@@ -1833,7 +1711,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Info",
     path: "Info / strong-background",
     cssVar: "--theme-semantics-highlight-strong-background",
-    aliasCssVar: "--theme-semantics-highlight-background-strong",
+    aliasCssVar: "--semantics-highlight-background-strong",
     coreRef: "--core-color-info-500",
     category: "info",
     type: "background",
@@ -1850,6 +1728,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     subgroup: "Info",
     path: "Info / text",
     cssVar: "--theme-semantics-highlight-text",
+    aliasCssVar: "--semantics-highlight-text",
     coreRef: "--core-color-status-info-text",
     category: "info",
     type: "text",
@@ -1858,157 +1737,110 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     paletteNameLight: "Info 700",
     paletteNameDark: "Info 300",
   },
-  {
-    id: "info-disabled-background",
-    name: "disabled-background",
-    displayName: "Disabled Background",
-    group: "Info / Disabled",
-    subgroup: "Disabled",
-    path: "Info / Disabled / background",
-    cssVar: "--theme-semantics-highlight-disabled-background",
-    coreRef: "--core-semantics-highlight-disabled-background",
-    category: "info",
-    type: "background",
-    lightHex: "#EBF6FD",
-    darkHex: "#EBF6FD",
-    paletteNameLight: "Info 50",
-    paletteNameDark: "Info 50",
-  },
-  {
-    id: "info-disabled-text",
-    name: "disabled-text",
-    displayName: "Disabled Text",
-    group: "Info / Disabled",
-    subgroup: "Disabled",
-    path: "Info / Disabled / text",
-    cssVar: "--theme-semantics-highlight-disabled-text",
-    coreRef: "--core-semantics-highlight-disabled-text",
-    category: "info",
-    type: "text",
-    lightHex: "#2E8CD6",
-    darkHex: "#2E8CD6",
-    paletteNameLight: "Info 500",
-    paletteNameDark: "Info 500",
-  },
-  {
-    id: "info-disabled-border",
-    name: "disabled-border",
-    displayName: "Disabled Border",
-    group: "Info / Disabled",
-    subgroup: "Disabled",
-    path: "Info / Disabled / border",
-    cssVar: "--theme-semantics-highlight-disabled-border",
-    coreRef: "--core-semantics-highlight-disabled-border",
-    category: "info",
-    type: "borders",
-    lightHex: "#A9D8F6",
-    darkHex: "#A9D8F6",
-    paletteNameLight: "Info 200",
-    paletteNameDark: "Info 200",
-  },
-  {
-    id: "info-disabled-strong-background",
-    name: "disabled-strong-background",
-    displayName: "Disabled Strong Background",
-    group: "Info / Disabled",
-    subgroup: "Disabled",
-    path: "Info / Disabled / strong-background",
-    cssVar: "--theme-semantics-highlight-disabled-strong-background",
-    coreRef: "--core-semantics-highlight-disabled-strong-background",
-    category: "info",
-    type: "background",
-    lightHex: "#A9D8F6",
-    darkHex: "#A9D8F6",
-    paletteNameLight: "Info 200",
-    paletteNameDark: "Info 200",
-  },
-  {
-    id: "info-disabled-strong-text",
-    name: "disabled-strong-text",
-    displayName: "Disabled Strong Text",
-    group: "Info / Disabled",
-    subgroup: "Disabled",
-    path: "Info / Disabled / strong-text",
-    cssVar: "--theme-semantics-highlight-disabled-strong-text",
-    coreRef: "--core-semantics-highlight-disabled-strong-text",
-    category: "info",
-    type: "text",
-    lightHex: "#103E69",
-    darkHex: "#103E69",
-    paletteNameLight: "Info 800",
-    paletteNameDark: "Info 800",
-  },
 ];
 
-/* Vertical Pillar Segment displaying Token Name on line 1 and Color Palette Name on line 2 (NO COLOR CODES) */
+/* Vertical Pillar Segment — canonical token name + resolved hex + WCAG */
 function BaseColorPillarSegment({
   token,
   mode,
+  contrastBackground,
   isCopied,
   onCopy,
 }: {
   token: FigmaTokenItem;
   mode: "light" | "dark";
+  contrastBackground: ContrastBackground;
   isCopied: boolean;
   onCopy: (text: string, id: string) => void;
 }) {
   const currentHex = mode === "light" ? token.lightHex : token.darkHex;
-  const paletteName = mode === "light" ? token.paletteNameLight : token.paletteNameDark;
+  const tokenVar = canonicalTokenVar(token);
+  const tokenLabel = canonicalTokenName(token);
   const rgb = hexToRgb(currentHex);
   const lum = luminance(rgb.r, rgb.g, rgb.b);
   const isLight = lum > 0.42;
   const textColor = isLight ? "#1A1A22" : "#FFFFFF";
-  const subtextColor = isLight ? "rgba(26, 26, 34, 0.78)" : "rgba(255, 255, 255, 0.88)";
+
+  const metaColor = isLight ? "rgba(26, 26, 34, 0.72)" : "rgba(255, 255, 255, 0.82)";
+  const dividerColor = isLight ? "rgba(26, 26, 34, 0.14)" : "rgba(255, 255, 255, 0.22)";
 
   return (
     <div
-      onClick={() => onCopy(currentHex, token.id)}
-      title={`Click to copy ${currentHex}`}
+      onClick={() => onCopy(tokenVar, token.id)}
+      title={`Click to copy ${tokenVar}`}
       style={{
         background: currentHex,
         color: textColor,
-        padding: "16px 16px 14px",
-        minHeight: 76,
+        padding: "14px 14px 12px",
+        minHeight: 108,
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-start",
-        gap: 3,
+        gap: 0,
+        borderRadius: 12,
+        border: `1px solid ${dividerColor}`,
+        boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
         cursor: "pointer",
         position: "relative",
         userSelect: "none",
-        transition: "filter 0.15s ease",
+        transition: "filter 0.15s ease, box-shadow 0.15s ease",
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.filter = "brightness(1.04)";
+        e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)";
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.filter = "none";
+        e.currentTarget.style.boxShadow = "0 1px 4px rgba(0,0,0,0.06)";
       }}
     >
-      {/* Line 1: Token Name */}
+      {/* Token name */}
       <div
         style={{
-          fontSize: "var(--typography-body-md-size)",
-          fontWeight: 600,
+          fontSize: 11,
+          fontWeight: 700,
           letterSpacing: "-0.01em",
-          lineHeight: 1.25,
+          lineHeight: 1.4,
           color: textColor,
+          fontFamily: "var(--site-mono)",
+          wordBreak: "break-word",
+          marginBottom: 6,
         }}
       >
-        {token.displayName || token.name}
+        {tokenLabel}
       </div>
 
-      {/* Line 2: Color Palette Name (NO COLOR CODES) */}
+      {/* Hex value */}
       <div
         style={{
-          fontSize: 12,
-          fontWeight: 700,
-          letterSpacing: "0.01em",
-          color: subtextColor,
+          fontSize: 11,
+          fontWeight: 600,
+          letterSpacing: "0.02em",
+          color: metaColor,
           fontFamily: "var(--site-mono)",
+          marginBottom: 10,
         }}
       >
-        {paletteName}
+        {currentHex.toUpperCase()}
+      </div>
+
+      {/* WCAG contrast — separated from identity block */}
+      <div
+        style={{
+          marginTop: "auto",
+          paddingTop: 8,
+          borderTop: `1px solid ${dividerColor}`,
+        }}
+      >
+        <WcagContrastIndicator
+          hex={currentHex}
+          contrastBackground={contrastBackground}
+          showUsageHint
+          tokenType={token.type}
+          onSwatch
+          isLightSwatch={isLight}
+          layout="stack"
+        />
       </div>
 
       {/* Copied Toast Overlay */}
@@ -2036,63 +1868,40 @@ function BaseColorPillarSegment({
   );
 }
 
-/* Vertical Pillar Card Container */
-function BaseColorPillar({
-  title,
+/* Horizontal 2-column grid of full-color swatch cards */
+function BaseColorHorizontalCards({
   tokens,
   mode,
+  contrastBackground,
   copiedKey,
   onCopy,
 }: {
-  title?: string;
   tokens: FigmaTokenItem[];
   mode: "light" | "dark";
+  contrastBackground: ContrastBackground;
   copiedKey: string | null;
   onCopy: (cssVar: string, id: string) => void;
 }) {
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "column",
-        flex: "1 1 145px",
-        minWidth: 140,
-        maxWidth: 180,
+        display: "grid",
+        gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+        gap: 12,
+        width: "100%",
+        alignItems: "stretch",
       }}
     >
-      {title && (
-        <div
-          style={{
-            fontSize: "var(--typography-body-md-size)",
-            fontWeight: 700,
-            color: "var(--site-text)",
-            marginBottom: 8,
-            paddingLeft: 4,
-          }}
-        >
-          {title}
-        </div>
-      )}
-      <div
-        style={{
-          borderRadius: 20,
-          overflow: "hidden",
-          border: "1px solid rgba(128,128,128,0.15)",
-          boxShadow: "0 2px 10px rgba(0,0,0,0.04)",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        {tokens.map((token) => (
-          <BaseColorPillarSegment
-            key={token.id}
-            token={token}
-            mode={mode}
-            isCopied={copiedKey === token.id}
-            onCopy={onCopy}
-          />
-        ))}
-      </div>
+      {tokens.map((token) => (
+        <BaseColorPillarSegment
+          key={token.id}
+          token={token}
+          mode={mode}
+          contrastBackground={contrastBackground}
+          isCopied={copiedKey === token.id}
+          onCopy={onCopy}
+        />
+      ))}
     </div>
   );
 }
@@ -2101,7 +1910,7 @@ interface EditorialColorGroup {
   id: string;
   eyebrow: string;
   title: string;
-  category: "primary" | "secondary" | "tertiary" | "neutral" | "critical" | "warning" | "success" | "info";
+  category: "primary" | "secondary" | "tertiary" | "neutral" | "disabled" | "critical" | "warning" | "success" | "info";
   pillars: Array<{
     subgroup: string;
     tokens: FigmaTokenItem[];
@@ -2142,25 +1951,21 @@ function BaseColorsRedesignedSection() {
     tokens: FIGMA_BASE_TOKENS.filter((t) => t.category === "tertiary" && t.subgroup === subgroup),
   }));
 
-  // 4. Neutral Pillars (Text, Border, Disabled)
-  const neutralPillars = ["Text", "Border", "Disabled"].map((subgroup) => ({
+  // 4. Neutral Pillars (Text, Border)
+  const neutralPillars = ["Text", "Border"].map((subgroup) => ({
     subgroup,
     tokens: FIGMA_BASE_TOKENS.filter((t) => t.category === "neutral" && t.subgroup === subgroup),
   }));
 
-  const semanticFamilyPillars = (category: FigmaTokenItem["category"]) =>
-    [
-      {
-        subgroup: "Default",
-        tokens: FIGMA_BASE_TOKENS.filter((t) => t.category === category && t.subgroup !== "Disabled"),
-      },
-      {
-        subgroup: "Disabled",
-        tokens: FIGMA_BASE_TOKENS.filter((t) => t.category === category && t.subgroup === "Disabled"),
-      },
-    ].filter((pillar) => pillar.tokens.length > 0);
+  const semanticFamilyPillars = (category: FigmaTokenItem["category"]) => [
+    {
+      subgroup: "Default",
+      tokens: FIGMA_BASE_TOKENS.filter((t) => t.category === category),
+    },
+  ];
 
-  // 5–8. Semantic family pillars with separate Default / Disabled columns
+  // 5–9. Semantic family pillars (Default only)
+  const disabledPillars = semanticFamilyPillars("disabled");
   const criticalPillars = semanticFamilyPillars("critical");
   const warningPillars = semanticFamilyPillars("warning");
   const successPillars = semanticFamilyPillars("success");
@@ -2170,7 +1975,7 @@ function BaseColorsRedesignedSection() {
     {
       id: "primary",
       eyebrow: "Colors",
-      title: "Primary Colors",
+      title: "Brand",
       category: "primary",
       pillars: primaryPillars,
     },
@@ -2194,6 +1999,13 @@ function BaseColorsRedesignedSection() {
       title: "Neutral Colors",
       category: "neutral",
       pillars: neutralPillars,
+    },
+    {
+      id: "disabled",
+      eyebrow: "Colors",
+      title: "Disabled Colors",
+      category: "disabled",
+      pillars: disabledPillars,
     },
     {
       id: "critical",
@@ -2232,8 +2044,11 @@ function BaseColorsRedesignedSection() {
       return activeCategory === g.category;
     });
 
+  const contrastBackground: ContrastBackground = activeMode === "light" ? "white" : "black";
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+      <WcagLegend style={{ padding: "0 4px" }} />
       {/* Control header: Filters, Search, and Light/Dark Mode Switcher */}
       <div
         style={{
@@ -2255,10 +2070,11 @@ function BaseColorsRedesignedSection() {
           </span>
           {[
             { id: "all", label: "All Groups" },
-            { id: "primary", label: "Primary" },
+            { id: "primary", label: "Brand" },
             { id: "secondary", label: "Secondary" },
             { id: "tertiary", label: "Tertiary" },
             { id: "neutral", label: "Neutral" },
+            { id: "disabled", label: "Disabled" },
             { id: "critical", label: "Critical" },
             { id: "warning", label: "Warning" },
             { id: "success", label: "Success" },
@@ -2324,6 +2140,9 @@ function BaseColorsRedesignedSection() {
             </button>
             <span style={{ fontSize: 12, fontWeight: 600, color: activeMode === "dark" ? "var(--site-text)" : "var(--site-text-faint)" }}>Dark</span>
           </div>
+          <span style={{ fontSize: "var(--typography-font-size-xs)", color: "var(--site-text-faint)" }}>
+            Contrast vs {contrastBackground}
+          </span>
         </div>
       </div>
 
@@ -2395,27 +2214,22 @@ function BaseColorsRedesignedSection() {
               </div>
             </div>
 
-            {/* Right column: Vertical Pillar Cards side-by-side */}
+            {/* Right column: horizontal 2-column swatch cards */}
             <div
               style={{
                 flex: "1 1 500px",
                 minWidth: 320,
                 display: "flex",
-                gap: 16,
-                flexWrap: "wrap",
                 alignItems: "flex-start",
               }}
             >
-              {group.pillars.map((pillar) => (
-                <BaseColorPillar
-                  key={pillar.subgroup}
-                  title={pillar.subgroup}
-                  tokens={pillar.tokens}
-                  mode={activeMode}
-                  copiedKey={copiedKey}
-                  onCopy={copyText}
-                />
-              ))}
+              <BaseColorHorizontalCards
+                tokens={group.pillars.flatMap((pillar) => pillar.tokens)}
+                mode={activeMode}
+                contrastBackground={contrastBackground}
+                copiedKey={copiedKey}
+                onCopy={copyText}
+              />
             </div>
           </div>
         ))}
@@ -2452,28 +2266,197 @@ function BaseColorsRedesignedSection() {
 
 /* ── end Figma Aligned Base Color Variables ─────────────────────────────── */
 
+const BRAND_PALETTE_OVERVIEW = [
+  {
+    id: "primary",
+    label: "Primary",
+    hex: color?.brand?.["500"] as string,
+  },
+  {
+    id: "secondary",
+    label: "Secondary",
+    hex: color?.secondary?.["500"] as string,
+  },
+  {
+    id: "tertiary",
+    label: "Tertiary",
+    hex: color?.tertiary?.["500"] as string,
+  },
+] as const;
+
+function BrandPaletteOverviewCard({
+  label,
+  hex,
+  onCopy,
+  copied,
+}: {
+  label: string;
+  hex: string;
+  onCopy: (text: string) => void;
+  copied: boolean;
+}) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <button
+      type="button"
+      onClick={() => onCopy(hex)}
+      title={`Click to copy ${hex}`}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        flex: "1 1 0",
+        minWidth: 140,
+        maxWidth: 200,
+        padding: 0,
+        border: "1px solid var(--site-border)",
+        borderRadius: 14,
+        overflow: "hidden",
+        background: "var(--site-bg-elevated, #fff)",
+        cursor: "pointer",
+        textAlign: "left",
+        boxShadow: hovered
+          ? "0 6px 20px rgba(0,0,0,0.08)"
+          : "0 1px 6px rgba(0,0,0,0.04)",
+        transform: hovered ? "translateY(-2px)" : "none",
+        transition: "transform 0.2s ease, box-shadow 0.2s ease",
+      }}
+    >
+      <div
+        style={{
+          position: "relative",
+          height: 72,
+          background: hex,
+          width: "100%",
+        }}
+        aria-hidden="true"
+      >
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.06) 100%)",
+            pointerEvents: "none",
+          }}
+        />
+        {copied && (
+          <div
+            style={{
+              position: "absolute",
+              top: 8,
+              right: 8,
+              padding: "4px 8px",
+              borderRadius: 999,
+              background: "rgba(255,255,255,0.94)",
+              color: "var(--core-color-status-success-text, #178451)",
+              fontSize: "var(--typography-font-size-xs)",
+              fontWeight: 700,
+              boxShadow: "0 2px 8px rgba(0,0,0,0.12)",
+            }}
+          >
+            Copied
+          </div>
+        )}
+      </div>
+
+      <div
+        style={{
+          padding: "12px 14px 14px",
+          display: "flex",
+          flexDirection: "column",
+          gap: 4,
+        }}
+      >
+        <div
+          style={{
+            fontSize: "var(--typography-body-md-size)",
+            fontWeight: 700,
+            color: "var(--site-text)",
+            letterSpacing: "-0.02em",
+            lineHeight: 1.2,
+          }}
+        >
+          {label}
+        </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 8,
+          }}
+        >
+          <span
+            style={{
+              fontSize: "var(--typography-font-size-xs)",
+              fontFamily: "var(--site-mono)",
+              fontWeight: 600,
+              color: "var(--site-text-dim)",
+              letterSpacing: "0.03em",
+            }}
+          >
+            {hex.toUpperCase()}
+          </span>
+          <span
+            style={{
+              fontSize: 10,
+              fontWeight: 600,
+              color: "var(--site-text-faint)",
+              opacity: hovered ? 1 : 0.5,
+              transition: "opacity 0.15s ease",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {copied ? "Copied!" : "Copy"}
+          </span>
+        </div>
+      </div>
+    </button>
+  );
+}
+
+function BrandPaletteOverview() {
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const handleCopy = (id: string, hex: string) => {
+    navigator.clipboard.writeText(hex);
+    setCopiedId(id);
+    setTimeout(() => setCopiedId((curr) => (curr === id ? null : curr)), 2000);
+  };
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: 16,
+        justifyContent: "center",
+        maxWidth: 680,
+        width: "100%",
+        margin: "40px auto 56px",
+        padding: "0 4px",
+      }}
+    >
+      {BRAND_PALETTE_OVERVIEW.map((item) => (
+        <BrandPaletteOverviewCard
+          key={item.id}
+          label={item.label}
+          hex={item.hex}
+          copied={copiedId === item.id}
+          onCopy={() => handleCopy(item.id, item.hex)}
+        />
+      ))}
+    </div>
+  );
+}
+
 export default function Color() {
   const sections = [
     {
       id: "01",
       anchorId: "full-color-scales",
       title: "Full color scales",
-      content: (
-        <div style={{ background: "var(--core-color-surface-default)", borderRadius: 14, padding: "32px", border: "1px solid rgba(128,128,128,0.15)" }}>
-          <div style={{ display: "flex", paddingBottom: 16, borderBottom: "1px solid var(--site-border)", fontSize: "var(--typography-font-size-xs)", fontWeight: 600, color: "var(--core-color-text-secondary)" }}>
-            <div style={{ width: "25%", minWidth: 150 }}>Name</div>
-            <div style={{ width: "75%" }}>Swatches</div>
-          </div>
-          <RampRow name="brand (primary)" prefix="brand" scale={color.brand} />
-          <RampRow name="secondary" prefix="secondary" scale={color.secondary} />
-          <RampRow name="tertiary" prefix="tertiary" scale={color.tertiary} />
-          <RampRow name="neutral" prefix="neutral" scale={color.neutral} />
-          <RampRow name="success" prefix="success" scale={color.success} />
-          <RampRow name="warning" prefix="warning" scale={color.warning} />
-          <RampRow name="danger" prefix="danger" scale={color.danger} />
-          <RampRow name="info" prefix="info" scale={color.info} isLast />
-        </div>
-      ),
+      content: <FullColorScalesSection />,
     },
     {
       id: "02",
@@ -2482,38 +2465,6 @@ export default function Color() {
       content: (
         <div style={{ display: "flex", flexDirection: "column" }}>
           <BaseColorsRedesignedSection />
-        </div>
-      )
-    },
-    {
-      id: "03",
-      anchorId: "quick-reference",
-      title: "Quick reference",
-      content: (
-        <div style={{ background: "var(--core-color-bg-page)", borderRadius: 14, padding: "32px", border: "1px solid rgba(128,128,128,0.15)" }}>
-          <table style={{ width: "100%", textAlign: "left", borderCollapse: "collapse" }}>
-            <thead>
-              <tr>
-                <th style={{ paddingBottom: 16, borderBottom: "1px solid var(--site-border)", fontSize: "var(--typography-font-size-xs)", color: "var(--core-color-text-secondary)" }}>If you're building this…</th>
-                <th style={{ paddingBottom: 16, borderBottom: "1px solid var(--site-border)", fontSize: "var(--typography-font-size-xs)", color: "var(--core-color-text-secondary)" }}>…use this token</th>
-              </tr>
-            </thead>
-            <tbody>
-              {quickRef.map((r) => (
-                <tr key={r.use}>
-                  <td style={{ padding: "16px 0", borderBottom: "1px solid var(--site-border)", fontSize: 14, color: "var(--core-color-text-primary)" }}>{r.use}</td>
-                  <td style={{ padding: "16px 0", borderBottom: "1px solid var(--site-border)" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                      <span style={{ background: `var(${r.token})`, display: "inline-block", width: 24, height: 24, borderRadius: 6, border: "1px solid rgba(128,128,128,0.2)" }} />
-                      <code style={{ cursor: "pointer", color: "var(--core-color-brand-600)", fontSize: "var(--typography-font-size-xs)", fontFamily: "var(--site-mono)" }} onClick={() => navigator.clipboard.writeText(`var(${r.token})`)} title="Copy token">
-                        {r.token}
-                      </code>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </div>
       )
     }
@@ -2536,45 +2487,21 @@ export default function Color() {
     const secLines = sortScale(secondary).map(([k, v]) => `  --theme-primitive-color-secondary-${k}: ${v};`).join("\n");
     const tertLines = sortScale(tertiary).map(([k, v]) => `  --theme-primitive-color-tertiary-${k}: ${v};`).join("\n");
     const succLines = sortScale(success).map(([k, v]) => `  --theme-colors-success-${k}: ${v};`).join("\n");
+    const neutralScaleLines = sortScale(neutral)
+      .filter(([k]) => k !== "0")
+      .map(([k, v]) => `  --theme-colors-neutral-${k}: ${v};`);
     const neutralLines = [
       `  --theme-colors-neutral-white: #FFFFFF;`,
       `  --theme-colors-neutral-grey-black: #000000;`,
       `  --theme-colors-neutral-0: #FFFFFF;`,
-      ...sortScale(neutral).map(([k, v]) => `  --theme-colors-neutral-${k}: ${v};`)
+      ...neutralScaleLines,
     ].join("\n");
     const redLines = sortScale(danger).map(([k, v]) => `  --theme-colors-red-${k}: ${v};`).join("\n");
     const infoLines = sortScale(info).map(([k, v]) => `  --theme-colors-info-${k}: ${v};`).join("\n");
     const warnLines = sortScale(warning).map(([k, v]) => `  --theme-colors-warning-${k}: ${v};`).join("\n");
 
-    const getTokensByMode = (isDark: boolean) => {
-      const grouped = FIGMA_BASE_TOKENS.reduce((acc, token) => {
-        if (!acc[token.group]) acc[token.group] = [];
-        acc[token.group].push(token);
-        return acc;
-      }, {} as Record<string, typeof FIGMA_BASE_TOKENS>);
-
-      return Object.entries(grouped).map(([groupName, tokens]) => {
-        const lines = tokens.map(t => {
-          const val = isDark ? t.darkHex : t.lightHex;
-          let css = `  ${t.cssVar}: ${val};`;
-          if (t.aliasCssVar) {
-            css += `\n  ${t.aliasCssVar}: ${val};`;
-          }
-          return css;
-        });
-        return `  /* ${groupName} ---------------------------------------------------------------------*/\n${lines.join("\n")}`;
-      }).join("\n\n");
-    };
-
-    const lightSemanticLines = getTokensByMode(false);
-    const darkSemanticLines = getTokensByMode(true);
-
     return `/**
  * CORE DESIGN SYSTEM — THEME COLOR & FIGMA BASE VARIABLES
- *
- * Generated with 1:1 Figma Variable parity.
- * Includes both Light and Dark mode mappings, plus the full primitive ramps.
- * Use these semantic variables across styles and components.
  */
 
 :root {
@@ -2607,22 +2534,7 @@ ${infoLines}
 ${warnLines}
 }
 
-/* ---------------------------------------------------------------------------------- */
-/* Figma Aligned Semantic Base Variables (Light Mode) */
-/* ---------------------------------------------------------------------------------- */
-:root,
-html[data-site-mode="light"],
-[data-mode="light"] {
-${lightSemanticLines}
-}
-
-/* ---------------------------------------------------------------------------------- */
-/* Figma Aligned Semantic Base Variables (Dark Mode) */
-/* ---------------------------------------------------------------------------------- */
-html[data-site-mode="dark"],
-[data-mode="dark"] {
-${darkSemanticLines}
-}
+${semanticPaletteScss.trim()}
 `;
   }
 
@@ -2675,6 +2587,8 @@ ${darkSemanticLines}
           </button>
         </div>
       </div>
+
+      <BrandPaletteOverview />
 
       <div style={{ display: "flex", flexDirection: "column", gap: 100 }}>
         {sections.map((s) => (

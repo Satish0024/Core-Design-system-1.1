@@ -6,7 +6,7 @@ import { Field, Input, InputWithIcon } from "../../../../packages/core/src/compo
 import { Icon } from "../../../../packages/core/src/components/Primitives";
 import { Switch } from "../../../../packages/core/src/components/Misc";
 import { Textarea, Select, Checkbox, Radio, RadioGroup } from "../../../../packages/core/src/components/FormControls";
-import { Toggle, ToggleGroup, InputGroup, InputOTP, IncrementalSelector } from "../../../../packages/core/src/components/ToggleInputs";
+import { Toggle, ToggleGroup, InputGroup, IncrementalSelector } from "../../../../packages/core/src/components/ToggleInputs";
 import { Slider } from "../../../../packages/core/src/components/Primitives";
 import { Combobox } from "../../../../packages/core/src/components/Combobox";
 import { Calendar, DatePicker } from "../../../../packages/core/src/components/Calendar";
@@ -23,9 +23,6 @@ export default function Forms({ embedded = false }: { embedded?: boolean }) {
   const [on, setOn] = useState(true);
   const [plan, setPlan] = useState("roth");
   const [segment, setSegment] = useState<"sources" | "investments">("sources");
-  const [otp, setOtp] = useState("");
-  const [filledOtp, setFilledOtp] = useState("482916");
-  const [errorOtp, setErrorOtp] = useState("830174");
   const [contribPct, setContribPct] = useState(6);
   const [employer, setEmployer] = useState("");
   const [dob, setDob] = useState<Date | undefined>(undefined);
@@ -365,34 +362,6 @@ export default function Forms({ embedded = false }: { embedded?: boolean }) {
               </div>
             </Preview>
           </div>
-        </div>
-      )
-    },
-    {
-      id: "08",
-      anchorId: "input-otp",
-      title: "Input OTP",
-      content: (
-        <div className="site-panel site-panel--flush">
-          <Preview>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 32, width: "100%" }}>
-              <div className="force-default">
-                <Field label="Default">
-                  {(p) => <InputOTP {...p} value={otp} onChange={setOtp} length={6} />}
-                </Field>
-              </div>
-              <div className="force-filled">
-                <Field label="Filled">
-                  {(p) => <InputOTP {...p} value={filledOtp} onChange={setFilledOtp} length={6} />}
-                </Field>
-              </div>
-              <div className="force-error">
-                <Field label="Error" error="Invalid verification code. Please try again.">
-                  {(p) => <InputOTP {...p} value={errorOtp} onChange={setErrorOtp} length={6} />}
-                </Field>
-              </div>
-            </div>
-          </Preview>
         </div>
       )
     },
@@ -1202,18 +1171,6 @@ export default function Forms({ embedded = false }: { embedded?: boolean }) {
         .force-disabled .cds-slider-value,
         .cds-slider--disabled .cds-slider-value {
           color: var(--theme-neutral-text-subtleleast) !important;
-        }
-        .force-hover .cds-otp-digit:not(:disabled) {
-          border-color: var(--theme-neutral-border-strong) !important;
-        }
-        .force-error .cds-otp-digit {
-          border-color: var(--theme-semantics-critical-border) !important;
-        }
-        .force-disabled .cds-otp-digit {
-          background: var(--theme-brand-background-disabled-light) !important;
-          color: var(--theme-neutral-text-subtleleast) !important;
-          border-color: var(--theme-brand-borders-primary-disabled) !important;
-          cursor: not-allowed !important;
         }
       `}</style>
   );

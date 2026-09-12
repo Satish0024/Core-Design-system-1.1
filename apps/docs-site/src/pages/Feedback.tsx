@@ -126,13 +126,18 @@ export default function Feedback({ embedded = false }: { embedded?: boolean }) {
             className="preview-surface"
             data-theme="core"
             data-mode="light"
-            style={{ background: "var(--core-color-bg-page)" }}
+            style={{
+              background: "var(--core-color-bg-page)",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: 220,
+            }}
           >
             <Empty
               title="No transactions yet"
               description="Once you make your first contribution, it will show up here."
               action={
-                <Button variant="secondary" size="sm">
+                <Button variant="primary" size="sm">
                   Learn how contributions work
                 </Button>
               }

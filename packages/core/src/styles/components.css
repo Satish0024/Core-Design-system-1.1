@@ -1,6 +1,6 @@
 /* CORE component primitives — colors from Color pallete.scss (--theme-* / --brand-*)
    Typography from public/typography.json (--typography-* via typography-tokens.css)
-   Corner radius: 6px (--core-radius-sm) on all rectangular component surfaces. */
+   Corner radius: 8px (--core-radius-sm) on all rectangular component surfaces. */
 
 [data-theme] {
   font-family: var(--typography-font-family-sans);
@@ -526,7 +526,7 @@
 .cds-step-marker {
   width: 28px;
   height: 28px;
-  border-radius: 6px;
+  border-radius: var(--core-radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2804,25 +2804,38 @@
 
 /* ---------- Skeleton ---------- */
 .cds-skeleton {
-  background: linear-gradient(90deg, var(--theme-colors-neutral-100) 25%, var(--core-color-border-subtle) 50%, var(--theme-colors-neutral-100) 75%);
-  background-size: 200% 100%;
-  animation: cds-skeleton-shimmer 1.4s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+  background: var(--theme-colors-neutral-100);
   border-radius: var(--core-radius-sm);
 }
 
-@keyframes cds-skeleton-shimmer {
-  0% {
-    background-position: 200% 0;
-  }
+.cds-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  animation: cds-skeleton-shimmer 1.4s ease-in-out infinite;
+}
 
+@keyframes cds-skeleton-shimmer {
   100% {
-    background-position: -200% 0;
+    transform: translateX(100%);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cds-skeleton {
+  .cds-skeleton::after {
     animation: none;
+  }
+
+  .cds-skeleton {
     opacity: 0.6;
   }
 }
@@ -3476,7 +3489,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
+  width: 100%;
   padding: 48px 24px;
   gap: 6px;
   color: var(--theme-neutral-text-subtle);
@@ -4099,7 +4114,7 @@
    width, no background/border of its own, sized to its container instead. */
 .cds-app-sidebar--panel {
   width: auto;
-  background: none;
+  background: var(--theme-colors-neutral-0);
   border-right: none;
   padding: 0;
   gap: 4px;
@@ -4112,7 +4127,7 @@
    fixed-dark chrome. */
 .cds-app-sidebar--rail {
   width: var(--core-space-24);
-  background: var(--theme-colors-neutral-50);
+  background: var(--theme-colors-neutral-0);
   border-right: 1px solid var(--theme-neutral-border-primary-default);
   padding: var(--core-space-4) 0;
   gap: var(--core-space-2);

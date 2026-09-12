@@ -26,7 +26,7 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
                   style={{
                     width: 40,
                     height: 40,
-                    borderRadius: 6,
+                    borderRadius: "var(--core-radius-sm)",
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -48,7 +48,7 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
                   style={{
                     width: 40,
                     height: 40,
-                    borderRadius: 6,
+                    borderRadius: "var(--core-radius-sm)",
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -70,7 +70,7 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
                   style={{
                     width: 40,
                     height: 40,
-                    borderRadius: 6,
+                    borderRadius: "var(--core-radius-sm)",
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -86,6 +86,18 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
                 </button>
               </div>
 
+              {/* FOCUS */}
+              <div className="force-focus" style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
+                <StateLabel variant="site">FOCUSED</StateLabel>
+                <button
+                  type="button"
+                  className="icon-button-state-demo"
+                  aria-label="Edit Focus"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" /></svg>
+                </button>
+              </div>
+
               {/* DISABLED */}
               <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
                 <StateLabel variant="site">DISABLED</StateLabel>
@@ -93,7 +105,7 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
                   style={{
                     width: 40,
                     height: 40,
-                    borderRadius: 6,
+                    borderRadius: "var(--core-radius-sm)",
                     display: "inline-flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -110,6 +122,24 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
               </div>
             </div>
           </Preview>
+          <style>{`
+            .icon-button-state-demo {
+              width: 40px;
+              height: 40px;
+              border-radius: var(--core-radius-sm);
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              background-color: transparent;
+              color: var(--theme-brand-text-primary-default);
+              border: 1px solid var(--theme-brand-borders-primary-default);
+            }
+            .force-focus .icon-button-state-demo {
+              outline: var(--core-focusRing-width) solid var(--theme-primitive-color-primary-400);
+              outline-offset: 2px;
+            }
+          `}</style>
         </div>
       ),
     },

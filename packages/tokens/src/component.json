@@ -47,7 +47,7 @@
   "sidebar.icon.activeBg": "{color.action.primary.bg}",
   "sidebar.icon.activeText": "{color.action.primary.text}",
 
-  "sidebar.rail.bg": "{color.surface.sunken}",
+  "sidebar.rail.bg": "{color.surface.default}",
   "sidebar.rail.accentBar": "{color.action.primary.bg}",
 
   "iconButton.ghost.radius": "{radius.sm}",

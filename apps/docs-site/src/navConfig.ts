@@ -24,7 +24,6 @@ export const componentSections: NavSection[] = [
       componentLink("switch", "Switch"),
       componentLink("toggle", "Toggle / Toggle Group"),
       componentLink("input-group", "Input Group"),
-      componentLink("input-otp", "Input OTP"),
       componentLink("slider", "Slider"),
       componentLink("combobox", "Combobox"),
       componentLink("date-picker", "Date Picker"),
@@ -41,8 +40,6 @@ export const componentSections: NavSection[] = [
       componentLink("badge", "Badge"),
       componentLink("data-table", "Data Table"),
       componentLink("table", "Table"),
-      componentLink("item", "Item"),
-      componentLink("description-list", "Description List"),
       componentLink("avatar", "Avatar"),
       componentLink("progress", "Progress"),
     ],
@@ -56,7 +53,6 @@ export const componentSections: NavSection[] = [
   {
     title: "Disclosure",
     links: [
-      componentLink("collapsible", "Collapsible"),
       componentLink("accordion", "Accordion"),
       componentLink("separator", "Separator"),
       componentLink("skeleton", "Skeleton"),
@@ -65,7 +61,6 @@ export const componentSections: NavSection[] = [
   {
     title: "Navigation",
     links: [
-      componentLink("navigation-menu", "Navigation Menu"),
       componentLink("sidebar", "Sidebar"),
       componentLink("tabs", "Tabs"),
       componentLink("breadcrumb", "Breadcrumb"),
@@ -87,12 +82,8 @@ export const componentSections: NavSection[] = [
     title: "Overlays",
     links: [
       componentLink("modal", "Modal"),
-      componentLink("confirm-dialog", "Confirmation Dialog"),
-      componentLink("drawer", "Drawer"),
       componentLink("slideover", "Slideover"),
-      componentLink("dropdown-menu", "Dropdown Menu"),
       componentLink("tooltip", "Tooltip"),
-      componentLink("hover-card", "Hover Card"),
     ],
   },
 ];

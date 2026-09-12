@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Preview } from "../Preview";
 import { DocsSection, DocsSectionList, StateLabel } from "../DocsSection";
-import { Tabs, Breadcrumb, Pagination, NavigationMenu, AppSidebar, Stepper, type SidebarItem, type StepState } from "../../../../packages/core/src/components/Navigation";
+import { Tabs, Breadcrumb, Pagination, AppSidebar, Stepper, type SidebarItem, type StepState } from "../../../../packages/core/src/components/Navigation";
 import { Icon } from "../../../../packages/core/src/components/Primitives";
 
 type SidebarRailState = "DEFAULT" | "HOVER" | "SELECTED" | "FOCUS" | "DISABLED";
@@ -196,14 +196,6 @@ export default function NavigationPage({ embedded = false }: { embedded?: boolea
 
   const sections = (
     <DocsSectionList>
-      <DocsSection anchorId="navigation-menu" title="Navigation menu (top nav)">
-        <div className="site-panel site-panel--flush">
-          <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)" }}>
-            <NavigationMenu items={[{ label: "Dashboard", current: true }, { label: "Accounts" }, { label: "Documents" }, { label: "Support" }]} />
-          </div>
-        </div>
-      </DocsSection>
-
       <DocsSection anchorId="sidebar" title="Sidebar">
         <SidebarRailStatesDemo />
       </DocsSection>

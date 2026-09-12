@@ -143,7 +143,7 @@ function TypeScaleRow({ roleKey, roleNameStr, typoObj, isLast }: { roleKey: stri
           width: "100%",
           wordWrap: "break-word"
         }}>
-          {roleKey === "numericData" ? "1,234,567.89" : "The quick brown fox jumps over the lazy dog."}
+          {roleNameStr} - {roleKey === "numericData" ? "1,234,567.89" : "The quick brown fox jumps over the lazy dog."}
         </div>
       </div>
     </div>

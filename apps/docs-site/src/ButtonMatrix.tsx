@@ -337,7 +337,7 @@ export function ButtonMatrix() {
                   border: "none",
                   background: size === s ? "var(--theme-brand-background-primary-default)" : "transparent",
                   color: size === s ? "#FFFFFF" : "var(--site-text, inherit)",
-                  borderRadius: 6,
+                  borderRadius: "var(--core-radius-sm)",
                   padding: "4px 12px",
                   fontSize: 12,
                   fontWeight: 600,

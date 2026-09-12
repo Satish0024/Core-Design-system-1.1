@@ -22,6 +22,5 @@ export const pageSections: Record<string, { hash: string; label: string }[]> = {
   "/foundations/color": [
     { hash: "#full-color-scales", label: "Full color scales" },
     { hash: "#base-colors", label: "Base colors" },
-    { hash: "#quick-reference", label: "Quick reference" },
   ],
 };

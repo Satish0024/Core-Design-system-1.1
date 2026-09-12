@@ -25,7 +25,7 @@ const GROUPS: Group[] = [
       { name: "Select", status: "done", note: "Listbox popup clamps to viewport; trigger is fluid." },
       { name: "Checkbox / Radio", status: "done", note: "Fixed-size control + wrapping label text." },
       { name: "Switch / Toggle / Toggle Group", status: "done", note: "Fixed-size control, fluid label." },
-      { name: "Input Group / Input OTP", status: "done", note: "Flex row of fixed-size cells; OTP wraps on very narrow widths." },
+      { name: "Input Group", status: "done", note: "Flex row of fixed-size cells with addon prefix/suffix." },
       { name: "Slider", status: "done", note: "width: 100% of container." },
       { name: "Combobox", status: "done", note: "Same fluid input + clamped popup as Select." },
       { name: "Date Picker / Calendar", status: "review", note: "7-column grid is tight under ~340px — not yet given a small-screen density adjustment." },
