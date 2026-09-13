@@ -66,6 +66,9 @@ export interface DrawerProps {
  */
 const DRAWER_ANIMATION_MS = 280;
 
+/** Portaled overlays render on document.body, outside any app theme root — pin CORE tokens here. */
+const CORE_OVERLAY_THEME = { "data-theme": "core", "data-mode": "light" } as const;
+
 export function Drawer({ open, onClose, title, children, side = "right", width = 360, actions, aside }: DrawerProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
@@ -155,6 +158,7 @@ export function Drawer({ open, onClose, title, children, side = "right", width =
 
   return createPortal(
     <div
+      {...CORE_OVERLAY_THEME}
       className={`cds-overlay-scrim cds-overlay-scrim--drawer${isClosing ? " cds-overlay-scrim--drawer-closing" : ""}`}
       onClick={onClose}
       style={{ display: "flex", justifyContent: side === "right" ? "flex-end" : "flex-start", alignItems: "stretch" }}

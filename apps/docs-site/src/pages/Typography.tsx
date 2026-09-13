@@ -207,7 +207,7 @@ function ElevationCard({ elevationKey, shadowVal }: { elevationKey: string; shad
               gap: 4,
               border: "1px solid var(--site-border)",
               background: copied ? "rgba(34, 163, 105, 0.15)" : "var(--core-color-surface-hover)",
-              color: copied ? "var(--site-success, #22A369)" : "var(--core-color-brand-600)",
+              color: copied ? "var(--theme-semantics-success-text)" : "var(--theme-primitive-color-primary-600)",
               fontSize: "var(--typography-font-size-xs)",
               fontWeight: 600,
               padding: "3px 8px",
@@ -238,7 +238,7 @@ function ElevationCard({ elevationKey, shadowVal }: { elevationKey: string; shad
           style={{
             fontSize: "var(--typography-font-size-xs)",
             fontFamily: "var(--site-mono)",
-            color: "var(--core-color-brand-600)",
+            color: "var(--theme-primitive-color-primary-600)",
             background: "var(--core-color-surface-hover)",
             padding: "8px 10px",
             borderRadius: 6,

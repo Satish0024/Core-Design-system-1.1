@@ -34,16 +34,14 @@ function CopyBtn({
         onCopied(value);
       }}
       style={{
-        border: "none",
-        background: "rgba(0,0,0,0.06)",
+        border: "1px solid var(--theme-neutral-border-primary-default)",
+        background: "var(--theme-colors-neutral-100)",
         borderRadius: 6,
         padding: "4px 8px",
-        fontSize: 11,
+        fontSize: "var(--typography-font-size-xs)",
         fontWeight: 600,
-        color: "#5C5C6B",
+        color: "var(--theme-neutral-text-subtle)",
         cursor: "pointer",
-        opacity: 0,
-        transition: "opacity 0.12s ease",
       }}
       className="brand-token-copy-btn"
     >
@@ -208,8 +206,13 @@ export function BrandTokenReference() {
       <style>{`
         .brand-token-reference .brand-token-row:hover { background: #F7F7F9; }
         .brand-token-reference .brand-token-pill:hover { border-color: #C4C4CF; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-        .brand-token-reference .brand-token-row:hover .brand-token-copy-btn,
-        .brand-token-reference .brand-token-pill:hover .brand-token-copy-btn { opacity: 1; }
+        .brand-token-reference .brand-token-copy-btn:hover,
+        .brand-token-reference .brand-token-copy-btn:focus-visible {
+          color: var(--theme-primitive-color-primary-600);
+          border-color: var(--brand-border-primary-default);
+          background: var(--brand-background-primary-light);
+          outline: none;
+        }
         .brand-token-reference thead th { position: sticky; top: 0; z-index: 2; background: #FFFFFF; }
         @media (max-width: 900px) {
           .brand-token-reference table { display: block; overflow-x: auto; }

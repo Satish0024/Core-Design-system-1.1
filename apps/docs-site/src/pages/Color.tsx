@@ -2399,11 +2399,14 @@ function BrandPaletteOverviewCard({
           </span>
           <span
             style={{
-              fontSize: 10,
+              fontSize: "var(--typography-font-size-xs)",
               fontWeight: 600,
-              color: "var(--site-text-faint)",
-              opacity: hovered ? 1 : 0.5,
-              transition: "opacity 0.15s ease",
+              color: copied
+                ? "var(--theme-semantics-success-text)"
+                : hovered
+                  ? "var(--theme-primitive-color-primary-600)"
+                  : "var(--theme-neutral-text-subtle)",
+              transition: "color 0.15s ease",
               whiteSpace: "nowrap",
             }}
           >
