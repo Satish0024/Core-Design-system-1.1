@@ -146,7 +146,11 @@ export function Stepper({ steps, currentIndex, orientation = "horizontal" }: { s
               {step.description && <span className="cds-step-desc">{step.description}</span>}
               {(state === "in-progress" || state === "warning" || state === "error") && step.status && (
                 <span className="cds-step-status">
-                  <span className="cds-step-status-dot" aria-hidden="true" />
+                  {state === "in-progress" ? (
+                    <span className="cds-step-status-spinner" role="status" aria-hidden="true" />
+                  ) : (
+                    <span className="cds-step-status-dot" aria-hidden="true" />
+                  )}
                   {step.status}
                 </span>
               )}

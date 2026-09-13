@@ -3,12 +3,15 @@
  * Do not edit manually.
  */
 :root {
-  --typography-font-family-sans: "Inclusive Sans", system-ui, sans-serif;
+  --typography-font-family-sans: "Inclusive Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --typography-font-family-mono: "Inclusive Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --core-font-family-base: var(--typography-font-family-sans);
+  --core-font-family-mono: var(--typography-font-family-mono);
   --typography-font-weight-regular: 400;
   --typography-font-weight-medium: 500;
   --typography-font-weight-semibold: 600;
   --typography-font-weight-bold: 700;
-  --typography-font-weight-extrabold: 800;
+  --typography-font-weight-extrabold: 700;
   --typography-font-size-xs: 0.75rem;
   --typography-font-size-xs-px: 12px;
   --typography-font-size-sm: 0.875rem;
@@ -78,7 +81,7 @@
   --typography-eyebrow-size: 0.75rem;
   --typography-eyebrow-line-height: 1.125rem;
   --typography-eyebrow-letter-spacing: 0;
-  --typography-eyebrow-weight: 800;
+  --typography-eyebrow-weight: 700;
   --typography-link-size: 0.875rem;
   --typography-link-line-height: 1.3125rem;
   --typography-link-letter-spacing: 0;
@@ -114,4 +117,15 @@
   --typography-text12-semibold-size: 0.75rem;
   --typography-text12-semibold-line-height: 1.125rem;
   --typography-text12-semibold-weight: 600;
+}
+
+html,
+body,
+button,
+input,
+select,
+textarea,
+optgroup {
+  font-family: var(--typography-font-family-sans);
+  font-synthesis: weight style;
 }

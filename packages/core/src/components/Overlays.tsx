@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Button } from "./Button";
 
 export function Modal({ open, onClose, title, children, actions }: { open: boolean; onClose: () => void; title: string; children?: React.ReactNode; actions?: React.ReactNode }) {
@@ -63,11 +64,110 @@ export interface DrawerProps {
  * simple "Drawer" case (title + body) and the richer "Slideover" pattern (title + header actions +
  * close button + an optional side-by-side summary panel) via the `actions`/`aside` props.
  */
+const DRAWER_ANIMATION_MS = 280;
+
 export function Drawer({ open, onClose, title, children, side = "right", width = 360, actions, aside }: DrawerProps) {
-  if (!open) return null;
-  return (
-    <div className="cds-overlay-scrim" onClick={onClose} style={{ display: "flex", justifyContent: side === "right" ? "flex-end" : "flex-start" }}>
-      <div className="cds-drawer" role="dialog" aria-modal="true" aria-label={title} style={{ width, maxWidth: "90vw" }} onClick={(e) => e.stopPropagation()}>
+  const panelRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [canTransition, setCanTransition] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      setMounted(true);
+      return;
+    }
+
+    setVisible(false);
+    const timeout = window.setTimeout(() => {
+      setMounted(false);
+      setCanTransition(false);
+    }, DRAWER_ANIMATION_MS);
+    return () => window.clearTimeout(timeout);
+  }, [open]);
+
+  useLayoutEffect(() => {
+    if (!mounted || !open) return;
+
+    setVisible(false);
+    setCanTransition(false);
+    const frame = requestAnimationFrame(() => {
+      panelRef.current?.getBoundingClientRect();
+      setCanTransition(true);
+      setVisible(true);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [mounted, open]);
+
+  useEffect(() => {
+    if (!mounted) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [mounted, onClose]);
+
+  useEffect(() => {
+    if (!mounted) return;
+
+    const scrollY = window.scrollY;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    const root = document.getElementById("root");
+    if (!root) return;
+
+    const prev = {
+      position: root.style.position,
+      top: root.style.top,
+      left: root.style.left,
+      right: root.style.right,
+      width: root.style.width,
+      paddingRight: root.style.paddingRight,
+    };
+
+    root.style.position = "fixed";
+    root.style.top = `-${scrollY}px`;
+    root.style.left = "0";
+    root.style.right = "0";
+    root.style.width = "100%";
+    if (scrollbarWidth > 0) root.style.paddingRight = `${scrollbarWidth}px`;
+    document.documentElement.style.overflow = "hidden";
+
+    return () => {
+      root.style.position = prev.position;
+      root.style.top = prev.top;
+      root.style.left = prev.left;
+      root.style.right = prev.right;
+      root.style.width = prev.width;
+      root.style.paddingRight = prev.paddingRight;
+      document.documentElement.style.overflow = "";
+      window.scrollTo(0, scrollY);
+    };
+  }, [mounted]);
+
+  if (!mounted) return null;
+
+  const fromSideClass = side === "right" ? "cds-drawer--from-right" : "cds-drawer--from-left";
+  const visibleClass = visible ? " cds-drawer--visible" : "";
+  const animatingClass = canTransition ? " cds-drawer--animating" : "";
+  const isClosing = mounted && !open;
+
+  return createPortal(
+    <div
+      className={`cds-overlay-scrim cds-overlay-scrim--drawer${isClosing ? " cds-overlay-scrim--drawer-closing" : ""}`}
+      onClick={onClose}
+      style={{ display: "flex", justifyContent: side === "right" ? "flex-end" : "flex-start", alignItems: "stretch" }}
+    >
+      <div
+        ref={panelRef}
+        className={`cds-drawer ${fromSideClass}${visibleClass}${animatingClass}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label={title}
+        style={{ width, maxWidth: "90vw" }}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="cds-drawer-header">
           <h2 className="cds-modal-title" style={{ margin: 0 }}>{title}</h2>
           <div className="cds-drawer-header-actions">
@@ -82,7 +182,8 @@ export function Drawer({ open, onClose, title, children, side = "right", width =
           {aside && <div className="cds-drawer-aside">{aside}</div>}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

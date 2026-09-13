@@ -33,7 +33,7 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
                     cursor: "pointer",
                     backgroundColor: "transparent",
                     color: "var(--theme-brand-text-primary-default)",
-                    border: "1px solid var(--theme-brand-borders-primary-default)",
+                    border: "1px solid var(--theme-brand-border-primary-default)",
                   }}
                   aria-label="Edit"
                 >
@@ -53,9 +53,9 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
                     alignItems: "center",
                     justifyContent: "center",
                     cursor: "pointer",
-                    backgroundColor: "var(--theme-brand-background-hover)",
+                    backgroundColor: "var(--theme-brand-background-primary-hover)",
                     color: "var(--theme-brand-text-primary-oncolor)",
-                    border: "1px solid var(--theme-brand-borders-hover)",
+                    border: "1px solid var(--theme-brand-border-primary-hover)",
                   }}
                   aria-label="Edit Hover"
                 >
@@ -75,9 +75,9 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
                     alignItems: "center",
                     justifyContent: "center",
                     cursor: "pointer",
-                    backgroundColor: "var(--theme-brand-background-active)",
+                    backgroundColor: "var(--theme-brand-background-primary-active)",
                     color: "var(--theme-brand-text-primary-oncolor)",
-                    border: "1px solid var(--theme-brand-background-active)",
+                    border: "1px solid var(--theme-brand-background-primary-active)",
                     transform: "translateY(1px)",
                   }}
                   aria-label="Edit Active"
@@ -112,7 +112,7 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
                     cursor: "not-allowed",
                     backgroundColor: "transparent",
                     color: "var(--theme-brand-text-primary-default)",
-                    border: "1px solid var(--theme-brand-borders-primary-disabled)",
+                    border: "1px solid var(--theme-brand-border-primary-disabled)",
                   }}
                   disabled
                   aria-label="Edit Disabled"
@@ -133,7 +133,7 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
               cursor: pointer;
               background-color: transparent;
               color: var(--theme-brand-text-primary-default);
-              border: 1px solid var(--theme-brand-borders-primary-default);
+              border: 1px solid var(--theme-brand-border-primary-default);
             }
             .force-focus .icon-button-state-demo {
               outline: var(--core-focusRing-width) solid var(--theme-primitive-color-primary-400);
@@ -250,7 +250,7 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
                         style={{
                           color: "var(--theme-brand-text-primary-default)",
                           textDecoration: "underline",
-                          textDecorationColor: "var(--theme-brand-borders-primary-disabled)",
+                          textDecorationColor: "var(--theme-brand-border-primary-disabled)",
                           cursor: "not-allowed",
                         }}
                       >
@@ -294,7 +294,7 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
         <h1
           style={{
             fontSize: 72,
-            fontWeight: 800,
+            fontWeight: 700,
             letterSpacing: "-0.06em",
             margin: "0 0 16px 0",
             color: "var(--core-color-text-primary)",

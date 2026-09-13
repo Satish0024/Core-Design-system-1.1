@@ -56,13 +56,17 @@ function StatusIcon({ kind, color }: { kind: "check" | "warn" | "fail"; color: s
 
 export function contrastUsageHint(
   level: WcagLevel,
-  options: { contrastBackground: ContrastBackground; tokenType?: "text" | "background" | "borders" }
+  options: { contrastBackground: ContrastBackground; tokenType?: "text" | "background" | "border" }
 ): string {
   const surface = options.contrastBackground === "white" ? "white" : "black";
   const { tokenType } = options;
 
-  if (tokenType === "borders") {
-    return level === "fail" ? "Border / divider" : "UI state";
+  if (tokenType === "border") {
+    return level === "fail"
+      ? "Below 3:1 non-text minimum"
+      : level === "aa-large"
+        ? "Meets 3:1 UI boundary"
+        : "Strong UI boundary";
   }
   if (tokenType === "background") {
     if (level === "fail" || level === "aa-large") return "Background / surface";
@@ -206,7 +210,7 @@ export function WcagContrastIndicator({
   hex: string;
   contrastBackground?: ContrastBackground;
   showUsageHint?: boolean;
-  tokenType?: "text" | "background" | "borders";
+  tokenType?: "text" | "background" | "border";
   onSwatch?: boolean;
   isLightSwatch?: boolean;
   layout?: "inline" | "stack";

@@ -312,7 +312,7 @@ export default function ColorExtractionPage() {
     <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
       {/* Header */}
       <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
-        <h1 style={{ fontSize: 72, fontWeight: 800, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>
+        <h1 style={{ fontSize: 72, fontWeight: 700, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>
           Color extraction
         </h1>
         <p style={{ maxWidth: 580, margin: "0 auto", color: "var(--core-color-text-tertiary)", fontSize: 18, lineHeight: 1.6, fontWeight: 400 }}>
@@ -327,7 +327,7 @@ export default function ColorExtractionPage() {
             background: "var(--core-color-surface-default)",
             borderRadius: 14,
             padding: "36px",
-            border: isDragging ? "2px dashed var(--core-color-action-primary-bg)" : "1px solid rgba(128,128,128,0.15)",
+            border: isDragging ? "2px dashed var(--core-color-action-primary-bg)" : "1px solid var(--site-border)",
             transition: "border-color 0.2s, background 0.2s",
             boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
           }}
@@ -445,7 +445,7 @@ export default function ColorExtractionPage() {
                   />
                 </div>
                 <div>
-                  <div style={{ fontSize: 20, fontWeight: 800, fontFamily: "var(--site-mono)", color: "var(--core-color-text-primary)" }}>
+                  <div style={{ fontSize: 20, fontWeight: 700, fontFamily: "var(--site-mono)", color: "var(--core-color-text-primary)" }}>
                     {activeHex}
                   </div>
                   <div style={{ fontSize: 12, color: "var(--core-color-text-tertiary)", marginTop: 2 }}>
@@ -511,7 +511,7 @@ export default function ColorExtractionPage() {
               </span>
             </div>
 
-            <div style={{ display: "flex", width: "100%", height: 54, borderRadius: 8, overflow: "hidden", border: "1px solid rgba(128,128,128,0.15)" }}>
+            <div style={{ display: "flex", width: "100%", height: 54, borderRadius: 8, overflow: "hidden", border: "1px solid var(--site-border)" }}>
               {Object.entries(brandScale).map(([step, hex]) => (
                 <div
                   key={step}
@@ -540,7 +540,7 @@ export default function ColorExtractionPage() {
         {/* Live Component Resilience & Constant Scales Indicator */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
           {/* Card 1: Live Interactive Components */}
-          <div style={{ background: "var(--core-color-surface-default)", borderRadius: 14, padding: "28px", border: "1px solid rgba(128,128,128,0.15)" }}>
+          <div style={{ background: "var(--core-color-surface-default)", borderRadius: 14, padding: "28px", border: "1px solid var(--site-border)" }}>
             <div style={{ fontSize: "var(--typography-body-lg-size)", fontWeight: 700, color: "var(--core-color-text-primary)", marginBottom: 18 }}>
               Live Components (Primary Brand Action)
             </div>
@@ -606,7 +606,7 @@ export default function ColorExtractionPage() {
           </div>
 
           {/* Card 2: Constant Tokens Proof (Neutral, Success, Warning, Danger, Info) */}
-          <div style={{ background: "var(--core-color-surface-default)", borderRadius: 14, padding: "28px", border: "1px solid rgba(128,128,128,0.15)" }}>
+          <div style={{ background: "var(--core-color-surface-default)", borderRadius: 14, padding: "28px", border: "1px solid var(--site-border)" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18 }}>
               <div style={{ fontSize: "var(--typography-body-lg-size)", fontWeight: 700, color: "var(--core-color-text-primary)" }}>
                 Constant Tokens (Untouched)

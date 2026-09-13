@@ -121,7 +121,7 @@ export const BRAND_TOKEN_SECTIONS: TokenReferenceSection[] = [
     rows: [
       {
         name: "strong",
-        cssVar: "--brand-background-strong",
+        cssVar: "--brand-background-primary-strong",
         light: { primitiveId: "blue500" },
         dark: { primitiveId: "blue500" },
       },
@@ -139,25 +139,25 @@ export const BRAND_TOKEN_SECTIONS: TokenReferenceSection[] = [
       },
       {
         name: "disabled-light",
-        cssVar: "--brand-background-disabled-light",
+        cssVar: "--brand-background-primary-disabled-light",
         light: { primitiveId: "grey100" },
         dark: { primitiveId: "grey100" },
       },
       {
         name: "disabled-strong",
-        cssVar: "--brand-background-disabled-strong",
+        cssVar: "--brand-background-primary-disabled",
         light: { primitiveId: "blue200" },
         dark: { primitiveId: "blue200" },
       },
       {
         name: "active",
-        cssVar: "--brand-background-active",
+        cssVar: "--brand-background-primary-active",
         light: { primitiveId: "blue700" },
         dark: { primitiveId: "blue500" },
       },
       {
         name: "hover",
-        cssVar: "--brand-background-hover",
+        cssVar: "--brand-background-primary-hover",
         light: { primitiveId: "blue600" },
         dark: { primitiveId: "blue600" },
       },
@@ -169,19 +169,19 @@ export const BRAND_TOKEN_SECTIONS: TokenReferenceSection[] = [
     rows: [
       {
         name: "primary-default",
-        cssVar: "--brand-borders-primary-default",
+        cssVar: "--brand-border-primary-default",
         light: { primitiveId: "blue500" },
         dark: { primitiveId: "blue500" },
       },
       {
         name: "primary-disabled",
-        cssVar: "--brand-borders-primary-disabled",
+        cssVar: "--brand-border-primary-disabled",
         light: { primitiveId: "blue200" },
         dark: { primitiveId: "blue200" },
       },
       {
         name: "hover",
-        cssVar: "--brand-borders-hover",
+        cssVar: "--brand-border-primary-hover",
         light: { primitiveId: "blue600" },
         dark: { primitiveId: "blue300" },
       },

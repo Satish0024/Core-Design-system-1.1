@@ -10,14 +10,6 @@ const file = path.resolve(__dirname, "../src/styles/components.css");
 let css = readFileSync(file, "utf-8");
 
 const replacements = [
-  // Palette border token names (Color pallete.scss uses --brand-borders-*)
-  ["--brand-border-primary-default", "--brand-borders-primary-default"],
-  ["--brand-border-hover", "--brand-borders-hover"],
-  ["--brand-border-primary-disabled", "--brand-borders-primary-disabled"],
-  ["--theme-brand-border-primary-default", "--theme-brand-borders-primary-default"],
-  ["--theme-brand-border-hover", "--theme-brand-borders-hover"],
-  ["--theme-brand-border-primary-disabled", "--theme-brand-borders-primary-disabled"],
-
   // Typography: core token build → public typography.json generated vars
   ["var(--core-typography-text14SemiBold-size, 14px)", "var(--typography-text14-semibold-size)"],
   ["var(--core-typography-text14SemiBold-lineHeight, var(--core-font-lineHeight-normal))", "var(--typography-text14-semibold-line-height)"],

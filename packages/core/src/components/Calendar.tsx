@@ -31,7 +31,7 @@ export function Calendar({ selected, onSelect, minDate, maxDate, disabled }: Cal
   const monthLabel = cursor.toLocaleDateString(undefined, { month: "long", year: "numeric" });
 
   return (
-    <div className={`cds-calendar ${disabled ? "cds-calendar--disabled" : ""}`} role="group" aria-label="Calendar" style={disabled ? { opacity: 0.6, pointerEvents: "none" } : undefined}>
+    <div className={`cds-calendar ${disabled ? "cds-calendar--disabled" : ""}`} role="group" aria-label="Calendar">
       <div className="cds-calendar-header">
         <button type="button" className="cds-calendar-nav" disabled={disabled} onClick={() => setCursor(new Date(year, month - 1, 1))} aria-label="Previous month">‹</button>
         <span className="cds-calendar-title">{monthLabel}</span>

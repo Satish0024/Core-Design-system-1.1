@@ -23,7 +23,7 @@ export default function Forms({ embedded = false }: { embedded?: boolean }) {
   const [on, setOn] = useState(true);
   const [plan, setPlan] = useState("roth");
   const [segment, setSegment] = useState<"sources" | "investments">("sources");
-  const [contribPct, setContribPct] = useState(6);
+  const [contribPct, setContribPct] = useState(12);
   const [employer, setEmployer] = useState("");
   const [dob, setDob] = useState<Date | undefined>(undefined);
   const [files, setFiles] = useState<AttachmentFile[]>([{ id: "1", name: "beneficiary-form.pdf", size: "212 KB" }]);
@@ -372,23 +372,17 @@ export default function Forms({ embedded = false }: { embedded?: boolean }) {
       content: (
         <div className="site-panel site-panel--flush">
           <Preview>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(220px, 1fr))", gap: 32, width: "100%", padding: "8px 0" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(220px, 1fr))", gap: 32, width: "100%", padding: "8px 0" }}>
               <div style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "stretch", padding: "8px 12px" }}>
                 <StateLabel>DEFAULT</StateLabel>
                 <Field label="Contribution rate">{() => (
                   <Slider value={contribPct} min={0} max={25} onChange={setContribPct} formatValue={(v) => `${v}%`} />
                 )}</Field>
               </div>
-              <div className="force-focus" style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "stretch", padding: "8px 12px" }}>
-                <StateLabel>FOCUS</StateLabel>
-                <Field label="Contribution rate">{() => (
-                  <Slider value={6} min={0} max={25} onChange={() => {}} formatValue={(v) => `${v}%`} />
-                )}</Field>
-              </div>
               <div style={{ display: "flex", flexDirection: "column", gap: 20, alignItems: "stretch", padding: "8px 12px" }}>
                 <StateLabel>DISABLED</StateLabel>
                 <Field label="Contribution rate">{() => (
-                  <Slider disabled value={6} min={0} max={25} onChange={() => {}} formatValue={(v) => `${v}%`} />
+                  <Slider disabled value={12} min={0} max={25} onChange={() => {}} formatValue={(v) => `${v}%`} />
                 )}</Field>
               </div>
             </div>
@@ -846,7 +840,7 @@ export default function Forms({ embedded = false }: { embedded?: boolean }) {
                   <span style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 600, color: "var(--core-color-text-tertiary)", display: "flex", alignItems: "center", gap: 6 }}>
                     <Icon name="fa-solid fa-lock" size="sm" /> Disable State
                   </span>
-                  <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 600, color: "var(--theme-neutral-text-subtleleast)", background: "var(--theme-brand-background-disabled-light)", border: "1px solid var(--theme-brand-borders-primary-disabled)", padding: "1px 8px", borderRadius: 999 }}>
+                  <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 600, color: "var(--theme-neutral-text-subtleleast)", background: "var(--theme-brand-background-primary-disabled-light)", border: "1px solid var(--theme-brand-border-primary-disabled)", padding: "1px 8px", borderRadius: 999 }}>
                     Disabled
                   </span>
                 </div>
@@ -962,9 +956,9 @@ export default function Forms({ embedded = false }: { embedded?: boolean }) {
           background: var(--theme-colors-neutral-0) !important;
         }
         .force-hover .cds-toggle:not(:disabled):not([aria-pressed="true"]) { 
-          background: var(--brand-background-hover) !important;
+          background: var(--brand-background-primary-hover) !important;
           color: var(--theme-primitive-color-primary-100) !important;
-          border-color: var(--brand-borders-hover) !important;
+          border-color: var(--brand-border-primary-hover) !important;
         }
         .toggle-group-states {
           display: grid;
@@ -1000,7 +994,7 @@ export default function Forms({ embedded = false }: { embedded?: boolean }) {
           background: var(--theme-colors-neutral-400) !important;
         }
         .force-hover .cds-switch input:checked:not(:disabled) + .cds-switch-track {
-          background: var(--brand-background-hover) !important;
+          background: var(--brand-background-primary-hover) !important;
         }
         .force-hover .cds-checkbox input:not(:checked):not(:disabled) + .cds-checkbox-box,
         .force-hover .cds-radio input:not(:checked):not(:disabled) + .cds-radio-box {
@@ -1009,8 +1003,8 @@ export default function Forms({ embedded = false }: { embedded?: boolean }) {
         }
         .force-hover .cds-checkbox input:checked:not(:disabled) + .cds-checkbox-box,
         .force-hover .cds-radio input:checked:not(:disabled) + .cds-radio-box {
-          background: var(--brand-background-hover) !important;
-          border-color: var(--brand-background-hover) !important;
+          background: var(--brand-background-primary-hover) !important;
+          border-color: var(--brand-background-primary-hover) !important;
         }
         
         .force-focus .cds-input,
@@ -1071,20 +1065,6 @@ export default function Forms({ embedded = false }: { embedded?: boolean }) {
           outline: var(--core-focusRing-width) solid var(--theme-primitive-color-primary-400) !important;
           outline-offset: var(--core-focusRing-offset) !important;
         }
-        .force-focus .cds-slider input[type="range"] {
-          outline: none !important;
-        }
-        .force-focus .cds-slider input[type="range"]::-webkit-slider-thumb {
-          box-shadow:
-            0 0 0 2px var(--theme-colors-neutral-0),
-            0 0 0 calc(2px + var(--core-focusRing-width)) var(--theme-primitive-color-primary-400) !important;
-        }
-        .force-focus .cds-slider input[type="range"]::-moz-range-thumb {
-          box-shadow:
-            0 0 0 2px var(--theme-colors-neutral-0),
-            0 0 0 calc(2px + var(--core-focusRing-width)) var(--theme-primitive-color-primary-400) !important;
-        }
-
         .force-active .cds-textarea, .force-active .cds-select { 
           border-color: var(--theme-primitive-color-primary-400) !important; 
           box-shadow: 0 0 0 3px color-mix(in srgb, var(--theme-primitive-color-primary-400) 25%, transparent) !important; 
@@ -1092,36 +1072,36 @@ export default function Forms({ embedded = false }: { embedded?: boolean }) {
         }
         .force-active .cds-checkbox input:checked:not(:disabled) + .cds-checkbox-box,
         .force-active .cds-radio input:checked:not(:disabled) + .cds-radio-box {
-          background: var(--brand-background-active) !important;
-          border-color: var(--brand-background-active) !important;
+          background: var(--brand-background-primary-active) !important;
+          border-color: var(--brand-background-primary-active) !important;
         }
         .force-error .cds-input[aria-invalid="true"] {
           border-color: var(--theme-semantics-critical-border) !important;
         }
 
         .force-disabled .cds-select, .cds-select:disabled, .cds-select[aria-disabled="true"] { 
-          background: var(--theme-brand-background-disabled-light) !important; 
+          background: var(--theme-brand-background-primary-disabled-light) !important; 
           color: var(--theme-neutral-text-subtleleast) !important; 
           border-color: var(--theme-neutral-border-primary-default) !important; 
           opacity: 1 !important; 
           cursor: not-allowed !important;
         }
         .force-disabled .cds-textarea, .cds-textarea:disabled { 
-          background: var(--theme-brand-background-disabled-light) !important; 
+          background: var(--theme-brand-background-primary-disabled-light) !important; 
           color: var(--theme-neutral-text-subtleleast) !important; 
           border-color: var(--theme-neutral-border-primary-default) !important; 
           opacity: 1 !important; 
           cursor: not-allowed !important;
         }
         .force-disabled .cds-input, .cds-input:disabled { 
-          background: var(--theme-brand-background-disabled-light) !important; 
+          background: var(--theme-brand-background-primary-disabled-light) !important; 
           color: var(--theme-neutral-text-subtleleast) !important; 
           border-color: var(--theme-neutral-border-primary-default) !important; 
           opacity: 1 !important; 
           cursor: not-allowed !important;
         }
         .force-disabled .cds-input-group-addon, .cds-input-group:has(.cds-input:disabled) .cds-input-group-addon {
-          background: var(--theme-brand-background-disabled-light) !important; 
+          background: var(--theme-brand-background-primary-disabled-light) !important; 
           color: var(--theme-neutral-text-subtleleast) !important; 
           border-color: var(--theme-neutral-border-primary-default) !important; 
           cursor: not-allowed !important;
@@ -1133,13 +1113,13 @@ export default function Forms({ embedded = false }: { embedded?: boolean }) {
         .force-disabled .cds-incremental-selector__value,
         .cds-incremental-selector--disabled .cds-incremental-selector__btn,
         .cds-incremental-selector--disabled .cds-incremental-selector__value {
-          background: var(--theme-brand-background-disabled-light) !important;
+          background: var(--theme-brand-background-primary-disabled-light) !important;
           color: var(--theme-neutral-text-subtleleast) !important;
           border-color: var(--theme-neutral-border-primary-default) !important;
           cursor: not-allowed !important;
         }
         .force-disabled .cds-toggle, .cds-toggle:disabled {
-          background: var(--theme-brand-background-disabled-light) !important; 
+          background: var(--theme-brand-background-primary-disabled-light) !important; 
           color: var(--theme-neutral-text-subtleleast) !important; 
           border-color: var(--theme-neutral-border-primary-default) !important; 
           opacity: 1 !important; 
@@ -1149,23 +1129,22 @@ export default function Forms({ embedded = false }: { embedded?: boolean }) {
           background: var(--theme-neutral-border-subtle) !important;
           color: var(--theme-neutral-text-subtleleast) !important;
         }
+        .force-disabled .cds-slider,
+        .cds-slider--disabled {
+          --cds-slider-track-fill: var(--theme-colors-neutral-300) !important;
+          --cds-slider-track-bg: var(--theme-semantics-disabled-background) !important;
+          --cds-slider-thumb-bg: var(--theme-colors-neutral-300) !important;
+          --cds-slider-thumb-ring: var(--theme-colors-neutral-300) !important;
+          cursor: not-allowed !important;
+        }
         .force-disabled .cds-slider input[type="range"],
         .cds-slider input[type="range"]:disabled {
-          background: var(--theme-brand-background-disabled-light) !important;
           cursor: not-allowed !important;
         }
         .force-disabled .cds-slider input[type="range"]::-webkit-slider-thumb,
-        .cds-slider input[type="range"]:disabled::-webkit-slider-thumb {
-          background: var(--theme-colors-neutral-300) !important;
-          border-color: var(--theme-colors-neutral-0) !important;
-          box-shadow: none !important;
-          cursor: not-allowed !important;
-        }
         .force-disabled .cds-slider input[type="range"]::-moz-range-thumb,
+        .cds-slider input[type="range"]:disabled::-webkit-slider-thumb,
         .cds-slider input[type="range"]:disabled::-moz-range-thumb {
-          background: var(--theme-colors-neutral-300) !important;
-          border-color: var(--theme-colors-neutral-0) !important;
-          box-shadow: none !important;
           cursor: not-allowed !important;
         }
         .force-disabled .cds-slider-value,
@@ -1188,7 +1167,7 @@ export default function Forms({ embedded = false }: { embedded?: boolean }) {
     <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
       {formStyles}
       <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
-        <h1 style={{ fontSize: 72, fontWeight: 800, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>
+        <h1 style={{ fontSize: 72, fontWeight: 700, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>
           Form Controls
         </h1>
         <p style={{ maxWidth: 560, margin: "0 auto", color: "var(--core-color-text-tertiary)", fontSize: 18, lineHeight: 1.6, fontWeight: 400 }}>

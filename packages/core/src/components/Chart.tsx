@@ -24,7 +24,8 @@ const DEFAULT_SERIES_COLORS = [
   "var(--core-color-categorical-5)",
 ];
 
-const axisTick = { fontSize: 12, fill: "var(--core-color-text-tertiary)" };
+const axisTick = { fontSize: 12, fill: "var(--core-color-text-secondary)" };
+const legendStyle = { fontSize: 12, color: "var(--core-color-text-secondary)" };
 const tooltipStyle: React.CSSProperties = {
   background: "var(--core-card-bg)",
   border: "1px solid var(--core-color-border-default)",
@@ -91,11 +92,11 @@ export function LineChartCard({ data, xKey, series, height = 260, title, descrip
     <ChartFrame title={title} description={description} data={data} xKey={xKey} series={series}>
       <ResponsiveContainer width="100%" height={height}>
         <LineChart data={data} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="var(--core-color-border-subtle)" />
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--core-color-border-default)" />
           <XAxis dataKey={xKey} tick={axisTick} axisLine={{ stroke: "var(--core-color-border-default)" }} tickLine={false} />
           <YAxis tick={axisTick} axisLine={false} tickLine={false} width={40} />
           <RTooltip contentStyle={tooltipStyle} />
-          <Legend wrapperStyle={{ fontSize: 12 }} />
+          <Legend wrapperStyle={legendStyle} />
           {series.map((s, i) => (
             <Line key={s.key} type="monotone" dataKey={s.key} name={s.label}
               stroke={s.color ?? DEFAULT_SERIES_COLORS[i % DEFAULT_SERIES_COLORS.length]}
@@ -112,11 +113,11 @@ export function BarChartCard({ data, xKey, series, height = 260, title, descript
     <ChartFrame title={title} description={description} data={data} xKey={xKey} series={series}>
       <ResponsiveContainer width="100%" height={height}>
         <BarChart data={data} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="var(--core-color-border-subtle)" vertical={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--core-color-border-default)" vertical={false} />
           <XAxis dataKey={xKey} tick={axisTick} axisLine={{ stroke: "var(--core-color-border-default)" }} tickLine={false} />
           <YAxis tick={axisTick} axisLine={false} tickLine={false} width={40} />
           <RTooltip contentStyle={tooltipStyle} />
-          <Legend wrapperStyle={{ fontSize: 12 }} />
+          <Legend wrapperStyle={legendStyle} />
           {series.map((s, i) => (
             <Bar key={s.key} dataKey={s.key} name={s.label}
               fill={s.color ?? DEFAULT_SERIES_COLORS[i % DEFAULT_SERIES_COLORS.length]}

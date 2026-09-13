@@ -24,9 +24,19 @@ function add(name, value) {
   lines.push(`  --typography-${name}: ${value};`);
 }
 
+const fontStack = (name) =>
+  `"${name}", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif`;
+
 if (data.fontFamily?.sans) {
-  add("font-family-sans", `"${data.fontFamily.sans}", system-ui, sans-serif`);
+  add("font-family-sans", fontStack(data.fontFamily.sans));
 }
+if (data.fontFamily?.mono) {
+  add("font-family-mono", fontStack(data.fontFamily.mono));
+}
+
+/* Aliases used by CORE components and typography previews */
+lines.push("  --core-font-family-base: var(--typography-font-family-sans);");
+lines.push("  --core-font-family-mono: var(--typography-font-family-mono);");
 
 for (const [key, weight] of Object.entries(data.fontWeight ?? {})) {
   add(`font-weight-${key}`, String(weight));
@@ -84,6 +94,18 @@ add("text12-semibold-size", data.fontSize?.xs?.rem ?? "0.75rem");
 add("text12-semibold-line-height", data.body?.xs?.lineHeight?.rem ?? "1.125rem");
 add("text12-semibold-weight", String(data.fontWeight?.semibold ?? 600));
 
+lines.push("}");
+
+lines.push("");
+lines.push("html,");
+lines.push("body,");
+lines.push("button,");
+lines.push("input,");
+lines.push("select,");
+lines.push("textarea,");
+lines.push("optgroup {");
+lines.push("  font-family: var(--typography-font-family-sans);");
+lines.push("  font-synthesis: weight style;");
 lines.push("}");
 
 writeFileSync(out, lines.join("\n") + "\n");

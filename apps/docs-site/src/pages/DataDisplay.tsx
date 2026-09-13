@@ -4,6 +4,7 @@ import { DocsSection, DocsSectionList, StateLabel } from "../DocsSection";
 import { Anatomy, AnatomyLegend } from "../Anatomy";
 import { Card, Badge, BadgeTone, BadgeSize } from "../../../../packages/core/src/components/Misc";
 import { Table, Avatar, AvatarGroup, Progress } from "../../../../packages/core/src/components/DataDisplay";
+import { AVATAR_JORDAN, AVATAR_SAM, AVATAR_SAMPLES } from "../avatarSamples";
 import { Icon } from "../../../../packages/core/src/components/Primitives";
 const rows = [
   { id: 1, date: "Sep 01, 2026", type: "Contribution", amount: "$412.50", status: "success" as const },
@@ -55,7 +56,7 @@ function BadgeMatrixDemo() {
             onClick={() => setSize(s)}
             style={{
               border: "none",
-              background: size === s ? "var(--theme-brand-background-strong)" : "transparent",
+              background: size === s ? "var(--theme-brand-background-primary-strong)" : "transparent",
               color: size === s ? "var(--theme-brand-text-primary-oncolor)" : "var(--theme-neutral-text-primary-default)",
               borderRadius: "var(--core-radius-sm)",
               padding: "5px 14px",
@@ -92,8 +93,6 @@ function BadgeMatrixDemo() {
                   <th scope="col" style={{ ...badgeMatrixHeaderStyle, width: 110 }}>Tone</th>
                   <th scope="col" style={badgeMatrixHeaderStyle}>Default</th>
                   <th scope="col" style={badgeMatrixHeaderStyle}>Hover</th>
-                  <th scope="col" style={badgeMatrixHeaderStyle}>With Dot</th>
-                  <th scope="col" style={badgeMatrixHeaderStyle}>Removable</th>
                   <th scope="col" style={badgeMatrixHeaderStyle}>Disable</th>
                 </tr>
               </thead>
@@ -110,12 +109,6 @@ function BadgeMatrixDemo() {
                       </div>
                     </td>
                     <td>
-                      <Badge tone={t} size={size} variant="soft" dot>{t}</Badge>
-                    </td>
-                    <td>
-                      <Badge tone={t} size={size} variant="soft" onRemove={() => {}}>{t}</Badge>
-                    </td>
-                    <td>
                       <Badge tone={t} size={size} variant="soft" disabled>{t}</Badge>
                     </td>
                   </tr>
@@ -129,13 +122,7 @@ function BadgeMatrixDemo() {
   );
 }
 
-const sampleAvatars = [
-  { name: "Jordan Lee" },
-  { name: "Sam Park" },
-  { name: "Ada Osei" },
-  { name: "Lee Kim" },
-  { name: "Nia Brooks" },
-];
+const sampleAvatars = [...AVATAR_SAMPLES];
 
 function AvatarSizeDemo() {
   return (
@@ -166,20 +153,20 @@ function AvatarSizeDemo() {
                 <td style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 600, color: "var(--core-color-text-primary)" }}>Single Avatar</td>
                 <td>
                   <div style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
-                    <Avatar name="Jordan Lee" size="sm" />
-                    <Avatar name="Sam Park" size="sm" />
+                    <Avatar name={AVATAR_JORDAN.name} src={AVATAR_JORDAN.src} size="sm" />
+                    <Avatar name={AVATAR_SAM.name} src={AVATAR_SAM.src} size="sm" />
                   </div>
                 </td>
                 <td>
                   <div style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
-                    <Avatar name="Jordan Lee" size="md" />
-                    <Avatar name="Sam Park" size="md" />
+                    <Avatar name={AVATAR_JORDAN.name} src={AVATAR_JORDAN.src} size="md" />
+                    <Avatar name={AVATAR_SAM.name} src={AVATAR_SAM.src} size="md" />
                   </div>
                 </td>
                 <td>
                   <div style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
-                    <Avatar name="Jordan Lee" size="lg" />
-                    <Avatar name="Sam Park" size="lg" />
+                    <Avatar name={AVATAR_JORDAN.name} src={AVATAR_JORDAN.src} size="lg" />
+                    <Avatar name={AVATAR_SAM.name} src={AVATAR_SAM.src} size="lg" />
                   </div>
                 </td>
               </tr>
@@ -367,7 +354,7 @@ export default function DataDisplay({ embedded = false }: { embedded?: boolean }
       .force-active .cds-card--interactive:not(:disabled) {
         transform: translateY(1px) !important;
         box-shadow: none !important;
-        border-color: var(--theme-brand-borders-primary-default) !important;
+        border-color: var(--theme-brand-border-primary-default) !important;
         background: var(--theme-brand-background-primary-subtle) !important;
       }
       .force-active .cds-card--interactive:not(:disabled) .cds-card__quick-link-icon {
@@ -390,7 +377,7 @@ export default function DataDisplay({ embedded = false }: { embedded?: boolean }
     <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
       {cardStateStyles}
       <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
-        <h1 style={{ fontSize: 72, fontWeight: 800, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>Data Display</h1>
+        <h1 style={{ fontSize: 72, fontWeight: 700, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>Data Display</h1>
         <p style={{ maxWidth: 580, margin: "0 auto", color: "var(--core-color-text-tertiary)", fontSize: "var(--core-font-size-lg, 20px)", lineHeight: 1.6, fontWeight: 400 }}>
           Quick links, Badges, Tables, Avatars, and Progress meters designed for metrics and data summaries.
         </p>

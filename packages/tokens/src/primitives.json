@@ -77,7 +77,7 @@
   "border": { "width.hairline": "1px", "width.default": "1px", "width.thick": "2px", "width.focus": "2px" },
   "font": {
     "family.base": "'Inclusive Sans', -apple-system, 'Segoe UI', sans-serif",
-    "family.mono": "'JetBrains Mono', 'SFMono-Regular', Menlo, monospace",
+    "family.mono": "'Inclusive Sans', -apple-system, 'Segoe UI', sans-serif",
     "size.xs": "12px", "size.sm": "14px", "size.md": "16px", "size.lg": "20px",
     "size.xl": "24px", "size.2xl": "28px", "size.3xl": "32px", "size.4xl": "40px", "size.5xl": "48px",
     "weight.regular": "400", "weight.medium": "500", "weight.semibold": "600", "weight.bold": "700",

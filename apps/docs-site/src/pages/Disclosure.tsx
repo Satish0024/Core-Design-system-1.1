@@ -43,7 +43,7 @@ function AccordionVariantsDemo() {
           alignItems: "center",
           gap: 12,
           background: "var(--site-bg-elevated, #FFFFFF)",
-          border: "1px solid var(--site-border, rgba(128,128,128,0.18))",
+          border: "1px solid var(--site-border)",
           borderRadius: 12,
           padding: "12px 18px",
           boxShadow: "0 1px 4px rgba(0,0,0,0.03)",
@@ -66,7 +66,7 @@ function AccordionVariantsDemo() {
             background: "var(--site-bg, rgba(128,128,128,0.08))",
             borderRadius: 8,
             padding: 3,
-            border: "1px solid var(--site-border, rgba(128,128,128,0.15))",
+            border: "1px solid var(--site-border)",
           }}
         >
           {(["bordered", "separated", "flush"] as const).map((v) => {
@@ -78,8 +78,8 @@ function AccordionVariantsDemo() {
                 onClick={() => setVariant(v)}
                 style={{
                   border: "none",
-                  background: variant === v ? "var(--theme-brand-background-primary-default)" : "transparent",
-                  color: variant === v ? "#FFFFFF" : "var(--site-text, inherit)",
+                  background: variant === v ? "var(--theme-brand-background-primary-strong)" : "transparent",
+                  color: variant === v ? "var(--brand-text-primary-oncolor)" : "var(--site-text)",
                   borderRadius: "var(--core-radius-sm)",
                   padding: "5px 14px",
                   fontSize: "var(--typography-font-size-xs)",
@@ -241,7 +241,7 @@ export default function DisclosurePage({ embedded = false }: { embedded?: boolea
   return (
     <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
       <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
-        <h1 style={{ fontSize: 72, fontWeight: 800, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>Disclosure</h1>
+        <h1 style={{ fontSize: 72, fontWeight: 700, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>Disclosure</h1>
         <p style={{ maxWidth: 580, margin: "0 auto", color: "var(--core-color-text-tertiary)", fontSize: "var(--core-font-size-lg, 20px)", lineHeight: 1.6, fontWeight: 400 }}>
           Progressive disclosure with accordions, separators, and loading skeleton placeholders.
         </p>

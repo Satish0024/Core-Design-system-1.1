@@ -1,14 +1,15 @@
 {
   "$schema": "Typography tokens -- design-system branch",
   "fontFamily": {
-    "sans": "Inclusive Sans"
+    "sans": "Inclusive Sans",
+    "mono": "Inclusive Sans"
   },
   "fontWeight": {
     "regular": 400,
     "medium": 500,
     "semibold": 600,
     "bold": 700,
-    "extrabold": 800
+    "extrabold": 700
   },
   "fontSize": {
     "xs": {
@@ -278,7 +279,7 @@
       "rem": "0",
       "px": 0
     },
-    "fontWeight": 800
+    "fontWeight": 700
   },
   "button": {
     "lg": {

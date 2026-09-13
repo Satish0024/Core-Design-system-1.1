@@ -5,6 +5,7 @@ import { AppSidebar, Breadcrumb, Stepper } from "../../../../packages/core/src/c
 import { Button, IconButton } from "../../../../packages/core/src/components/Button";
 import { Card, Badge } from "../../../../packages/core/src/components/Misc";
 import { Avatar, DataTable, Progress } from "../../../../packages/core/src/components/DataDisplay";
+import { AVATAR_TAYLOR } from "../avatarSamples";
 import { Field, Input } from "../../../../packages/core/src/components/Field";
 import { Select } from "../../../../packages/core/src/components/FormControls";
 import { Icon, DescriptionList } from "../../../../packages/core/src/components/Primitives";
@@ -25,7 +26,7 @@ function ScreenHeader({ userName }: { userName: string }) {
       actions={
         <>
           <IconButton variant="tertiary" size="sm" shape="circle" aria-label="Help"><Icon name="fa-solid fa-circle-question" size="sm" /></IconButton>
-          <Avatar name={userName} size="sm" />
+          <Avatar name={userName} src={AVATAR_TAYLOR.src} size="sm" />
         </>
       }
     />

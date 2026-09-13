@@ -30,51 +30,51 @@ const VARIANTS: VariantConfig[] = [
     category: "brand",
     stateTokens: {
       default: {
-        bgVar: "--theme-brand-background-strong",
+        bgVar: "--theme-brand-background-primary-strong",
         bgFallback: "#1F4F8D",
         textVar: "--theme-brand-text-primary-oncolor",
         textFallback: "#FFFFFF",
-        borderVar: "--theme-brand-borders-primary-default",
+        borderVar: "--theme-brand-border-primary-default",
         borderFallback: "#3275CD",
         extraStyles: { boxShadow: "0 1px 2px rgba(17,16,23,0.08)" },
       },
       hover: {
-        bgVar: "--theme-brand-background-hover",
+        bgVar: "--theme-brand-background-primary-hover",
         bgFallback: "#1B4479",
         textVar: "--theme-brand-text-primary-oncolor",
         textFallback: "#FFFFFF",
-        borderVar: "--theme-brand-borders-hover",
+        borderVar: "--theme-brand-border-primary-hover",
         borderFallback: "#1B4479",
         extraStyles: { boxShadow: "0 2px 6px rgba(31,79,141,0.25)" },
       },
       active: {
-        bgVar: "--theme-brand-background-active",
+        bgVar: "--theme-brand-background-primary-active",
         bgFallback: "#17365E",
         textVar: "--theme-brand-text-primary-oncolor",
         textFallback: "#FFFFFF",
-        borderVar: "--theme-brand-background-active",
+        borderVar: "--theme-brand-background-primary-active",
         borderFallback: "#17365E",
         extraStyles: { transform: "translateY(1px)" },
       },
       focused: {
-        bgVar: "--theme-brand-background-strong",
+        bgVar: "--theme-brand-background-primary-strong",
         bgFallback: "#1F4F8D",
         textVar: "--theme-brand-text-primary-oncolor",
         textFallback: "#FFFFFF",
-        borderVar: "--theme-brand-borders-primary-default",
+        borderVar: "--theme-brand-border-primary-default",
         borderFallback: "#3275CD",
         extraStyles: {
-          outline: "2px solid var(--theme-brand-borders-primary-default)",
+          outline: "2px solid var(--theme-brand-border-primary-default)",
           outlineOffset: "2px",
           boxShadow: "0 0 0 3px rgba(50,117,205,0.3)",
         },
       },
       disabled: {
-        bgVar: "--theme-brand-background-disabled-strong",
+        bgVar: "--theme-brand-background-primary-disabled",
         bgFallback: "#BACEE9",
         textVar: "--theme-primitive-color-primary-300",
         textFallback: "#86ADDF",
-        borderVar: "--theme-brand-borders-primary-disabled",
+        borderVar: "--theme-brand-border-primary-disabled",
         borderFallback: "#BACEE9",
         extraStyles: {},
       },
@@ -92,23 +92,23 @@ const VARIANTS: VariantConfig[] = [
         bgFallback: "transparent",
         textVar: "--theme-primitive-color-primary-500",
         textFallback: "#1F4F8D",
-        borderVar: "--theme-brand-borders-primary-default",
+        borderVar: "--theme-brand-border-primary-default",
         borderFallback: "#3275CD",
       },
       hover: {
-        bgVar: "--theme-brand-background-hover",
+        bgVar: "--theme-brand-background-primary-hover",
         bgFallback: "#1B4479",
         textVar: "--theme-primitive-color-primary-100",
         textFallback: "#E2E9F3",
-        borderVar: "--theme-brand-borders-hover",
+        borderVar: "--theme-brand-border-primary-hover",
         borderFallback: "#1B4479",
       },
       active: {
-        bgVar: "--theme-brand-background-active",
+        bgVar: "--theme-brand-background-primary-active",
         bgFallback: "#17365E",
         textVar: "--theme-primitive-color-primary-100",
         textFallback: "#E2E9F3",
-        borderVar: "--theme-brand-background-active",
+        borderVar: "--theme-brand-background-primary-active",
         borderFallback: "#17365E",
         extraStyles: { transform: "translateY(1px)" },
       },
@@ -117,10 +117,10 @@ const VARIANTS: VariantConfig[] = [
         bgFallback: "transparent",
         textVar: "--theme-primitive-color-primary-500",
         textFallback: "#1F4F8D",
-        borderVar: "--theme-brand-borders-primary-default",
+        borderVar: "--theme-brand-border-primary-default",
         borderFallback: "#3275CD",
         extraStyles: {
-          outline: "2px solid var(--theme-brand-borders-primary-default)",
+          outline: "2px solid var(--theme-brand-border-primary-default)",
           outlineOffset: "2px",
         },
       },
@@ -129,7 +129,7 @@ const VARIANTS: VariantConfig[] = [
         bgFallback: "transparent",
         textVar: "--theme-primitive-color-primary-300",
         textFallback: "#86ADDF",
-        borderVar: "--theme-brand-borders-primary-disabled",
+        borderVar: "--theme-brand-border-primary-disabled",
         borderFallback: "#86ADDF",
         extraStyles: {},
       },
@@ -177,7 +177,7 @@ const VARIANTS: VariantConfig[] = [
         borderVar: "transparent",
         borderFallback: "transparent",
         extraStyles: {
-          outline: "2px solid var(--theme-brand-borders-primary-default)",
+          outline: "2px solid var(--theme-brand-border-primary-default)",
           outlineOffset: "2px",
         },
       },
@@ -315,7 +315,7 @@ export function ButtonMatrix() {
           justifyContent: "space-between",
           gap: 16,
           background: "var(--site-bg-elevated, #FFFFFF)",
-          border: "1px solid var(--site-border, rgba(128,128,128,0.18))",
+          border: "1px solid var(--site-border)",
           borderRadius: 14,
           padding: "14px 20px",
           marginBottom: 18,
@@ -324,10 +324,10 @@ export function ButtonMatrix() {
       >
         <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
           {/* Size Controls */}
-          <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--site-text-dim, #787887)" }}>
+          <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--theme-neutral-text-subtle)" }}>
             Size:
           </span>
-          <div style={{ display: "inline-flex", background: "var(--site-bg, rgba(128,128,128,0.08))", borderRadius: 8, padding: 3, border: "1px solid var(--site-border, rgba(128,128,128,0.15))" }}>
+          <div style={{ display: "inline-flex", background: "var(--site-bg)", borderRadius: 8, padding: 3, border: "1px solid var(--site-border)" }}>
             {(["sm", "md", "lg"] as const).map((s) => (
               <button
                 key={s}
@@ -335,8 +335,8 @@ export function ButtonMatrix() {
                 onClick={() => setSize(s)}
                 style={{
                   border: "none",
-                  background: size === s ? "var(--theme-brand-background-primary-default)" : "transparent",
-                  color: size === s ? "#FFFFFF" : "var(--site-text, inherit)",
+                  background: size === s ? "var(--theme-brand-background-primary-strong)" : "transparent",
+                  color: size === s ? "var(--brand-text-primary-oncolor)" : "var(--site-text)",
                   borderRadius: "var(--core-radius-sm)",
                   padding: "4px 12px",
                   fontSize: 12,
@@ -353,7 +353,7 @@ export function ButtonMatrix() {
 
         {/* Canvas Theme Toggle Switch (Right Side) */}
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: canvasBg === "light" ? "var(--site-text, #1D1C24)" : "var(--site-text-dim, #787887)", transition: "color 0.3s ease" }}>
+          <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: canvasBg === "light" ? "var(--site-text)" : "var(--theme-neutral-text-subtle)", transition: "color 0.3s ease" }}>
             Light
           </span>
           <div
@@ -361,7 +361,7 @@ export function ButtonMatrix() {
             style={{
               width: 44,
               height: 24,
-              background: canvasBg === "dark" ? "var(--theme-brand-background-primary-default)" : "var(--site-border, rgba(128,128,128,0.3))",
+              background: canvasBg === "dark" ? "var(--theme-brand-background-primary-strong)" : "var(--theme-neutral-border-strong)",
               borderRadius: 12,
               position: "relative",
               cursor: "pointer",
@@ -372,7 +372,7 @@ export function ButtonMatrix() {
               style={{
                 width: 20,
                 height: 20,
-                background: "#FFFFFF",
+                background: "var(--theme-colors-neutral-0)",
                 borderRadius: "50%",
                 position: "absolute",
                 top: 2,
@@ -382,7 +382,7 @@ export function ButtonMatrix() {
               }}
             />
           </div>
-          <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: canvasBg === "dark" ? "var(--site-text, #F4F4F6)" : "var(--site-text-dim, #787887)", transition: "color 0.3s ease" }}>
+          <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: canvasBg === "dark" ? "var(--site-text)" : "var(--theme-neutral-text-subtle)", transition: "color 0.3s ease" }}>
             Dark
           </span>
         </div>
@@ -419,7 +419,7 @@ export function ButtonMatrix() {
           borderRadius: 16,
           padding: "36px 32px",
           boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
-          border: "1px solid var(--site-border, rgba(128,128,128,0.18))",
+          border: "1px solid var(--site-border)",
           overflowX: "auto",
           transition: "background 150ms ease",
         }}
@@ -437,7 +437,7 @@ export function ButtonMatrix() {
               {/* Column Header */}
               <div
                 style={{
-                  borderBottom: "1px solid var(--site-border, rgba(128,128,128,0.2))",
+                  borderBottom: "1px solid var(--site-border)",
                   paddingBottom: 14,
                   marginBottom: 24,
                 }}

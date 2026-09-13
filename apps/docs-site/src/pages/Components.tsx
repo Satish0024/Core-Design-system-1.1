@@ -34,7 +34,7 @@ export default function Components() {
         <h1
           style={{
             fontSize: 72,
-            fontWeight: 800,
+            fontWeight: 700,
             letterSpacing: "-0.06em",
             margin: "0 0 16px 0",
             color: "var(--core-color-text-primary)",
@@ -47,7 +47,7 @@ export default function Components() {
           style={{
             maxWidth: 620,
             margin: "0 auto",
-            color: "var(--core-color-text-tertiary)",
+            color: "var(--core-color-text-secondary)",
             fontSize: 18,
             lineHeight: 1.6,
             fontWeight: 400,

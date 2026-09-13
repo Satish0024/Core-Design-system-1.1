@@ -17,6 +17,8 @@ export function Slider({
   onChange: (v: number) => void;
   formatValue?: (v: number) => string;
 }) {
+  const fill = max === min ? 0 : ((value - min) / (max - min)) * 100;
+
   return (
     <div className={`cds-slider ${disabled ? "cds-slider--disabled" : ""}`.trim()}>
       <input
@@ -27,7 +29,7 @@ export function Slider({
         value={value}
         disabled={disabled}
         onChange={(e) => !disabled && onChange(Number(e.target.value))}
-        style={{ flex: 1 }}
+        style={{ flex: 1, "--cds-slider-fill": `${fill}%` } as React.CSSProperties}
         aria-valuetext={formatValue ? formatValue(value) : String(value)}
       />
       <span className="cds-slider-value">{formatValue ? formatValue(value) : value}</span>

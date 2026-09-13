@@ -8,12 +8,12 @@ import { fileURLToPath } from "url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../src");
 
 const replacements = [
-  ["--theme-brand-border-primary-default", "--theme-brand-borders-primary-default"],
-  ["--theme-brand-border-hover", "--theme-brand-borders-hover"],
-  ["--theme-brand-border-primary-disabled", "--theme-brand-borders-primary-disabled"],
-  ["--theme-brand-border-active", "--theme-brand-background-active"],
-  ["--brand-border-hover", "--brand-borders-hover"],
-  ["--brand-border-primary-disabled", "--brand-borders-primary-disabled"],
+  ["--theme-brand-border-primary-default", "--theme-brand-border-primary-default"],
+  ["--theme-brand-border-primary-hover", "--theme-brand-border-primary-hover"],
+  ["--theme-brand-border-primary-disabled", "--theme-brand-border-primary-disabled"],
+  ["--theme-brand-border-active", "--theme-brand-background-primary-active"],
+  ["--brand-border-primary-hover", "--brand-border-primary-hover"],
+  ["--brand-border-primary-disabled", "--brand-border-primary-disabled"],
   ["--core-font-size-xs, 12px", "--typography-font-size-xs"],
   ["--core-font-size-sm, 14px", "--typography-body-md-size"],
   ["--core-font-size-md, 16px", "--typography-body-lg-size"],

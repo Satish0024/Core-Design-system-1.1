@@ -4,6 +4,7 @@ import { AppHeader, AppFooter, Grid, GridCol } from "../../../../packages/core/s
 import type { GridGap } from "../../../../packages/core/src/components/Layout";
 import { IconButton } from "../../../../packages/core/src/components/Button";
 import { Avatar } from "../../../../packages/core/src/components/DataDisplay";
+import { AVATAR_TAYLOR } from "../avatarSamples";
 import { ChevronIcon, Icon } from "../../../../packages/core/src/components/Primitives";
 import primitives from "../../../../packages/tokens/src/primitives.json";
 
@@ -120,7 +121,7 @@ export default function LayoutGrid() {
                 brand="Meridian"
                 actions={<>
                   <IconButton variant="tertiary" size="sm" shape="circle" aria-label="Help"><Icon name="fa-solid fa-circle-question" size="sm" /></IconButton>
-                  <Avatar name="Taylor Hale" size="sm" />
+                  <Avatar name={AVATAR_TAYLOR.name} src={AVATAR_TAYLOR.src} size="sm" />
                 </>}
               />
             </div>
@@ -365,11 +366,11 @@ export default function LayoutGrid() {
               <div style={{ display: "flex", gap: "var(--core-space-8)", flexWrap: "wrap" }}>
                 <div>
                   <div style={{ fontSize: "var(--core-font-size-xs)", color: "var(--core-color-text-secondary)" }}>Account balance</div>
-                  <div style={{ fontSize: "var(--core-font-size-xl)", fontWeight: 800, color: "var(--core-color-text-primary)" }}>$14,590.00</div>
+                  <div style={{ fontSize: "var(--core-font-size-xl)", fontWeight: 700, color: "var(--core-color-text-primary)" }}>$14,590.00</div>
                 </div>
                 <div>
                   <div style={{ fontSize: "var(--core-font-size-xs)", color: "var(--core-color-text-secondary)" }}>Vested balance</div>
-                  <div style={{ fontSize: "var(--core-font-size-xl)", fontWeight: 800, color: "var(--core-color-text-primary)" }}>$13,870.00</div>
+                  <div style={{ fontSize: "var(--core-font-size-xl)", fontWeight: 700, color: "var(--core-color-text-primary)" }}>$13,870.00</div>
                 </div>
               </div>
             </div>
@@ -561,7 +562,7 @@ export default function LayoutGrid() {
       <DocsSection anchorId="code" title="Code">
       <div className="site-panel site-panel--flush">
         <pre style={{ margin: 0, padding: 20, fontSize: "var(--typography-font-size-xs)", overflowX: "auto" }}>{`<AppShell
-  header={<AppHeader brand="Meridian" actions={<Avatar name="Taylor Hale" size="sm" />} />}
+  header={<AppHeader brand="Meridian" actions={<Avatar name={AVATAR_TAYLOR.name} src={AVATAR_TAYLOR.src} size="sm" />} />}
   sidebar={<AppSidebar items={navItems} />}
   footer={<AppFooter copyright="© 2026 Meridian." links={<a href="/privacy">Privacy</a>} />}
 >

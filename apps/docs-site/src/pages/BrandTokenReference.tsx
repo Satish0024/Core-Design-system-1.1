@@ -94,7 +94,7 @@ function ColorValuePill({
         <span style={{ fontSize: 12, fontWeight: 500, color: "#1D1C24", lineHeight: 1.3, whiteSpace: "nowrap" }}>
           {primitive.path}
         </span>
-        <span style={{ fontSize: 11, fontFamily: "var(--site-mono, ui-monospace, monospace)", color: "#787887", lineHeight: 1.3 }}>
+        <span style={{ fontSize: 11, fontFamily: "var(--site-mono)", color: "#787887", lineHeight: 1.3 }}>
           {primitive.hex}
         </span>
       </div>
@@ -135,7 +135,7 @@ function TokenRow({
             <code
               style={{
                 fontSize: 11,
-                fontFamily: "var(--site-mono, ui-monospace, monospace)",
+                fontFamily: "var(--site-mono)",
                 color: "#787887",
                 cursor: "pointer",
               }}
@@ -348,7 +348,7 @@ export function BrandTokenReference() {
             fontWeight: 600,
             boxShadow: "0 8px 24px rgba(0,0,0,0.18)",
             zIndex: 9999,
-            fontFamily: "var(--site-mono, ui-monospace, monospace)",
+            fontFamily: "var(--site-mono)",
           }}
         >
           ✓ Copied {copied}

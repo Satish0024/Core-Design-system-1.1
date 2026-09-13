@@ -27,7 +27,7 @@ const sections = [
             key={item.label}
             style={{
               borderRadius: 14,
-              border: "1px solid rgba(128,128,128,0.15)",
+              border: "1px solid var(--site-border)",
               background: "var(--core-color-surface-default)",
               padding: "24px 28px",
               display: "flex",
@@ -93,17 +93,17 @@ const sections = [
               gap: 8,
               padding: "22px 24px",
               borderRadius: 14,
-              border: "1px solid rgba(128,128,128,0.15)",
+              border: "1px solid var(--site-border)",
               background: "var(--core-color-surface-default)",
               textDecoration: "none",
               color: "inherit",
               transition: "border-color 0.15s ease",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "var(--theme-brand-borders-primary-default)";
+              e.currentTarget.style.borderColor = "var(--theme-brand-border-primary-default)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "rgba(128,128,128,0.15)";
+              e.currentTarget.style.borderColor = "var(--site-border)";
             }}
           >
             <span
@@ -144,7 +144,7 @@ const sections = [
               display: "block",
               padding: "10px 14px",
               borderRadius: 8,
-              border: "1px solid rgba(128,128,128,0.12)",
+              border: "1px solid var(--site-border)",
               background: "var(--core-color-surface-default)",
               textDecoration: "none",
               fontSize: "var(--typography-body-md-size)",
@@ -153,10 +153,10 @@ const sections = [
               transition: "border-color 0.15s ease",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "var(--theme-brand-borders-primary-default)";
+              e.currentTarget.style.borderColor = "var(--theme-brand-border-primary-default)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "rgba(128,128,128,0.12)";
+              e.currentTarget.style.borderColor = "var(--site-border)";
             }}
           >
             {link.label}
@@ -173,7 +173,7 @@ const sections = [
       <div
         style={{
           borderRadius: 14,
-          border: "1px solid rgba(128,128,128,0.15)",
+          border: "1px solid var(--site-border)",
           background: "var(--core-color-surface-hover)",
           padding: "28px 32px",
         }}
@@ -221,7 +221,7 @@ export default function Home() {
         <h1
           style={{
             fontSize: 72,
-            fontWeight: 800,
+            fontWeight: 700,
             letterSpacing: "-0.06em",
             margin: "0 0 16px 0",
             color: "var(--core-color-text-primary)",

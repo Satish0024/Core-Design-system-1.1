@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 // @ts-ignore — Vite `?raw` import for palette download bundle.
-import semanticPaletteScss from "../../public/Format to follow naming.scss?raw";
+import semanticPaletteScss from "../../public/Format.expanded.css?raw";
 import primitives from "../../../../packages/tokens/src/primitives.json";
 import { ContrastBadge } from "../ContrastBadge";
 import { rgbStringToHex } from "../lib/contrast";
@@ -150,7 +150,7 @@ function BaselineSwatch({ tokenKey, label }: { tokenKey: string; label: string }
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        border: "1px solid rgba(128,128,128,0.12)",
+        border: "1px solid var(--site-border)",
         flex: "1 1 140px",
         minWidth: 0,
         cursor: "pointer",
@@ -304,7 +304,7 @@ function FullColorScalesSection() {
   const [contrastBackground, setContrastBackground] = useState<ContrastBackground>("white");
 
   return (
-    <div style={{ background: "var(--core-color-surface-default)", borderRadius: 14, padding: "32px", border: "1px solid rgba(128,128,128,0.15)" }}>
+    <div style={{ background: "var(--core-color-surface-default)", borderRadius: 14, padding: "32px", border: "1px solid var(--site-border)" }}>
       <div
         style={{
           display: "flex",
@@ -387,7 +387,7 @@ function RampRow({
               height: 56,
               borderRadius: 6,
               overflow: "hidden",
-              border: "1px solid rgba(128,128,128,0.15)",
+              border: "1px solid var(--site-border)",
             }}
           >
             {entries.map(([step, hex]) => (
@@ -490,7 +490,7 @@ export interface FigmaTokenItem {
   aliasCssVar?: string; // e.g. "--brand-text-primary-default"
   coreRef: string; // e.g. "--core-color-action-primary-bg"
   category: "primary" | "secondary" | "tertiary" | "neutral" | "disabled" | "critical" | "warning" | "success" | "info" | "brand" | "semantics";
-  type: "text" | "background" | "borders";
+  type: "text" | "background" | "border";
   lightHex: string;
   darkHex: string;
   paletteNameLight: string; // e.g. "Brand 500"
@@ -638,8 +638,8 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     group: "Primary / Background",
     subgroup: "Background",
     path: "Primary / Background / disabled-light",
-    cssVar: "--theme-brand-background-disabled-light",
-    aliasCssVar: "--brand-background-disabled-light",
+    cssVar: "--theme-brand-background-primary-disabled-light",
+    aliasCssVar: "--brand-background-primary-disabled-light",
     coreRef: "--core-color-neutral-100",
     category: "primary",
     type: "background",
@@ -655,8 +655,8 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     group: "Primary / Background",
     subgroup: "Background",
     path: "Primary / Background / disabled-strong",
-    cssVar: "--theme-brand-background-disabled-strong",
-    aliasCssVar: "--brand-background-disabled-strong",
+    cssVar: "--theme-brand-background-primary-disabled",
+    aliasCssVar: "--brand-background-primary-disabled",
     coreRef: "--core-color-brand-200",
     category: "primary",
     type: "background",
@@ -672,8 +672,8 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     group: "Primary / Background",
     subgroup: "Background",
     path: "Primary / Background / strong",
-    cssVar: "--theme-brand-background-strong",
-    aliasCssVar: "--brand-background-strong",
+    cssVar: "--theme-brand-background-primary-strong",
+    aliasCssVar: "--brand-background-primary-strong",
     coreRef: "--core-color-action-primary-bg",
     category: "primary",
     type: "background",
@@ -689,8 +689,8 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     group: "Primary / Background",
     subgroup: "Background",
     path: "Primary / Background / hover",
-    cssVar: "--theme-brand-background-hover",
-    aliasCssVar: "--brand-background-hover",
+    cssVar: "--theme-brand-background-primary-hover",
+    aliasCssVar: "--brand-background-primary-hover",
     coreRef: "--core-color-action-primary-bgHover",
     category: "primary",
     type: "background",
@@ -706,8 +706,8 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     group: "Primary / Background",
     subgroup: "Background",
     path: "Primary / Background / active",
-    cssVar: "--theme-brand-background-active",
-    aliasCssVar: "--brand-background-active",
+    cssVar: "--theme-brand-background-primary-active",
+    aliasCssVar: "--brand-background-primary-active",
     coreRef: "--core-color-action-primary-bgActive",
     category: "primary",
     type: "background",
@@ -719,51 +719,51 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
 
   // Primary / Borders
   {
-    id: "primary-borders-disabled",
+    id: "primary-border-disabled",
     name: "primary-disabled",
     displayName: "Primary Disabled",
     group: "Primary / Borders",
     subgroup: "Borders",
     path: "Primary / Borders / primary-disabled",
-    cssVar: "--theme-brand-borders-primary-disabled",
-    aliasCssVar: "--brand-borders-primary-disabled",
+    cssVar: "--theme-brand-border-primary-disabled",
+    aliasCssVar: "--brand-border-primary-disabled",
     coreRef: "--core-color-brand-200",
     category: "primary",
-    type: "borders",
+    type: "border",
     lightHex: "#BACEE9",
     darkHex: "#BACEE9",
     paletteNameLight: "Brand 200",
     paletteNameDark: "Brand 200",
   },
   {
-    id: "primary-borders-default",
+    id: "primary-border-default",
     name: "primary-default",
     displayName: "Primary Default",
     group: "Primary / Borders",
     subgroup: "Borders",
     path: "Primary / Borders / primary-default",
-    cssVar: "--theme-brand-borders-primary-default",
-    aliasCssVar: "--brand-borders-primary-default",
+    cssVar: "--theme-brand-border-primary-default",
+    aliasCssVar: "--brand-border-primary-default",
     coreRef: "--core-color-brand-500",
     category: "primary",
-    type: "borders",
+    type: "border",
     lightHex: "#1F4F8D",
     darkHex: "#1F4F8D",
     paletteNameLight: "Brand 500",
     paletteNameDark: "Brand 500",
   },
   {
-    id: "primary-borders-hover",
+    id: "primary-border-primary-hover",
     name: "hover",
     displayName: "Hover",
     group: "Primary / Borders",
     subgroup: "Borders",
     path: "Primary / Borders / hover",
-    cssVar: "--theme-brand-borders-hover",
-    aliasCssVar: "--brand-borders-hover",
+    cssVar: "--theme-brand-border-primary-hover",
+    aliasCssVar: "--brand-border-primary-hover",
     coreRef: "--core-color-brand-600",
     category: "primary",
-    type: "borders",
+    type: "border",
     lightHex: "#1B4479",
     darkHex: "#86ADDF",
     paletteNameLight: "Brand 600",
@@ -893,7 +893,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     group: "Secondary / Background",
     subgroup: "Background",
     path: "Secondary / Background / disabled-light",
-    cssVar: "--theme-secondary-background-disabled-light",
+    cssVar: "--theme-secondary-background-primary-disabled-light",
     coreRef: "--core-color-neutral-100",
     category: "secondary",
     type: "background",
@@ -909,7 +909,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     group: "Secondary / Background",
     subgroup: "Background",
     path: "Secondary / Background / disabled-strong",
-    cssVar: "--theme-secondary-background-disabled-strong",
+    cssVar: "--theme-secondary-background-primary-disabled",
     coreRef: "--core-color-secondary-200",
     category: "secondary",
     type: "background",
@@ -925,7 +925,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     group: "Secondary / Background",
     subgroup: "Background",
     path: "Secondary / Background / strong",
-    cssVar: "--theme-secondary-background-strong",
+    cssVar: "--theme-secondary-background-primary-strong",
     coreRef: "--core-color-secondary-500",
     category: "secondary",
     type: "background",
@@ -941,7 +941,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     group: "Secondary / Background",
     subgroup: "Background",
     path: "Secondary / Background / hover",
-    cssVar: "--theme-secondary-background-hover",
+    cssVar: "--theme-secondary-background-primary-hover",
     coreRef: "--core-color-secondary-600",
     category: "secondary",
     type: "background",
@@ -957,7 +957,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     group: "Secondary / Background",
     subgroup: "Background",
     path: "Secondary / Background / active",
-    cssVar: "--theme-secondary-background-active",
+    cssVar: "--theme-secondary-background-primary-active",
     coreRef: "--core-color-secondary-700",
     category: "secondary",
     type: "background",
@@ -969,48 +969,48 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
 
   // Secondary / Borders
   {
-    id: "secondary-borders-disabled",
+    id: "secondary-border-disabled",
     name: "secondary-disabled",
     displayName: "Secondary Disabled",
     group: "Secondary / Borders",
     subgroup: "Borders",
     path: "Secondary / Borders / secondary-disabled",
-    cssVar: "--theme-secondary-borders-primary-disabled",
+    cssVar: "--theme-secondary-border-primary-disabled",
     coreRef: "--core-color-secondary-200",
     category: "secondary",
-    type: "borders",
+    type: "border",
     lightHex: "#AFDEF4",
     darkHex: "#AFDEF4",
     paletteNameLight: "Secondary 200",
     paletteNameDark: "Secondary 200",
   },
   {
-    id: "secondary-borders-default",
+    id: "secondary-border-default",
     name: "secondary-default",
     displayName: "Secondary Default",
     group: "Secondary / Borders",
     subgroup: "Borders",
     path: "Secondary / Borders / secondary-default",
-    cssVar: "--theme-secondary-borders-primary-default",
+    cssVar: "--theme-secondary-border-primary-default",
     coreRef: "--core-color-secondary-500",
     category: "secondary",
-    type: "borders",
+    type: "border",
     lightHex: "#39BCF9",
     darkHex: "#39BCF9",
     paletteNameLight: "Secondary 500",
     paletteNameDark: "Secondary 500",
   },
   {
-    id: "secondary-borders-hover",
+    id: "secondary-border-primary-hover",
     name: "hover",
     displayName: "Hover",
     group: "Secondary / Borders",
     subgroup: "Borders",
     path: "Secondary / Borders / hover",
-    cssVar: "--theme-secondary-borders-hover",
+    cssVar: "--theme-secondary-border-primary-hover",
     coreRef: "--core-color-secondary-600",
     category: "secondary",
-    type: "borders",
+    type: "border",
     lightHex: "#07A8F2",
     darkHex: "#71CAF4",
     paletteNameLight: "Secondary 600",
@@ -1140,7 +1140,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     group: "Tertiary / Background",
     subgroup: "Background",
     path: "Tertiary / Background / disabled-light",
-    cssVar: "--theme-tertiary-background-disabled-light",
+    cssVar: "--theme-tertiary-background-primary-disabled-light",
     coreRef: "--core-color-neutral-100",
     category: "tertiary",
     type: "background",
@@ -1156,7 +1156,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     group: "Tertiary / Background",
     subgroup: "Background",
     path: "Tertiary / Background / disabled-strong",
-    cssVar: "--theme-tertiary-background-disabled-strong",
+    cssVar: "--theme-tertiary-background-primary-disabled",
     coreRef: "--core-color-tertiary-200",
     category: "tertiary",
     type: "background",
@@ -1172,7 +1172,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     group: "Tertiary / Background",
     subgroup: "Background",
     path: "Tertiary / Background / strong",
-    cssVar: "--theme-tertiary-background-strong",
+    cssVar: "--theme-tertiary-background-primary-strong",
     coreRef: "--core-color-tertiary-500",
     category: "tertiary",
     type: "background",
@@ -1188,7 +1188,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     group: "Tertiary / Background",
     subgroup: "Background",
     path: "Tertiary / Background / hover",
-    cssVar: "--theme-tertiary-background-hover",
+    cssVar: "--theme-tertiary-background-primary-hover",
     coreRef: "--core-color-tertiary-600",
     category: "tertiary",
     type: "background",
@@ -1204,7 +1204,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     group: "Tertiary / Background",
     subgroup: "Background",
     path: "Tertiary / Background / active",
-    cssVar: "--theme-tertiary-background-active",
+    cssVar: "--theme-tertiary-background-primary-active",
     coreRef: "--core-color-tertiary-700",
     category: "tertiary",
     type: "background",
@@ -1216,48 +1216,48 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
 
   // Tertiary / Borders
   {
-    id: "tertiary-borders-disabled",
+    id: "tertiary-border-disabled",
     name: "tertiary-disabled",
     displayName: "Tertiary Disabled",
     group: "Tertiary / Borders",
     subgroup: "Borders",
     path: "Tertiary / Borders / tertiary-disabled",
-    cssVar: "--theme-tertiary-borders-primary-disabled",
+    cssVar: "--theme-tertiary-border-primary-disabled",
     coreRef: "--core-color-tertiary-200",
     category: "tertiary",
-    type: "borders",
+    type: "border",
     lightHex: "#FCDB94",
     darkHex: "#FCDB94",
     paletteNameLight: "Tertiary 200",
     paletteNameDark: "Tertiary 200",
   },
   {
-    id: "tertiary-borders-default",
+    id: "tertiary-border-default",
     name: "tertiary-default",
     displayName: "Tertiary Default",
     group: "Tertiary / Borders",
     subgroup: "Borders",
     path: "Tertiary / Borders / tertiary-default",
-    cssVar: "--theme-tertiary-borders-primary-default",
+    cssVar: "--theme-tertiary-border-primary-default",
     coreRef: "--core-color-tertiary-500",
     category: "tertiary",
-    type: "borders",
+    type: "border",
     lightHex: "#E89A1C",
     darkHex: "#E89A1C",
     paletteNameLight: "Tertiary 500",
     paletteNameDark: "Tertiary 500",
   },
   {
-    id: "tertiary-borders-hover",
+    id: "tertiary-border-primary-hover",
     name: "hover",
     displayName: "Hover",
     group: "Tertiary / Borders",
     subgroup: "Borders",
     path: "Tertiary / Borders / hover",
-    cssVar: "--theme-tertiary-borders-hover",
+    cssVar: "--theme-tertiary-border-primary-hover",
     coreRef: "--core-color-tertiary-600",
     category: "tertiary",
-    type: "borders",
+    type: "border",
     lightHex: "#C27A10",
     darkHex: "#FBCB6B",
     paletteNameLight: "Tertiary 600",
@@ -1347,7 +1347,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     aliasCssVar: "--neutral-border-inverse",
     coreRef: "--core-color-neutral-0",
     category: "neutral",
-    type: "borders",
+    type: "border",
     lightHex: "#FFFFFF",
     darkHex: "#1D1C24",
     paletteNameLight: "Neutral 0",
@@ -1364,7 +1364,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     aliasCssVar: "--neutral-border-subtle",
     coreRef: "--core-color-border-subtle",
     category: "neutral",
-    type: "borders",
+    type: "border",
     lightHex: "#EEEEF2",
     darkHex: "#2E2D38",
     paletteNameLight: "Neutral 100",
@@ -1381,7 +1381,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     aliasCssVar: "--neutral-border-light",
     coreRef: "--core-color-border-default",
     category: "neutral",
-    type: "borders",
+    type: "border",
     lightHex: "#DFDFE6",
     darkHex: "#454452",
     paletteNameLight: "Neutral 200",
@@ -1398,11 +1398,11 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     aliasCssVar: "--neutral-border-strong",
     coreRef: "--core-color-border-strong",
     category: "neutral",
-    type: "borders",
-    lightHex: "#9E9EAD",
-    darkHex: "#787887",
-    paletteNameLight: "Neutral 400",
-    paletteNameDark: "Neutral 500",
+    type: "border",
+    lightHex: "#5C5C6B",
+    darkHex: "#5C5C6B",
+    paletteNameLight: "Neutral 600",
+    paletteNameDark: "Neutral 600",
   },
 
   // ── 5. DISABLED COLORS ──
@@ -1434,7 +1434,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     aliasCssVar: "--semantics-disabled-border",
     coreRef: "--core-color-control-disabled-border",
     category: "disabled",
-    type: "borders",
+    type: "border",
     lightHex: "#454452",
     darkHex: "#454452",
     paletteNameLight: "Light Grey 700",
@@ -1452,10 +1452,10 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     coreRef: "--core-color-control-disabled-text",
     category: "disabled",
     type: "text",
-    lightHex: "#EEEEF2",
-    darkHex: "#EEEEF2",
-    paletteNameLight: "Neutral 100",
-    paletteNameDark: "Neutral 100",
+    lightHex: "#5C5C6B",
+    darkHex: "#5C5C6B",
+    paletteNameLight: "Neutral 600",
+    paletteNameDark: "Neutral 600",
   },
 
   // ── 6. CRITICAL COLORS ──
@@ -1487,7 +1487,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     aliasCssVar: "--semantics-critical-border",
     coreRef: "--core-color-status-danger-border",
     category: "critical",
-    type: "borders",
+    type: "border",
     lightHex: "#F4B1B1",
     darkHex: "#8F212A",
     paletteNameLight: "Danger 300",
@@ -1502,13 +1502,13 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     path: "Critical / strong-background",
     cssVar: "--theme-semantics-critical-strong-background",
     aliasCssVar: "--semantics-critical-background-strong",
-    coreRef: "--core-color-danger-500",
+    coreRef: "--core-color-danger-600",
     category: "critical",
     type: "background",
-    lightHex: "#D8434A",
-    darkHex: "#D8434A",
-    paletteNameLight: "Danger 500",
-    paletteNameDark: "Danger 500",
+    lightHex: "#B72E38",
+    darkHex: "#B72E38",
+    paletteNameLight: "Danger 600",
+    paletteNameDark: "Danger 600",
   },
   {
     id: "critical-text",
@@ -1557,7 +1557,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     aliasCssVar: "--semantics-warning-border",
     coreRef: "--core-color-status-warning-border",
     category: "warning",
-    type: "borders",
+    type: "border",
     lightHex: "#FCDB94",
     darkHex: "#95590A",
     paletteNameLight: "Warning 300",
@@ -1572,13 +1572,13 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     path: "Warning / strong-background",
     cssVar: "--theme-semantics-warning-strong-background",
     aliasCssVar: "--semantics-warning-background-strong",
-    coreRef: "--core-color-warning-500",
+    coreRef: "--core-color-warning-600",
     category: "warning",
     type: "background",
-    lightHex: "#E89A1C",
-    darkHex: "#E89A1C",
-    paletteNameLight: "Warning 500",
-    paletteNameDark: "Warning 500",
+    lightHex: "#C27A10",
+    darkHex: "#C27A10",
+    paletteNameLight: "Warning 600",
+    paletteNameDark: "Warning 600",
   },
   {
     id: "warning-text",
@@ -1627,7 +1627,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     aliasCssVar: "--semantics-success-border",
     coreRef: "--core-color-status-success-border",
     category: "success",
-    type: "borders",
+    type: "border",
     lightHex: "#A8E7C6",
     darkHex: "#116840",
     paletteNameLight: "Success 300",
@@ -1642,13 +1642,13 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     path: "Success / strong-background",
     cssVar: "--theme-semantics-success-strong-background",
     aliasCssVar: "--semantics-success-background-strong",
-    coreRef: "--core-color-success-500",
+    coreRef: "--core-color-success-600",
     category: "success",
     type: "background",
-    lightHex: "#22A369",
-    darkHex: "#22A369",
-    paletteNameLight: "Success 500",
-    paletteNameDark: "Success 500",
+    lightHex: "#178451",
+    darkHex: "#178451",
+    paletteNameLight: "Success 600",
+    paletteNameDark: "Success 600",
   },
   {
     id: "success-text",
@@ -1697,7 +1697,7 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     aliasCssVar: "--semantics-highlight-border",
     coreRef: "--core-color-status-info-border",
     category: "info",
-    type: "borders",
+    type: "border",
     lightHex: "#A9D8F6",
     darkHex: "#155187",
     paletteNameLight: "Info 300",
@@ -1712,13 +1712,13 @@ const FIGMA_BASE_TOKENS: FigmaTokenItem[] = [
     path: "Info / strong-background",
     cssVar: "--theme-semantics-highlight-strong-background",
     aliasCssVar: "--semantics-highlight-background-strong",
-    coreRef: "--core-color-info-500",
+    coreRef: "--core-color-info-600",
     category: "info",
     type: "background",
-    lightHex: "#2E8CD6",
-    darkHex: "#2E8CD6",
-    paletteNameLight: "Info 500",
-    paletteNameDark: "Info 500",
+    lightHex: "#1D6DB0",
+    darkHex: "#1D6DB0",
+    paletteNameLight: "Info 600",
+    paletteNameDark: "Info 600",
   },
   {
     id: "info-text",
@@ -2107,7 +2107,7 @@ function BaseColorsRedesignedSection() {
         {/* Light / Dark Mode Toggle */}
         <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, background: "var(--site-bg)", padding: "4px 10px", borderRadius: 24, border: "1px solid var(--site-border)" }}>
-            <span style={{ fontSize: 12, fontWeight: 600, color: activeMode === "light" ? "var(--site-text)" : "var(--site-text-faint)" }}>Light</span>
+            <span style={{ fontSize: 12, fontWeight: 600, color: activeMode === "light" ? "var(--site-text)" : "var(--theme-neutral-text-subtle)" }}>Light</span>
             <button
               type="button"
               onClick={() => setActiveMode(activeMode === "light" ? "dark" : "light")}
@@ -2115,7 +2115,7 @@ function BaseColorsRedesignedSection() {
                 width: 40,
                 height: 22,
                 borderRadius: 11,
-                background: activeMode === "light" ? "rgba(128,128,128,0.25)" : "var(--core-color-action-primary-bg, #1F4F8D)",
+                background: activeMode === "light" ? "var(--theme-neutral-border-strong)" : "var(--theme-brand-background-primary-strong)",
                 border: "none",
                 position: "relative",
                 cursor: "pointer",
@@ -2129,7 +2129,7 @@ function BaseColorsRedesignedSection() {
                   width: 18,
                   height: 18,
                   borderRadius: 9,
-                  background: "#fff",
+                  background: "var(--theme-colors-neutral-0)",
                   position: "absolute",
                   top: 2,
                   left: activeMode === "light" ? 2 : 20,
@@ -2138,7 +2138,7 @@ function BaseColorsRedesignedSection() {
                 }}
               />
             </button>
-            <span style={{ fontSize: 12, fontWeight: 600, color: activeMode === "dark" ? "var(--site-text)" : "var(--site-text-faint)" }}>Dark</span>
+            <span style={{ fontSize: 12, fontWeight: 600, color: activeMode === "dark" ? "var(--site-text)" : "var(--theme-neutral-text-subtle)" }}>Dark</span>
           </div>
           <span style={{ fontSize: "var(--typography-font-size-xs)", color: "var(--site-text-faint)" }}>
             Contrast vs {contrastBackground}
@@ -2184,7 +2184,7 @@ function BaseColorsRedesignedSection() {
                 <h3
                   style={{
                     fontSize: 28,
-                    fontWeight: 800,
+                    fontWeight: 700,
                     letterSpacing: "-0.025em",
                     lineHeight: 1.15,
                     color: "var(--site-text, #111)",
@@ -2555,7 +2555,7 @@ ${semanticPaletteScss.trim()}
   return (
     <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
       <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
-        <h1 style={{ fontSize: 72, fontWeight: 800, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>
+        <h1 style={{ fontSize: 72, fontWeight: 700, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>
           Colors
         </h1>
         <p style={{ maxWidth: 560, margin: "0 auto", color: "var(--core-color-text-tertiary)", fontSize: 18, lineHeight: 1.6, fontWeight: 400 }}>
@@ -2595,7 +2595,7 @@ ${semanticPaletteScss.trim()}
           <div key={s.id} id={s.anchorId} className="docs-section" style={{ display: "flex", flexDirection: "column", gap: 40, position: "relative" }}>
             <div style={{ position: "absolute", top: 0, left: "-12.5%", width: "125%", height: 1, backgroundColor: "var(--site-border)" }} />
             <div style={{ paddingTop: 32 }}>
-              <div style={{ fontSize: 12, fontWeight: 600, color: "var(--core-color-text-tertiary)", marginBottom: 12 }}>{s.id}</div>
+              <div className="docs-section__number">{s.id}</div>
               <h2 style={{ fontSize: 48, fontWeight: 500, letterSpacing: "-0.04em", margin: 0 }}>{s.title}</h2>
             </div>
             <div>

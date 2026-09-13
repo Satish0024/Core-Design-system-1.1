@@ -176,7 +176,7 @@ export default function Feedback({ embedded = false }: { embedded?: boolean }) {
   return (
     <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
       <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
-        <h1 style={{ fontSize: 72, fontWeight: 800, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>Feedback</h1>
+        <h1 style={{ fontSize: 72, fontWeight: 700, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>Feedback</h1>
         <p style={{ maxWidth: 580, margin: "0 auto", color: "var(--core-color-text-tertiary)", fontSize: 18, lineHeight: 1.6, fontWeight: 400 }}>
           Alerts, transient toasts, empty states, and activity spinners for user reassurance and operational statuses.
         </p>

@@ -27,7 +27,7 @@ const CRITERIA: Criterion[] = [
   { id: "1.4.4", name: "Resize Text", level: "AA", status: "component", note: "Typography tokens use rem-equivalent scaling and respect browser zoom/OS text size." },
   { id: "1.4.5", name: "Images of Text", level: "AA", status: "product", note: "CORE never renders text as an image; the app must avoid it too (e.g. banners)." },
   { id: "1.4.10", name: "Reflow", level: "AA", status: "component", note: "Table wraps in horizontal scroll rather than breaking layout at 320px width; grids collapse to 1 column under 700px." },
-  { id: "1.4.11", name: "Non-text Contrast", level: "AA", status: "component", note: "Input borders, focus rings, and icon-only controls meet 3:1 against adjacent color." },
+  { id: "1.4.11", name: "Non-text Contrast", level: "AA", status: "component", note: "Component borders use neutral-500+ and semantic 400–600 steps for ≥3:1 against adjacent surfaces." },
   { id: "1.4.12", name: "Text Spacing", level: "AA", status: "component", note: "No component breaks when a user overrides line-height/letter-spacing/word-spacing via user stylesheet." },
   { id: "1.4.13", name: "Content on Hover or Focus", level: "AA", status: "component", note: "Tooltip/HoverCard/Popover are dismissible (Escape), hoverable, and don't disappear on their own — see Overlays." },
   { id: "2.1.1", name: "Keyboard", level: "A", status: "component", note: "Every interactive component (Button, Select, Combobox, Tabs, Menu, Modal, Slider…) is fully keyboard-operable — verified per component page." },

@@ -1,326 +1,292 @@
 /**
- * Semantic color tokens — references primitives from "Color pallete.scss".
- * Import after the primitive :root block (Color pallete.scss does this via @import).
+ * Semantic color tokens — base color mappings only.
+ * References primitives from "Color pallete.scss".
+ *
+ * Structure per role (brand | secondary | tertiary):
+ *   - {role}-text-primary
+ *   - {role}-background-primary
+ *   - {role}-border-primary
+ *
+ * Expanded to CSS custom properties by generate-theme-palette.mjs (sass compile).
+ * Theme-prefixed aliases (--theme-*) are auto-generated in the build step.
  */
+
+@use "sass:map";
+
+// ── Helpers ────────────────────────────────────────────────────────────────────
+
+@function prim($family, $step) {
+  @return var(--theme-primitive-color-#{$family}-#{$step});
+}
+
+@function neutral($step) {
+  @return var(--theme-colors-neutral-#{$step});
+}
+
+@function status($family, $step) {
+  @return var(--theme-colors-#{$family}-#{$step});
+}
+
+// ── Accent roles (brand / secondary / tertiary) ──────────────────────────────────
+
+$accent-roles: (
+  brand: primary,
+  secondary: secondary,
+  tertiary: tertiary,
+);
+
+$accent-text-primary-light: (
+  default: 500,
+  hover: 600,
+  active: 700,
+  disabled: 600,
+);
+
+$accent-text-primary-dark: (
+  default: 500,
+  hover: 400,
+  active: 200,
+  disabled: 300,
+);
+
+$accent-text-oncolor: (
+  light: (
+    brand: neutral(white),
+    secondary: neutral(white),
+    tertiary: neutral(white),
+  ),
+  dark: (
+    brand: prim(primary, 50),
+    secondary: neutral(white),
+    tertiary: neutral(white),
+  ),
+);
+
+$accent-background-primary-light: (
+  strong: 500,
+  hover: 600,
+  active: 700,
+  light: 50,
+  subtle: 100,
+  disabled-light: neutral(100),
+  disabled-strong: 200,
+);
+
+$accent-background-primary-dark: (
+  strong: 500,
+  hover: 600,
+  active: 500,
+  light: 900,
+  subtle: 800,
+  disabled-light: neutral(100),
+  disabled-strong: 200,
+);
+
+$accent-border-primary-light: (
+  default: 500,
+  hover: 600,
+  disabled: 400,
+);
+
+$accent-border-primary-dark: (
+  default: 500,
+  hover: 300,
+  disabled: 400,
+);
+
+@mixin accent-role-tokens($role, $family, $text, $background, $border, $oncolor) {
+
+  /* #{$role}-text-primary */
+  --#{$role}-text-primary-default: #{prim($family, map.get($text, default))};
+  --#{$role}-text-primary-hover: #{prim($family, map.get($text, hover))};
+  --#{$role}-text-primary-active: #{prim($family, map.get($text, active))};
+  --#{$role}-text-primary-disabled: #{prim($family, map.get($text, disabled))};
+  --#{$role}-text-primary-oncolor: #{$oncolor};
+
+  /* #{$role}-background-primary */
+  --#{$role}-background-primary-strong: #{prim($family, map.get($background, strong))};
+  --#{$role}-background-primary-hover: #{prim($family, map.get($background, hover))};
+  --#{$role}-background-primary-active: #{prim($family, map.get($background, active))};
+  --#{$role}-background-primary-light: #{prim($family, map.get($background, light))};
+  --#{$role}-background-primary-subtle: #{prim($family, map.get($background, subtle))};
+  --#{$role}-background-primary-disabled-light: #{map.get($background, disabled-light)};
+  --#{$role}-background-primary-disabled: #{prim($family, map.get($background, disabled-strong))};
+
+  /* #{$role}-border-primary */
+  --#{$role}-border-primary-default: #{prim($family, map.get($border, default))};
+  --#{$role}-border-primary-hover: #{prim($family, map.get($border, hover))};
+  --#{$role}-border-primary-disabled: #{prim($family, map.get($border, disabled))};
+}
+
+// ── Neutral ────────────────────────────────────────────────────────────────────
+
+$neutral-text-light: (
+  default: 900,
+  subtle: 600,
+  subtle-light: 600,
+  on-color: white,
+);
+
+$neutral-text-dark: (
+  default: 50,
+  subtle: 300,
+  subtle-light: 400,
+  on-color: white,
+);
+
+$neutral-border-light: (
+  subtle: 500,
+  light: 500,
+  strong: 600,
+  inverse: white,
+);
+
+$neutral-border-dark: (
+  subtle: 500,
+  light: 500,
+  strong: 400,
+  inverse: 900,
+);
+
+@mixin neutral-tokens($text, $border) {
+
+  /* neutral-text */
+  --neutral-text-default: #{neutral(map.get($text, default))};
+  --neutral-text-subtle: #{neutral(map.get($text, subtle))};
+  --neutral-text-subtle-light: #{neutral(map.get($text, subtle-light))};
+  --neutral-text-on-color: #{neutral(map.get($text, on-color))};
+
+  /* neutral-border */
+  --neutral-border-subtle: #{neutral(map.get($border, subtle))};
+  --neutral-border-light: #{neutral(map.get($border, light))};
+  --neutral-border-strong: #{neutral(map.get($border, strong))};
+  --neutral-border-inverse: #{neutral(map.get($border, inverse))};
+}
+
+// ── Semantics (critical / highlight / success / warning) ───────────────────────
+
+$semantic-roles: critical, highlight, success, warning;
+$semantic-families: (
+  critical: red,
+  highlight: info,
+  success: success,
+  warning: warning,
+);
+
+$semantics-light: (
+  text: 700,
+  background-light: 50,
+  background-strong: 600,
+);
+
+$semantics-dark: (
+  text: 300,
+  background-light: 950,
+  background-strong: 600,
+);
+
+// Per-role border steps — minimum 3:1 vs adjacent light/dark surfaces (WCAG 1.4.11)
+$semantics-border-light: (
+  critical: 400,
+  highlight: 500,
+  success: 500,
+  warning: 600,
+);
+
+$semantics-border-dark: (
+  critical: 400,
+  highlight: 600,
+  success: 600,
+  warning: 600,
+);
+
+$semantics-disabled-border: (
+  critical: 400,
+  highlight: 500,
+  success: 500,
+  warning: 600,
+);
+
+@mixin semantics-role-tokens($role, $family, $tokens, $border-step) {
+
+  /* semantics-#{$role} */
+  --semantics-#{$role}-border: #{status($family, $border-step)};
+  --semantics-#{$role}-text: #{status($family, map.get($tokens, text))};
+  --semantics-#{$role}-background-light: #{status($family, map.get($tokens, background-light))};
+  --semantics-#{$role}-background-strong: #{status($family, map.get($tokens, background-strong))};
+}
+
+// ── Disabled (shared across modes) ─────────────────────────────────────────────
+
+@mixin disabled-tokens {
+  /* semantics-disabled */
+  --semantics-disabled-background: var(--theme-colors-neutral-lightgrey-50);
+  --semantics-disabled-border: var(--theme-colors-neutral-lightgrey-700);
+  --semantics-disabled-text: #{neutral(600)};
+
+  @each $role, $family in $semantic-families {
+    /* semantics-#{$role}-disabled */
+    --semantics-#{$role}-disabled-background: #{status($family, 50)};
+    --semantics-#{$role}-disabled-text: #{status($family, 500)};
+    --semantics-#{$role}-disabled-border: #{status($family, map.get($semantics-disabled-border, $role))};
+    --semantics-#{$role}-disabled-strong-background: #{status($family, 200)};
+    --semantics-#{$role}-disabled-strong-text: #{status($family, 800)};
+  }
+}
+
+// ── Output ─────────────────────────────────────────────────────────────────────
+
+:root {
+  @include disabled-tokens;
+}
 
 :root,
 html[data-site-mode="light"],
 [data-mode="light"] {
-  /* ---------------------------------------------------------------------------------- */
-  /* Brand */
-  /* ---------------------------------------------------------------------------------- */
+  @each $role, $family in $accent-roles {
+    @include accent-role-tokens(
+      $role,
+      $family,
+      $accent-text-primary-light,
+      $accent-background-primary-light,
+      $accent-border-primary-light,
+      map.get(map.get($accent-text-oncolor, light), $role)
+    );
+  }
 
-  /* Brand Text ------------------------------------------------------------------------*/
-  --brand-text-primary-default: var(--theme-primitive-color-primary-500);
-  --brand-text-primary-hover: var(--theme-primitive-color-primary-600);
-  --brand-text-primary-active: var(--theme-primitive-color-primary-700);
-  --brand-text-primary-disabled: var(--theme-primitive-color-primary-300);
-  --brand-text-primary-oncolor: var(--theme-colors-neutral-white);
+  @include neutral-tokens($neutral-text-light, $neutral-border-light);
 
-  /* Brand Background ------------------------------------------------------------------*/
-  --brand-background-strong: var(--theme-primitive-color-primary-500);
-  --brand-background-hover: var(--theme-primitive-color-primary-600);
-  --brand-background-active: var(--theme-primitive-color-primary-700);
-  --brand-background-primary-light: var(--theme-primitive-color-primary-50);
-  --brand-background-primary-subtle: var(--theme-primitive-color-primary-100);
-  --brand-background-disabled-light: var(--theme-colors-neutral-100);
-  --brand-background-disabled-strong: var(--theme-primitive-color-primary-200);
-
-  /* Brand Borders ---------------------------------------------------------------------*/
-  --brand-borders-primary-default: var(--theme-primitive-color-primary-500);
-  --brand-borders-hover: var(--theme-primitive-color-primary-600);
-  --brand-borders-primary-disabled: var(--theme-primitive-color-primary-200);
-
-  /* ---------------------------------------------------------------------------------- */
-  /* Secondary */
-  /* ---------------------------------------------------------------------------------- */
-
-  --secondary-text-primary-default: var(--theme-primitive-color-secondary-500);
-  --secondary-text-primary-hover: var(--theme-primitive-color-secondary-600);
-  --secondary-text-primary-active: var(--theme-primitive-color-secondary-700);
-  --secondary-text-primary-disabled: var(--theme-primitive-color-secondary-300);
-  --secondary-text-primary-oncolor: var(--theme-colors-neutral-white);
-
-  --secondary-background-strong: var(--theme-primitive-color-secondary-500);
-  --secondary-background-hover: var(--theme-primitive-color-secondary-600);
-  --secondary-background-active: var(--theme-primitive-color-secondary-700);
-  --secondary-background-primary-light: var(--theme-primitive-color-secondary-50);
-  --secondary-background-primary-subtle: var(--theme-primitive-color-secondary-100);
-  --secondary-background-disabled-light: var(--theme-colors-neutral-100);
-  --secondary-background-disabled-strong: var(--theme-primitive-color-secondary-200);
-
-  --secondary-borders-primary-default: var(--theme-primitive-color-secondary-500);
-  --secondary-borders-hover: var(--theme-primitive-color-secondary-600);
-  --secondary-borders-primary-disabled: var(--theme-primitive-color-secondary-200);
-
-  /* ---------------------------------------------------------------------------------- */
-  /* Tertiary */
-  /* ---------------------------------------------------------------------------------- */
-
-  --tertiary-text-primary-default: var(--theme-primitive-color-tertiary-500);
-  --tertiary-text-primary-hover: var(--theme-primitive-color-tertiary-600);
-  --tertiary-text-primary-active: var(--theme-primitive-color-tertiary-700);
-  --tertiary-text-primary-disabled: var(--theme-primitive-color-tertiary-300);
-  --tertiary-text-primary-oncolor: var(--theme-colors-neutral-white);
-
-  --tertiary-background-strong: var(--theme-primitive-color-tertiary-500);
-  --tertiary-background-hover: var(--theme-primitive-color-tertiary-600);
-  --tertiary-background-active: var(--theme-primitive-color-tertiary-700);
-  --tertiary-background-primary-light: var(--theme-primitive-color-tertiary-50);
-  --tertiary-background-primary-subtle: var(--theme-primitive-color-tertiary-100);
-  --tertiary-background-disabled-light: var(--theme-colors-neutral-100);
-  --tertiary-background-disabled-strong: var(--theme-primitive-color-tertiary-200);
-
-  --tertiary-borders-primary-default: var(--theme-primitive-color-tertiary-500);
-  --tertiary-borders-hover: var(--theme-primitive-color-tertiary-600);
-  --tertiary-borders-primary-disabled: var(--theme-primitive-color-tertiary-200);
-
-  /* ---------------------------------------------------------------------------------- */
-  /* Neutral */
-  /* ---------------------------------------------------------------------------------- */
-
-  --neutral-text-default: var(--theme-colors-neutral-900);
-  --neutral-text-subtle: var(--theme-colors-neutral-600);
-  --neutral-text-subtle-light: var(--theme-colors-neutral-500);
-  --neutral-text-on-color: var(--theme-colors-neutral-white);
-
-  --neutral-border-subtle: var(--theme-colors-neutral-100);
-  --neutral-border-light: var(--theme-colors-neutral-200);
-  --neutral-border-strong: var(--theme-colors-neutral-400);
-  --neutral-border-inverse: var(--theme-colors-neutral-white);
-
-  /* ---------------------------------------------------------------------------------- */
-  /* Semantics */
-  /* ---------------------------------------------------------------------------------- */
-
-  --semantics-critical-border: var(--theme-colors-red-200);
-  --semantics-critical-text: var(--theme-colors-red-700);
-  --semantics-critical-background-light: var(--theme-colors-red-50);
-  --semantics-critical-background-strong: var(--theme-colors-red-500);
-
-  --semantics-highlight-border: var(--theme-colors-info-200);
-  --semantics-highlight-text: var(--theme-colors-info-700);
-  --semantics-highlight-background-light: var(--theme-colors-info-50);
-  --semantics-highlight-background-strong: var(--theme-colors-info-500);
-
-  --semantics-success-border: var(--theme-colors-success-200);
-  --semantics-success-text: var(--theme-colors-success-700);
-  --semantics-success-background-light: var(--theme-colors-success-50);
-  --semantics-success-background-strong: var(--theme-colors-success-500);
-
-  --semantics-warning-border: var(--theme-colors-warning-200);
-  --semantics-warning-text: var(--theme-colors-warning-700);
-  --semantics-warning-background-light: var(--theme-colors-warning-50);
-  --semantics-warning-background-strong: var(--theme-colors-warning-500);
-
-  /* Disabled ----------------------------------------------------------------------*/
-  --semantics-disabled-background: var(--theme-colors-neutral-lightgrey-50);
-  --semantics-disabled-border: var(--theme-colors-neutral-lightgrey-700);
-  --semantics-disabled-text: var(--theme-colors-neutral-100);
-
-  /* ---------------------------------------------------------------------------------- */
-  /* Theme-prefixed aliases (components + docs) */
-  /* ---------------------------------------------------------------------------------- */
-
-  --theme-brand-text-primary-default: var(--brand-text-primary-default);
-  --theme-brand-text-primary-hover: var(--brand-text-primary-hover);
-  --theme-brand-text-primary-active: var(--brand-text-primary-active);
-  --theme-brand-text-primary-disabled: var(--brand-text-primary-disabled);
-  --theme-brand-text-primary-oncolor: var(--brand-text-primary-oncolor);
-  --brand-text-primaryhover: var(--brand-text-primary-hover);
-
-  --theme-brand-background-strong: var(--brand-background-strong);
-  --theme-brand-background-hover: var(--brand-background-hover);
-  --theme-brand-background-active: var(--brand-background-active);
-  --theme-brand-background-primary-light: var(--brand-background-primary-light);
-  --theme-brand-background-primary-subtle: var(--brand-background-primary-subtle);
-  --theme-brand-background-disabled-light: var(--brand-background-disabled-light);
-  --theme-brand-background-disabled-strong: var(--brand-background-disabled-strong);
-
-  --theme-brand-borders-primary-default: var(--brand-borders-primary-default);
-  --theme-brand-borders-hover: var(--brand-borders-hover);
-  --theme-brand-borders-primary-disabled: var(--brand-borders-primary-disabled);
-
-  --theme-secondary-text-primary-default: var(--secondary-text-primary-default);
-  --theme-secondary-text-primary-hover: var(--secondary-text-primary-hover);
-  --theme-secondary-text-primary-active: var(--secondary-text-primary-active);
-  --theme-secondary-text-primary-disabled: var(--secondary-text-primary-disabled);
-  --theme-secondary-text-primary-oncolor: var(--secondary-text-primary-oncolor);
-
-  --theme-secondary-background-strong: var(--secondary-background-strong);
-  --theme-secondary-background-hover: var(--secondary-background-hover);
-  --theme-secondary-background-active: var(--secondary-background-active);
-  --theme-secondary-background-primary-light: var(--secondary-background-primary-light);
-  --theme-secondary-background-primary-subtle: var(--secondary-background-primary-subtle);
-  --theme-secondary-background-disabled-light: var(--secondary-background-disabled-light);
-  --theme-secondary-background-disabled-strong: var(--secondary-background-disabled-strong);
-
-  --theme-secondary-borders-primary-default: var(--secondary-borders-primary-default);
-  --theme-secondary-borders-hover: var(--secondary-borders-hover);
-  --theme-secondary-borders-primary-disabled: var(--secondary-borders-primary-disabled);
-
-  --theme-tertiary-text-primary-default: var(--tertiary-text-primary-default);
-  --theme-tertiary-text-primary-hover: var(--tertiary-text-primary-hover);
-  --theme-tertiary-text-primary-active: var(--tertiary-text-primary-active);
-  --theme-tertiary-text-primary-disabled: var(--tertiary-text-primary-disabled);
-  --theme-tertiary-text-primary-oncolor: var(--tertiary-text-primary-oncolor);
-
-  --theme-tertiary-background-strong: var(--tertiary-background-strong);
-  --theme-tertiary-background-hover: var(--tertiary-background-hover);
-  --theme-tertiary-background-active: var(--tertiary-background-active);
-  --theme-tertiary-background-primary-light: var(--tertiary-background-primary-light);
-  --theme-tertiary-background-primary-subtle: var(--tertiary-background-primary-subtle);
-  --theme-tertiary-background-disabled-light: var(--tertiary-background-disabled-light);
-  --theme-tertiary-background-disabled-strong: var(--tertiary-background-disabled-strong);
-
-  --theme-tertiary-borders-primary-default: var(--tertiary-borders-primary-default);
-  --theme-tertiary-borders-hover: var(--tertiary-borders-hover);
-  --theme-tertiary-borders-primary-disabled: var(--tertiary-borders-primary-disabled);
-
-  --theme-neutral-text: var(--neutral-text-default);
-  --theme-neutral-text-primary-default: var(--neutral-text-default);
-  --theme-neutral-text-subtle: var(--neutral-text-subtle);
-  --theme-neutral-text-subtle-least: var(--neutral-text-subtle-light);
-  --theme-neutral-text-subtleleast: var(--neutral-text-subtle-light);
-  --theme-neutral-text-on-color: var(--neutral-text-on-color);
-  --theme-neutral-text-oncolor: var(--neutral-text-on-color);
-
-  --theme-neutral-border-subtle: var(--neutral-border-subtle);
-  --theme-neutral-border-primary-default: var(--neutral-border-light);
-  --theme-neutral-border-light: var(--neutral-border-light);
-  --theme-neutral-border-strong: var(--neutral-border-strong);
-  --theme-neutral-border-inverse: var(--neutral-border-inverse);
-
-  --theme-semantics-critical-border: var(--semantics-critical-border);
-  --theme-semantics-critical-text: var(--semantics-critical-text);
-  --theme-semantics-critical-light-background: var(--semantics-critical-background-light);
-  --theme-semantics-critical-background-light: var(--semantics-critical-background-light);
-  --theme-semantics-critical-strong-background: var(--semantics-critical-background-strong);
-  --theme-semantics-critical-background-strong: var(--semantics-critical-background-strong);
-
-  --theme-semantics-highlight-border: var(--semantics-highlight-border);
-  --theme-semantics-highlight-text: var(--semantics-highlight-text);
-  --theme-semantics-highlight-light-background: var(--semantics-highlight-background-light);
-  --theme-semantics-highlight-background-light: var(--semantics-highlight-background-light);
-  --theme-semantics-highlight-strong-background: var(--semantics-highlight-background-strong);
-  --theme-semantics-highlight-background-strong: var(--semantics-highlight-background-strong);
-
-  --theme-semantics-success-border: var(--semantics-success-border);
-  --theme-semantics-success-text: var(--semantics-success-text);
-  --theme-semantics-success-light-background: var(--semantics-success-background-light);
-  --theme-semantics-success-background-light: var(--semantics-success-background-light);
-  --theme-semantics-success-strong-background: var(--semantics-success-background-strong);
-  --theme-semantics-success-background-strong: var(--semantics-success-background-strong);
-
-  --theme-semantics-warning-border: var(--semantics-warning-border);
-  --theme-semantics-warning-text: var(--semantics-warning-text);
-  --theme-semantics-warning-light-background: var(--semantics-warning-background-light);
-  --theme-semantics-warning-background-light: var(--semantics-warning-background-light);
-  --theme-semantics-warning-strong-background: var(--semantics-warning-background-strong);
-  --theme-semantics-warning-background-strong: var(--semantics-warning-background-strong);
-
-  --theme-semantics-disabled-background: var(--semantics-disabled-background);
-  --theme-semantics-disabled-text: var(--semantics-disabled-text);
-  --theme-semantics-disabled-border: var(--semantics-disabled-border);
+  @each $role in $semantic-roles {
+    @include semantics-role-tokens(
+      $role,
+      map.get($semantic-families, $role),
+      $semantics-light,
+      map.get($semantics-border-light, $role)
+    );
+  }
 }
-
-/* ---------------------------------------------------------------------------------- */
-/* Dark Mode Overrides */
-/* ---------------------------------------------------------------------------------- */
 
 html[data-site-mode="dark"],
 [data-mode="dark"] {
-  /* Brand -------------------------------------------------------------------------*/
-  --brand-text-primary-default: var(--theme-primitive-color-primary-500);
-  --brand-text-primary-hover: var(--theme-primitive-color-primary-400);
-  --brand-text-primary-active: var(--theme-primitive-color-primary-200);
-  --brand-text-primary-disabled: var(--theme-primitive-color-primary-300);
-  --brand-text-primary-oncolor: var(--theme-primitive-color-primary-50);
+  @each $role, $family in $accent-roles {
+    @include accent-role-tokens(
+      $role,
+      $family,
+      $accent-text-primary-dark,
+      $accent-background-primary-dark,
+      $accent-border-primary-dark,
+      map.get(map.get($accent-text-oncolor, dark), $role)
+    );
+  }
 
-  --brand-background-strong: var(--theme-primitive-color-primary-500);
-  --brand-background-hover: var(--theme-primitive-color-primary-600);
-  --brand-background-active: var(--theme-primitive-color-primary-500);
-  --brand-background-primary-light: var(--theme-primitive-color-primary-900);
-  --brand-background-primary-subtle: var(--theme-primitive-color-primary-800);
-  --brand-background-disabled-light: var(--theme-colors-neutral-100);
-  --brand-background-disabled-strong: var(--theme-primitive-color-primary-200);
+  @include neutral-tokens($neutral-text-dark, $neutral-border-dark);
 
-  --brand-borders-primary-default: var(--theme-primitive-color-primary-500);
-  --brand-borders-hover: var(--theme-primitive-color-primary-300);
-  --brand-borders-primary-disabled: var(--theme-primitive-color-primary-200);
-
-  /* Secondary ---------------------------------------------------------------------*/
-  --secondary-text-primary-default: var(--theme-primitive-color-secondary-500);
-  --secondary-text-primary-hover: var(--theme-primitive-color-secondary-400);
-  --secondary-text-primary-active: var(--theme-primitive-color-secondary-200);
-  --secondary-text-primary-disabled: var(--theme-primitive-color-secondary-300);
-  --secondary-text-primary-oncolor: var(--theme-colors-neutral-white);
-
-  --secondary-background-strong: var(--theme-primitive-color-secondary-500);
-  --secondary-background-hover: var(--theme-primitive-color-secondary-400);
-  --secondary-background-active: var(--theme-primitive-color-secondary-300);
-  --secondary-background-primary-light: var(--theme-primitive-color-secondary-900);
-  --secondary-background-primary-subtle: var(--theme-primitive-color-secondary-800);
-  --secondary-background-disabled-light: var(--theme-colors-neutral-100);
-  --secondary-background-disabled-strong: var(--theme-primitive-color-secondary-200);
-
-  --secondary-borders-primary-default: var(--theme-primitive-color-secondary-500);
-  --secondary-borders-hover: var(--theme-primitive-color-secondary-300);
-  --secondary-borders-primary-disabled: var(--theme-primitive-color-secondary-200);
-
-  /* Tertiary ----------------------------------------------------------------------*/
-  --tertiary-text-primary-default: var(--theme-primitive-color-tertiary-500);
-  --tertiary-text-primary-hover: var(--theme-primitive-color-tertiary-400);
-  --tertiary-text-primary-active: var(--theme-primitive-color-tertiary-200);
-  --tertiary-text-primary-disabled: var(--theme-primitive-color-tertiary-300);
-  --tertiary-text-primary-oncolor: var(--theme-colors-neutral-white);
-
-  --tertiary-background-strong: var(--theme-primitive-color-tertiary-500);
-  --tertiary-background-hover: var(--theme-primitive-color-tertiary-400);
-  --tertiary-background-active: var(--theme-primitive-color-tertiary-300);
-  --tertiary-background-primary-light: var(--theme-primitive-color-tertiary-900);
-  --tertiary-background-primary-subtle: var(--theme-primitive-color-tertiary-800);
-  --tertiary-background-disabled-light: var(--theme-colors-neutral-100);
-  --tertiary-background-disabled-strong: var(--theme-primitive-color-tertiary-200);
-
-  --tertiary-borders-primary-default: var(--theme-primitive-color-tertiary-500);
-  --tertiary-borders-hover: var(--theme-primitive-color-tertiary-300);
-  --tertiary-borders-primary-disabled: var(--theme-primitive-color-tertiary-200);
-
-  /* Neutral -----------------------------------------------------------------------*/
-  --neutral-text-default: var(--theme-colors-neutral-50);
-  --neutral-text-subtle: var(--theme-colors-neutral-300);
-  --neutral-text-subtle-light: var(--theme-colors-neutral-400);
-  --neutral-text-on-color: var(--theme-colors-neutral-white);
-
-  --neutral-border-subtle: var(--theme-colors-neutral-800);
-  --neutral-border-light: var(--theme-colors-neutral-700);
-  --neutral-border-strong: var(--theme-colors-neutral-500);
-  --neutral-border-inverse: var(--theme-colors-neutral-900);
-
-  /* Semantics ---------------------------------------------------------------------*/
-  --semantics-critical-border: var(--theme-colors-red-700);
-  --semantics-critical-text: var(--theme-colors-red-300);
-  --semantics-critical-background-light: var(--theme-colors-red-950);
-  --semantics-critical-background-strong: var(--theme-colors-red-500);
-
-  --semantics-highlight-border: var(--theme-colors-info-700);
-  --semantics-highlight-text: var(--theme-colors-info-300);
-  --semantics-highlight-background-light: var(--theme-colors-info-950);
-  --semantics-highlight-background-strong: var(--theme-colors-info-500);
-
-  --semantics-success-border: var(--theme-colors-success-700);
-  --semantics-success-text: var(--theme-colors-success-300);
-  --semantics-success-background-light: var(--theme-colors-success-950);
-  --semantics-success-background-strong: var(--theme-colors-success-500);
-
-  --semantics-warning-border: var(--theme-colors-warning-700);
-  --semantics-warning-text: var(--theme-colors-warning-300);
-  --semantics-warning-background-light: var(--theme-colors-warning-950);
-  --semantics-warning-background-strong: var(--theme-colors-warning-500);
-
-  /* Disabled ----------------------------------------------------------------------*/
-  --semantics-disabled-background: var(--theme-colors-neutral-lightgrey-50);
-  --semantics-disabled-border: var(--theme-colors-neutral-lightgrey-700);
-  --semantics-disabled-text: var(--theme-colors-neutral-100);
+  @each $role in $semantic-roles {
+    @include semantics-role-tokens(
+      $role,
+      map.get($semantic-families, $role),
+      $semantics-dark,
+      map.get($semantics-border-dark, $role)
+    );
+  }
 }

@@ -199,24 +199,28 @@ const brandAliases = {
 
   // Brand / background
   "brand-background-primary-default": "color.action.primary.bg",
-  "brand-background-strong": "color.action.primary.bg",
+  "brand-background-primary-strong": "color.action.primary.bg",
   "brand-background-primary-light": "color.brand.100",
   "brand-background-primary-subtle": "color.neutral.0",
-  "brand-background-disabled-light": "color.brand.100",
-  "brand-background-disabled-strong": "color.brand.200",
-  "brand-background-active": "color.brand.700",
-  "brand-background-hover": "color.brand.600",
+  "brand-background-primary-disabled-light": "color.brand.100",
+  "brand-background-primary-disabled": "color.brand.200",
+  "brand-background-primary-active": "color.brand.700",
+  "brand-background-primary-hover": "color.brand.600",
 
   // Brand / Borders (canonical)
   "brand-border-primary-default": "color.brand.500",
   "brand-border-primary-disabled": "color.brand.300",
-  "brand-border-hover": "color.brand.600",
+  "brand-border-primary-hover": "color.brand.600",
 
   // Legacy plural aliases → canonical border tokens
-  "brand-borders-primary-default": "brand.border.primary-default",
-  "brand-borders-primary-disabled": "brand.border.primary-disabled",
-  "brand-borders-hover": "brand.border.hover",
-  "brand-background-primary-strong": "color.action.primary.bg",
+  "brand-border-primary-default": "brand.border.primary-default",
+  "brand-border-primary-disabled": "brand.border.primary-disabled",
+  "brand-border-primary-hover": "brand.border.primary-hover",
+  "brand-background-primary-strong": "brand.background.primary-strong",
+  "brand-background-primary-hover": "brand.background.primary-hover",
+  "brand-background-primary-active": "brand.background.primary-active",
+  "brand-background-primary-disabled": "brand.background.primary-disabled",
+  "brand-background-primary-disabled-light": "brand.background.primary-disabled-light",
 };
 
 const neutralAliases = {
@@ -311,16 +315,16 @@ const semanticsAliases = {
 
 const secondaryAliases = {
   "secondary-text-primary-disabled": "secondary.text.primary-disabled",
-  "secondary-background-disabled-light": "secondary.background.disabled-light",
-  "secondary-background-disabled-strong": "secondary.background.disabled-strong",
-  "secondary-borders-primary-disabled": "secondary.borders.primary-disabled",
+  "secondary-background-primary-disabled-light": "secondary.background.primary-disabled-light",
+  "secondary-background-primary-disabled": "secondary.background.primary-disabled",
+  "secondary-border-primary-disabled": "secondary.border.primary-disabled",
 };
 
 const tertiaryAliases = {
   "tertiary-text-primary-disabled": "tertiary.text.primary-disabled",
-  "tertiary-background-disabled-light": "tertiary.background.disabled-light",
-  "tertiary-background-disabled-strong": "tertiary.background.disabled-strong",
-  "tertiary-borders-primary-disabled": "tertiary.borders.primary-disabled",
+  "tertiary-background-primary-disabled-light": "tertiary.background.primary-disabled-light",
+  "tertiary-background-primary-disabled": "tertiary.background.primary-disabled",
+  "tertiary-border-primary-disabled": "tertiary.border.primary-disabled",
 };
 
 const elevationAliases = {

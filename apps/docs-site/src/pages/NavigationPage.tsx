@@ -54,7 +54,11 @@ function StepperStatePreview({
             <span className="cds-step-desc">{description}</span>
             {(state === "in-progress" || state === "warning" || state === "error") && status && (
               <span className="cds-step-status">
-                <span className="cds-step-status-dot" aria-hidden="true" />
+                {state === "in-progress" ? (
+                  <span className="cds-step-status-spinner" role="status" aria-hidden="true" />
+                ) : (
+                  <span className="cds-step-status-dot" aria-hidden="true" />
+                )}
                 {status}
               </span>
             )}

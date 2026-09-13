@@ -138,7 +138,7 @@ function TypeScaleRow({ roleKey, roleNameStr, typoObj, isLast }: { roleKey: stri
           fontWeight: d.weight,
           lineHeight: d.lineHeight,
           letterSpacing: "0px",
-          fontFamily: roleKey === "numericData" ? "var(--core-font-family-mono)" : "var(--core-font-family-base)",
+          fontFamily: "var(--typography-font-family-sans)",
           color: "var(--core-color-text-primary)",
           width: "100%",
           wordWrap: "break-word"
@@ -170,7 +170,7 @@ function ElevationCard({ elevationKey, shadowVal }: { elevationKey: string; shad
     <div
       style={{
         background: "var(--core-color-surface-default)",
-        border: elevationKey === "0" ? "1px solid var(--site-border)" : "1px solid rgba(128,128,128,0.14)",
+        border: elevationKey === "0" ? "1px solid var(--site-border)" : "1px solid var(--site-border)",
         boxShadow: shadowVal,
         borderRadius: 12,
         padding: "24px",
@@ -205,7 +205,7 @@ function ElevationCard({ elevationKey, shadowVal }: { elevationKey: string; shad
               display: "inline-flex",
               alignItems: "center",
               gap: 4,
-              border: "1px solid rgba(128,128,128,0.2)",
+              border: "1px solid var(--site-border)",
               background: copied ? "rgba(34, 163, 105, 0.15)" : "var(--core-color-surface-hover)",
               color: copied ? "var(--site-success, #22A369)" : "var(--core-color-brand-600)",
               fontSize: "var(--typography-font-size-xs)",
@@ -246,7 +246,7 @@ function ElevationCard({ elevationKey, shadowVal }: { elevationKey: string; shad
             wordBreak: "break-word",
             lineHeight: 1.4,
             cursor: "pointer",
-            border: "1px solid rgba(128,128,128,0.15)",
+            border: "1px solid var(--site-border)",
           }}
           onClick={handleCopy}
           title="Click to copy exact value"
@@ -271,10 +271,10 @@ export default function Typography() {
       anchorId: "typeface",
       title: "Typeface",
       content: (
-        <div style={{ background: "var(--core-color-surface-default)", borderRadius: 14, padding: "48px 40px", border: "1px solid rgba(128,128,128,0.15)", color: "var(--core-color-text-primary)" }}>
+        <div style={{ background: "var(--core-color-surface-default)", borderRadius: 14, padding: "48px 40px", border: "1px solid var(--site-border)", color: "var(--core-color-text-primary)" }}>
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 40, flexWrap: "wrap", gap: 32 }}>
             <div style={{ flex: "1 1 300px" }}>
-              <div style={{ fontSize: 64, fontWeight: 700, lineHeight: 1.1, letterSpacing: "0", fontFamily: "'Inclusive Sans', sans-serif" }}>
+              <div style={{ fontSize: 64, fontWeight: 700, lineHeight: 1.1, letterSpacing: "0", fontFamily: "var(--typography-font-family-sans)" }}>
                 INCLUSIVE<br />SANS
               </div>
             </div>
@@ -287,12 +287,12 @@ export default function Typography() {
           </div>
 
           <div style={{ borderTop: "1px solid var(--site-border)", paddingTop: 40, display: "flex", flexWrap: "wrap", gap: 32 }}>
-            <div style={{ flex: "1 1 300px", fontSize: 200, fontWeight: 400, lineHeight: 0.8, letterSpacing: "0", fontFamily: "'Inclusive Sans', sans-serif" }}>
+            <div style={{ flex: "1 1 300px", fontSize: 200, fontWeight: 400, lineHeight: 0.8, letterSpacing: "0", fontFamily: "var(--typography-font-family-sans)" }}>
               Aa
             </div>
             <div style={{ flex: "1 1 200px" }}>
               <div style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, letterSpacing: "0.06em", marginBottom: 24, color: "var(--core-color-text-secondary)" }}>WEIGHTS</div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 12, fontSize: 18, fontFamily: "'Inclusive Sans', sans-serif", color: "var(--core-color-text-primary)" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: 12, fontSize: 18, fontFamily: "var(--typography-font-family-sans)", color: "var(--core-color-text-primary)" }}>
                 <div style={{ fontWeight: 300 }}>Light (300)</div>
                 <div style={{ fontWeight: 400 }}>Regular (400)</div>
                 <div style={{ fontWeight: 500 }}>Medium (500)</div>
@@ -302,7 +302,7 @@ export default function Typography() {
             </div>
             <div style={{ flex: "1 1 250px" }}>
               <div style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, letterSpacing: "0.06em", marginBottom: 24, color: "var(--core-color-text-secondary)" }}>OVERVIEW</div>
-              <div style={{ fontSize: 18, fontFamily: "'Inclusive Sans', sans-serif", lineHeight: 1.6, wordBreak: "break-all", color: "var(--core-color-text-primary)" }}>
+              <div style={{ fontSize: 18, fontFamily: "var(--typography-font-family-sans)", lineHeight: 1.6, wordBreak: "break-all", color: "var(--core-color-text-primary)" }}>
                 Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz
                 <br /><br />
                 0123456789
@@ -319,7 +319,7 @@ export default function Typography() {
       anchorId: "type-scale",
       title: "Type scale",
       content: (
-        <div data-theme="core" data-mode="light" style={{ background: "var(--core-color-surface-default)", borderRadius: 14, padding: "8px 40px", border: "1px solid rgba(128,128,128,0.15)" }}>
+        <div data-theme="core" data-mode="light" style={{ background: "var(--core-color-surface-default)", borderRadius: 14, padding: "8px 40px", border: "1px solid var(--site-border)" }}>
           {order.map((key, index) => (
             <TypeScaleRow
               key={key}
@@ -337,7 +337,7 @@ export default function Typography() {
       anchorId: "spacing-padding",
       title: "Spacing & Padding",
       content: (
-        <div style={{ display: "flex", flexDirection: "column", background: "var(--core-color-surface-default)", borderRadius: 14, padding: "24px 32px", border: "1px solid rgba(128,128,128,0.15)" }}>
+        <div style={{ display: "flex", flexDirection: "column", background: "var(--core-color-surface-default)", borderRadius: 14, padding: "24px 32px", border: "1px solid var(--site-border)" }}>
           {Object.entries(primitives.space).sort((a, b) => parseInt(a[1], 10) - parseInt(b[1], 10)).map(([key, val], i, arr) => {
             const numVal = parseInt(val, 10);
             return (
@@ -358,7 +358,7 @@ export default function Typography() {
       anchorId: "border-radius",
       title: "Border Radius",
       content: (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 24, background: "var(--core-color-surface-default)", borderRadius: 14, padding: "32px", border: "1px solid rgba(128,128,128,0.15)" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 24, background: "var(--core-color-surface-default)", borderRadius: 14, padding: "32px", border: "1px solid var(--site-border)" }}>
           {Object.entries(primitives.radius).map(([key, val]) => (
             <div key={key} style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center", width: 110 }}>
               <div style={{
@@ -399,7 +399,7 @@ export default function Typography() {
       anchorId: "icon-sizing",
       title: "Icon Sizing",
       content: (
-        <div style={{ display: "flex", gap: 32, flexWrap: "wrap", background: "var(--core-color-surface-default)", borderRadius: 14, padding: "32px", border: "1px solid rgba(128,128,128,0.15)" }}>
+        <div style={{ display: "flex", gap: 32, flexWrap: "wrap", background: "var(--core-color-surface-default)", borderRadius: 14, padding: "32px", border: "1px solid var(--site-border)" }}>
           {iconSizes.map((item) => (
             <div key={item.key} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16, width: 140 }}>
               <div style={{
@@ -442,14 +442,14 @@ export default function Typography() {
       id: "08",
       title: "Motion & Timing",
       content: (
-        <div style={{ display: "flex", flexDirection: "column", gap: 24, background: "var(--core-color-surface-default)", borderRadius: 14, padding: "28px 32px", border: "1px solid rgba(128,128,128,0.15)" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 24, background: "var(--core-color-surface-default)", borderRadius: 14, padding: "28px 32px", border: "1px solid var(--site-border)" }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
             {Object.entries((primitives as any).motion || {}).filter(([k]) => k.startsWith("duration.")).map(([key, val]) => (
               <div key={key} style={{ padding: "16px", borderRadius: 10, background: "var(--core-color-surface-hover)", border: "1px solid var(--site-border)" }}>
                 <div style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, letterSpacing: "0.06em", color: "var(--core-color-text-tertiary)", textTransform: "uppercase", marginBottom: 6 }}>
                   {key.replace("duration.", "")}
                 </div>
-                <div style={{ fontSize: 20, fontWeight: 800, color: "var(--core-color-text-primary)", fontFamily: "var(--site-mono)" }}>
+                <div style={{ fontSize: 20, fontWeight: 700, color: "var(--core-color-text-primary)", fontFamily: "var(--site-mono)" }}>
                   {val as string}
                 </div>
                 <code style={{ fontSize: "var(--typography-font-size-xs)", color: "var(--core-color-brand-600)", marginTop: 6, display: "block" }}>
@@ -495,7 +495,7 @@ export default function Typography() {
   return (
     <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
       <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
-        <h1 style={{ fontSize: 72, fontWeight: 800, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>
+        <h1 style={{ fontSize: 72, fontWeight: 700, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>
           Typography
         </h1>
         <p style={{ maxWidth: 560, margin: "0 auto", color: "var(--core-color-text-tertiary)", fontSize: 18, lineHeight: 1.6, fontWeight: 400 }}>
@@ -538,7 +538,7 @@ export default function Typography() {
           <div key={s.id} id={s.anchorId} className="docs-section" style={{ display: "flex", flexDirection: "column", gap: 32, position: "relative" }}>
             <div style={{ position: "absolute", top: 0, left: "-12.5%", width: "125%", height: 1, backgroundColor: "var(--site-border)" }} />
             <div style={{ paddingTop: 32 }}>
-              <div style={{ fontSize: 12, fontWeight: 600, color: "var(--core-color-text-tertiary)", marginBottom: 12 }}>{s.id}</div>
+              <div className="docs-section__number">{s.id}</div>
               <h2 style={{ fontSize: 40, fontWeight: 600, letterSpacing: "-0.03em", margin: 0 }}>{s.title}</h2>
             </div>
             <div>

@@ -6,7 +6,11 @@ export function Preview({ children, dark = false }: { children: React.ReactNode;
       data-theme="core"
       data-mode={dark ? "dark" : "light"}
       className="preview-surface"
-      style={{ background: "var(--core-color-bg-page)", color: "var(--core-color-text-primary)" }}
+      style={{
+        background: "var(--core-color-bg-page)",
+        color: "var(--core-color-text-primary)",
+        fontFamily: "var(--typography-font-family-sans)",
+      }}
     >
       {children}
     </div>

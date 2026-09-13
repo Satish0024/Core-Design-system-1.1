@@ -58,8 +58,8 @@ function LogoAnatomy() {
             padding: "6px 14px",
             borderRadius: 8,
             border: "1px solid",
-            borderColor: orientation === "horizontal" ? "var(--theme-brand-background-primary-default)" : "rgba(128,128,128,0.2)",
-            background: orientation === "horizontal" ? "var(--theme-brand-background-primary-default)" : "transparent",
+            borderColor: orientation === "horizontal" ? "var(--theme-brand-background-primary-strong)" : "var(--site-border)",
+            background: orientation === "horizontal" ? "var(--theme-brand-background-primary-strong)" : "transparent",
             color: orientation === "horizontal" ? "#FFFFFF" : "var(--core-color-text-secondary)",
             fontSize: 12,
             fontWeight: 600,
@@ -76,8 +76,8 @@ function LogoAnatomy() {
             padding: "6px 14px",
             borderRadius: 8,
             border: "1px solid",
-            borderColor: orientation === "vertical" ? "var(--theme-brand-background-primary-default)" : "rgba(128,128,128,0.2)",
-            background: orientation === "vertical" ? "var(--theme-brand-background-primary-default)" : "transparent",
+            borderColor: orientation === "vertical" ? "var(--theme-brand-background-primary-strong)" : "var(--site-border)",
+            background: orientation === "vertical" ? "var(--theme-brand-background-primary-strong)" : "transparent",
             color: orientation === "vertical" ? "#FFFFFF" : "var(--core-color-text-secondary)",
             fontSize: 12,
             fontWeight: 600,
@@ -180,7 +180,7 @@ function LogoAnatomy() {
             <div style={{ width: "100%", height: 8, margin: 0, background: "rgba(17, 141, 87, 0.3)", borderTop: "1px dashed rgba(17, 141, 87, 0.8)", borderBottom: "1px dashed rgba(17, 141, 87, 0.8)", position: "relative" }}></div>
 
             {/* Wordmark beneath */}
-            <span style={{ display: "block", fontSize: 18, fontWeight: 800, letterSpacing: "0.08em", color: "#292670", lineHeight: 1, margin: 0 }}>
+            <span style={{ display: "block", fontSize: 18, fontWeight: 700, letterSpacing: "0.08em", color: "#292670", lineHeight: 1, margin: 0 }}>
               CORE
             </span>
           </div>
@@ -247,7 +247,7 @@ export default function LogoPage() {
   return (
     <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
       <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
-        <h1 style={{ fontSize: 72, fontWeight: 800, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>
+        <h1 style={{ fontSize: 72, fontWeight: 700, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>
           Logo
         </h1>
         <p style={{ maxWidth: 560, margin: "0 auto", color: "var(--core-color-text-tertiary)", fontSize: 18, lineHeight: 1.6, fontWeight: 400 }}>
@@ -260,7 +260,7 @@ export default function LogoPage() {
           <div key={s.id} id={s.anchorId} className="docs-section" style={{ display: "flex", flexDirection: "column", gap: 40, position: "relative" }}>
             <div style={{ position: "absolute", top: 0, left: "-12.5%", width: "125%", height: 1, backgroundColor: "var(--site-border)" }} />
             <div style={{ paddingTop: 32 }}>
-              <div style={{ fontSize: 12, fontWeight: 600, color: "var(--core-color-text-tertiary)", marginBottom: 12 }}>{s.id}</div>
+              <div className="docs-section__number">{s.id}</div>
               <h2 style={{ fontSize: 48, fontWeight: 500, letterSpacing: "-0.04em", margin: 0 }}>{s.title}</h2>
             </div>
             <div>

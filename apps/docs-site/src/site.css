@@ -9,142 +9,22 @@ html[data-site-mode="dark"],
   --site-bg: #0B0C10;
   --site-bg-elevated: #111219;
   --site-bg-hover: #181923;
-  --site-border: #23242f;
+  --site-border: var(--theme-neutral-border-primary-default, var(--theme-colors-neutral-500));
   --site-text: #F4F4F6;
   --site-text-dim: #9A9AAC;
-  --site-text-faint: #63647A;
+  --site-text-faint: var(--theme-colors-neutral-400, #9E9EAD);
   --site-accent: #4998C1;
   --site-accent-soft: #4998C122;
   --site-code-bg: #14151D;
   --site-code-text: #C9CBE0;
-  --site-success: #4ADE9C;
-  --site-danger: #F58E93;
+  --site-success: var(--theme-semantics-success-strong-background);
+  --site-danger: var(--theme-semantics-critical-strong-background);
   --site-topbar-bg: rgba(11, 12, 16, 0.85);
   --site-radius: 10px;
-  --site-font: 'Inter', -apple-system, sans-serif;
-  --site-mono: 'JetBrains Mono', monospace;
+  --site-font: var(--typography-font-family-sans);
+  --site-mono: var(--typography-font-family-sans);
 
-  /* Figma Aligned Brand Base Variables (Dark) */
-  --theme-brand-text-primary-default: #1F4F8D;
-  --theme-brand-text-primary-disabled: #86ADDF;
-  --theme-brand-text-primary-active: #BACEE9;
-  --theme-brand-text-primary-hover: #3275CD;
-  --theme-brand-text-primaryhover: #3275CD;
-  --theme-brand-text-primary-oncolor: #F5F7FA;
-
-  --theme-brand-background-primary-default: #1F4F8D;
-  --theme-brand-background-strong: #1F4F8D;
-  --theme-brand-background-primary-light: #102137;
-  --theme-brand-background-primary-subtle: #132A49;
-  --theme-brand-background-disabled-light: #2E2D38;
-  --theme-brand-background-disabled-strong: #17365E;
-  --theme-brand-background-active: #1F4F8D;
-  --theme-brand-background-hover: #1B4479;
-
-  --theme-brand-border-primary-default: #1F4F8D;
-  --theme-brand-borders-primary-default: #1F4F8D;
-  --theme-brand-border-primary-disabled: #17365E;
-  --theme-brand-borders-primary-disabled: #17365E;
-  --theme-brand-border-hover: #86ADDF;
-  --theme-brand-borders-hover: #86ADDF;
-  --theme-brand-border-active: #BACEE9;
-  --theme-brand-borders-active: #BACEE9;
-
-  /* Figma Aligned Secondary Base Variables (Dark) */
-  --theme-secondary-text-primary-default: #39BCF9;
-  --theme-secondary-text-primary-disabled: #71CAF4;
-  --theme-secondary-text-primary-active: #AFDEF4;
-  --theme-secondary-text-primary-hover: #56C3F5;
-  --theme-secondary-text-primary-oncolor: #FFFFFF;
-  --theme-secondary-background-primary-default: #39BCF9;
-  --theme-secondary-background-strong: #39BCF9;
-  --theme-secondary-background-primary-light: #0A3F57;
-  --theme-secondary-background-primary-subtle: #0B5E84;
-  --theme-secondary-background-disabled-light: #2E2D38;
-  --theme-secondary-background-disabled-strong: #0B5E84;
-  --theme-secondary-background-active: #71CAF4;
-  --theme-secondary-background-hover: #56C3F5;
-  --theme-secondary-border-primary-default: #39BCF9;
-  --theme-secondary-borders-primary-default: #39BCF9;
-  --theme-secondary-border-primary-disabled: #0B81B7;
-  --theme-secondary-borders-primary-disabled: #0B81B7;
-  --theme-secondary-border-hover: #71CAF4;
-  --theme-secondary-borders-hover: #71CAF4;
-
-  /* Figma Aligned Tertiary Base Variables (Dark) */
-  --theme-tertiary-text-primary-default: #E89A1C;
-  --theme-tertiary-text-primary-disabled: #FBCB6B;
-  --theme-tertiary-text-primary-active: #FCDB94;
-  --theme-tertiary-text-primary-hover: #F2B244;
-  --theme-tertiary-text-primary-oncolor: #FFFFFF;
-  --theme-tertiary-background-primary-default: #E89A1C;
-  --theme-tertiary-background-strong: #E89A1C;
-  --theme-tertiary-background-primary-light: #5C3505;
-  --theme-tertiary-background-primary-subtle: #784708;
-  --theme-tertiary-background-disabled-light: #2E2D38;
-  --theme-tertiary-background-disabled-strong: #784708;
-  --theme-tertiary-background-active: #FBCB6B;
-  --theme-tertiary-background-hover: #F2B244;
-  --theme-tertiary-border-primary-default: #E89A1C;
-  --theme-tertiary-borders-primary-default: #E89A1C;
-  --theme-tertiary-border-primary-disabled: #95590A;
-  --theme-tertiary-borders-primary-disabled: #95590A;
-  --theme-tertiary-border-hover: #FBCB6B;
-  --theme-tertiary-borders-hover: #FBCB6B;
-
-  /* Figma Aligned Neutral Base Variables (Dark) */
-  --theme-neutral-text-primary-default: #F7F7F9;
-  --theme-neutral-text: #F7F7F9;
-  --theme-neutral-text-default: #F7F7F9;
-  --theme-neutral-text-text: #F7F7F9;
-  --theme-neutral-text-subtle: #C4C4CF;
-  --theme-neutral-text-subtleleast: #9E9EAD;
-  --theme-neutral-text-subtle-least: #9E9EAD;
-  --theme-neutral-text-on-color: #FFFFFF;
-  --theme-neutral-text-oncolor: #FFFFFF;
-
-  --theme-neutral-border-primary-default: #454452;
-  --theme-neutral-border-default: #454452;
-  --theme-neutral-border-light: #454452;
-  --theme-neutral-border-border-light: #454452;
-  --theme-neutral-border-subtle: #2E2D38;
-  --theme-neutral-border-border-subtle: #2E2D38;
-  --theme-neutral-border-strong: #787887;
-  --theme-neutral-border-border-strong: #787887;
-  --theme-neutral-border-inverse: #1D1C24;
-
-  --theme-neutral-background-primary-default: #1D1C24;
-  --theme-neutral-background-subtle: #2E2D38;
-  --theme-neutral-background-strong: #454452;
-
-  /* Figma Aligned Semantics Base Variables (Dark) */
-  --theme-semantics-critical-border: #8F212A;
-  --theme-semantics-critical-text: #EF8E8E;
-  --theme-semantics-critical-light-background: #3B0B11;
-  --theme-semantics-critical-strong-background: #D8434A;
-  --theme-semantics-critical-background-light: #3B0B11;
-  --theme-semantics-critical-background-strong: #D8434A;
-
-  --theme-semantics-warning-border: #95590A;
-  --theme-semantics-warning-text: #FBCB6B;
-  --theme-semantics-warning-light-background: #382002;
-  --theme-semantics-warning-strong-background: #E89A1C;
-  --theme-semantics-warning-background-light: #382002;
-  --theme-semantics-warning-background-strong: #E89A1C;
-
-  --theme-semantics-success-border: #116840;
-  --theme-semantics-success-text: #7EDCAC;
-  --theme-semantics-success-light-background: #052014;
-  --theme-semantics-success-strong-background: #22A369;
-  --theme-semantics-success-background-light: #052014;
-  --theme-semantics-success-background-strong: #22A369;
-
-  --theme-semantics-highlight-border: #155187;
-  --theme-semantics-highlight-text: #84C7F1;
-  --theme-semantics-highlight-light-background: #061C30;
-  --theme-semantics-highlight-strong-background: #2E8CD6;
-  --theme-semantics-highlight-background-light: #061C30;
-  --theme-semantics-highlight-strong-background: #2E8CD6;
+  /* Component + semantic colors: theme-palette.css (from Format to follow naming.scss) */
 }
 
 :root,
@@ -153,145 +33,26 @@ html[data-site-mode="light"],
   --site-bg: #FAFAFC;
   --site-bg-elevated: #FFFFFF;
   --site-bg-hover: #F1F1F6;
-  --site-border: #E3E3EC;
+  --site-border: var(--theme-neutral-border-primary-default, var(--theme-colors-neutral-500));
   --site-text: #16161D;
   --site-text-dim: #55566B;
-  --site-text-faint: #85869C;
+  --site-text-faint: var(--theme-colors-neutral-600, #5C5C6B);
   --site-accent: #0270A9;
   --site-accent-soft: #0270A920;
   --site-code-bg: #F1F1F6;
   --site-code-text: #33344A;
-  --site-success: #178451;
-  --site-danger: #B72E38;
+  --site-success: var(--theme-semantics-success-strong-background);
+  --site-danger: var(--theme-semantics-critical-strong-background);
   --site-topbar-bg: rgba(250, 250, 252, 0.85);
   --site-radius: 10px;
-  --site-font: 'Inter', -apple-system, sans-serif;
-  --site-mono: 'JetBrains Mono', monospace;
+  --site-font: var(--typography-font-family-sans);
+  --site-mono: var(--typography-font-family-sans);
 
-  /* Figma Aligned Brand Base Variables (Light) */
-  --theme-brand-text-primary-default: #1F4F8D;
-  --theme-brand-text-primary-disabled: #86ADDF;
-  --theme-brand-text-primary-active: #17365E;
-  --theme-brand-text-primary-hover: #1B4479;
-  --theme-brand-text-primaryhover: #1B4479;
-  --theme-brand-text-primary-oncolor: #FFFFFF;
-
-  --theme-brand-background-primary-default: #1F4F8D;
-  --theme-brand-background-strong: #1F4F8D;
-  --theme-brand-background-primary-light: #F5F7FA;
-  --theme-brand-background-primary-subtle: #E2E9F3;
-  --theme-brand-background-disabled-light: #EEEEF2;
-  --theme-brand-background-disabled-strong: #86ADDF;
-  --theme-brand-background-active: #17365E;
-  --theme-brand-background-hover: #1B4479;
-
-  --theme-brand-border-primary-default: #1F4F8D;
-  --theme-brand-borders-primary-default: #1F4F8D;
-  --theme-brand-border-primary-disabled: #86ADDF;
-  --theme-brand-borders-primary-disabled: #86ADDF;
-  --theme-brand-border-hover: #1B4479;
-  --theme-brand-borders-hover: #1B4479;
-  --theme-brand-border-active: #17365E;
-  --theme-brand-borders-active: #17365E;
-
-  /* Figma Aligned Secondary Base Variables (Light) */
-  --theme-secondary-text-primary-default: #39BCF9;
-  --theme-secondary-text-primary-disabled: #71CAF4;
-  --theme-secondary-text-primary-active: #0B81B7;
-  --theme-secondary-text-primary-hover: #07A8F2;
-  --theme-secondary-text-primary-oncolor: #FFFFFF;
-  --theme-secondary-background-primary-default: #39BCF9;
-  --theme-secondary-background-strong: #39BCF9;
-  --theme-secondary-background-primary-light: #F4F9FB;
-  --theme-secondary-background-primary-subtle: #DEEFF7;
-  --theme-secondary-background-disabled-light: #EEEEF2;
-  --theme-secondary-background-disabled-strong: #AFDEF4;
-  --theme-secondary-background-active: #0B81B7;
-  --theme-secondary-background-hover: #07A8F2;
-  --theme-secondary-border-primary-default: #39BCF9;
-  --theme-secondary-borders-primary-default: #39BCF9;
-  --theme-secondary-border-primary-disabled: #AFDEF4;
-  --theme-secondary-borders-primary-disabled: #AFDEF4;
-  --theme-secondary-border-hover: #07A8F2;
-  --theme-secondary-borders-hover: #07A8F2;
-
-  /* Figma Aligned Tertiary Base Variables (Light) */
-  --theme-tertiary-text-primary-default: #E89A1C;
-  --theme-tertiary-text-primary-disabled: #FBCB6B;
-  --theme-tertiary-text-primary-active: #95590A;
-  --theme-tertiary-text-primary-hover: #C27A10;
-  --theme-tertiary-text-primary-oncolor: #FFFFFF;
-  --theme-tertiary-background-primary-default: #E89A1C;
-  --theme-tertiary-background-strong: #E89A1C;
-  --theme-tertiary-background-primary-light: #FFF8EA;
-  --theme-tertiary-background-primary-subtle: #FEEBBE;
-  --theme-tertiary-background-disabled-light: #EEEEF2;
-  --theme-tertiary-background-disabled-strong: #FCDB94;
-  --theme-tertiary-background-active: #95590A;
-  --theme-tertiary-background-hover: #C27A10;
-  --theme-tertiary-border-primary-default: #E89A1C;
-  --theme-tertiary-borders-primary-default: #E89A1C;
-  --theme-tertiary-border-primary-disabled: #FCDB94;
-  --theme-tertiary-borders-primary-disabled: #FCDB94;
-  --theme-tertiary-border-hover: #C27A10;
-  --theme-tertiary-borders-hover: #C27A10;
-
-  /* Figma Aligned Neutral Base Variables (Light) */
-  --theme-neutral-text-primary-default: #1D1C24;
-  --theme-neutral-text: #1D1C24;
-  --theme-neutral-text-default: #1D1C24;
-  --theme-neutral-text-text: #1D1C24;
-  --theme-neutral-text-subtle: #5C5C6B;
-  --theme-neutral-text-subtleleast: #787887;
-  --theme-neutral-text-subtle-least: #787887;
-  --theme-neutral-text-on-color: #FFFFFF;
-  --theme-neutral-text-oncolor: #FFFFFF;
-
-  --theme-neutral-border-primary-default: #DFDFE6;
-  --theme-neutral-border-default: #DFDFE6;
-  --theme-neutral-border-light: #DFDFE6;
-  --theme-neutral-border-border-light: #DFDFE6;
-  --theme-neutral-border-subtle: #EEEEF2;
-  --theme-neutral-border-border-subtle: #EEEEF2;
-  --theme-neutral-border-strong: #9E9EAD;
-  --theme-neutral-border-border-strong: #9E9EAD;
-  --theme-neutral-border-inverse: #FFFFFF;
-
-  --theme-neutral-background-primary-default: #FFFFFF;
-  --theme-neutral-background-subtle: #F7F7F9;
-  --theme-neutral-background-strong: #EEEEF2;
-
-  /* Figma Aligned Semantics Base Variables (Light) */
-  --theme-semantics-critical-border: #F4B1B1;
-  --theme-semantics-critical-text: #8F212A;
-  --theme-semantics-critical-light-background: #FDEFEF;
-  --theme-semantics-critical-strong-background: #D8434A;
-  --theme-semantics-critical-background-light: #FDEFEF;
-  --theme-semantics-critical-background-strong: #D8434A;
-
-  --theme-semantics-warning-border: #FCDB94;
-  --theme-semantics-warning-text: #95590A;
-  --theme-semantics-warning-light-background: #FFF8EA;
-  --theme-semantics-warning-strong-background: #E89A1C;
-  --theme-semantics-warning-background-light: #FFF8EA;
-  --theme-semantics-warning-background-strong: #E89A1C;
-
-  --theme-semantics-success-border: #A8E7C6;
-  --theme-semantics-success-text: #116840;
-  --theme-semantics-success-light-background: #EDFAF2;
-  --theme-semantics-success-strong-background: #22A369;
-  --theme-semantics-success-background-light: #EDFAF2;
-  --theme-semantics-success-background-strong: #22A369;
-
-  --theme-semantics-highlight-border: #A9D8F6;
-  --theme-semantics-highlight-text: #155187;
-  --theme-semantics-highlight-light-background: #EBF6FD;
-  --theme-semantics-highlight-strong-background: #2E8CD6;
-  --theme-semantics-highlight-background-light: #EBF6FD;
-  --theme-semantics-highlight-strong-background: #2E8CD6;
+  /* Component + semantic colors: theme-palette.css (from Format to follow naming.scss) */
 }
 
 * { box-sizing: border-box; }
+html { scrollbar-gutter: stable; }
 html, body { overflow-x: clip; }
 html, body, #root { height: 100%; }
 body {
@@ -312,7 +73,7 @@ a { color: inherit; }
   padding: 20px 16px;
   position: sticky; top: 0; height: 100vh; overflow-y: auto;
 }
-.site-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; letter-spacing: -0.02em; padding: 4px 8px 20px; }
+.site-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; letter-spacing: -0.02em; padding: 4px 8px 20px; }
 .site-logo .dot { width: 10px; height: 10px; border-radius: 3px; background: var(--site-accent); }
 
 .site-nav-group { margin-bottom: 22px; }
@@ -320,9 +81,15 @@ a { color: inherit; }
 .site-nav-link {
   display: block; padding: 7px 8px; border-radius: 7px; font-size: 14px; color: var(--site-text-dim);
   text-decoration: none; margin-bottom: 1px;
+  border: 1px solid transparent;
 }
 .site-nav-link:hover { background: var(--site-bg-hover); color: var(--site-text); }
-.site-nav-link.active { background: var(--site-accent-soft); color: var(--site-accent); font-weight: 600; }
+.site-nav-link.active {
+  background: var(--brand-background-primary-light);
+  color: var(--theme-primitive-color-primary-500);
+  border-color: var(--brand-border-primary-default);
+  font-weight: 600;
+}
 .site-nav-subgroup { margin-bottom: 10px; }
 .site-nav-subgroup:last-child { margin-bottom: 0; }
 .site-nav-subtitle {
@@ -341,7 +108,7 @@ a { color: inherit; }
 }
 .site-content { padding: 40px 32px 96px; max-width: 1180px; width: 100%; margin: 0 auto; flex: 1; }
 
-.site-h1 { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 8px; }
+.site-h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 8px; }
 .site-lede { font-size: 16px; color: var(--site-text-dim); max-width: 680px; line-height: 1.6; margin: 0 0 36px; }
 .site-section-title { font-size: 20px; font-weight: 700; margin: 48px 0 16px; letter-spacing: -0.01em; }
 .site-section-sub { font-size: var(--core-font-size-sm, 14px); color: var(--site-text-dim); margin: -10px 0 20px; }
@@ -373,6 +140,13 @@ a { color: inherit; }
 .docs-section__header {
   display: flex;
   flex-direction: column;
+}
+
+.docs-section__number {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--theme-neutral-text-subtle);
+  margin-bottom: 12px;
 }
 
 .docs-section__title {
@@ -438,6 +212,7 @@ a { color: inherit; }
    Pin text to the CORE token so icons/labels stay visible on light demos. */
 .preview-surface[data-theme],
 .preview-surface[data-mode] {
+  font-family: var(--typography-font-family-sans);
   color: var(--core-color-text-primary);
 }
 /* No overflow:hidden here on purpose — it was clipping every dropdown/combobox/popover
@@ -498,8 +273,8 @@ pre.code-block {
 .dodont { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 @media (max-width: 700px) { .dodont { grid-template-columns: 1fr; } }
 .dodont .box { border-radius: 12px; padding: 20px; border: 1px solid var(--site-border); }
-.dodont .box.do { border-color: color-mix(in srgb, var(--site-success) 40%, transparent); background: color-mix(in srgb, var(--site-success) 8%, transparent); }
-.dodont .box.dont { border-color: color-mix(in srgb, var(--site-danger) 40%, transparent); background: color-mix(in srgb, var(--site-danger) 8%, transparent); }
+.dodont .box.do { border-color: var(--theme-semantics-success-border); background: color-mix(in srgb, var(--site-success) 8%, transparent); }
+.dodont .box.dont { border-color: var(--theme-semantics-critical-border); background: color-mix(in srgb, var(--site-danger) 8%, transparent); }
 .dodont .tag { font-size: var(--core-font-size-xs, 12px); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; display: block; }
 .dodont .box.do .tag { color: var(--site-success); }
 .dodont .box.dont .tag { color: var(--site-danger); }
@@ -552,7 +327,7 @@ pre.code-block {
 }
 .hero h1 {
   font-size: clamp(28px, 3.6vw, 42px);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.035em;
   line-height: 1.12;
   margin: 0 0 14px;
@@ -597,12 +372,12 @@ pre.code-block {
 }
 .hero .btn-hero.ghost {
   background: #fff;
-  border-color: #d8d9e6;
+  border-color: var(--theme-colors-neutral-500, #787887);
   color: var(--hero-ink);
 }
 .hero .btn-hero.ghost:hover {
   background: #f6f6fb;
-  border-color: #c5c6d6;
+  border-color: var(--theme-colors-neutral-600, #5C5C6B);
 }
 .btn-hero:focus-visible { outline: 3px solid var(--hero-cta, var(--site-accent)); outline-offset: 2px; }
 
@@ -631,7 +406,7 @@ pre.code-block {
 .stat-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; padding: 0 0 8px; }
 @media (max-width: 900px) { .stat-cards { grid-template-columns: repeat(2, 1fr); } }
 .stat-card { background: var(--site-bg-elevated); border: 1px solid var(--site-border); border-radius: 12px; padding: 18px; }
-.stat-card .num { font-size: 26px; font-weight: 800; }
+.stat-card .num { font-size: 26px; font-weight: 700; }
 .stat-card .lbl { font-size: 12px; color: var(--site-text-faint); margin-top: 2px; }
 
 table.spec-table { width: 100%; border-collapse: collapse; font-size: var(--core-font-size-sm, 14px); }
