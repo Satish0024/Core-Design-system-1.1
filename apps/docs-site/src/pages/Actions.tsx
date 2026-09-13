@@ -111,7 +111,7 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
                     justifyContent: "center",
                     cursor: "not-allowed",
                     backgroundColor: "transparent",
-                    color: "var(--theme-brand-text-primary-default)",
+                    color: "var(--theme-brand-text-primary-disabled)",
                     border: "1px solid var(--theme-brand-border-primary-disabled)",
                   }}
                   disabled

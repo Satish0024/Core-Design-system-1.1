@@ -43,3 +43,30 @@ export function contrastAgainst(hex: string) {
     onBlack: { ratio: onBlack, level: wcagLevel(onBlack) },
   };
 }
+
+export const SWATCH_TEXT_DARK = "#1A1A22";
+export const SWATCH_TEXT_LIGHT = "#FFFFFF";
+
+/** Pick readable label text on a colored swatch card (WCAG-aware). */
+export function pickSwatchForeground(swatchHex: string): {
+  foreground: string;
+  /** True when the swatch is light enough for dark foreground text. */
+  isLight: boolean;
+} {
+  const darkRatio = contrastRatio(SWATCH_TEXT_DARK, swatchHex);
+  const lightRatio = contrastRatio(SWATCH_TEXT_LIGHT, swatchHex);
+
+  let foreground: string;
+  if (darkRatio >= 4.5 && lightRatio < 4.5) {
+    foreground = SWATCH_TEXT_DARK;
+  } else if (lightRatio >= 4.5 && darkRatio < 4.5) {
+    foreground = SWATCH_TEXT_LIGHT;
+  } else {
+    foreground = darkRatio >= lightRatio ? SWATCH_TEXT_DARK : SWATCH_TEXT_LIGHT;
+  }
+
+  return {
+    foreground,
+    isLight: foreground === SWATCH_TEXT_DARK,
+  };
+}

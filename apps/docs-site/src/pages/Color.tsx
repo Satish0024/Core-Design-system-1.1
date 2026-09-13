@@ -7,6 +7,7 @@ import { rgbStringToHex } from "../lib/contrast";
 import {
   ContrastAgainstControl,
   ContrastBasisNote,
+  getContrastResult,
   WcagContrastIndicator,
   WcagLegend,
   type ContrastBackground,
@@ -1758,7 +1759,13 @@ function BaseColorPillarSegment({
   const tokenLabel = canonicalTokenName(token);
   const rgb = hexToRgb(currentHex);
   const lum = luminance(rgb.r, rgb.g, rgb.b);
-  const isLight = lum > 0.42;
+  const { level: contrastLevel } = getContrastResult(currentHex, contrastBackground);
+  const failsPageContrast = contrastLevel === "fail";
+  // Failing tokens (e.g. light fills on white) need dark on-card labels for ADA.
+  // Passing tokens keep luminance-based white/dark text on the swatch.
+  const isLight = failsPageContrast
+    ? contrastBackground === "white"
+    : lum > 0.42;
   const textColor = isLight ? "#1A1A22" : "#FFFFFF";
 
   const metaColor = isLight ? "rgba(26, 26, 34, 0.72)" : "rgba(255, 255, 255, 0.82)";

@@ -85,13 +85,13 @@ $accent-background-primary-dark: (
 $accent-border-primary-light: (
   default: 500,
   hover: 600,
-  disabled: 400,
+  disabled: 500,
 );
 
 $accent-border-primary-dark: (
   default: 500,
   hover: 300,
-  disabled: 400,
+  disabled: 500,
 );
 
 @mixin accent-role-tokens($role, $family, $text, $background, $border, $oncolor) {
@@ -201,9 +201,9 @@ $semantics-border-dark: (
 );
 
 $semantics-disabled-border: (
-  critical: 400,
-  highlight: 500,
-  success: 500,
+  critical: 600,
+  highlight: 600,
+  success: 600,
   warning: 600,
 );
 
@@ -220,14 +220,14 @@ $semantics-disabled-border: (
 
 @mixin disabled-tokens {
   /* semantics-disabled */
-  --semantics-disabled-background: var(--theme-colors-neutral-lightgrey-50);
-  --semantics-disabled-border: var(--theme-colors-neutral-lightgrey-700);
+  --semantics-disabled-background: #{neutral(100)};
+  --semantics-disabled-border: #{neutral(500)};
   --semantics-disabled-text: #{neutral(600)};
 
   @each $role, $family in $semantic-families {
     /* semantics-#{$role}-disabled */
     --semantics-#{$role}-disabled-background: #{status($family, 50)};
-    --semantics-#{$role}-disabled-text: #{status($family, 500)};
+    --semantics-#{$role}-disabled-text: #{status($family, 700)};
     --semantics-#{$role}-disabled-border: #{status($family, map.get($semantics-disabled-border, $role))};
     --semantics-#{$role}-disabled-strong-background: #{status($family, 200)};
     --semantics-#{$role}-disabled-strong-text: #{status($family, 800)};

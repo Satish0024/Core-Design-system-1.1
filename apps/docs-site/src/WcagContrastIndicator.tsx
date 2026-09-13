@@ -239,9 +239,17 @@ export function WcagContrastIndicator({
 
   const textColor = swatchTextColor;
 
-  const ratioIconColor = onSwatchAdaptive ? swatchTextColor : status.colorVar;
+  const ratioIconColor = onSwatchAdaptive
+    ? isLightSwatch
+      ? status.colorVar
+      : swatchTextColor
+    : status.colorVar;
   const ratioNumberColor = onSwatchAdaptive ? swatchTextColor : "var(--core-color-text-primary)";
-  const labelColor = onSwatchAdaptive ? swatchTextColor : status.colorVar;
+  const labelColor = onSwatchAdaptive
+    ? isLightSwatch
+      ? status.colorVar
+      : swatchTextColor
+    : status.colorVar;
 
   const ratioLine = (
     <span style={{ display: "inline-flex", alignItems: "center", gap: 3 }}>

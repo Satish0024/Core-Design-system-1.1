@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ButtonVariant } from "../../../packages/core/src/components/Button";
+import { Button, ButtonVariant } from "../../../packages/core/src/components/Button";
 
 export type MatrixSize = "sm" | "md" | "lg";
 export type VariantCategory = "all" | "brand" | "semantics" | "neutral";
@@ -72,11 +72,11 @@ const VARIANTS: VariantConfig[] = [
       disabled: {
         bgVar: "--theme-brand-background-primary-disabled",
         bgFallback: "#BACEE9",
-        textVar: "--theme-primitive-color-primary-300",
-        textFallback: "#86ADDF",
+        textVar: "--theme-brand-text-primary-disabled",
+        textFallback: "#1B4479",
         borderVar: "--theme-brand-border-primary-disabled",
-        borderFallback: "#BACEE9",
-        extraStyles: {},
+        borderFallback: "#1F4F8D",
+        extraStyles: { boxShadow: "0 1px 2px rgba(17,16,23,0.06)" },
       },
     },
   },
@@ -127,10 +127,10 @@ const VARIANTS: VariantConfig[] = [
       disabled: {
         bgVar: "transparent",
         bgFallback: "transparent",
-        textVar: "--theme-primitive-color-primary-300",
-        textFallback: "#86ADDF",
+        textVar: "--theme-brand-text-primary-disabled",
+        textFallback: "#1B4479",
         borderVar: "--theme-brand-border-primary-disabled",
-        borderFallback: "#86ADDF",
+        borderFallback: "#1F4F8D",
         extraStyles: {},
       },
     },
@@ -184,8 +184,8 @@ const VARIANTS: VariantConfig[] = [
       disabled: {
         bgVar: "transparent",
         bgFallback: "transparent",
-        textVar: "--theme-primitive-color-primary-300",
-        textFallback: "#86ADDF",
+        textVar: "--theme-brand-text-primary-disabled",
+        textFallback: "#1B4479",
         borderVar: "transparent",
         borderFallback: "transparent",
         extraStyles: {},
@@ -258,17 +258,10 @@ export function ButtonMatrix() {
         ? { textVar: "--theme-primitive-color-primary-50", textFallback: "#F5F7FA" }
         : undefined;
 
-    const primaryDisabledLightText =
-      canvasBg === "light" && variant.id === "primary" && stateKey === "disabled"
-        ? { textVar: "--theme-primitive-color-primary-50", textFallback: "#F5F7FA" }
-        : undefined;
-
     const textVar =
-      primaryDisabledLightText?.textVar ??
       tertiaryDarkText?.textVar ??
       (useDarkPrimary50Text ? "--theme-primitive-color-primary-50" : tok.textVar);
     const textFallback =
-      primaryDisabledLightText?.textFallback ??
       tertiaryDarkText?.textFallback ??
       (useDarkPrimary50Text ? "#F5F7FA" : tok.textFallback);
     const textVal = textVar.startsWith("--") ? `var(${textVar}, ${textFallback})` : textFallback;
@@ -484,15 +477,36 @@ export function ButtonMatrix() {
 
                     {/* Exact Rendered Button for this State */}
                     <div style={{ marginBottom: 6 }}>
-                      <button
-                        type="button"
-                        style={getButtonStyles(variant, st.key)}
-                        disabled={st.key === "disabled"}
-                        onClick={() => handleCopy(variant.id, st.key)}
-                        title={`Click to copy JSX for ${variant.name} (${st.label})`}
-                      >
-                        {buttonText}
-                      </button>
+                      {st.key === "disabled" ? (
+                        <div
+                          role="button"
+                          tabIndex={0}
+                          onClick={() => handleCopy(variant.id, st.key)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") handleCopy(variant.id, st.key);
+                          }}
+                          title={`Click to copy JSX for ${variant.name} (${st.label})`}
+                          style={{ display: "inline-block", cursor: "pointer" }}
+                        >
+                          <Button
+                            variant={variant.id}
+                            size={size}
+                            disabled
+                            style={{ minWidth: size === "sm" ? 110 : size === "md" ? 130 : 150, pointerEvents: "none" }}
+                          >
+                            {buttonText}
+                          </Button>
+                        </div>
+                      ) : (
+                        <button
+                          type="button"
+                          style={getButtonStyles(variant, st.key)}
+                          onClick={() => handleCopy(variant.id, st.key)}
+                          title={`Click to copy JSX for ${variant.name} (${st.label})`}
+                        >
+                          {buttonText}
+                        </button>
+                      )}
                     </div>
                   </div>
                 );
