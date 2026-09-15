@@ -48,7 +48,7 @@ function BadgeMatrixDemo() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-4, 16px)" }}>
-      <div style={{ display: "inline-flex", gap: "var(--core-space-1, 4px)", padding: 3, borderRadius: "var(--core-radius-sm)", border: "1px solid var(--theme-neutral-border-primary-default)", background: "var(--theme-colors-neutral-50)" }}>
+      <div style={{ display: "inline-flex", gap: "var(--core-space-1, 4px)", padding: "var(--core-space-1)", borderRadius: "var(--core-radius-sm)", border: "1px solid var(--theme-neutral-border-primary-default)", background: "var(--theme-colors-neutral-50)" }}>
         {(["md", "sm"] as const).map((s) => (
           <button
             key={s}
@@ -59,7 +59,7 @@ function BadgeMatrixDemo() {
               background: size === s ? "var(--theme-brand-background-primary-strong)" : "transparent",
               color: size === s ? "var(--theme-brand-text-primary-oncolor)" : "var(--theme-neutral-text-primary-default)",
               borderRadius: "var(--core-radius-sm)",
-              padding: "5px 14px",
+              padding: "var(--core-space-1) var(--core-space-4)",
               fontFamily: "var(--typography-font-family-sans)",
               fontSize: "var(--typography-body-xs-size)",
               lineHeight: "var(--typography-body-xs-line-height)",
@@ -135,7 +135,7 @@ function AvatarSizeDemo() {
           background: "var(--core-color-bg-page)",
           flexDirection: "column",
           alignItems: "stretch",
-          padding: "24px 28px",
+          padding: "var(--core-space-6) var(--core-space-8)",
         }}
       >
         <div style={{ overflowX: "auto" }}>
@@ -150,28 +150,28 @@ function AvatarSizeDemo() {
             </thead>
             <tbody>
               <tr>
-                <td style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 600, color: "var(--core-color-text-primary)" }}>Single Avatar</td>
+                <td style={{ fontSize: "var(--typography-body-md-size)", fontWeight: "var(--typography-font-weight-semibold)", color: "var(--core-color-text-primary)" }}>Single Avatar</td>
                 <td>
-                  <div style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: "var(--core-space-2)" }}>
                     <Avatar name={AVATAR_JORDAN.name} src={AVATAR_JORDAN.src} size="sm" />
                     <Avatar name={AVATAR_SAM.name} src={AVATAR_SAM.src} size="sm" />
                   </div>
                 </td>
                 <td>
-                  <div style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: "var(--core-space-2)" }}>
                     <Avatar name={AVATAR_JORDAN.name} src={AVATAR_JORDAN.src} size="md" />
                     <Avatar name={AVATAR_SAM.name} src={AVATAR_SAM.src} size="md" />
                   </div>
                 </td>
                 <td>
-                  <div style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: "var(--core-space-2)" }}>
                     <Avatar name={AVATAR_JORDAN.name} src={AVATAR_JORDAN.src} size="lg" />
                     <Avatar name={AVATAR_SAM.name} src={AVATAR_SAM.src} size="lg" />
                   </div>
                 </td>
               </tr>
               <tr>
-                <td style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 600, color: "var(--core-color-text-primary)" }}>Avatar Group</td>
+                <td style={{ fontSize: "var(--typography-body-md-size)", fontWeight: "var(--typography-font-weight-semibold)", color: "var(--core-color-text-primary)" }}>Avatar Group</td>
                 <td>
                   <AvatarGroup avatars={sampleAvatars} size="sm" max={3} />
                 </td>
@@ -309,10 +309,10 @@ export default function DataDisplay({ embedded = false }: { embedded?: boolean }
       anchorId: "progress",
       title: "Progress",
       content: (
-        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-5)" }}>
           <div className="site-panel site-panel--flush">
             <Preview>
-              <div style={{ width: 320, display: "flex", flexDirection: "column", gap: 20 }}>
+              <div style={{ width: 320, display: "flex", flexDirection: "column", gap: "var(--core-space-5)" }}>
                 <Progress value={68} label="Retirement readiness — 68%" />
                 <Progress indeterminate label="Submitting your request…" />
               </div>
@@ -374,11 +374,11 @@ export default function DataDisplay({ embedded = false }: { embedded?: boolean }
   }
 
   return (
-    <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
+    <div style={{ maxWidth: 1024, margin: "0 auto", padding: "var(--core-space-5)" }}>
       {cardStateStyles}
-      <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
-        <h1 style={{ fontSize: 72, fontWeight: 700, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>Data Display</h1>
-        <p style={{ maxWidth: 580, margin: "0 auto", color: "var(--core-color-text-tertiary)", fontSize: "var(--core-font-size-lg, 20px)", lineHeight: 1.6, fontWeight: 400 }}>
+      <div style={{ textAlign: "center", marginBottom: "var(--core-space-16)", marginTop: "var(--core-space-10)" }}>
+        <h1 style={{ fontSize: 72 /* no token above 48px */, fontWeight: "var(--typography-font-weight-bold)", letterSpacing: "-0.06em", margin: "0 0 var(--core-space-4) 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>Data Display</h1>
+        <p style={{ maxWidth: 580, margin: "0 auto", color: "var(--core-color-text-tertiary)", fontSize: "var(--core-font-size-lg)", lineHeight: 1.6, fontWeight: 400 }}>
           Quick links, Badges, Tables, Avatars, and Progress meters designed for metrics and data summaries.
         </p>
       </div>

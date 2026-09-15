@@ -117,8 +117,8 @@ export default function Responsive() {
 
         <DocsSection anchorId="component-checklist" title="Component checklist">
           {GROUPS.map((g) => (
-            <div key={g.title} style={{ marginBottom: 28 }}>
-              <div className="site-nav-title" style={{ padding: "0 0 8px" }}>{g.title}</div>
+            <div key={g.title} style={{ marginBottom: "var(--core-space-8)" }}>
+              <div className="site-nav-title" style={{ padding: "0 0 var(--core-space-2)" }}>{g.title}</div>
               <div className="site-panel site-panel--flush">
                 <table className="spec-table">
                   <thead><tr><th style={{ width: 40 }}></th><th>Component</th><th>Notes</th></tr></thead>
@@ -138,7 +138,7 @@ export default function Responsive() {
         </DocsSection>
 
         <DocsSection anchorId="do-dont" title="Do / Don't">
-          <ul style={{ color: "var(--site-text-dim)", lineHeight: 1.8, fontSize: 14, margin: 0 }}>
+          <ul style={{ color: "var(--site-text-dim)", lineHeight: 1.8, fontSize: "var(--core-font-size-sm)", margin: 0 }}>
             <li><strong style={{ color: "var(--site-text)" }}>Do</strong> write mobile-first: a component's base style is its narrowest state, and a <code>min-width</code> media query adds complexity at wider sizes — never the other way around.</li>
             <li><strong style={{ color: "var(--site-text)" }}>Do</strong> reuse the exact breakpoint values above in any new media query, with a comment naming which token it corresponds to.</li>
             <li><strong style={{ color: "var(--site-text)" }}>Don't</strong> hide content on mobile just because it doesn't fit — stack, scroll, or collapse to icon-only (as AppSidebar and Stepper do) rather than removing it.</li>

@@ -19,7 +19,7 @@ export default function RadiusElevation() {
             {Object.entries(radius).map(([step, val]) => (
               <div key={step} style={{ textAlign: "center" }}>
                 <div style={{ height: 70, background: "var(--site-accent-soft)", border: "1px solid var(--site-accent)", borderRadius: val === "9999px" ? "9999px" : val }} />
-                <div style={{ marginTop: 8, fontSize: 12, fontFamily: "var(--site-mono)" }}>radius.{step} · {val}</div>
+                <div style={{ marginTop: "var(--core-space-2)", fontSize: "var(--core-font-size-xs)", fontFamily: "var(--site-mono)" }}>radius.{step} · {val}</div>
               </div>
             ))}
           </div>
@@ -30,7 +30,7 @@ export default function RadiusElevation() {
             {Object.entries(elevation).filter(([k]) => k !== "0").map(([step, val]) => (
               <div key={step} style={{ textAlign: "center" }}>
                 <div style={{ height: 70, background: "var(--core-color-bg-canvas)", borderRadius: "var(--core-radius-md)", boxShadow: val, border: "1px solid var(--core-color-border-subtle)" }} />
-                <div style={{ marginTop: 8, fontSize: 12, fontFamily: "var(--site-mono)", color: "var(--core-color-text-secondary)" }}>elevation.{step}</div>
+                <div style={{ marginTop: "var(--core-space-2)", fontSize: "var(--core-font-size-xs)", fontFamily: "var(--site-mono)", color: "var(--core-color-text-secondary)" }}>elevation.{step}</div>
               </div>
             ))}
           </div>

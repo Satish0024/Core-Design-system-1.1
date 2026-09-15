@@ -38,8 +38,8 @@ export default function Spacing() {
                 ].map(({ step, use }) => (
                   <tr key={step}>
                     <td><code>space.{step}</code></td>
-                    <td style={{ fontFamily: "var(--site-mono)", fontSize: 12 }}>{space[step]}</td>
-                    <td style={{ width: 120 }}><div style={{ height: 10, width: space[step], background: "var(--site-accent)", borderRadius: 3 }} /></td>
+                    <td style={{ fontFamily: "var(--site-mono)", fontSize: "var(--core-font-size-xs)" }}>{space[step]}</td>
+                    <td style={{ width: 120 }}><div style={{ height: 10, width: space[step], background: "var(--site-accent)", borderRadius: "var(--core-radius-xs)" }} /></td>
                     <td style={{ color: "var(--site-text-dim)", fontSize: "var(--typography-body-md-size)" }}>{use}</td>
                   </tr>
                 ))}
@@ -49,13 +49,13 @@ export default function Spacing() {
         </DocsSection>
 
         <DocsSection anchorId="control-sizes" title="Control sizes">
-          <div className="site-panel" style={{ display: "flex", gap: 24 }}>
+          <div className="site-panel" style={{ display: "flex", gap: "var(--core-space-6)" }}>
             {controls.map((c) => (
               <div key={c.label} style={{ textAlign: "center" }}>
-                <div style={{ height: c.h, width: 120, background: "var(--core-color-action-primary-bg, #6952E2)", borderRadius: "var(--core-radius-sm)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: "var(--typography-body-md-size)", fontWeight: 600 }}>
+                <div style={{ height: c.h, width: 120, background: "var(--core-color-action-primary-bg, #6952E2)", borderRadius: "var(--core-radius-sm)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--core-color-text-inverse)", fontSize: "var(--typography-body-md-size)", fontWeight: "var(--typography-font-weight-semibold)" }}>
                   {c.label}
                 </div>
-                <div style={{ marginTop: 8, fontSize: 12, color: "var(--site-text-faint)", fontFamily: "var(--site-mono)" }}>height {c.h} · padding {c.pad} · text {c.font}</div>
+                <div style={{ marginTop: "var(--core-space-2)", fontSize: "var(--core-font-size-xs)", color: "var(--site-text-faint)", fontFamily: "var(--site-mono)" }}>height {c.h} · padding {c.pad} · text {c.font}</div>
               </div>
             ))}
           </div>

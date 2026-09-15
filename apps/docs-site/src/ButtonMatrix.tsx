@@ -263,7 +263,7 @@ export function ButtonMatrix() {
       (useDarkPrimary50Text ? "--theme-primitive-color-primary-50" : tok.textVar);
     const textFallback =
       tertiaryDarkText?.textFallback ??
-      (useDarkPrimary50Text ? "#F5F7FA" : tok.textFallback);
+      (useDarkPrimary50Text ? "var(--core-color-brand-50)" : tok.textFallback);
     const textVal = textVar.startsWith("--") ? `var(${textVar}, ${textFallback})` : textFallback;
     const borderVal = tok.borderVar && tok.borderVar !== "transparent" ? `var(${tok.borderVar}, ${tok.borderFallback || "transparent"})` : "transparent";
 
@@ -306,11 +306,11 @@ export function ButtonMatrix() {
           flexWrap: "wrap",
           alignItems: "center",
           justifyContent: "space-between",
-          gap: 16,
-          background: "var(--site-bg-elevated, #FFFFFF)",
+          gap: "var(--core-space-4)",
+          background: "var(--site-bg-elevated)",
           border: "1px solid var(--site-border)",
-          borderRadius: 14,
-          padding: "14px 20px",
+          borderRadius: "var(--core-radius-lg)",
+          padding: "var(--core-space-4) var(--core-space-5)",
           marginBottom: 18,
           boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
         }}
@@ -320,7 +320,7 @@ export function ButtonMatrix() {
           <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--theme-neutral-text-subtle)" }}>
             Size:
           </span>
-          <div style={{ display: "inline-flex", background: "var(--site-bg)", borderRadius: 8, padding: 3, border: "1px solid var(--site-border)" }}>
+          <div style={{ display: "inline-flex", background: "var(--site-bg)", borderRadius: "var(--core-radius-sm)", padding: "var(--core-space-1)", border: "1px solid var(--site-border)" }}>
             {(["sm", "md", "lg"] as const).map((s) => (
               <button
                 key={s}
@@ -331,8 +331,8 @@ export function ButtonMatrix() {
                   background: size === s ? "var(--theme-brand-background-primary-strong)" : "transparent",
                   color: size === s ? "var(--brand-text-primary-oncolor)" : "var(--site-text)",
                   borderRadius: "var(--core-radius-sm)",
-                  padding: "4px 12px",
-                  fontSize: 12,
+                  padding: "var(--core-space-1) var(--core-space-3)",
+                  fontSize: "var(--core-font-size-xs)",
                   fontWeight: 600,
                   cursor: "pointer",
                   transition: "all 120ms ease",
@@ -345,7 +345,7 @@ export function ButtonMatrix() {
         </div>
 
         {/* Canvas Theme Toggle Switch (Right Side) */}
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "var(--core-space-3)" }}>
           <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: canvasBg === "light" ? "var(--site-text)" : "var(--theme-neutral-text-subtle)", transition: "color 0.3s ease" }}>
             Light
           </span>
@@ -355,7 +355,7 @@ export function ButtonMatrix() {
               width: 44,
               height: 24,
               background: canvasBg === "dark" ? "var(--theme-brand-background-primary-strong)" : "var(--theme-neutral-border-strong)",
-              borderRadius: 12,
+              borderRadius: "var(--core-radius-lg)",
               position: "relative",
               cursor: "pointer",
               transition: "background 0.3s ease",
@@ -389,10 +389,10 @@ export function ButtonMatrix() {
             bottom: 24,
             right: 24,
             background: "var(--theme-semantics-success-strong-background)",
-            color: "#FFFFFF",
-            padding: "10px 20px",
-            borderRadius: 8,
-            fontSize: 12,
+            color: "var(--core-color-text-inverse)",
+            padding: "var(--core-space-3) var(--core-space-5)",
+            borderRadius: "var(--core-radius-sm)",
+            fontSize: "var(--core-font-size-xs)",
             fontWeight: 600,
             boxShadow: "0 8px 24px rgba(0,0,0,0.25)",
             zIndex: 9999,
@@ -407,10 +407,10 @@ export function ButtonMatrix() {
         data-theme="core"
         data-mode={canvasBg}
         style={{
-          background: canvasBg === "light" ? "#FFFFFF" : "#111017",
-          color: canvasBg === "light" ? "#1D1C24" : "#F4F4F6",
-          borderRadius: 16,
-          padding: "36px 32px",
+          background: canvasBg === "light" ? "var(--core-color-neutral-0)" : "var(--core-color-neutral-950)",
+          color: canvasBg === "light" ? "var(--core-color-neutral-900)" : "var(--core-color-neutral-50)",
+          borderRadius: "var(--core-radius-xl)",
+          padding: "var(--core-space-10) var(--core-space-8)",
           boxShadow: "0 4px 20px rgba(0,0,0,0.06)",
           border: "1px solid var(--site-border)",
           overflowX: "auto",
@@ -437,7 +437,7 @@ export function ButtonMatrix() {
               >
                 <div
                   style={{
-                    fontSize: 17,
+                    fontSize: "var(--core-font-size-md)",
                     fontWeight: 700,
                     letterSpacing: "-0.01em",
                     textTransform: "capitalize",
@@ -464,7 +464,7 @@ export function ButtonMatrix() {
                     >
                       <span
                         style={{
-                          color: "var(--site-text-dim, #787887)",
+                          color: "var(--site-text-dim)",
                           fontSize: "var(--typography-font-size-xs)",
                           fontWeight: 700,
                           textTransform: "uppercase",

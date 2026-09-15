@@ -52,7 +52,7 @@ export default function OverlaysPage({ embedded = false }: { embedded?: boolean 
             />
           }
         >
-          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-4)" }}>
             <Field label="Recipient name">{(p) => <Input {...p} placeholder="e.g. Taylor Hale" />}</Field>
             <Field label="Distribution mode">{(p) => <Select {...p} options={[{ value: "", label: "Select" }, { value: "lump", label: "Lump sum" }, { value: "installments", label: "Installments" }]} />}</Field>
             <Field label="Withdrawal amount">{(p) => <Input {...p} placeholder="$0.00" />}</Field>
@@ -70,7 +70,7 @@ export default function OverlaysPage({ embedded = false }: { embedded?: boolean 
         </div>
         <div className="site-panel site-panel--flush">
           <Preview>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14 }}>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: "var(--core-space-2)", fontSize: "var(--core-font-size-sm)" }}>
               Vested balance
               <Tooltip label="The portion of employer contributions you keep if you leave today.">
                 <IconButton variant="tertiary" size="sm" shape="circle" aria-label="What is vested balance?">
@@ -78,7 +78,7 @@ export default function OverlaysPage({ embedded = false }: { embedded?: boolean 
                 </IconButton>
               </Tooltip>
             </span>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 14 }}>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: "var(--core-space-2)", fontSize: "var(--core-font-size-sm)" }}>
               Federal tax withholding
               <Tooltip label="20% is the IRS-mandated minimum for most retirement plan distributions.">
                 <IconButton variant="tertiary" size="sm" shape="circle" aria-label="What is federal tax withholding?">

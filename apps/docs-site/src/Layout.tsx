@@ -181,6 +181,12 @@ export default function Layout() {
   const scrollHash = useScrollSpy(location.pathname, spyHashes, location.hash);
   const onPageNav = pageSections[location.pathname] ?? [];
 
+  // AA compliance: update document title on route change for screen readers
+  useEffect(() => {
+    const page = pages.find((p) => p.path === location.pathname);
+    document.title = page ? `${page.label} — CORE Design System` : "CORE Design System";
+  }, [location.pathname]);
+
   // Scroll sidebar only when the user clicks a link — not on every scroll-spy tick.
   useEffect(() => {
     if (!location.hash) return;
@@ -207,8 +213,9 @@ export default function Layout() {
     // ([data-site-mode] on <html>, driven by useSiteMode() below) — that's a
     // separate --site-* variable system for the docs UI itself.
     <div className="site-shell" data-theme="core" data-mode="light">
-      <aside className="site-sidebar" ref={sidebarRef}>
-        <div className="site-logo" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: 6, padding: "8px 12px 20px" }}>
+      <a href="#main-content" className="skip-nav">Skip to main content</a>
+      <nav className="site-sidebar" aria-label="Main navigation" ref={sidebarRef}>
+        <div className="site-logo" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "var(--core-space-2)", padding: "var(--core-space-2) var(--core-space-3) var(--core-space-5)" }}>
           <CoreLogo size={22} />
           <span style={{ fontSize: "var(--typography-font-size-xs)", fontWeight: 700, color: "var(--site-text-dim)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
             Participant Portal
@@ -216,7 +223,7 @@ export default function Layout() {
         </div>
         {nav.map((g) => (
           <div className="site-nav-group" key={g.group}>
-            <div className="site-nav-title">{g.group}</div>
+            <div className="site-nav-title" role="heading" aria-level={2}>{g.group}</div>
             {g.links.map((l, i) => (
               <Link
                 key={l.to}
@@ -226,6 +233,7 @@ export default function Layout() {
                   (i > 0 && g.group === "Component" ? " site-nav-link--sub" : "") +
                   (isNavLinkActive(l.to, location.pathname, location.hash, scrollHash) ? " active" : "")
                 }
+                aria-current={isNavLinkActive(l.to, location.pathname, location.hash, scrollHash) ? "page" : undefined}
               >
                 {l.label}
               </Link>
@@ -243,18 +251,19 @@ export default function Layout() {
                   "site-nav-link site-nav-link--sub" +
                   ((scrollHash || location.hash) === s.hash ? " active" : "")
                 }
+                aria-current={(scrollHash || location.hash) === s.hash ? "true" : undefined}
               >
                 {s.label}
               </Link>
             ))}
           </div>
         )}
-      </aside>
-      <div className="site-main" style={location.pathname === "/" || location.pathname === "/components" ? { backgroundColor: "#FFFFFF" } : undefined}>
-        <div className="site-content" style={location.pathname === "/" || location.pathname === "/components" ? { maxWidth: "100%", padding: 0, backgroundColor: "#FFFFFF" } : undefined}>
+      </nav>
+      <main id="main-content" className="site-main" style={location.pathname === "/" || location.pathname === "/components" ? { backgroundColor: "var(--core-color-neutral-0)" } : undefined}>
+        <div className="site-content" style={location.pathname === "/" || location.pathname === "/components" ? { maxWidth: "100%", padding: 0, backgroundColor: "var(--core-color-neutral-0)" } : undefined}>
           <Outlet />
         </div>
-        <footer className="site-footer" style={location.pathname === "/" || location.pathname === "/components" ? { backgroundColor: "#FFFFFF", borderColor: "#E5E7EB" } : undefined}>
+        <footer className="site-footer" style={location.pathname === "/" || location.pathname === "/components" ? { backgroundColor: "var(--core-color-neutral-0)", borderColor: "var(--core-color-neutral-200)" } : undefined}>
           <div className="site-footer-inner">
             <div className="site-footer-left">
               <CoreLogo size={16} />
@@ -267,7 +276,7 @@ export default function Layout() {
             </div>
           </div>
         </footer>
-      </div>
+      </main>
     </div>
   );
 }

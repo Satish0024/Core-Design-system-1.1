@@ -21,13 +21,13 @@ export default function Motion() {
       <DocsSectionList>
         <DocsSection anchorId="durations" title="Durations">
           <div className="site-panel">
-            <button className="btn-hero ghost" style={{ marginBottom: 20, cursor: "pointer" }} onClick={() => setPlay((p) => p + 1)}>
+            <button className="btn-hero ghost" style={{ marginBottom: "var(--core-space-5)", cursor: "pointer" }} onClick={() => setPlay((p) => p + 1)}>
               ▶ Replay
             </button>
             {durations.map((d) => (
-              <div key={d.name} style={{ display: "flex", alignItems: "center", gap: 16, padding: "10px 0", borderBottom: "1px solid var(--site-border)" }}>
-                <div style={{ width: 90, fontFamily: "var(--site-mono)", fontSize: 12 }}>{d.name} · {d.ms}ms</div>
-                <div style={{ width: 200, height: 8, background: "var(--site-bg-hover)", borderRadius: 4, position: "relative", overflow: "hidden" }}>
+              <div key={d.name} style={{ display: "flex", alignItems: "center", gap: "var(--core-space-4)", padding: "var(--core-space-3) 0", borderBottom: "1px solid var(--site-border)" }}>
+                <div style={{ width: 90, fontFamily: "var(--site-mono)", fontSize: "var(--core-font-size-xs)" }}>{d.name} · {d.ms}ms</div>
+                <div style={{ width: 200, height: 8, background: "var(--site-bg-hover)", borderRadius: "var(--core-radius-xs)", position: "relative", overflow: "hidden" }}>
                   <div
                     key={play}
                     style={{

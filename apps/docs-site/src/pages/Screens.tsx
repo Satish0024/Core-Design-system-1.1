@@ -64,8 +64,8 @@ export default function Screens() {
       <DocsSection anchorId="login" title="Login">
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", overflowX: "auto" }}>
           <Grid columns={2} gap="4" style={{ width: 720, minHeight: 380, borderRadius: "var(--core-card-radius)", overflow: "hidden", border: "1px solid var(--core-color-border-subtle)" }}>
-            <div style={{ background: "var(--core-color-brand-600, var(--core-card-bg))", color: "white", display: "flex", flexDirection: "column", justifyContent: "center", padding: "var(--core-space-8)", gridColumn: "span 1" }}>
-              <div style={{ fontWeight: 700, fontSize: "var(--core-font-size-xl)", marginBottom: "var(--core-space-3)" }}>Meridian</div>
+            <div style={{ background: "var(--core-color-brand-600, var(--core-card-bg))", color: "var(--core-color-text-inverse)", display: "flex", flexDirection: "column", justifyContent: "center", padding: "var(--core-space-8)", gridColumn: "span 1" }}>
+              <div style={{ fontWeight: "var(--typography-font-weight-bold)", fontSize: "var(--core-font-size-xl)", marginBottom: "var(--core-space-3)" }}>Meridian</div>
               <h2 style={{ fontSize: "var(--core-font-size-lg)", margin: 0 }}>Your retirement, on track.</h2>
               <p style={{ opacity: 0.85, fontSize: "var(--core-font-size-sm)" }}>Sign in to review your plans, contributions, and investment performance.</p>
             </div>
@@ -91,18 +91,18 @@ export default function Screens() {
               sidebar={<AppSidebar items={NAV_ITEMS} variant="rail" />}
               footer={<ScreenFooter />}
             >
-              <div style={{ fontSize: "var(--core-font-size-lg)", fontWeight: 700, marginBottom: "var(--core-space-6)" }}>Hi Taylor 👋</div>
+              <div style={{ fontSize: "var(--core-font-size-lg)", fontWeight: "var(--typography-font-weight-bold)", marginBottom: "var(--core-space-6)" }}>Hi Taylor 👋</div>
               <Grid columns={12} gap="6">
                 <GridCol span={12} spanMd={8}>
                   <Card style={{ marginBottom: "var(--core-space-6)" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "var(--core-space-6)" }}>
                       <div>
                         <div style={{ fontSize: "var(--core-font-size-xs)", color: "var(--core-color-text-secondary)", marginBottom: "var(--core-space-2)", textTransform: "uppercase", letterSpacing: "0.04em" }}>Account balance</div>
-                        <div style={{ fontSize: "var(--core-font-size-xl)", fontWeight: 700 }}>$100,416.00</div>
+                        <div style={{ fontSize: "var(--core-font-size-xl)", fontWeight: "var(--typography-font-weight-bold)" }}>$100,416.00</div>
                       </div>
                       <div>
                         <div style={{ fontSize: "var(--core-font-size-xs)", color: "var(--core-color-text-secondary)", marginBottom: "var(--core-space-2)", textTransform: "uppercase", letterSpacing: "0.04em" }}>Vested balance</div>
-                        <div style={{ fontSize: "var(--core-font-size-xl)", fontWeight: 700 }}>$92,400.00</div>
+                        <div style={{ fontSize: "var(--core-font-size-xl)", fontWeight: "var(--typography-font-weight-bold)" }}>$92,400.00</div>
                       </div>
                       <Button variant="secondary" size="sm">View summary</Button>
                     </div>
@@ -110,35 +110,35 @@ export default function Screens() {
                       Outstanding loan balance <strong style={{ color: "var(--core-color-text-primary)" }}>$0,500.00</strong>
                     </div>
                   </Card>
-                  <div style={{ fontWeight: 700, fontSize: "var(--core-font-size-md)", marginBottom: "var(--core-space-4)" }}>My plans</div>
+                  <div style={{ fontWeight: "var(--typography-font-weight-bold)", fontSize: "var(--core-font-size-md)", marginBottom: "var(--core-space-4)" }}>My plans</div>
                   <Card style={{ marginBottom: "var(--core-space-6)" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "var(--core-space-4)" }}>
                       <div>
-                        <div style={{ fontWeight: 600 }}>Meridian 401(k) Plan <Badge tone="info" size="sm">Participating</Badge></div>
+                        <div style={{ fontWeight: "var(--typography-font-weight-semibold)" }}>Meridian 401(k) Plan <Badge tone="info" size="sm">Participating</Badge></div>
                         <div style={{ fontSize: "var(--core-font-size-xs)", color: "var(--core-color-text-secondary)", marginTop: "var(--core-space-1)" }}>401(K) · ID 134342</div>
                       </div>
                       <Badge tone="info" size="sm">Participating</Badge>
                     </div>
-                    <div style={{ background: "var(--core-color-bg-success-subtle, #e8f5e9)", borderRadius: "var(--core-radius-sm)", padding: "var(--core-space-3) var(--core-space-4)", marginBottom: "var(--core-space-4)", fontSize: "var(--core-font-size-sm)" }}>
-                      Congratulations! You are enrolled in this plan. <a href="#" style={{ fontWeight: 600 }}>View details</a>
+                    <div style={{ background: "var(--core-color-bg-success-subtle)", borderRadius: "var(--core-radius-sm)", padding: "var(--core-space-3) var(--core-space-4)", marginBottom: "var(--core-space-4)", fontSize: "var(--core-font-size-sm)" }}>
+                      Congratulations! You are enrolled in this plan. <a href="#" style={{ fontWeight: "var(--typography-font-weight-semibold)" }}>View details</a>
                     </div>
                     <Grid columns={2} gap="4">
                       <GridCol span={1}>
                         <Card variant="outlined">
                           <div style={{ fontSize: "var(--core-font-size-xs)", color: "var(--core-color-text-secondary)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "var(--core-space-1)" }}>Account Balance</div>
-                          <div style={{ fontWeight: 600, marginBottom: "var(--core-space-2)" }}>Account balance</div>
-                          <div style={{ fontSize: "var(--core-font-size-lg)", fontWeight: 700, color: "var(--core-color-brand-600, #3b47d6)" }}>$92,480.00</div>
+                          <div style={{ fontWeight: "var(--typography-font-weight-semibold)", marginBottom: "var(--core-space-2)" }}>Account balance</div>
+                          <div style={{ fontSize: "var(--core-font-size-lg)", fontWeight: "var(--typography-font-weight-bold)", color: "var(--core-color-brand-600)" }}>$92,480.00</div>
                         </Card>
                       </GridCol>
                       <GridCol span={1}>
                         <Card variant="outlined">
                           <div style={{ fontSize: "var(--core-font-size-xs)", color: "var(--core-color-text-secondary)", textTransform: "uppercase", letterSpacing: "0.04em", marginBottom: "var(--core-space-1)" }}>Vested Balance</div>
-                          <div style={{ fontSize: "var(--core-font-size-lg)", fontWeight: 700 }}>$29,300.00</div>
+                          <div style={{ fontSize: "var(--core-font-size-lg)", fontWeight: "var(--typography-font-weight-bold)" }}>$29,300.00</div>
                         </Card>
                       </GridCol>
                     </Grid>
                   </Card>
-                  <div style={{ fontWeight: 700, fontSize: "var(--core-font-size-md)", marginBottom: "var(--core-space-4)" }}>Quick links</div>
+                  <div style={{ fontWeight: "var(--typography-font-weight-bold)", fontSize: "var(--core-font-size-md)", marginBottom: "var(--core-space-4)" }}>Quick links</div>
                   <Grid columns={3} gap="4" style={{ marginBottom: "var(--core-space-6)" }}>
                     <GridCol span={1}><Card variant="outlined"><div style={{ display: "flex", alignItems: "center", gap: "var(--core-space-3)" }}><Icon name="fa-solid fa-user-plus" size="sm" /><span style={{ fontSize: "var(--core-font-size-sm)" }}>Add beneficiary</span></div></Card></GridCol>
                     <GridCol span={1}><Card variant="outlined"><div style={{ display: "flex", alignItems: "center", gap: "var(--core-space-3)" }}><Icon name="fa-solid fa-file-lines" size="sm" /><span style={{ fontSize: "var(--core-font-size-sm)" }}>My documents</span></div></Card></GridCol>
@@ -146,17 +146,17 @@ export default function Screens() {
                   </Grid>
                 </GridCol>
                 <GridCol span={12} spanMd={4}>
-                  <Card style={{ marginBottom: "var(--core-space-4)", background: "var(--core-color-brand-600, #2d3a8c)", color: "white", borderColor: "transparent" }}>
+                  <Card style={{ marginBottom: "var(--core-space-4)", background: "var(--core-color-brand-600)", color: "var(--core-color-text-inverse)", borderColor: "transparent" }}>
                     <div style={{ fontSize: "var(--core-font-size-xs)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "var(--core-space-2)", opacity: 0.85 }}>Retirement Readiness</div>
-                    <div style={{ fontWeight: 600, marginBottom: "var(--core-space-3)" }}>See how your inputs affect your savings, income, risk.</div>
+                    <div style={{ fontWeight: "var(--typography-font-weight-semibold)", marginBottom: "var(--core-space-3)" }}>See how your inputs affect your savings, income, risk.</div>
                   </Card>
                   <Card style={{ marginBottom: "var(--core-space-4)" }}>
-                    <div style={{ fontWeight: 600, marginBottom: "var(--core-space-2)" }}>Retirement Readiness</div>
+                    <div style={{ fontWeight: "var(--typography-font-weight-semibold)", marginBottom: "var(--core-space-2)" }}>Retirement Readiness</div>
                     <Progress value={72} label="72% on track" />
                   </Card>
                   <Card style={{ marginBottom: "var(--core-space-4)" }}>
                     <div style={{ fontSize: "var(--core-font-size-xs)", textTransform: "uppercase", letterSpacing: "0.06em", color: "var(--core-color-text-secondary)", marginBottom: "var(--core-space-2)" }}>Learning</div>
-                    <div style={{ fontWeight: 600, marginBottom: "var(--core-space-2)" }}>Financial Wellness</div>
+                    <div style={{ fontWeight: "var(--typography-font-weight-semibold)", marginBottom: "var(--core-space-2)" }}>Financial Wellness</div>
                     <div style={{ fontSize: "var(--core-font-size-sm)", color: "var(--core-color-text-secondary)" }}>Learn about planning, saving lessons.</div>
                   </Card>
                 </GridCol>
@@ -237,13 +237,13 @@ export default function Screens() {
       <div className="site-panel" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", overflowX: "auto" }}>
         <div style={{ width: 860, position: "relative" }}>
             <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} variant="rail" />} footer={<ScreenFooter />}>
-              <div style={{ fontSize: "var(--core-font-size-lg)", fontWeight: 700, marginBottom: "var(--core-space-4)" }}>Hi Taylor 👋</div>
+              <div style={{ fontSize: "var(--core-font-size-lg)", fontWeight: "var(--typography-font-weight-bold)", marginBottom: "var(--core-space-4)" }}>Hi Taylor 👋</div>
               <Button onClick={() => setDrawerOpen(true)}>Open "Add Allocation"</Button>
             </AppShell>
             <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.35)", pointerEvents: "none" }} />
             <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: 320, background: "var(--core-card-bg)", boxShadow: "var(--core-elevation-4)", padding: "var(--core-space-6)" }}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "var(--core-space-4)" }}>
-                <div style={{ fontWeight: 600, fontSize: "var(--core-font-size-lg)" }}>Add Allocation</div>
+                <div style={{ fontWeight: "var(--typography-font-weight-semibold)", fontSize: "var(--core-font-size-lg)" }}>Add Allocation</div>
                 <IconButton variant="tertiary" size="sm" shape="circle" aria-label="Close"><Icon name="fa-solid fa-xmark" size="sm" /></IconButton>
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-4)" }}>
@@ -272,7 +272,7 @@ export default function Screens() {
             <AppShell header={<ScreenHeader userName="Taylor Hale" />} sidebar={<AppSidebar items={NAV_ITEMS} variant="rail" />} footer={<ScreenFooter />}>
               <Card>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "var(--core-space-6)" }}>
-                  <div style={{ fontWeight: 700, fontSize: "var(--core-font-size-lg)" }}>My Profile</div>
+                  <div style={{ fontWeight: "var(--typography-font-weight-bold)", fontSize: "var(--core-font-size-lg)" }}>My Profile</div>
                   <Button>Update contribution</Button>
                 </div>
                 <div style={{ display: "flex", gap: "var(--core-space-2)", flexWrap: "wrap" }}>

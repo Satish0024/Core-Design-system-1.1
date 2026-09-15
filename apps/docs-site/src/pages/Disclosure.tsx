@@ -35,27 +35,27 @@ function AccordionVariantsDemo() {
   ];
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-4)" }}>
       {/* Variant Switcher Toolbar */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
-          gap: 12,
-          background: "var(--site-bg-elevated, #FFFFFF)",
+          gap: "var(--core-space-3)",
+          background: "var(--site-bg-elevated)",
           border: "1px solid var(--site-border)",
-          borderRadius: 12,
-          padding: "12px 18px",
+          borderRadius: "var(--core-radius-lg)",
+          padding: "var(--core-space-3) var(--core-space-5)",
           boxShadow: "0 1px 4px rgba(0,0,0,0.03)",
         }}
       >
         <span
           style={{
             fontSize: "var(--typography-font-size-xs)",
-            fontWeight: 700,
+            fontWeight: "var(--typography-font-weight-bold)",
             textTransform: "uppercase",
             letterSpacing: "0.08em",
-            color: "var(--site-text-dim, #787887)",
+            color: "var(--site-text-dim)",
           }}
         >
           Style:
@@ -64,8 +64,8 @@ function AccordionVariantsDemo() {
           style={{
             display: "inline-flex",
             background: "var(--site-bg, rgba(128,128,128,0.08))",
-            borderRadius: 8,
-            padding: 3,
+            borderRadius: "var(--core-radius-sm)",
+            padding: "var(--core-space-1)",
             border: "1px solid var(--site-border)",
           }}
         >
@@ -81,9 +81,9 @@ function AccordionVariantsDemo() {
                   background: variant === v ? "var(--theme-brand-background-primary-strong)" : "transparent",
                   color: variant === v ? "var(--brand-text-primary-oncolor)" : "var(--site-text)",
                   borderRadius: "var(--core-radius-sm)",
-                  padding: "5px 14px",
+                  padding: "var(--core-space-1) var(--core-space-4)",
                   fontSize: "var(--typography-font-size-xs)",
-                  fontWeight: 600,
+                  fontWeight: "var(--typography-font-weight-semibold)",
                   cursor: "pointer",
                   transition: "all 120ms ease",
                 }}
@@ -105,7 +105,7 @@ function AccordionVariantsDemo() {
             background: "var(--core-color-bg-page)",
             flexDirection: "column",
             alignItems: "stretch",
-            padding: "24px 28px",
+            padding: "var(--core-space-6) var(--core-space-8)",
           }}
         >
           <div style={{ maxWidth: 640, margin: "0 auto", width: "100%" }}>
@@ -136,7 +136,7 @@ export default function DisclosurePage({ embedded = false }: { embedded?: boolea
       anchorId: "separator",
       title: "Separator",
       content: (
-        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-5)" }}>
           <div className="site-panel site-panel--flush">
             <div
               className="preview-surface"
@@ -146,35 +146,35 @@ export default function DisclosurePage({ embedded = false }: { embedded?: boolea
                 background: "var(--core-color-bg-page)",
                 flexDirection: "column",
                 alignItems: "stretch",
-                gap: 16,
-                padding: "24px 28px",
+                gap: "var(--core-space-4)",
+                padding: "var(--core-space-6) var(--core-space-8)",
               }}
             >
               <div
                 style={{
-                  background: "var(--core-color-surface-raised, #FFFFFF)",
+                  background: "var(--core-color-surface-raised)",
                   border: "1px solid var(--core-color-border-default)",
-                  borderRadius: 8,
-                  padding: "18px 20px",
+                  borderRadius: "var(--core-radius-sm)",
+                  padding: "var(--core-space-5)",
                   display: "flex",
                   flexDirection: "column",
-                  gap: 12,
+                  gap: "var(--core-space-3)",
                 }}
               >
                 <div>
-                  <div style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 600, color: "var(--core-color-text-primary)" }}>
+                  <div style={{ fontSize: "var(--typography-body-md-size)", fontWeight: "var(--typography-font-weight-semibold)", color: "var(--core-color-text-primary)" }}>
                     Plan Overview
                   </div>
-                  <div style={{ fontSize: "var(--typography-body-md-size)", color: "var(--core-color-text-secondary)", marginTop: 4 }}>
+                  <div style={{ fontSize: "var(--typography-body-md-size)", color: "var(--core-color-text-secondary)", marginTop: "var(--core-space-1)" }}>
                     Primary account balance and portfolio asset allocations across equities and fixed income.
                   </div>
                 </div>
                 <Separator />
                 <div>
-                  <div style={{ fontSize: "var(--typography-body-md-size)", fontWeight: 600, color: "var(--core-color-text-primary)" }}>
+                  <div style={{ fontSize: "var(--typography-body-md-size)", fontWeight: "var(--typography-font-weight-semibold)", color: "var(--core-color-text-primary)" }}>
                     Contribution History
                   </div>
-                  <div style={{ fontSize: "var(--typography-body-md-size)", color: "var(--core-color-text-secondary)", marginTop: 4 }}>
+                  <div style={{ fontSize: "var(--typography-body-md-size)", color: "var(--core-color-text-secondary)", marginTop: "var(--core-space-1)" }}>
                     Recent bi-weekly payroll deferrals and employer matching contributions.
                   </div>
                 </div>
@@ -189,30 +189,30 @@ export default function DisclosurePage({ embedded = false }: { embedded?: boolea
       anchorId: "skeleton",
       title: "Skeleton",
       content: (
-        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-5)" }}>
           <div className="site-panel site-panel--flush">
             <Preview>
               <div
                 style={{
-                  background: "var(--core-color-surface-raised, #FFFFFF)",
+                  background: "var(--core-color-surface-raised)",
                   border: "1px solid var(--core-color-border-default)",
-                  borderRadius: 8,
-                  padding: 24,
+                  borderRadius: "var(--core-radius-sm)",
+                  padding: "var(--core-space-6)",
                   width: 340,
                   display: "flex",
                   flexDirection: "column",
-                  gap: 16,
+                  gap: "var(--core-space-4)",
                   boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "var(--core-space-4)" }}>
                   <Skeleton width={44} height={44} radius="50%" />
-                  <div style={{ display: "flex", flexDirection: "column", gap: 6, flex: 1 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-2)", flex: 1 }}>
                     <Skeleton height={14} width="70%" />
                     <Skeleton height={12} width="45%" />
                   </div>
                 </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-2)" }}>
                   <Skeleton height={14} width="95%" />
                   <Skeleton height={14} width="85%" />
                   <Skeleton height={14} width="60%" />
@@ -239,10 +239,10 @@ export default function DisclosurePage({ embedded = false }: { embedded?: boolea
   if (embedded) return sectionList;
 
   return (
-    <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
-      <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
-        <h1 style={{ fontSize: 72, fontWeight: 700, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>Disclosure</h1>
-        <p style={{ maxWidth: 580, margin: "0 auto", color: "var(--core-color-text-tertiary)", fontSize: "var(--core-font-size-lg, 20px)", lineHeight: 1.6, fontWeight: 400 }}>
+    <div style={{ maxWidth: 1024, margin: "0 auto", padding: "var(--core-space-5)" }}>
+      <div style={{ textAlign: "center", marginBottom: "var(--core-space-16)", marginTop: "var(--core-space-10)" }}>
+        <h1 style={{ fontSize: 72 /* no token above 48px */, fontWeight: "var(--typography-font-weight-bold)", letterSpacing: "-0.06em", margin: "0 0 var(--core-space-4) 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>Disclosure</h1>
+        <p style={{ maxWidth: 580, margin: "0 auto", color: "var(--core-color-text-tertiary)", fontSize: "var(--core-font-size-lg)", lineHeight: 1.6, fontWeight: 400 }}>
           Progressive disclosure with accordions, separators, and loading skeleton placeholders.
         </p>
       </div>

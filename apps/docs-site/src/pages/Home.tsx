@@ -8,7 +8,7 @@ const sections = [
     anchorId: "whats-in-this-site",
     title: "What's in this site",
     content: (
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "var(--core-space-4)" }}>
         {[
           {
             label: "Foundation",
@@ -26,19 +26,19 @@ const sections = [
           <div
             key={item.label}
             style={{
-              borderRadius: 14,
+              borderRadius: "var(--core-radius-lg)",
               border: "1px solid var(--site-border)",
               background: "var(--core-color-surface-default)",
-              padding: "24px 28px",
+              padding: "var(--core-space-6) var(--core-space-8)",
               display: "flex",
               flexDirection: "column",
-              gap: 12,
+              gap: "var(--core-space-3)",
             }}
           >
             <div
               style={{
-                fontSize: 12,
-                fontWeight: 700,
+                fontSize: "var(--core-font-size-xs)",
+                fontWeight: "var(--typography-font-weight-bold)",
                 letterSpacing: "0.06em",
                 textTransform: "uppercase",
                 color: "var(--core-color-brand-600)",
@@ -61,7 +61,7 @@ const sections = [
               to={item.to}
               style={{
                 fontSize: "var(--typography-body-md-size)",
-                fontWeight: 600,
+                fontWeight: "var(--typography-font-weight-semibold)",
                 color: "var(--theme-brand-text-primary-default)",
                 textDecoration: "none",
               }}
@@ -78,7 +78,7 @@ const sections = [
     anchorId: "foundation",
     title: "Foundation",
     content: (
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "var(--core-space-4)" }}>
         {[
           { title: "Logo", desc: "CORE mark usage rules and client white-label lockups.", to: "/foundations/logo" },
           { title: "Color", desc: "Semantic tokens, light/dark modes, and Figma variable mapping.", to: "/foundations/color" },
@@ -90,9 +90,9 @@ const sections = [
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: 8,
-              padding: "22px 24px",
-              borderRadius: 14,
+              gap: "var(--core-space-2)",
+              padding: "var(--core-space-5) var(--core-space-6)",
+              borderRadius: "var(--core-radius-lg)",
               border: "1px solid var(--site-border)",
               background: "var(--core-color-surface-default)",
               textDecoration: "none",
@@ -108,8 +108,8 @@ const sections = [
           >
             <span
               style={{
-                fontSize: 20,
-                fontWeight: 500,
+                fontSize: "var(--core-font-size-lg)",
+                fontWeight: "var(--typography-font-weight-medium)",
                 letterSpacing: "-0.02em",
                 color: "var(--core-color-text-primary)",
               }}
@@ -133,7 +133,7 @@ const sections = [
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
-          gap: 8,
+          gap: "var(--core-space-2)",
         }}
       >
         {componentLinks.map((link) => (
@@ -142,13 +142,13 @@ const sections = [
             to={link.to}
             style={{
               display: "block",
-              padding: "10px 14px",
-              borderRadius: 8,
+              padding: "var(--core-space-3) var(--core-space-4)",
+              borderRadius: "var(--core-radius-sm)",
               border: "1px solid var(--site-border)",
               background: "var(--core-color-surface-default)",
               textDecoration: "none",
               fontSize: "var(--typography-body-md-size)",
-              fontWeight: 500,
+              fontWeight: "var(--typography-font-weight-medium)",
               color: "var(--core-color-text-primary)",
               transition: "border-color 0.15s ease",
             }}
@@ -172,31 +172,31 @@ const sections = [
     content: (
       <div
         style={{
-          borderRadius: 14,
+          borderRadius: "var(--core-radius-lg)",
           border: "1px solid var(--site-border)",
           background: "var(--core-color-surface-hover)",
-          padding: "28px 32px",
+          padding: "var(--core-space-8)",
         }}
       >
-        <ol style={{ margin: 0, paddingLeft: 20, display: "flex", flexDirection: "column", gap: 14 }}>
+        <ol style={{ margin: 0, paddingLeft: "var(--core-space-5)", display: "flex", flexDirection: "column", gap: "var(--core-space-4)" }}>
           <li style={{ fontSize: "var(--typography-body-md-size)", lineHeight: 1.6, color: "var(--core-color-text-secondary)" }}>
             Review{" "}
-            <Link to="/foundations/color" style={{ color: "var(--theme-brand-text-primary-default)", fontWeight: 600, textDecoration: "none" }}>
+            <Link to="/foundations/color" style={{ color: "var(--theme-brand-text-primary-default)", fontWeight: "var(--typography-font-weight-semibold)", textDecoration: "none" }}>
               Color
             </Link>{" "}
             and{" "}
-            <Link to="/foundations/typography" style={{ color: "var(--theme-brand-text-primary-default)", fontWeight: 600, textDecoration: "none" }}>
+            <Link to="/foundations/typography" style={{ color: "var(--theme-brand-text-primary-default)", fontWeight: "var(--typography-font-weight-semibold)", textDecoration: "none" }}>
               Typography
             </Link>{" "}
             to understand tokens and naming.
           </li>
           <li style={{ fontSize: "var(--typography-body-md-size)", lineHeight: 1.6, color: "var(--core-color-text-secondary)" }}>
             Explore{" "}
-            <Link to="/components/actions" style={{ color: "var(--theme-brand-text-primary-default)", fontWeight: 600, textDecoration: "none" }}>
+            <Link to="/components/actions" style={{ color: "var(--theme-brand-text-primary-default)", fontWeight: "var(--typography-font-weight-semibold)", textDecoration: "none" }}>
               Actions
             </Link>{" "}
             and{" "}
-            <Link to="/components/forms" style={{ color: "var(--theme-brand-text-primary-default)", fontWeight: 600, textDecoration: "none" }}>
+            <Link to="/components/forms" style={{ color: "var(--theme-brand-text-primary-default)", fontWeight: "var(--typography-font-weight-semibold)", textDecoration: "none" }}>
               Forms
             </Link>{" "}
             for the most common UI patterns.
@@ -216,14 +216,14 @@ export default function Home() {
   }, []);
 
   return (
-    <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
-      <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
+    <div style={{ maxWidth: 1024, margin: "0 auto", padding: "var(--core-space-5)" }}>
+      <div style={{ textAlign: "center", marginBottom: "var(--core-space-16)", marginTop: "var(--core-space-10)" }}>
         <h1
           style={{
-            fontSize: 72,
-            fontWeight: 700,
+            fontSize: 72 /* no token above 48px */,
+            fontWeight: "var(--typography-font-weight-bold)",
             letterSpacing: "-0.06em",
-            margin: "0 0 16px 0",
+            margin: "0 0 var(--core-space-4) 0",
             color: "var(--core-color-text-primary)",
             lineHeight: 1.1,
           }}
@@ -235,7 +235,7 @@ export default function Home() {
             maxWidth: 560,
             margin: "0 auto",
             color: "var(--core-color-text-tertiary)",
-            fontSize: 18,
+            fontSize: "var(--core-font-size-lg)",
             lineHeight: 1.6,
             fontWeight: 400,
           }}
@@ -245,9 +245,9 @@ export default function Home() {
         </p>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 100 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-24)" }}>
         {sections.map((s) => (
-          <div key={s.id} id={s.anchorId} className="docs-section" style={{ display: "flex", flexDirection: "column", gap: 40, position: "relative" }}>
+          <div key={s.id} id={s.anchorId} className="docs-section" style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-10)", position: "relative" }}>
             <div
               style={{
                 position: "absolute",
@@ -258,21 +258,21 @@ export default function Home() {
                 backgroundColor: "var(--site-border)",
               }}
             />
-            <div style={{ paddingTop: 32 }}>
+            <div style={{ paddingTop: "var(--core-space-8)" }}>
               <div
                 style={{
-                  fontSize: 12,
-                  fontWeight: 600,
+                  fontSize: "var(--core-font-size-xs)",
+                  fontWeight: "var(--typography-font-weight-semibold)",
                   color: "var(--core-color-text-tertiary)",
-                  marginBottom: 12,
+                  marginBottom: "var(--core-space-3)",
                 }}
               >
                 {s.id}
               </div>
               <h2
                 style={{
-                  fontSize: 48,
-                  fontWeight: 500,
+                  fontSize: "var(--core-font-size-5xl)",
+                  fontWeight: "var(--typography-font-weight-medium)",
                   letterSpacing: "-0.04em",
                   margin: 0,
                   color: "var(--core-color-text-primary)",

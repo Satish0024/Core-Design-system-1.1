@@ -27,7 +27,7 @@ export default function Feedback({ embedded = false }: { embedded?: boolean }) {
               background: "var(--core-color-bg-page)",
               flexDirection: "column",
               alignItems: "stretch",
-              gap: 12,
+              gap: "var(--core-space-3)",
             }}
           >
             {!dismissed.has("success") && (
@@ -154,7 +154,7 @@ export default function Feedback({ embedded = false }: { embedded?: boolean }) {
         <div className="site-panel site-panel--flush">
           <Preview>
             <Spinner />
-            <span style={{ fontSize: 14, color: "var(--core-color-text-secondary)" }}>Saving your changes…</span>
+            <span style={{ fontSize: "var(--core-font-size-sm)", color: "var(--core-color-text-secondary)" }}>Saving your changes…</span>
           </Preview>
         </div>
       ),
@@ -174,10 +174,10 @@ export default function Feedback({ embedded = false }: { embedded?: boolean }) {
   if (embedded) return sectionList;
 
   return (
-    <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
-      <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
-        <h1 style={{ fontSize: 72, fontWeight: 700, letterSpacing: "-0.06em", margin: "0 0 16px 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>Feedback</h1>
-        <p style={{ maxWidth: 580, margin: "0 auto", color: "var(--core-color-text-tertiary)", fontSize: 18, lineHeight: 1.6, fontWeight: 400 }}>
+    <div style={{ maxWidth: 1024, margin: "0 auto", padding: "var(--core-space-5)" }}>
+      <div style={{ textAlign: "center", marginBottom: "var(--core-space-16)", marginTop: "var(--core-space-10)" }}>
+        <h1 style={{ fontSize: 72 /* no token above 48px */, fontWeight: "var(--typography-font-weight-bold)", letterSpacing: "-0.06em", margin: "0 0 var(--core-space-4) 0", color: "var(--core-color-text-primary)", lineHeight: 1.1 }}>Feedback</h1>
+        <p style={{ maxWidth: 580, margin: "0 auto", color: "var(--core-color-text-tertiary)", fontSize: "var(--core-font-size-lg)", lineHeight: 1.6, fontWeight: 400 }}>
           Alerts, transient toasts, empty states, and activity spinners for user reassurance and operational statuses.
         </p>
       </div>

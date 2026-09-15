@@ -73,9 +73,9 @@ const STATUS_LABEL: Record<Status, string> = {
   content: "Content responsibility",
 };
 const STATUS_COLOR: Record<Status, string> = {
-  component: "#4ADE9C",
-  product: "#E8B563",
-  content: "#8F93AA",
+  component: "var(--core-color-success-400)",
+  product: "var(--core-color-warning-300)",
+  content: "var(--core-color-neutral-400)",
 };
 
 const PRINCIPLES: Array<{ name: string; range: string }> = [
@@ -121,7 +121,7 @@ export default function Accessibility() {
                     <td>{c.name}</td>
                     <td>{c.level}</td>
                     <td>
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12 }}>
+                      <span style={{ display: "inline-flex", alignItems: "center", gap: "var(--core-space-2)", fontSize: "var(--core-font-size-xs)" }}>
                         <span style={{ width: 8, height: 8, borderRadius: "50%", background: STATUS_COLOR[c.status], display: "inline-block" }} />
                         {STATUS_LABEL[c.status]}
                       </span>
@@ -151,13 +151,13 @@ export default function Accessibility() {
 
       <h2 className="site-section-title">Screen reader &amp; NVDA</h2>
       <div className="site-panel">
-        <p style={{ margin: "0 0 12px", fontSize: 14, color: "var(--site-text-dim)", lineHeight: 1.7 }}>
+        <p style={{ margin: "0 0 var(--core-space-3)", fontSize: "var(--core-font-size-sm)", color: "var(--site-text-dim)", lineHeight: 1.7 }}>
           Current state: component ARIA/roles are correct by construction (verified via code review and the
           Accessibility notes on each component page), but <strong style={{ color: "var(--site-text)" }}>no
           real NVDA/VoiceOver pass has been run against the live site yet</strong> — that's tracked as an open
           item, not claimed as done. A real screen-reader pass should specifically verify:
         </p>
-        <ul style={{ margin: 0, paddingLeft: 18, color: "var(--site-text-dim)", lineHeight: 1.8, fontSize: 14 }}>
+        <ul style={{ margin: 0, paddingLeft: "var(--core-space-5)", color: "var(--site-text-dim)", lineHeight: 1.8, fontSize: "var(--core-font-size-sm)" }}>
           <li>Form errors are announced immediately on submit, not just visually shown.</li>
           <li>Modal/Drawer opening is announced and focus lands on the right element.</li>
           <li>Toast notifications are announced without stealing focus from the current task.</li>
@@ -168,7 +168,7 @@ export default function Accessibility() {
 
       <h2 className="site-section-title">Layout &amp; breakpoints</h2>
       <div className="site-panel">
-        <p style={{ margin: 0, fontSize: 14, color: "var(--site-text-dim)", lineHeight: 1.7 }}>
+        <p style={{ margin: 0, fontSize: "var(--core-font-size-sm)", color: "var(--site-text-dim)", lineHeight: 1.7 }}>
           Bootstrap breakpoints are the foundation (per scope §14): <code>sm</code> 576px, <code>md</code> 768px,
           <code>lg</code> 992px, <code>xl</code> 1200px. Grids in this site collapse to 1 column under 700px;
           Table/DataTable scroll horizontally rather than reflow. <strong style={{ color: "var(--site-text)" }}>

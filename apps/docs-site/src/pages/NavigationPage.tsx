@@ -209,9 +209,9 @@ export default function NavigationPage({ embedded = false }: { embedded?: boolea
           <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch" }}>
             <Tabs
               items={[
-                { id: "overview", label: "Overview", content: <p style={{ fontSize: 14, color: "var(--core-color-text-secondary)" }}>Account overview content.</p> },
-                { id: "transactions", label: "Transactions", content: <p style={{ fontSize: 14, color: "var(--core-color-text-secondary)" }}>Transaction history content.</p> },
-                { id: "documents", label: "Documents", content: <p style={{ fontSize: 14, color: "var(--core-color-text-secondary)" }}>Statements & tax forms content.</p> },
+                { id: "overview", label: "Overview", content: <p style={{ fontSize: "var(--core-font-size-sm)", color: "var(--core-color-text-secondary)" }}>Account overview content.</p> },
+                { id: "transactions", label: "Transactions", content: <p style={{ fontSize: "var(--core-font-size-sm)", color: "var(--core-color-text-secondary)" }}>Transaction history content.</p> },
+                { id: "documents", label: "Documents", content: <p style={{ fontSize: "var(--core-font-size-sm)", color: "var(--core-color-text-secondary)" }}>Statements & tax forms content.</p> },
               ]}
             />
           </div>
@@ -221,10 +221,10 @@ export default function NavigationPage({ embedded = false }: { embedded?: boolea
             <Tabs
               orientation="vertical"
               items={[
-                { id: "personal", label: "Personal Details", content: <p style={{ fontSize: 14, color: "var(--core-color-text-secondary)", margin: 0 }}>Personal details content.</p> },
-                { id: "bank", label: "Bank Details", content: <p style={{ fontSize: 14, color: "var(--core-color-text-secondary)", margin: 0 }}>Bank details content.</p> },
-                { id: "employment", label: "Employment Information", content: <p style={{ fontSize: 14, color: "var(--core-color-text-secondary)", margin: 0 }}>Employment info content.</p> },
-                { id: "beneficiary", label: "Beneficiary Details", content: <p style={{ fontSize: 14, color: "var(--core-color-text-secondary)", margin: 0 }}>Beneficiary details content.</p> },
+                { id: "personal", label: "Personal Details", content: <p style={{ fontSize: "var(--core-font-size-sm)", color: "var(--core-color-text-secondary)", margin: 0 }}>Personal details content.</p> },
+                { id: "bank", label: "Bank Details", content: <p style={{ fontSize: "var(--core-font-size-sm)", color: "var(--core-color-text-secondary)", margin: 0 }}>Bank details content.</p> },
+                { id: "employment", label: "Employment Information", content: <p style={{ fontSize: "var(--core-font-size-sm)", color: "var(--core-color-text-secondary)", margin: 0 }}>Employment info content.</p> },
+                { id: "beneficiary", label: "Beneficiary Details", content: <p style={{ fontSize: "var(--core-font-size-sm)", color: "var(--core-color-text-secondary)", margin: 0 }}>Beneficiary details content.</p> },
               ]}
             />
           </div>
@@ -238,7 +238,7 @@ export default function NavigationPage({ embedded = false }: { embedded?: boolea
           </Preview>
         </div>
         <div className="site-panel site-panel--flush">
-          <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch", gap: 10 }}>
+          <div className="preview-surface" data-theme="core" data-mode="light" style={{ background: "var(--core-color-bg-page)", flexDirection: "column", alignItems: "stretch", gap: "var(--core-space-3)" }}>
             {(["slash", "line", "dot", "none"] as const).map((sep) => (
               <Breadcrumb key={sep} separator={sep} items={[{ label: "Home", href: "#" }, { label: "Accounts", href: "#" }, { label: "Transactions" }]} />
             ))}

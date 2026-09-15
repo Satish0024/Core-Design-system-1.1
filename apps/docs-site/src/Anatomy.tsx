@@ -19,7 +19,7 @@ export interface AnatomyRect {
 
 export function Anatomy({ children, points = [], rects = [], height = 120 }: { children?: React.ReactNode; points?: AnatomyPoint[]; rects?: AnatomyRect[]; height?: number }) {
   return (
-    <div style={{ position: "relative", minHeight: height, background: "var(--core-color-bg-page)", border: "1px solid var(--core-color-border-subtle)", borderRadius: "var(--core-radius-md)", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", margin: "16px 0" }}>
+    <div style={{ position: "relative", minHeight: height, background: "var(--core-color-bg-page)", border: "1px solid var(--core-color-border-subtle)", borderRadius: "var(--core-radius-md)", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", margin: "var(--core-space-4) 0" }}>
       <div style={{ position: "relative", display: "inline-block" }}>
         {children}
         {rects.map((r, i) => (
@@ -30,7 +30,7 @@ export function Anatomy({ children, points = [], rects = [], height = 120 }: { c
             width: r.width,
             height: r.height,
             background: "rgba(35, 136, 73, 0.2)",
-            border: "1px solid #238849",
+            border: "1px solid var(--core-color-success-600)",
             pointerEvents: "none",
             zIndex: 5
           }} />
@@ -48,10 +48,10 @@ export function Anatomy({ children, points = [], rects = [], height = 120 }: { c
               top: p.y,
               transform: "translate(-50%, -50%)",
               background: "var(--core-color-status-success-text)",
-              color: "white",
-              fontSize: 12,
+              color: "var(--core-color-text-inverse)",
+              fontSize: "var(--core-font-size-xs)",
               fontWeight: "bold",
-              borderRadius: "4px",
+              borderRadius: "var(--core-radius-xs)",
               padding: "2px 6px",
               lineHeight: 1,
               zIndex: 20,
@@ -69,15 +69,15 @@ export function Anatomy({ children, points = [], rects = [], height = 120 }: { c
 export function AnatomyLegend({ points = [] }: { points?: AnatomyPoint[] }) {
   if (points.length === 0) return null;
   return (
-    <ul style={{ display: "flex", gap: "24px", flexWrap: "wrap", padding: 0, margin: "0 0 32px 0", listStyle: "none" }}>
+    <ul style={{ display: "flex", gap: "var(--core-space-6)", flexWrap: "wrap", padding: 0, margin: "0 0 var(--core-space-8) 0", listStyle: "none" }}>
       {points.map((p, i) => (
-        <li key={i} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: 14 }}>
+        <li key={i} style={{ display: "flex", alignItems: "center", gap: "var(--core-space-2)", fontSize: "var(--core-font-size-sm)" }}>
           <span style={{
             background: "var(--core-color-status-success-text)",
-            color: "white",
-            fontSize: 12,
+            color: "var(--core-color-text-inverse)",
+            fontSize: "var(--core-font-size-xs)",
             fontWeight: "bold",
-            borderRadius: "4px",
+            borderRadius: "var(--core-radius-xs)",
             padding: "2px 6px",
             lineHeight: 1
           }}>{p.n}</span>

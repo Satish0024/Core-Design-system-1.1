@@ -36,8 +36,8 @@ function CopyBtn({
       style={{
         border: "1px solid var(--theme-neutral-border-primary-default)",
         background: "var(--theme-colors-neutral-100)",
-        borderRadius: 6,
-        padding: "4px 8px",
+        borderRadius: "var(--core-radius-xs)",
+        padding: "var(--core-space-1) var(--core-space-2)",
         fontSize: "var(--typography-font-size-xs)",
         fontWeight: 600,
         color: "var(--theme-neutral-text-subtle)",
@@ -68,11 +68,11 @@ function ColorValuePill({
       style={{
         display: "inline-flex",
         alignItems: "center",
-        gap: 10,
-        padding: "8px 12px",
-        borderRadius: 10,
-        border: "1px solid #E8E8EC",
-        background: "#FAFAFB",
+        gap: "var(--core-space-3)",
+        padding: "var(--core-space-2) var(--core-space-3)",
+        borderRadius: "var(--core-radius-lg)",
+        border: "1px solid var(--core-color-neutral-200)",
+        background: "var(--core-color-neutral-50)",
         minWidth: 200,
         transition: "border-color 0.12s ease, box-shadow 0.12s ease",
       }}
@@ -81,22 +81,22 @@ function ColorValuePill({
         style={{
           width: 20,
           height: 20,
-          borderRadius: 5,
+          borderRadius: "var(--core-radius-xs)",
           background: primitive.hex,
-          border: isLightSwatch ? "1px solid #DFDFE6" : "1px solid transparent",
+          border: isLightSwatch ? "1px solid var(--core-color-neutral-200)" : "1px solid transparent",
           flexShrink: 0,
           boxShadow: "inset 0 0 0 1px rgba(0,0,0,0.04)",
         }}
       />
-      <div style={{ display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}>
-        <span style={{ fontSize: 12, fontWeight: 500, color: "#1D1C24", lineHeight: 1.3, whiteSpace: "nowrap" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-1)", minWidth: 0 }}>
+        <span style={{ fontSize: "var(--core-font-size-xs)", fontWeight: 500, color: "var(--core-color-text-primary)", lineHeight: 1.3, whiteSpace: "nowrap" }}>
           {primitive.path}
         </span>
-        <span style={{ fontSize: 11, fontFamily: "var(--site-mono)", color: "#787887", lineHeight: 1.3 }}>
+        <span style={{ fontSize: "var(--core-font-size-xs)", fontFamily: "var(--site-mono)", color: "var(--core-color-text-secondary)", lineHeight: 1.3 }}>
           {primitive.hex}
         </span>
       </div>
-      <div style={{ marginLeft: "auto", display: "flex", gap: 4 }}>
+      <div style={{ marginLeft: "auto", display: "flex", gap: "var(--core-space-1)" }}>
         <CopyBtn label="hex" value={primitive.hex} onCopied={onCopied} />
         <CopyBtn label="token" value={cssVar} onCopied={onCopied} />
       </div>
@@ -121,20 +121,20 @@ function TokenRow({
       className="brand-token-row"
       style={{
         height: 60,
-        borderBottom: "1px solid #EEEEF2",
+        borderBottom: "1px solid var(--core-color-neutral-100)",
         transition: "background 0.12s ease",
       }}
     >
-      <td style={{ padding: "10px 16px", verticalAlign: "middle", width: "32%" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <td style={{ padding: "var(--core-space-3) var(--core-space-4)", verticalAlign: "middle", width: "32%" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "var(--core-space-3)" }}>
           <TokenIcon />
           <div>
-            <div style={{ fontSize: 14, fontWeight: 500, color: "#1D1C24", lineHeight: 1.35 }}>{row.name}</div>
+            <div style={{ fontSize: "var(--core-font-size-sm)", fontWeight: 500, color: "var(--core-color-text-primary)", lineHeight: 1.35 }}>{row.name}</div>
             <code
               style={{
-                fontSize: 11,
+                fontSize: "var(--core-font-size-xs)",
                 fontFamily: "var(--site-mono)",
-                color: "#787887",
+                color: "var(--core-color-text-secondary)",
                 cursor: "pointer",
               }}
               onClick={() => {
@@ -150,7 +150,7 @@ function TokenRow({
       </td>
       <td
         style={{
-          padding: "10px 16px",
+          padding: "var(--core-space-3) var(--core-space-4)",
           verticalAlign: "middle",
           width: "34%",
           opacity: previewMode === "dark" ? 0.45 : 1,
@@ -161,7 +161,7 @@ function TokenRow({
       </td>
       <td
         style={{
-          padding: "10px 16px",
+          padding: "var(--core-space-3) var(--core-space-4)",
           verticalAlign: "middle",
           width: "34%",
           opacity: previewMode === "light" ? 0.45 : 1,
@@ -202,10 +202,10 @@ export function BrandTokenReference() {
   const highlightMode = previewMode === "both" ? "both" : previewMode;
 
   return (
-    <div className="brand-token-reference" style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+    <div className="brand-token-reference" style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-8)" }}>
       <style>{`
-        .brand-token-reference .brand-token-row:hover { background: #F7F7F9; }
-        .brand-token-reference .brand-token-pill:hover { border-color: #C4C4CF; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+        .brand-token-reference .brand-token-row:hover { background: var(--core-color-neutral-50); }
+        .brand-token-reference .brand-token-pill:hover { border-color: var(--core-color-neutral-300); box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
         .brand-token-reference .brand-token-copy-btn:hover,
         .brand-token-reference .brand-token-copy-btn:focus-visible {
           color: var(--theme-primitive-color-primary-600);
@@ -213,7 +213,7 @@ export function BrandTokenReference() {
           background: var(--brand-background-primary-light);
           outline: none;
         }
-        .brand-token-reference thead th { position: sticky; top: 0; z-index: 2; background: #FFFFFF; }
+        .brand-token-reference thead th { position: sticky; top: 0; z-index: 2; background: var(--core-color-neutral-0); }
         @media (max-width: 900px) {
           .brand-token-reference table { display: block; overflow-x: auto; }
         }
@@ -224,13 +224,13 @@ export function BrandTokenReference() {
         style={{
           display: "flex",
           flexWrap: "wrap",
-          gap: 16,
+          gap: "var(--core-space-4)",
           alignItems: "center",
           justifyContent: "space-between",
-          padding: "14px 18px",
-          background: "#FFFFFF",
-          border: "1px solid #EEEEF2",
-          borderRadius: 12,
+          padding: "var(--core-space-4) var(--core-space-5)",
+          background: "var(--core-color-neutral-0)",
+          border: "1px solid var(--core-color-neutral-100)",
+          borderRadius: "var(--core-radius-lg)",
         }}
       >
         <input
@@ -241,27 +241,27 @@ export function BrandTokenReference() {
           style={{
             flex: "1 1 220px",
             minWidth: 200,
-            padding: "10px 14px",
-            borderRadius: 8,
-            border: "1px solid #DFDFE6",
-            fontSize: 14,
+            padding: "var(--core-space-3) var(--core-space-4)",
+            borderRadius: "var(--core-radius-sm)",
+            border: "1px solid var(--core-color-neutral-200)",
+            fontSize: "var(--core-font-size-sm)",
             outline: "none",
           }}
         />
-        <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-          <span style={{ fontSize: 12, fontWeight: 600, color: "#787887", marginRight: 4 }}>Highlight:</span>
+        <div style={{ display: "flex", gap: "var(--core-space-2)", alignItems: "center" }}>
+          <span style={{ fontSize: "var(--core-font-size-xs)", fontWeight: 600, color: "var(--core-color-text-secondary)", marginRight: 4 }}>Highlight:</span>
           {(["both", "light", "dark"] as const).map((mode) => (
             <button
               key={mode}
               type="button"
               onClick={() => setPreviewMode(mode)}
               style={{
-                padding: "6px 14px",
-                borderRadius: 8,
-                border: previewMode === mode ? "1px solid #1F4F8D" : "1px solid #DFDFE6",
-                background: previewMode === mode ? "#E2E9F3" : "#FFFFFF",
-                color: previewMode === mode ? "#1F4F8D" : "#5C5C6B",
-                fontSize: 12,
+                padding: "var(--core-space-2) var(--core-space-4)",
+                borderRadius: "var(--core-radius-sm)",
+                border: previewMode === mode ? "1px solid var(--core-color-brand-500)" : "1px solid var(--core-color-neutral-200)",
+                background: previewMode === mode ? "var(--core-color-brand-100)" : "var(--core-color-neutral-0)",
+                color: previewMode === mode ? "var(--core-color-brand-500)" : "var(--core-color-neutral-600)",
+                fontSize: "var(--core-font-size-xs)",
                 fontWeight: 600,
                 cursor: "pointer",
                 textTransform: "capitalize",
@@ -275,23 +275,23 @@ export function BrandTokenReference() {
 
       {/* Sections */}
       {filteredSections.map((section) => (
-        <section key={section.id} style={{ background: "#FFFFFF", border: "1px solid #EEEEF2", borderRadius: 12, overflow: "hidden" }}>
-          <div style={{ padding: "16px 20px 12px", borderBottom: "1px solid #EEEEF2" }}>
-            <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: "#1D1C24", letterSpacing: "-0.01em" }}>
+        <section key={section.id} style={{ background: "var(--core-color-neutral-0)", border: "1px solid var(--core-color-neutral-100)", borderRadius: "var(--core-radius-lg)", overflow: "hidden" }}>
+          <div style={{ padding: "var(--core-space-4) var(--core-space-5) var(--core-space-3)", borderBottom: "1px solid var(--core-color-neutral-100)" }}>
+            <h3 style={{ margin: 0, fontSize: "var(--core-font-size-sm)", fontWeight: 700, color: "var(--core-color-text-primary)", letterSpacing: "-0.01em" }}>
               {section.title}
             </h3>
           </div>
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 720 }}>
               <thead>
-                <tr style={{ borderBottom: "1px solid #EEEEF2", height: 44 }}>
+                <tr style={{ borderBottom: "1px solid var(--core-color-neutral-100)", height: 44 }}>
                   <th
                     style={{
                       textAlign: "left",
-                      padding: "10px 16px",
-                      fontSize: 12,
+                      padding: "var(--core-space-3) var(--core-space-4)",
+                      fontSize: "var(--core-font-size-xs)",
                       fontWeight: 600,
-                      color: "#787887",
+                      color: "var(--core-color-text-secondary)",
                       width: "32%",
                     }}
                   >
@@ -300,10 +300,10 @@ export function BrandTokenReference() {
                   <th
                     style={{
                       textAlign: "left",
-                      padding: "10px 16px",
-                      fontSize: 12,
+                      padding: "var(--core-space-3) var(--core-space-4)",
+                      fontSize: "var(--core-font-size-xs)",
                       fontWeight: 600,
-                      color: "#787887",
+                      color: "var(--core-color-text-secondary)",
                       width: "34%",
                     }}
                   >
@@ -312,10 +312,10 @@ export function BrandTokenReference() {
                   <th
                     style={{
                       textAlign: "left",
-                      padding: "10px 16px",
-                      fontSize: 12,
+                      padding: "var(--core-space-3) var(--core-space-4)",
+                      fontSize: "var(--core-font-size-xs)",
                       fontWeight: 600,
-                      color: "#787887",
+                      color: "var(--core-color-text-secondary)",
                       width: "34%",
                     }}
                   >
@@ -334,7 +334,7 @@ export function BrandTokenReference() {
       ))}
 
       {filteredSections.length === 0 && (
-        <div style={{ padding: 40, textAlign: "center", color: "#787887", fontSize: 14 }}>No tokens match your search.</div>
+        <div style={{ padding: "var(--core-space-10)", textAlign: "center", color: "var(--core-color-text-secondary)", fontSize: "var(--core-font-size-sm)" }}>No tokens match your search.</div>
       )}
 
       {copied && (
@@ -343,11 +343,11 @@ export function BrandTokenReference() {
             position: "fixed",
             bottom: 24,
             right: 24,
-            background: "#1D1C24",
-            color: "#FFFFFF",
-            padding: "12px 18px",
-            borderRadius: 10,
-            fontSize: 12,
+            background: "var(--core-color-text-primary)",
+            color: "var(--core-color-neutral-0)",
+            padding: "var(--core-space-3) var(--core-space-5)",
+            borderRadius: "var(--core-radius-lg)",
+            fontSize: "var(--core-font-size-xs)",
             fontWeight: 600,
             boxShadow: "0 8px 24px rgba(0,0,0,0.18)",
             zIndex: 9999,

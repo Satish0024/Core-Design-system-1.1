@@ -18,9 +18,9 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
       content: (
         <div className="site-panel site-panel--flush">
           <Preview>
-            <div style={{ display: "flex", gap: 32, alignItems: "flex-end", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: "var(--core-space-8)", alignItems: "flex-end", flexWrap: "wrap" }}>
               {/* DEFAULT */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-3)", alignItems: "center" }}>
                 <StateLabel variant="site">DEFAULT</StateLabel>
                 <button
                   style={{
@@ -42,7 +42,7 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
               </div>
 
               {/* HOVER */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-3)", alignItems: "center" }}>
                 <StateLabel variant="site">HOVER</StateLabel>
                 <button
                   style={{
@@ -64,7 +64,7 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
               </div>
 
               {/* ACTIVE */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-3)", alignItems: "center" }}>
                 <StateLabel variant="site">ACTIVE</StateLabel>
                 <button
                   style={{
@@ -87,7 +87,7 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
               </div>
 
               {/* FOCUS */}
-              <div className="force-focus" style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
+              <div className="force-focus" style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-3)", alignItems: "center" }}>
                 <StateLabel variant="site">FOCUSED</StateLabel>
                 <button
                   type="button"
@@ -99,7 +99,7 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
               </div>
 
               {/* DISABLED */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-3)", alignItems: "center" }}>
                 <StateLabel variant="site">DISABLED</StateLabel>
                 <button
                   style={{
@@ -150,12 +150,12 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
       content: (
         <div className="site-panel site-panel--flush">
             <Preview>
-              <div style={{ display: "flex", flexDirection: "column", gap: 24, width: "100%" }}>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 24 }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-6)", width: "100%" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "var(--core-space-6)" }}>
                   {/* DEFAULT */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-3)" }}>
                     <StateLabel variant="site">DEFAULT</StateLabel>
-                    <span style={{ fontSize: 14, color: "var(--core-color-text-primary)", lineHeight: 1.6 }}>
+                    <span style={{ fontSize: "var(--core-font-size-sm)", color: "var(--core-color-text-primary)", lineHeight: 1.6 }}>
                       Read our{" "}
                       <Link
                         href="#"
@@ -174,9 +174,9 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
                   </div>
 
                   {/* HOVER */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-3)" }}>
                     <StateLabel variant="site">HOVER</StateLabel>
-                    <span style={{ fontSize: 14, color: "var(--core-color-text-primary)", lineHeight: 1.6 }}>
+                    <span style={{ fontSize: "var(--core-font-size-sm)", color: "var(--core-color-text-primary)", lineHeight: 1.6 }}>
                       Read our{" "}
                       <a
                         href="#"
@@ -196,9 +196,9 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
                   </div>
 
                   {/* ACTIVE */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-3)" }}>
                     <StateLabel variant="site">ACTIVE</StateLabel>
-                    <span style={{ fontSize: 14, color: "var(--core-color-text-primary)", lineHeight: 1.6 }}>
+                    <span style={{ fontSize: "var(--core-font-size-sm)", color: "var(--core-color-text-primary)", lineHeight: 1.6 }}>
                       Read our{" "}
                       <a
                         href="#"
@@ -218,9 +218,9 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
                   </div>
 
                   {/* FOCUSED */}
-                  <div className="force-focus" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  <div className="force-focus" style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-3)" }}>
                     <StateLabel variant="site">FOCUSED</StateLabel>
-                    <span style={{ fontSize: 14, color: "var(--core-color-text-primary)", lineHeight: 1.6 }}>
+                    <span style={{ fontSize: "var(--core-font-size-sm)", color: "var(--core-color-text-primary)", lineHeight: 1.6 }}>
                       Read our{" "}
                       <Link
                         href="#"
@@ -239,9 +239,9 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
                   </div>
 
                   {/* DISABLED */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "var(--core-space-3)" }}>
                     <StateLabel variant="site">DISABLED</StateLabel>
-                    <span style={{ fontSize: 14, color: "var(--core-color-text-primary)", lineHeight: 1.6 }}>
+                    <span style={{ fontSize: "var(--core-font-size-sm)", color: "var(--core-color-text-primary)", lineHeight: 1.6 }}>
                       Read our{" "}
                       <Link
                         href="#"
@@ -288,15 +288,15 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
   if (embedded) return sectionList;
 
   return (
-    <div style={{ maxWidth: 1024, margin: "0 auto", padding: "20px" }}>
+    <div style={{ maxWidth: 1024, margin: "0 auto", padding: "var(--core-space-5)" }}>
       {/* Centered Hero Header — matching Logo and Typography sections */}
-      <div style={{ textAlign: "center", marginBottom: 60, marginTop: 40 }}>
+      <div style={{ textAlign: "center", marginBottom: "var(--core-space-16)", marginTop: "var(--core-space-10)" }}>
         <h1
           style={{
-            fontSize: 72,
-            fontWeight: 700,
+            fontSize: 72 /* no token above 48px */,
+            fontWeight: "var(--typography-font-weight-bold)",
             letterSpacing: "-0.06em",
-            margin: "0 0 16px 0",
+            margin: "0 0 var(--core-space-4) 0",
             color: "var(--core-color-text-primary)",
             lineHeight: 1.1,
           }}
@@ -308,7 +308,7 @@ export default function Actions({ embedded = false }: { embedded?: boolean }) {
             maxWidth: 580,
             margin: "0 auto",
             color: "var(--core-color-text-tertiary)",
-            fontSize: 18,
+            fontSize: "var(--core-font-size-lg)",
             lineHeight: 1.6,
             fontWeight: 400,
           }}
